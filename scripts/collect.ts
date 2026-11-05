@@ -92,7 +92,12 @@ async function coletarTipo(
       throw new ColetaError(`Formato inesperado em ${call}/${contract} p.${pagina}: ${parsed.error.message.slice(0, 300)}`, "formato");
     }
     const page = parsed.data;
-    if (page.length === 0) break;
+    if (page.length === 0) {
+      if (pagina === 1 && anterior && Object.keys(anterior.itens).length > 0) {
+        throw new ColetaError(`${call}/${contract}: primeira página vazia apesar de registros anteriores`, "plausibilidade");
+      }
+      break;
+    }
     for (const p of page) {
       const id = idDoLink(p.link);
       if (id && noEscopo(p)) itens[id] = p;

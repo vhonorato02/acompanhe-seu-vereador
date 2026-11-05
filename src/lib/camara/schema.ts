@@ -1,14 +1,17 @@
 import { z } from "zod";
+import { origemDaCamara } from "./origem";
 
 // Shapes observed in the Câmara open-data API (SoftCam) on 24/10/2026.
 // Unknown extra fields are tolerated but reported, so a format change is noticed.
+
+const urlOficial = z.string().url().refine((url) => origemDaCamara(url) !== null, "Link externo à origem oficial");
 
 export const vereadorApi = z.object({
   nome: z.string().min(1),
   partido: z.string(),
   funcao: z.string(),
   imagem: z.string(),
-  link: z.string().url(),
+  link: urlOficial,
 });
 
 export const tipoApi = z.object({
@@ -22,7 +25,7 @@ export const proposicaoApi = z.object({
   titulo: z.string().min(1),
   ementa: z.string(),
   autoria: z.string(),
-  link: z.string().url(),
+  link: urlOficial,
 });
 
 export const vereadoresResponse = z.array(vereadorApi);

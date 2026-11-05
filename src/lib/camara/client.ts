@@ -87,6 +87,8 @@ export class CamaraClient {
       }
     }
     if (ultimoErro instanceof ColetaError) throw ultimoErro;
-    throw new ColetaError(`Falha de rede em ${descricao}: ${String(ultimoErro)}`, "rede");
+    // Network errors may contain the request URL (and therefore the token). Never echo the raw error.
+    const motivo = ultimoErro instanceof Error ? ultimoErro.name : "erro desconhecido";
+    throw new ColetaError(`Falha de rede em ${descricao} (${motivo})`, "rede");
   }
 }

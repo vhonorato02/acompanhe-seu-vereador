@@ -1,23 +1,10 @@
 import { USER_AGENT } from "./client";
+import { origemDaCamara } from "./origem";
 
 export const MAX_FOTO_BYTES = 5 * 1024 * 1024;
-const HOSTS_OFICIAIS = new Set(["www.pindamonhangaba.sp.leg.br", "pindamonhangaba.sp.leg.br"]);
-
 export function validarUrlFoto(url: string): URL {
-  let origem: URL;
-  try {
-    origem = new URL(url);
-  } catch {
-    throw new Error("URL da foto inválida");
-  }
-  if (
-    origem.protocol !== "https:" ||
-    !HOSTS_OFICIAIS.has(origem.hostname) ||
-    origem.port !== "" ||
-    origem.username !== "" ||
-    origem.password !== "" ||
-    !/\.(?:jpe?g|png|webp)$/i.test(origem.pathname)
-  ) {
+  const origem = origemDaCamara(url);
+  if (!origem || !/\\.(?:jpe?g|png|webp)$/i.test(origem.pathname)) {
     throw new Error("Foto fora da origem oficial permitida");
   }
   return origem;

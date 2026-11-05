@@ -12,7 +12,7 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 
 - **Só Pindamonhangaba:** Observatório Social do Brasil – Pindamonhangaba e Câmara Municipal de Pindamonhangaba. Nada de outros observatórios ou municípios.
 - **Só free tier:** nenhum serviço pago, nenhum cartão, nenhum domínio comprado (endereço `*.vercel.app`). Sem IA paga.
-- **Atualização semanal** (quarta de manhã, depois da sessão de terça) + disparo manual.
+- **Atualização quinzenal manual** pelo proprietário (redeploy na Vercel com cache de build), conforme decisão posterior de 24/10/2026.
 - **Não é um clone do site da Câmara:** é um portal para acompanhar todos os vereadores. Mostra ementa, metadados e contexto, e linka para o documento oficial; não republica texto integral.
 - **Sem votações e sem presença na v1.** Atualização **quinzenal feita pelo dono** (Redeploy na Vercel); o coletor roda no build.
 

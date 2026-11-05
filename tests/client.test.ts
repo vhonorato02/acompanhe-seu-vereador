@@ -55,4 +55,15 @@ describe("CamaraClient", () => {
     const { c } = cliente([{ status: 200, body: "" }]);
     await expect(c.get("vereadores")).rejects.toSatisfy((e: unknown) => !String((e as Error).message).includes("SEGREDO"));
   });
+  it("não revela token quando a falha de rede inclui a URL no erro", async () => {
+    const { c } = cliente([
+      new Error("fetch https://host/?keysoft=SEGREDO failed"),
+      new Error("fetch https://host/?keysoft=SEGREDO failed"),
+      new Error("fetch https://host/?keysoft=SEGREDO failed"),
+    ]);
+    await expect(c.get("vereadores")).rejects.toSatisfy(
+      (e: unknown) => e instanceof Error && !e.message.includes("SEGREDO"),
+    );
+  });
+
 });

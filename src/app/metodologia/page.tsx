@@ -59,7 +59,7 @@ export default function Metodologia() {
           exercício (Poder Executivo, comissões, Mesa, suplentes que já saíram) aparecem nas listas, mas não têm perfil. Nesta
           coleta, {n(semVereador)} proposições não têm nenhum vereador em exercício entre os autores.
         </li>
-        <li>Nada é estimado. Se um dado não existe na fonte, o portal diz que não existe.</li>
+        <li>Os totais são contagens dos registros coletados, não estimativas. Assuntos, bairros e destinatários são classificações derivadas do texto, sujeitas a erros e omissões.</li>
       </ul>
 
       <h2 id="normas">Autoria de leis e normas</h2>
