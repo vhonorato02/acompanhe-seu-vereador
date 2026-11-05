@@ -17,7 +17,7 @@ export const vereadorApi = z.object({
 export const tipoApi = z.object({
   contract: z.string().min(1),
   titulo: z.string().min(1),
-  link: z.string(),
+  link: urlOficial,
 });
 
 export const proposicaoApi = z.object({

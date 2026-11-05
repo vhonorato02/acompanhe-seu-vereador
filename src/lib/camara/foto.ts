@@ -4,7 +4,7 @@ import { origemDaCamara } from "./origem";
 export const MAX_FOTO_BYTES = 5 * 1024 * 1024;
 export function validarUrlFoto(url: string): URL {
   const origem = origemDaCamara(url);
-  if (!origem || !/\\.(?:jpe?g|png|webp)$/i.test(origem.pathname)) {
+  if (!origem || !/\.(?:jpe?g|png|webp)$/i.test(origem.pathname)) {
     throw new Error("Foto fora da origem oficial permitida");
   }
   return origem;
