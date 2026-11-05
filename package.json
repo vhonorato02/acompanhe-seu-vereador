@@ -5,7 +5,7 @@
   "description": "Portal do Observatório Social do Brasil – Pindamonhangaba para acompanhar os vereadores da Câmara Municipal de Pindamonhangaba.",
   "license": "MIT",
   "engines": {
-    "node": ">=22.12"
+    "node": "24.x"
   },
   "scripts": {
     "collect": "tsx scripts/collect.ts",
