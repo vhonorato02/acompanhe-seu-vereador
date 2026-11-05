@@ -44,6 +44,18 @@
 
 `npm install` · `npm run collect` · `npm run dev` · `npm test` · `npm run typecheck` · `npm run build`
 
+## Auditoria 04/11/2026: ciclo 1 e publicação controlada
+
+- **Auditoria versionada:** [docs/auditoria/2026-11-04-ciclo-1.md](docs/auditoria/2026-11-04-ciclo-1.md), com achados, riscos P1/P2, testes realizados e bloqueios não disfarçados de aprovação.
+- **Baseline anterior da produção:** commit `54daed185fb7310303106b47d9a441fecab8f60b`; deployment `dpl_CkuHxDuciQ4H59XZwasrfJP6tKJn` (24/10/2026). Era o último snapshot publicado ao começar a auditoria, com 16.822 proposições e 397 normas.
+- **Correções já enviadas à `main`:** commit `703c11c2f7cff3cd65494915a96107fed35f0e18`. CSV resistente à interpretação de fórmulas; fotos apenas da origem oficial com limite de 5 MiB, assinatura e timeout; links recebidos da API restritos à Câmara; erros de rede sem vazamento de URL do token; proteção contra primeira página vazia; QA do GitHub Actions e texto metodológico.
+- **CI executada:** 70 testes, typecheck e build com **fixture de desenvolvimento**, aprovados na `main` ([run 41957926135](https://github.com/vhonorato02/obs-vereador/actions/runs/41957926135)). Isso não comprova coleta atual ou QA interativo real.
+- **Novo deployment acionado:** `dpl_ALemJf7XU5NhA4wq34WZURUQheCo`, SHA `703c11c`, com coleta oficial completa. Verificar se ficou `READY`, a data e os totais do novo snapshot na URL pública antes de chamar o rollout de concluído. Se falhar, preservar deployment anterior.
+- **Pin de runtime preparado separadamente:** `engines.node=24.x`, lockfile e CI Node 24, validados no branch `audit/2026-11-04-integridade` ([run 41958148886](https://github.com/vhonorato02/obs-vereador/actions/runs/41958148886)). Não enviar outra atualização à `main` enquanto o build completo de produção anterior estiver em andamento, para não interrompê-lo.
+- **Não confundir com `stable`:** a auditoria completa de E2E/browser, WCAG, responsividade, desempenho, PWA, direitos de imagem, SEO e reconciliação completa não foi executada; sem tag stable.
+- **Configuração pendente do GitHub:** repository default branch ainda aponta para `ccr-7efe4374-h0pmz6`. Alterar em Settings → General → Default branch → `main`. Branch de produção na Vercel já é `main`.
+- **Arquitetura mantida:** sem banco, admin, CMS ou VPS. Coleta quinzenal manual; plataforma gratuita; neutralidade editorial.
+
 ## Próximos passos possíveis
 
 1. Mostrar no site (metodologia) a reconciliação com o Power BI, que já está em `docs/research/power-bi.md` §9.
