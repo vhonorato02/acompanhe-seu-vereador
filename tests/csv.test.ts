@@ -13,7 +13,7 @@ describe("CSV de dados legislativos", () => {
   it.each(["=SUM(1,1)", "+cmd", "-2+3", "@SUM(A1:A2)", " \t=HYPERLINK(\"https://x\")", "\ufeff=1+1"])(
     "neutraliza texto de fonte externa que inicia fórmula: %s",
     (entrada) => {
-      expect(csv([[entrada]])).toContain("'" + entrada);
+      expect(csv([[entrada]])).toBe(csv([["'" + entrada]]));
     },
   );
 
