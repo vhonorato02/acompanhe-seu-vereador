@@ -4,8 +4,11 @@
  * serving the previous deployment instead of publishing broken data.
  */
 import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
-import { CamaraClient, ColetaError, USER_AGENT } from "../src/lib/camara/client";
+import { CamaraClient, ColetaError } from "../src/lib/camara/client";
+import { obterFotoSegura, validarUrlFoto } from "../src/lib/camara/foto";
+import { csv } from "../src/lib/data/csv";
 import {
   proposicoesResponse,
   tiposResponse,
@@ -112,10 +115,12 @@ async function coletarTipo(
 }
 
 async function baixarFoto(v: VereadorApi, slug: string): Promise<string | null> {
-  const ext = (/\.(jpe?g|png|webp)(?:\?|$)/i.exec(v.imagem)?.[1] ?? "jpg").toLowerCase().replace("jpeg", "jpg");
-  const nome = `${slug}.${ext}`;
-  const cacheFoto = path.join(CACHE_DIR, "fotos", `${nome}`);
   try {
+    const origem = validarUrlFoto(v.imagem);
+    const ext = (/\.(jpe?g|png|webp)$/i.exec(origem.pathname)?.[1] ?? "jpg").toLowerCase().replace("jpeg", "jpg");
+    const nome = `${slug}.${ext}`;
+    const hash = createHash("sha256").update(origem.href).digest("hex").slice(0, 16);
+    const cacheFoto = path.join(CACHE_DIR, "fotos", `${slug}-${hash}.${ext}`);
     let bytes: Buffer | null = null;
     try {
       const s = await stat(cacheFoto);
@@ -125,10 +130,7 @@ async function baixarFoto(v: VereadorApi, slug: string): Promise<string | null> 
     }
     if (!bytes) {
       await new Promise((r) => setTimeout(r, 1100));
-      const res = await fetch(v.imagem, { headers: { "User-Agent": USER_AGENT } });
-      const tipo = res.headers.get("content-type") ?? "";
-      if (res.status !== 200 || !tipo.startsWith("image/")) throw new Error(`HTTP ${res.status} ${tipo}`);
-      bytes = Buffer.from(await res.arrayBuffer());
+      bytes = await obterFotoSegura(origem.href);
       await mkdir(path.dirname(cacheFoto), { recursive: true });
       await writeFile(cacheFoto, bytes);
     }
@@ -284,15 +286,6 @@ async function main() {
   await escreverDadosAbertos(dataset);
   for (const a of avisos) log(`aviso: ${a}`);
   log(`${proposicoes.length} proposições, ${normas.length} normas, ${vereadores.length} vereadores; ${requisicoes} requisições em ${Math.round(dataset.execucao.duracaoMs / 1000)} s.`);
-}
-
-function csv(linhas: (string | number | null)[][]): string {
-  const cel = (v: string | number | null) => {
-    const s = v === null ? "" : String(v);
-    return /[";\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-  };
-  // BOM + ";" so the file opens correctly in spreadsheet software set to pt-BR.
-  return "﻿" + linhas.map((l) => l.map(cel).join(";")).join("\r\n") + "\r\n";
 }
 
 async function escreverDadosAbertos(d: Dataset) {
