@@ -111,10 +111,22 @@ jobs:
           TAG: ${{ needs.build.outputs.tag }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          printf '%s:%s\n' "${{ github.actor }}" "$TOKEN" |
-            ssh -i ~/.ssh/deploy_key -p "$DEPLOY_PORT" \
-              -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
-              "deploy@$DEPLOY_HOST" "deploy $TAG"
+          # The VPS hosts several sites; when they deploy at the same time sshd can be too slow
+          # to answer. Only connection failures (exit 255) are retried; a failed deploy is not.
+          for tentativa in 1 2 3 4; do
+            set +e
+            printf '%s:%s\n' "${{ github.actor }}" "$TOKEN" |
+              ssh -i ~/.ssh/deploy_key -p "$DEPLOY_PORT" \
+                -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=60 \
+                "deploy@$DEPLOY_HOST" "deploy $TAG"
+            codigo=$?
+            set -e
+            [ "$codigo" -eq 0 ] && exit 0
+            [ "$codigo" -ne 255 ] && exit "$codigo"
+            echo "::warning::Conexão SSH falhou (tentativa $tentativa/4); nova tentativa em $((tentativa * 60)) s."
+            sleep $((tentativa * 60))
+          done
+          exit 255
 
       - name: Smoke test (same collection as the canonical site)
         run: |
