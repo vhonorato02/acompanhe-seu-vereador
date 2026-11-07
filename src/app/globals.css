@@ -85,6 +85,8 @@
   box-sizing: border-box;
 }
 html {
+  /* Explicit on the root too: without it WebKit reports a white canvas under the dark theme. */
+  background: var(--bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   scroll-padding-top: 4.5rem;
@@ -588,6 +590,8 @@ main.page {
   object-fit: cover;
   object-position: 50% 15%;
   background: var(--fill-2);
+  /* Initials of a councillor without a photo: inherited link green would be greyed by the filter. */
+  color: var(--ink);
   filter: grayscale(1);
   flex: none;
 }
@@ -825,6 +829,11 @@ main.page {
 }
 .fato strong a {
   text-decoration: none;
+}
+/* A link inside running text must not rely on colour alone (WCAG 1.4.1). */
+.fato span a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 /* Segmented control (period). */
@@ -1158,6 +1167,8 @@ select {
 /* ---------- notes, provenance, footer ---------- */
 .nota {
   background: var(--fill);
+  /* Explicit: inside .fonte the inherited grey falls under 4.5:1 on the grey band. */
+  color: var(--ink);
   border-radius: var(--r);
   padding: 1rem 1.15rem;
   font-size: 0.9375rem;
@@ -1202,10 +1213,14 @@ select {
   border-top: 1px solid var(--line);
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 1.25rem;
+  gap: 0.25rem 1.25rem;
 }
 .rodape ul a {
   text-decoration: none;
+  /* WCAG 2.5.8: at least 24px tall targets, even with the small footer type. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
 }
 
 /* ---------- prose pages ---------- */
