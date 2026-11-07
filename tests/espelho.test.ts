@@ -2,6 +2,7 @@ import { mkdtemp, readFile, readdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { csv } from "@/lib/data/csv";
 import { espelhar, EspelhoError } from "@/lib/espelho/espelhar";
 
 const OFICIAL = "https://www.pindamonhangaba.sp.leg.br";
@@ -39,8 +40,9 @@ function siteFalso(muda: (arquivos: Record<string, string | Buffer>) => void = (
     "/dados/tipos.json": JSON.stringify([{ contract: "Requerimentos", titulo: "Requerimentos", grupo: "proposicao" }]),
     "/dados/proposicoes.json": JSON.stringify(proposicoes),
     "/dados/normas.json": JSON.stringify(normas),
-    "/dados/proposicoes.csv": "﻿id,tipo\n1,Requerimentos\n",
-    "/dados/normas.csv": "﻿id,tipo\n9,Leis\n",
+    // Produced by the same csv() the collector uses, so the test follows the real format.
+    "/dados/proposicoes.csv": csv([["id", "tipo", "titulo"], ["1", "Requerimentos", "Requerimento 1/2026"]]),
+    "/dados/normas.csv": csv([["id", "tipo", "titulo"], ["9", "Leis-Ordinarias", "Lei 9/2026"]]),
     "/fotos/ana-paula-goffi.jpg": JPG,
   };
   muda(arquivos);
@@ -107,6 +109,13 @@ describe("espelho dos dados abertos (cópia da VPS)", () => {
       a["/dados/proposicoes.json"] = JSON.stringify([reg("1"), { ...reg("2"), link: "https://exemplo.com/x" }]);
     });
     await expect(rodar(s)).rejects.toThrow(/formato inesperado/);
+  });
+
+  it("recusa CSV que não é o dos dados abertos (ex.: página de erro)", async () => {
+    const s = siteFalso((a) => {
+      a["/dados/normas.csv"] = "<html>erro</html>";
+    });
+    await expect(rodar(s)).rejects.toThrow(/cabeçalho inesperado/);
   });
 
   it("recusa foto que não é imagem", async () => {

@@ -137,7 +137,8 @@ export async function espelhar(o: OpcoesEspelho): Promise<Dataset> {
   const csvs: Array<[string, string]> = [];
   for (const nome of ["proposicoes.csv", "normas.csv"]) {
     const texto = await (await baixar(`/dados/${nome}`)).text();
-    if (!texto.replace(/^﻿/, "").startsWith("id,")) throw new EspelhoError(`/dados/${nome}: cabeçalho inesperado`);
+    // Same format as csv() in src/lib/data/csv.ts: BOM, ";" separator (Brazilian spreadsheets).
+    if (!texto.replace(/^﻿/, "").startsWith("id;tipo;")) throw new EspelhoError(`/dados/${nome}: cabeçalho inesperado`);
     csvs.push([nome, texto]);
   }
 
