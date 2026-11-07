@@ -1,8 +1,9 @@
 # Acompanhe seu Vereador — Pindamonhangaba
 
-Portal independente do **Observatório Social do Brasil – Pindamonhangaba** para acompanhar o que os vereadores de Pindamonhangaba apresentam na Câmara Municipal (legislatura 2025–2028). Cada número leva à lista que o compõe, e cada item leva ao documento oficial.
+Portal do **Observatório Social do Brasil – Pindamonhangaba** para acompanhar o que os vereadores de Pindamonhangaba apresentam na Câmara Municipal (legislatura 2025–2028). Cada número leva à lista que o compõe, e cada item leva ao documento oficial.
 
-**Endereço:** https://acompanhe-seu-vereador.vercel.app.
+**Endereço:** https://acompanhe-seu-vereador.vercel.app (canônico, Vercel).
+Cópia na VPS do Observatório: https://vereador.zewithane.vps.brz.dev.br (mesmos dados, sem indexação; ver abaixo).
 
 Não é o site oficial da Câmara e não republica seus documentos: mostra título, ementa, autoria e data, com link para o original. Identidade do projeto: [ADR 0001](docs/adr/0001-identidade-do-projeto.md).
 
@@ -14,9 +15,13 @@ Não é o site oficial da Câmara e não republica seus documentos: mostra títu
 4. O resultado vira `data/generated/dataset.json` (lido pelo site) e `public/dados/*.csv|json` (dados abertos).
 5. Coletas seguintes são incrementais (páginas novas + 45 dias de margem), com coleta completa a cada 30 dias. O estado fica no cache de build da Vercel.
 
-## Atualizar os dados (a cada 15 dias)
+## Atualização dos dados (automática, 2x/dia)
 
-Vercel → projeto **acompanhe-seu-vereador** → **Deployments** → no deploy de produção mais recente, **⋯ → Redeploy** (deixe “Use existing Build Cache” marcado). Em cerca de 5 minutos o rodapé de cada página mostra a nova data de coleta. Se o deploy falhar, o site antigo continua no ar e o log diz o motivo.
+O workflow `.github/workflows/atualizar-dados.yml` dispara um build de produção na Vercel às 06h17 e às 18h17 (Brasília) e confere no manifesto publicado que a coleta mudou. O workflow `vigia-dados.yml` lê o manifesto todo dia às 10h43 e abre uma issue `dados-desatualizados` se a coleta tiver mais de 36 horas ou trouxer avisos (o GitHub avisa por e-mail). Detalhes, limites do plano gratuito e como atualizar à mão: [`docs/operacao/atualizar-dados.md`](docs/operacao/atualizar-dados.md).
+
+## Cópia na VPS (zewithane)
+
+A Vercel é a única que fala com a API da Câmara. A cópia da VPS (`.github/workflows/deploy-vps.yml`) roda `npm run espelhar`, que baixa os dados abertos do próprio portal (`/dados/*.json`, `/fotos/*`), valida cada registro com Zod, confere os totais com o manifesto e só então monta a imagem (`Dockerfile`, Next standalone, `ESPELHO=1` → `X-Robots-Tag: noindex` e robots fechado). A imagem vai para o GHCR e é publicada com `site deploy vereador <tag>` (plataforma `vps-platform`, sem downtime). Roda depois de cada atualização da Vercel e a cada push de código. Saúde: `/api/health`.
 
 ## Desenvolvimento
 

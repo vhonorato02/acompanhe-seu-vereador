@@ -6,15 +6,15 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 
 ## Fase atual
 
-**0.2.0 em produção** em https://acompanhe-seu-vereador.vercel.app (Vercel, branch `main`). O dono autorizou trabalhar direto em produção na `main`; valide antes (testes + E2E) porque cada push dispara coleta real. Nome e endereço centralizados em `src/lib/site.ts` (ADR 0001). Arquitetura real e próximos passos em `HANDOFF.md`; pesquisa em `docs/research/`.
+**0.3.0 em produção** em https://acompanhe-seu-vereador.vercel.app (Vercel, branch `main`; endereço canônico). Cópia sem indexação na VPS zewithane (`vereador.zewithane.vps.brz.dev.br`), que espelha os dados abertos da Vercel e nunca consulta a Câmara. O dono autorizou trabalhar direto em produção na `main`; valide antes (testes + E2E) porque cada push dispara coleta real. Nome e endereço centralizados em `src/lib/site.ts` (ADR 0001). Arquitetura real e próximos passos em `HANDOFF.md`; pesquisa em `docs/research/`.
 
 ## Decisões do dono do projeto (24/10/2026)
 
 - **Só Pindamonhangaba:** Observatório Social do Brasil – Pindamonhangaba e Câmara Municipal de Pindamonhangaba. Nada de outros observatórios ou municípios.
 - **Só free tier:** nenhum serviço pago, nenhum cartão, nenhum domínio comprado (endereço `*.vercel.app`). Sem IA paga.
-- **Atualização quinzenal manual** pelo proprietário (redeploy na Vercel com cache de build), conforme decisão posterior de 24/10/2026.
+- **Atualização automática 2x/dia** (decisão de 07/11/2026, substitui a quinzenal manual de 24/10): GitHub Actions dispara o build de produção na Vercel com cache; um vigia diário abre issue se os dados ficarem velhos. Ver `docs/operacao/atualizar-dados.md`.
 - **Não é um clone do site da Câmara:** é um portal para acompanhar todos os vereadores. Mostra ementa, metadados e contexto, e linka para o documento oficial; não republica texto integral.
-- **Sem votações e sem presença na v1.** Atualização **quinzenal feita pelo dono** (Redeploy na Vercel); o coletor roda no build.
+- **Sem votações e sem presença na v1.** O coletor roda no build da Vercel.
 
 ## Princípios inegociáveis
 
