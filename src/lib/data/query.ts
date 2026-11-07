@@ -38,6 +38,21 @@ export interface Contexto {
   viraramLei?: ReadonlySet<string>;
 }
 
+const memoTexto = new WeakMap<Registro, string>();
+
+/**
+ * Normalised text a query is matched against. Records are immutable for the life of the
+ * process, so it is computed once: normalising 17k records on every keystroke cost ~0.5 s.
+ */
+function textoDeBusca(r: Registro): string {
+  let t = memoTexto.get(r);
+  if (t === undefined) {
+    t = normalizar(`${r.titulo} ${r.ementa} ${r.autoria}`);
+    memoTexto.set(r, t);
+  }
+  return t;
+}
+
 /**
  * The single filter used both for the lists and for every count shown on the site,
  * so a published number always equals the length of the list it links to.
@@ -65,7 +80,7 @@ export function filtrar<T extends Registro>(registros: readonly T[], f: Filtro, 
       if (f.destino && dv.destino !== f.destino) return false;
     }
     if (termos.length > 0) {
-      const alvo = normalizar(`${r.titulo} ${r.ementa} ${r.autoria}`);
+      const alvo = textoDeBusca(r);
       if (!termos.every((t) => alvo.includes(t))) return false;
     }
     return true;
