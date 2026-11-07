@@ -16,7 +16,7 @@ export default function ComoFunciona() {
   return (
     <div className="prosa">
       <h1>Como funciona a Câmara</h1>
-      <p className="soft" style={{ fontSize: "var(--step-1)" }}>
+      <p className="lede">
         A Câmara Municipal de Pindamonhangaba tem {d.vereadores.length} vereadores, eleitos para a legislatura 2025–2028. Eles
         propõem e votam leis municipais, fiscalizam a Prefeitura e fazem pedidos em nome da população.
       </p>

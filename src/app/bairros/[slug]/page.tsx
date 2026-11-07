@@ -48,10 +48,10 @@ export default async function PaginaBairro({ params }: { params: Promise<{ slug:
         <p className="soft">
           <Link href="/bairros">Bairros</Link>
         </p>
-        <h1 className="perfil-nome" style={{ fontSize: "var(--step-4)" }}>
+        <h1>
           {b.nome}
         </h1>
-        <p className="soft" style={{ fontSize: "var(--step-1)" }}>
+        <p className="lede">
           Citado em <Link href={hrefLista("/proposicoes", { bairro: slug })}>{n(b.n)} proposições</Link> desde 2025
           {tema1 ? `, sobretudo sobre ${tema1.nome.toLowerCase()} (${percent(tema1.n, b.n)}%)` : ""}.
         </p>

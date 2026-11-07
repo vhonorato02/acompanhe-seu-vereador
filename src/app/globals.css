@@ -867,6 +867,12 @@ main.page {
   .painel-grade {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
+    align-items: start;
+  }
+  /* The total and its chart stay in view while the longer type list scrolls beside them. */
+  .painel-grade > .painel:first-child {
+    position: sticky;
+    top: 5rem;
   }
 }
 .painel {

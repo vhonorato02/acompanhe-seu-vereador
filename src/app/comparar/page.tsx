@@ -66,7 +66,7 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
                 <span className="foto">{v.foto && <Image src={v.foto} alt="" width={136} height={136} />}</span>
                 <span>
                   <span className="nome">{v.nome}</span>
-                  <span className="meta"> {v.partido}{v.funcao !== "Vereador" ? `, ${v.funcao}` : ""}</span>
+                  <span className="meta"> {v.partido}{v.funcao && v.funcao !== "Vereador" ? `, ${v.funcao.toLowerCase()}` : ""}</span>
                 </span>
               </Link>
               <ul className="fatos" style={{ gridTemplateColumns: "1fr", marginTop: "1rem" }}>

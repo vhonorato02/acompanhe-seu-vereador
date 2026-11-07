@@ -14,7 +14,7 @@ export default function Correcoes() {
   return (
     <div className="prosa">
       <h1>Viu um erro? Avise.</h1>
-      <p className="soft" style={{ fontSize: "var(--step-1)" }}>
+      <p className="lede">
         O portal pode errar: a Câmara pode corrigir um documento, uma classificação automática pode ler um texto do jeito errado ou
         um nome pode estar escrito de outro modo. Cada aviso é conferido contra o documento oficial.
       </p>
