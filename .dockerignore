@@ -1,0 +1,16 @@
+# Only what the image build needs: sources plus the mirrored data (data/generated, public/).
+node_modules
+.next
+.git
+.github
+e2e
+e2e-artifacts
+tests
+docs
+fixtures
+.espelho-tmp
+.coleta-tmp-*
+.tmp-audit
+*.tsbuildinfo
+.env
+.env.*

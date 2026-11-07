@@ -1,0 +1,124 @@
+# Copy of the portal on the owner's VPS (platform vps-platform, site "vereador").
+# The canonical site stays on Vercel (SITE.url); this copy mirrors its open data, validated,
+# so both show the same collection and the Câmara gets no extra requests.
+#
+# Runs after every successful scheduled refresh (atualizar-dados), on code pushes to main and
+# by hand. Secrets DEPLOY_SSH_KEY and DEPLOY_KNOWN_HOSTS come from `site chave-deploy vereador`.
+name: deploy-vps
+
+on:
+  workflow_run:
+    workflows: [atualizar-dados]
+    types: [completed]
+  push:
+    branches: [main]
+    paths-ignore:
+      - .github/atualizacao-agendada
+      - "docs/**"
+      - "**/*.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-vps
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/vhonorato02/acompanhe-seu-vereador
+  DEPLOY_HOST: ssh.zewithane.vps.brz.dev.br
+  DEPLOY_PORT: "22322"
+  SITE_URL: https://vereador.zewithane.vps.brz.dev.br
+  HEALTH_PATH: /api/health
+
+jobs:
+  build:
+    # After a refresh, only when it actually published a new collection.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
+      - name: Wait for Vercel to publish this commit (code pushes only)
+        if: github.event_name == 'push'
+        run: |
+          # Every Vercel production build collects again, so a collection newer than the
+          # commit means the canonical site is already serving this code and its data.
+          commit=$(git log -1 --format=%ct)
+          for i in $(seq 1 12); do
+            coletado=$(curl -sS -m 30 -A "deploy-vps (+https://github.com/${GITHUB_REPOSITORY})" https://acompanhe-seu-vereador.vercel.app/dados/manifesto.json | jq -r '.execucao.coletadoEm // empty' 2>/dev/null || true)
+            if [ -n "$coletado" ] && [ "$(date -u -d "$coletado" +%s)" -gt "$commit" ]; then
+              echo "Vercel publicou: coleta de $coletado"; exit 0
+            fi
+            echo "Esperando a Vercel ($i/12)..."; sleep 180
+          done
+          echo "::error::A Vercel não publicou este commit em 36 minutos; a cópia da VPS fica como está."; exit 1
+      - name: Mirror the canonical site's open data (validated)
+        run: npm run espelhar
+      - name: Image tag (commit + collection time)
+        id: tag
+        run: |
+          coletado=$(jq -r '.execucao.coletadoEm' public/dados/manifesto.json | tr -dc '0-9' | cut -c1-12)
+          echo "tag=$(git rev-parse --short=12 HEAD)-$coletado" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE }}:${{ steps.tag.outputs.tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      packages: read # the job token goes over ssh stdin only to pull the image
+    steps:
+      - name: Configure SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Publish on the VPS (no downtime)
+        env:
+          TAG: ${{ needs.build.outputs.tag }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          printf '%s:%s\n' "${{ github.actor }}" "$TOKEN" |
+            ssh -i ~/.ssh/deploy_key -p "$DEPLOY_PORT" \
+              -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              "deploy@$DEPLOY_HOST" "deploy $TAG"
+
+      - name: Smoke test (same collection as the canonical site)
+        run: |
+          curl -fsS --retry 10 --retry-delay 6 --retry-all-errors "$SITE_URL$HEALTH_PATH" | tee saude.json
+          echo
+          curl -fsS -o /dev/null -w 'Página inicial: HTTP %{http_code} em %{time_total}s\n' "$SITE_URL/"
+          curl -fsSI "$SITE_URL/" | grep -i '^x-robots-tag: noindex'

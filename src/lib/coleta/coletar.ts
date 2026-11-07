@@ -397,6 +397,8 @@ async function escreverDadosAbertos(escrita: Escrita, dir: string, d: Dataset) {
   await escrita.escrever(path.join(dir, "proposicoes.json"), JSON.stringify(d.proposicoes));
   await escrita.escrever(path.join(dir, "normas.json"), JSON.stringify(d.normas));
   await escrita.escrever(path.join(dir, "vereadores.json"), JSON.stringify(d.vereadores));
+  // Type catalogue: with it the open data rebuilds the whole dataset (used by the VPS mirror).
+  await escrita.escrever(path.join(dir, "tipos.json"), JSON.stringify(d.tipos));
   await escrita.escrever(
     path.join(dir, "manifesto.json"),
     JSON.stringify(
