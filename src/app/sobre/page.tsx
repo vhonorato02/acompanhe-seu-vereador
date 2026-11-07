@@ -12,7 +12,7 @@ export default function Sobre() {
   return (
     <div className="prosa">
       <h1>Sobre o {SITE.nome}</h1>
-      <p className="soft" style={{ fontSize: "var(--step-1)" }}>
+      <p className="lede">
         O {SITE.nome} é um projeto independente do {SITE.organizacao} para que qualquer pessoa possa ver, em poucos toques, o que
         os vereadores da cidade apresentaram na Câmara, e conferir cada número no documento oficial.
       </p>
@@ -30,6 +30,17 @@ export default function Sobre() {
       <p>
         Os documentos oficiais, a tramitação e as votações estão no site da Câmara Municipal de Pindamonhangaba:{" "}
         <a href="https://www.pindamonhangaba.sp.leg.br">pindamonhangaba.sp.leg.br</a>. A Câmara não revisa nem endossa este portal.
+      </p>
+
+      <h2 id="instalar">No celular</h2>
+      <p>
+        Você pode adicionar o portal à tela inicial pelo menu do navegador. No iPhone, abra no Safari e procure
+        “Adicionar à Tela de Início” no menu de compartilhamento. No Android, procure “Instalar aplicativo” ou
+        “Adicionar à tela inicial”. As opções variam conforme o navegador.
+      </p>
+      <p>
+        É preciso estar conectado à internet para consultar o portal. Confira a data da coleta na página:
+        os dados são atualizados duas vezes ao dia, e a última coleta válida continua disponível se uma atualização falhar.
       </p>
 
       <h2 id="privacidade">Privacidade</h2>

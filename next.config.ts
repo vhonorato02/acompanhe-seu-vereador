@@ -43,7 +43,11 @@ const config: NextConfig = {
   // The dataset is read from disk by server routes; make sure it ships with them.
   outputFileTracingIncludes: { "/**": ["./data/generated/**"] },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // The service worker must always be revalidated, or a fix to it could take days to arrive.
+      { source: "/sw.js", headers: [{ key: "Cache-Control", value: "no-cache, max-age=0, must-revalidate" }] },
+    ];
   },
   async redirects() {
     return [

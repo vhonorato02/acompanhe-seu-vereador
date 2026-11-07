@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { NavTopo, TabBar } from "@/components/Navegacao";
+import { RegistrarSW } from "@/components/RegistrarSW";
 import { SITE, URL_REPORTAR_ERRO } from "@/lib/site";
 import "./globals.css";
 
@@ -11,10 +12,10 @@ export const metadata: Metadata = {
     default: `${SITE.nome} · Vereadores de ${SITE.cidade}`,
     template: `%s · ${SITE.nome}`,
   },
-  description: `${SITE.lema} Projeto independente do ${SITE.organizacao}; não é o site oficial da Câmara.`,
+  description: `${SITE.lema} Um projeto do ${SITE.organizacao}; não é o site oficial da Câmara.`,
   openGraph: { locale: "pt_BR", type: "website", siteName: SITE.nome },
   twitter: { card: "summary_large_image" },
-  appleWebApp: { capable: true, title: SITE.nome, statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "Vereadores", statusBarStyle: "default" },
   formatDetection: { telephone: false },
 };
 
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="conteudo" className="page" tabIndex={-1}>
           {children}
         </main>
+        <RegistrarSW />
         <footer className="rodape">
           <div className="page">
             <p>
