@@ -75,7 +75,7 @@ Nível de evidência: navegadores **emulados** no Windows; nenhum aparelho físi
 | PWA | N/A justificado | manifest e ícones (instalável), **sem service worker**: cópia offline mostraria coleta antiga como atual. ADR 0002 |
 | Notificações | N/A justificado | sem evento cívico, sem banco para inscrições; não implementar teatro |
 | SEO/legal | PASS com pendência | metadados, robots, sitemap, privacidade, créditos; contato institucional e parecer jurídico ficam com o Observatório |
-| Operação | ver HANDOFF | deploy, SHA e rollback registrados após a publicação |
+| Operação | PASS | `main` `f31b3be` → `dpl_GL98fDVSwhskN26Qzd4mrKDzQvGF` READY; coleta real completa de 07/11 00h33 (17.205 / 407 / 11, sem avisos); smoke E2E de 30 testes contra produção verde; rollback por “Promote” do deployment anterior (`dpl_ALemJf7XU5NhA4wq34WZURUQheCo`); só recursos gratuitos |
 | Handoff | PASS | HANDOFF, README, CLAUDE.md e ADRs atualizados |
 
 **Por que não `stable`:** contato institucional sem GitHub ainda não confirmado; nenhum teste em aparelho físico ou leitor de tela; a reconciliação com a API foi feita sobre o snapshot publicado, não com nova coleta.

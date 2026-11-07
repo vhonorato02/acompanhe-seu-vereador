@@ -14,7 +14,18 @@
 
 ## Última publicação
 
-Preenchido depois do deploy (ver final deste arquivo).
+| Item | Valor |
+|---|---|
+| Versão | 0.2.0 (sem tag `stable`; motivos na auditoria) |
+| Commit da coleta | `f31b3be` na `main` |
+| Deployment | `dpl_GL98fDVSwhskN26Qzd4mrKDzQvGF`, READY, alias `camara-a-vista.vercel.app` e `acompanhe-seu-vereador.vercel.app` |
+| Coleta | 07/11/2026 00h33 (Brasília), **completa**, 384 consultas, 9 min 43 s, nenhum aviso |
+| Totais | **17.205 proposições, 407 normas, 11 vereadores** (05/11: 17.196 / 403 / 11) |
+| Por que completa | o cache de build não foi reaproveitado depois da troca de Node/dependências; a próxima tende a ser incremental |
+| CI | `quality-gates` verde no commit `f31b3be` (run 42333636433), incluindo E2E no Linux |
+| Smoke em produção | 30 testes E2E (`E2E_URL=https://camara-a-vista.vercel.app`) verdes: número = lista em bairros, destinatários e funil, dados abertos = manifesto, axe, SEO, cabeçalhos |
+
+O commit seguinte (redirecionamento 308 do endereço antigo, feito no `next.config.ts`) gera mais um deploy; confira o mais recente na Vercel.
 
 ## Decisões do dono (24/10/2026, valem até nova decisão)
 
