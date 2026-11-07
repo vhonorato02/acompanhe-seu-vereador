@@ -1,0 +1,91 @@
+# Daily watchdog for the public data. Reads the published manifest once and, when the
+# collection is older than 36 hours, carries warnings or cannot be read, opens (or updates)
+# an issue labelled "dados-desatualizados". GitHub e-mails the owner about new issues.
+# When everything is fine again, it closes the open issue with a note.
+name: vigia-dados
+
+on:
+  schedule:
+    # 10h43 in Brasília, after the 06h refresh has had time to finish.
+    - cron: "43 13 * * *"
+  workflow_dispatch:
+    inputs:
+      limite_horas:
+        description: "Idade máxima da coleta, em horas (use 0 para testar a abertura da issue)"
+        default: "36"
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  SITE: https://acompanhe-seu-vereador.vercel.app
+  ROTULO: dados-desatualizados
+  LIMITE_HORAS: ${{ inputs.limite_horas || '36' }}
+
+jobs:
+  vigiar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check the published manifest
+        id: checar
+        run: |
+          ler() { curl -sS -m 30 -A "vigia-dados (+https://github.com/${GITHUB_REPOSITORY})" "$SITE/dados/manifesto.json" || true; }
+          manifesto=$(ler)
+          if ! printf '%s' "$manifesto" | jq -e '.execucao.coletadoEm' > /dev/null 2>&1; then
+            # A single retry, spaced out: rapid repeats get a bot challenge.
+            sleep 120
+            manifesto=$(ler)
+          fi
+          problemas=""
+          if ! printf '%s' "$manifesto" | jq -e '.execucao.coletadoEm' > /dev/null 2>&1; then
+            problemas="- Não consegui ler $SITE/dados/manifesto.json (resposta vazia, erro ou desafio anti-robô)."
+          else
+            coletado=$(printf '%s' "$manifesto" | jq -r '.execucao.coletadoEm')
+            horas=$(( ( $(date -u +%s) - $(date -u -d "$coletado" +%s) ) / 3600 ))
+            avisos=$(printf '%s' "$manifesto" | jq -r '.execucao.avisos // [] | .[] | "- Aviso da coleta: " + (if type == "string" then . else tojson end)')
+            echo "Coleta publicada: $coletado (há $horas h)"
+            if [ "$horas" -gt "$LIMITE_HORAS" ]; then
+              problemas="- A última coleta publicada é de $coletado, há $horas horas (limite: $LIMITE_HORAS h). A atualização das 06h e das 18h pode estar falhando."
+            fi
+            if [ -n "$avisos" ]; then
+              problemas=$(printf '%s\n%s' "$problemas" "$avisos" | sed '/^$/d')
+            fi
+          fi
+          {
+            echo "problemas<<FIM"
+            echo "$problemas"
+            echo "FIM"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open, update or close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PROBLEMAS: ${{ steps.checar.outputs.problemas }}
+        run: |
+          gh label create "$ROTULO" --color B60205 --description "Aberta pelo vigia quando os dados publicados ficam velhos ou com aviso" --force > /dev/null
+          aberta=$(gh issue list --label "$ROTULO" --state open --limit 1 --json number --jq '.[0].number // empty')
+          execucao="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          if [ -n "$(printf '%s' "$PROBLEMAS" | tr -d '[:space:]')" ]; then
+            corpo="O vigia diário encontrou problema nos dados publicados em $SITE:
+
+          $PROBLEMAS
+
+          O que fazer: veja o último build de produção na Vercel (projeto acompanhe-seu-vereador → Deployments) e as execuções do workflow \`atualizar-dados\`. Passo a passo em \`docs/operacao/atualizar-dados.md\`.
+
+          Execução do vigia: $execucao"
+            corpo=$(printf '%s\n' "$corpo" | sed 's/^          //')
+            if [ -n "$aberta" ]; then
+              gh issue comment "$aberta" --body "$corpo"
+              echo "Issue #$aberta atualizada."
+            else
+              gh issue create --title "Dados do portal desatualizados ou com aviso" --label "$ROTULO" --body "$corpo"
+            fi
+          elif [ -n "$aberta" ]; then
+            gh issue close "$aberta" --comment "Resolvido: a coleta publicada voltou a estar em dia e sem avisos. Execução: $execucao"
+            echo "Issue #$aberta fechada."
+          else
+            echo "Dados em dia, nenhuma issue aberta."
+          fi

@@ -5,7 +5,7 @@
 
 ## Contexto
 
-A auditoria pedia avaliar PWA e notificações. O portal é estático por coleta; não tem banco, login nem evento cívico em tempo real (a atualização é quinzenal e manual).
+A auditoria pedia avaliar PWA e notificações. O portal é estático por coleta; não tem banco, login nem evento cívico em tempo real (a atualização é automática, duas vezes por dia).
 
 ## Decisão
 

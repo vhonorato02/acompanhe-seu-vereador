@@ -3,6 +3,9 @@ name: quality-gates
 on:
   push:
     branches: [main, "release/**"]
+    # The scheduled data refresh only touches this file; it needs a Vercel build, not CI.
+    paths-ignore:
+      - .github/atualizacao-agendada
   pull_request:
     branches: [main]
 

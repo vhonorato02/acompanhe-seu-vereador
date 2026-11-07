@@ -43,8 +43,10 @@ export default function Metodologia() {
       </p>
       <p>
         Última coleta: {dataColeta(d.execucao.coletadoEm)} ({modo}
-        {d.execucao.requisicoes > 0 ? `, ${n(d.execucao.requisicoes)} consultas à API` : ""}). O Observatório atualiza os dados a
-        cada quinze dias; entre uma coleta e outra, o portal mostra a fotografia da última coleta, com a data acima.
+        {d.execucao.requisicoes > 0 ? `, ${n(d.execucao.requisicoes)} consultas à API` : ""}). Os dados são atualizados
+        automaticamente duas vezes por dia, por volta das 6h e das 18h; entre uma coleta e outra, o portal mostra a fotografia da
+        última coleta, com a data acima. Se uma coleta falhar, o site continua com a anterior e um aviso automático chega ao
+        Observatório.
       </p>
       <p>
         O coletor se identifica, espera pelo menos 1 segundo entre consultas e para se a resposta vier vazia, em formato

@@ -1,0 +1,86 @@
+# Refreshes the public data twice a day without anyone opening the Vercel dashboard.
+# The collector only runs inside the Vercel production build (the Câmara token lives there),
+# so "updating" means starting a new production build with the build cache: the collection
+# is incremental (about 60 requests, about 2 minutes) and a full one happens every 30 days.
+#
+# Trigger: the VERCEL_DEPLOY_HOOK_URL secret when it exists; otherwise a one-line commit to
+# .github/atualizacao-agendada, authored by the owner so the Vercel Git integration builds it.
+# quality-gates ignores that path, so the commit costs no CI run.
+name: atualizar-dados
+
+on:
+  schedule:
+    # 06h17 and 18h17 in Brasília (UTC-3). Off the hour to avoid the scheduler rush.
+    - cron: "17 9,21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atualizar-dados
+  cancel-in-progress: false
+
+env:
+  SITE: https://acompanhe-seu-vereador.vercel.app
+  # Job-level so the step `if` can see whether it is set; GitHub masks it in logs.
+  HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+
+jobs:
+  disparar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Read the published collection date (before)
+        id: antes
+        run: |
+          coletado=$(curl -sS -m 30 -A "atualizar-dados (+https://github.com/${GITHUB_REPOSITORY})" "$SITE/dados/manifesto.json" | jq -r '.execucao.coletadoEm // empty' 2>/dev/null || true)
+          echo "coletado=${coletado}" >> "$GITHUB_OUTPUT"
+          echo "Coleta publicada antes: ${coletado:-desconhecida}"
+
+      - name: Trigger with the deploy hook
+        id: hook
+        if: env.HOOK != ''
+        run: |
+          curl -fsS -m 30 -X POST "$HOOK" > /dev/null
+          echo "usado=1" >> "$GITHUB_OUTPUT"
+          echo "Deploy hook acionado."
+
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        if: steps.hook.outputs.usado != '1'
+        with:
+          ref: main
+
+      - name: Trigger with a one-line commit (no deploy hook configured)
+        if: steps.hook.outputs.usado != '1'
+        run: |
+          git config user.name "José Victor Honorato"
+          git config user.email "33707633+vhonorato02@users.noreply.github.com"
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/atualizacao-agendada
+          git add .github/atualizacao-agendada
+          git commit -m "chore(data): scheduled refresh $(date -u +%Y-%m-%dT%H:%MZ)" \
+            -m "Starts a Vercel production build so the collector fetches what the Câmara published since the last run."
+          for tentativa in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git pull --rebase origin main
+          done
+          echo "Não consegui enviar o commit de atualização."; exit 1
+
+      - name: Wait for the new collection to be published
+        env:
+          ANTES: ${{ steps.antes.outputs.coletado }}
+        run: |
+          # One request every 3 minutes: the site answers rapid repeats with a bot challenge.
+          for i in $(seq 1 11); do
+            sleep 180
+            manifesto=$(curl -sS -m 30 -A "atualizar-dados (+https://github.com/${GITHUB_REPOSITORY})" "$SITE/dados/manifesto.json" || true)
+            agora=$(printf '%s' "$manifesto" | jq -r '.execucao.coletadoEm // empty' 2>/dev/null || true)
+            if [ -n "$agora" ] && [ "$agora" != "$ANTES" ]; then
+              echo "Nova coleta publicada: $agora (antes: ${ANTES:-desconhecida})"
+              printf '%s' "$manifesto" | jq '{coletadoEm: .execucao.coletadoEm, modo: .execucao.modo, requisicoes: .execucao.requisicoes, avisos: .execucao.avisos, totais}'
+              exit 0
+            fi
+            echo "Ainda não ($i/11)..."
+          done
+          echo "::error::A coleta publicada não mudou em 33 minutos. O build pode ter falhado (a Vercel mantém a versão anterior). Veja o painel da Vercel."
+          exit 1
