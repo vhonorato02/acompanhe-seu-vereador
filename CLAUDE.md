@@ -1,4 +1,4 @@
-# CLAUDE.md — Acompanhe seu Vereador
+# CLAUDE.md — Câmara à Vista (ex-Acompanhe seu Vereador)
 
 Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** para o cidadão acompanhar a Câmara Municipal de Pindamonhangaba-SP e seus vereadores. Substitui um Power BI de contagens manuais.
 
@@ -6,7 +6,7 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 
 ## Fase atual
 
-**v1 em produção** (Vercel, branch `main`). O dono autorizou trabalhar direto em produção na `main`. Arquitetura real e próximos passos em `HANDOFF.md`; pesquisa em `docs/research/`.
+**0.2.0 em produção** em https://camara-a-vista.vercel.app (Vercel, branch `main`). O dono autorizou trabalhar direto em produção na `main`; valide antes (testes + E2E) porque cada push dispara coleta real. Nome e endereço centralizados em `src/lib/site.ts` (ADR 0001). Arquitetura real e próximos passos em `HANDOFF.md`; pesquisa em `docs/research/`.
 
 ## Decisões do dono do projeto (24/10/2026)
 
@@ -51,7 +51,13 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 | `docs/research/fase-1-relatorio.md` | relatório completo da Fase 1 (decisões pendentes na seção 20) |
 | `docs/research/camara-site.md` | mapa do site e da API da Câmara |
 | `docs/research/camara-api.md` | API validada com token: campos, coautoria, profundidade |
-| `scripts/collect.ts` | coletor (roda no build) |
+| `scripts/collect.ts` | entrada do coletor (roda no build) |
+| `src/lib/coleta/coletar.ts` | lógica do coletor: validação, cache, escrita atômica, plausibilidade |
+| `src/lib/site.ts` | nome, endereço, repositório e contato do projeto |
+| `src/lib/content/bairros.ts` | vocabulário versionado de grafias de bairros |
+| `e2e/` | Playwright + axe (jornadas, acessibilidade, SEO, capturas) |
+| `docs/auditoria/` | auditorias com matriz de achados e evidências |
+| `docs/adr/` | decisões (nome, PWA sem service worker) |
 | `src/lib/data/` | modelo, derivações e filtros (número = lista) |
 | `docs/research/power-bi.md` | engenharia reversa do Power BI + baseline histórico |
 | `docs/research/benchmark-design.md` | benchmark cívico, princípios de UI/dataviz, IA, URLs |
@@ -65,4 +71,4 @@ Superpowers (planejamento, TDD, debugging, verificação), frontend-design e Pla
 
 ## Comandos
 
-`npm run collect` (sem `CAMARA_API_TOKEN` usa a amostra de `fixtures/`) · `npm run dev` · `npm test` · `npm run typecheck` · `npm run build`
+`npm run collect` (sem `CAMARA_API_TOKEN` usa a amostra de `fixtures/`) · `npm run dev` · `npm test` · `npm run typecheck` · `npm run build` · `npm run test:e2e` · `npm run auditar:heuristicas`
