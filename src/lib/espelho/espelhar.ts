@@ -134,12 +134,16 @@ export async function espelhar(o: OpcoesEspelho): Promise<Dataset> {
   conferir("normas", t.normas, ns.dados.length);
   conferir("vereadores", t.vereadores, vs.dados.length);
 
-  const csvs: Array<[string, string]> = [];
+  // Copied byte for byte: Response.text() would drop the UTF-8 BOM, and without it Excel opens
+  // the accents wrong. Same format as csv() in src/lib/data/csv.ts: BOM, ";" separator.
+  const BOM = Buffer.from([0xef, 0xbb, 0xbf]);
+  const csvs: Array<[string, Buffer]> = [];
   for (const nome of ["proposicoes.csv", "normas.csv"]) {
-    const texto = await (await baixar(`/dados/${nome}`)).text();
-    // Same format as csv() in src/lib/data/csv.ts: BOM, ";" separator (Brazilian spreadsheets).
-    if (!texto.replace(/^﻿/, "").startsWith("id;tipo;")) throw new EspelhoError(`/dados/${nome}: cabeçalho inesperado`);
-    csvs.push([nome, texto]);
+    const bytes = Buffer.from(await (await baixar(`/dados/${nome}`)).arrayBuffer());
+    if (!bytes.subarray(0, 3).equals(BOM) || !bytes.subarray(3, 11).equals(Buffer.from("id;tipo;"))) {
+      throw new EspelhoError(`/dados/${nome}: cabeçalho inesperado`);
+    }
+    csvs.push([nome, bytes]);
   }
 
   const fotos: Array<[string, Buffer]> = [];
@@ -171,7 +175,7 @@ export async function espelhar(o: OpcoesEspelho): Promise<Dataset> {
     ["public/dados/tipos.json", ts.bruto],
     ["public/dados/proposicoes.json", ps.bruto],
     ["public/dados/normas.json", ns.bruto],
-    ...csvs.map(([nome, texto]): [string, string] => [`public/dados/${nome}`, texto]),
+    ...csvs.map(([nome, bytes]): [string, Buffer] => [`public/dados/${nome}`, bytes]),
     ...fotos.map(([nome, bytes]): [string, Buffer] => [`public/fotos/${nome}`, bytes]),
   ];
   for (const dir of ["data/generated", "public/dados", "public/fotos"]) await mkdir(path.join(tmp, dir), { recursive: true });

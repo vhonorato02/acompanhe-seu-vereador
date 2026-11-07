@@ -79,6 +79,9 @@ describe("espelho dos dados abertos (cópia da VPS)", () => {
       ["manifesto.json", "normas.csv", "normas.json", "proposicoes.csv", "proposicoes.json", "tipos.json", "vereadores.json"],
     );
     expect(await readFile(path.join(raiz, "public/fotos/ana-paula-goffi.jpg"))).toEqual(JPG);
+    // The CSV keeps its UTF-8 BOM (Excel needs it for the accents); Response.text() would drop it.
+    const csvGravado = await readFile(path.join(raiz, "public/dados/proposicoes.csv"));
+    expect([...csvGravado.subarray(0, 3)]).toEqual([0xef, 0xbb, 0xbf]);
     expect(s.pedidos.every((p) => p.startsWith("/dados/") || p.startsWith("/fotos/"))).toBe(true);
   });
 
