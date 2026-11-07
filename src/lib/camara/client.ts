@@ -1,6 +1,7 @@
+import { USER_AGENT_COLETOR } from "../site";
+
 export const API_URL = "https://www.pindamonhangaba.sp.leg.br/jsonweb/web-aplicativo.php";
-export const USER_AGENT =
-  "AcompanheSeuVereador/1.0 (Observatorio Social do Brasil - Pindamonhangaba; +https://github.com/vhonorato02/obs-vereador)";
+export const USER_AGENT = USER_AGENT_COLETOR;
 
 export class ColetaError extends Error {
   constructor(
@@ -15,7 +16,20 @@ export class ColetaError extends Error {
 type FetchLike = (url: string, init: { headers: Record<string, string>; signal: AbortSignal }) => Promise<{
   status: number;
   text(): Promise<string>;
+  headers?: { get(name: string): string | null };
 }>;
+
+/** Longest wait accepted from a Retry-After header. */
+const MAX_RETRY_AFTER_MS = 60_000;
+
+/** Seconds or HTTP date, as in RFC 9110; capped. Null when absent or unreadable. */
+function esperaRetryAfter(valor: string | null | undefined, agora = Date.now()): number | null {
+  if (!valor) return null;
+  const s = Number(valor);
+  const ms = Number.isFinite(s) ? s * 1000 : Date.parse(valor) - agora;
+  if (!Number.isFinite(ms) || ms < 0) return null;
+  return Math.min(ms, MAX_RETRY_AFTER_MS);
+}
 
 export interface ClientOptions {
   token: string;
@@ -50,6 +64,7 @@ export class CamaraClient {
     const descricao = `${call}${Object.entries(params).map(([k, v]) => ` ${k}=${v}`).join("")}`;
 
     let ultimoErro: unknown;
+    let esperaPedida: number | null = null;
     for (let tentativa = 1; tentativa <= 3; tentativa++) {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), this.timeoutMs);
@@ -63,6 +78,11 @@ export class CamaraClient {
         const body = await res.text();
         if (/Bot Verification|lsrecap/i.test(body)) {
           throw new ColetaError(`Desafio anti-robô em ${descricao}; coleta interrompida.`, "bloqueio");
+        }
+        if (res.status === 429) {
+          // Rate limited: wait what the server asks for (capped) before trying again.
+          esperaPedida = esperaRetryAfter(res.headers?.get("retry-after")) ?? 30_000;
+          throw new ColetaError(`HTTP 429 em ${descricao}`, "http");
         }
         if (res.status >= 500) throw new ColetaError(`HTTP ${res.status} em ${descricao}`, "http");
         if (res.status !== 200) {
@@ -79,9 +99,11 @@ export class CamaraClient {
         this.ultimo = Date.now();
         ultimoErro = e;
         const repetivel =
-          !(e instanceof ColetaError) || e.kind === "http" && /HTTP 5\d\d/.test(e.message);
+          !(e instanceof ColetaError) || (e.kind === "http" && /HTTP (5\d\d|429)/.test(e.message));
         if (!repetivel || tentativa === 3) break;
-        await this.sleep(2000 * 2 ** (tentativa - 1) + Math.floor(Math.random() * 500));
+        const backoff = 2000 * 2 ** (tentativa - 1) + Math.floor(Math.random() * 500);
+        await this.sleep(esperaPedida ?? backoff);
+        esperaPedida = null;
       } finally {
         clearTimeout(timer);
       }

@@ -1,1 +1,678 @@
-{"vereadores":[{"nome":"Marco Mayor","partido":"PL","funcao":"Presidente","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2026/06/2026060311132817804960082a2df0.jpeg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/8#pesquisa"},{"nome":"Ana Paula Goffi","partido":"União","funcao":"1º Vice-Presidente","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2025/02/20250226175434174060327471a7f0.jpeg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/204#pesquisa"},{"nome":"Carlos Moura - Magrão","partido":"PSD","funcao":"2º Vice-Presidente","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2025/01/202501231204431737644683ccad80.jpeg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/1#pesquisa"},{"nome":"Professor Everton","partido":"Republicanos","funcao":"1º Secretário","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2025/01/2025012816081017380912908746e0.jpeg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/202#pesquisa"},{"nome":"Gilson Nagrin","partido":"PL","funcao":"2º Secretário","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2025/05/20250505162154174647291471e760.jpeg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/4#pesquisa"},{"nome":"Felipinho César","partido":"PL","funcao":"Vereador","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2026/06/202606031348171780505297cdc3c0.jpeg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/205#pesquisa"},{"nome":"Gari Abençoado","partido":"Republicanos","funcao":"Vereador","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2025/02/2025021911444817399762884c7f20.JPG","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/203#pesquisa"},{"nome":"Norberto Moraes","partido":"PP","funcao":"Vereador","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2026/06/202606031106111780495571c37110.jpg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/3#pesquisa"},{"nome":"Professor Felipe Guimarães","partido":"Podemos","funcao":"Vereador","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2025/01/202501061154171736175257537cf0.jpg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/2#pesquisa"},{"nome":"Renato Cebola","partido":"União","funcao":"Vereador","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2025/03/2025032813523117431807514cac60.jpeg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/10#pesquisa"},{"nome":"Rogério Ramos","partido":"Podemos","funcao":"Vereador","imagem":"https://www.pindamonhangaba.sp.leg.br/news/2026/06/202606031108121780495692b2e460.jpeg","link":"https://www.pindamonhangaba.sp.leg.br/camara/membros/show/11#pesquisa"}],"proposicoes_tipos":[{"contract":"Emendas","titulo":"Emendas","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Emendas#pesquisa"},{"contract":"Indicacoes","titulo":"Indicações","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Indicacoes#pesquisa"},{"contract":"Indicacoes-de-Projetos-de-Lei","titulo":"Indicações de Projetos de Lei","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Indicacoes-de-Projetos-de-Lei#pesquisa"},{"contract":"Mocoes","titulo":"Moções","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Mocoes#pesquisa"},{"contract":"Projetos-de-Decreto-Legislativo","titulo":"Projetos de Decreto Legislativo","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Decreto-Legislativo#pesquisa"},{"contract":"Projetos-de-Lei-Complementar","titulo":"Projetos de Lei Complementar","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Lei-Complementar#pesquisa"},{"contract":"Projetos-de-Lei-de-Iniciativa-Popular","titulo":"Projetos de Lei de Iniciativa Popular","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Lei-de-Iniciativa-Popular#pesquisa"},{"contract":"Projetos-de-Lei-Ordinaria","titulo":"Projetos de Lei Ordinária","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Lei-Ordinaria#pesquisa"},{"contract":"Projetos-de-Resolucao","titulo":"Projetos de Resolução","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Resolucao#pesquisa"},{"contract":"Propostas-de-Emenda-a-Lei-Organica","titulo":"Propostas de Emenda à Lei Orgânica","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Propostas-de-Emenda-a-Lei-Organica#pesquisa"},{"contract":"Relatorio-Final---Comissao-de-Assuntos-Relevantes","titulo":"Relatório Final - Comissão de Assuntos Relevantes","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Relatorio-Final---Comissao-de-Assuntos-Relevantes#pesquisa"},{"contract":"Representacao-ao-Conselho-de-Etica-e-Decoro-Parlamentar","titulo":"Representação ao Conselho de Ética e Decoro Parlamentar","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Representacao-ao-Conselho-de-Etica-e-Decoro-Parlamentar#pesquisa"},{"contract":"Requerimentos","titulo":"Requerimentos","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Requerimentos#pesquisa"},{"contract":"Vetos","titulo":"Vetos","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Vetos#pesquisa"}],"legislacoes_tipos":[{"contract":"Atos","titulo":"Atos","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Atos#pesquisa"},{"contract":"Certidao","titulo":"Certidão","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Certidao#pesquisa"},{"contract":"Certidao---Departamento-Legislativo","titulo":"Certidão - Departamento Legislativo","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Certidao---Departamento-Legislativo#pesquisa"},{"contract":"Decretos-Legislativos","titulo":"Decretos Legislativos","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Decretos-Legislativos#pesquisa"},{"contract":"Denuncias","titulo":"Denúncias","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Denuncias#pesquisa"},{"contract":"Editais","titulo":"Editais","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Editais#pesquisa"},{"contract":"Emendas-a-Lei-Organica","titulo":"Emendas à Lei Orgânica","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Emendas-a-Lei-Organica#pesquisa"},{"contract":"Leis-Complementares","titulo":"Leis Complementares","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Leis-Complementares#pesquisa"},{"contract":"Leis-Ordinarias","titulo":"Leis Ordinárias","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Leis-Ordinarias#pesquisa"},{"contract":"Ordem-do-Dia","titulo":"Ordem do Dia","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Ordem-do-Dia#pesquisa"},{"contract":"Portarias","titulo":"Portarias","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Portarias#pesquisa"},{"contract":"Resolucoes","titulo":"Resoluções","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/Resolucoes#pesquisa"}],"pautas_p1":[{"data":"2026-10-27 17:00:00","titulo":"Pauta da 38ª Sessão Ordinária de 2026","link":"https://www.pindamonhangaba.sp.leg.br/pautas/0/0/0/0/1309#pesquisa"},{"data":"2026-10-20 17:00:00","titulo":"Pauta da 37ª Sessão Ordinária de 2026","link":"https://www.pindamonhangaba.sp.leg.br/pautas/0/0/0/0/1307#pesquisa"},{"data":"2026-10-19 14:30:00","titulo":"Pauta da 32ª Reunião Ordinária de Comissão de 2026 - (CLJR)","link":"https://www.pindamonhangaba.sp.leg.br/pautas/0/0/0/0/1308#pesquisa"}],"proposicoes":{"Emendas":[{"data":"2026-10-21 16:52:51","titulo":"SUBSTITUTIVO N.º 055/2026 AO PROJETO DE LEI ORDINÁRIA N.º 234/2025","ementa":"Denomina de JOAQUIM ADEMIR DE MIRANDA, a Estrada particular saindo da Estrada Luiza Fernandes Miranda no Ribeirão Grande.","autoria":"Norberto Moraes","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154225#pesquisa"},{"data":"2026-10-19 16:48:19","titulo":"SUBSTITUTIVO N.º 054/2026 AO PROJETO DE LEI ORDINÁRIA N.º 231/2026","ementa":"Institui o Programa Municipal “Meninas Seguras”, no âmbito do Município de Pindamonhangaba, e dá outras providências.\r\n ","autoria":"Ana Paula Goffi","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154106#pesquisa"},{"data":"2026-10-19 13:09:15","titulo":"SUBSTITUTIVO N.º 053/2026 AO PROJETO DE LEI COMPLEMENTAR N.º 008/2026","ementa":"Acrescenta dispositivo ao art. 219 da Lei Complementar nº 77, de 29 de dezembro de 2023, e dá outras providências.","autoria":"Norberto Moraes","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153980#pesquisa"}],"Indicacoes":[{"data":"2026-10-23 15:45:39","titulo":"INDICAÇÃO N.º 4676/2026","ementa":"Ao Executivo Municipal, com cópia ao Departamento Competente, manutenção das luminárias internas e externas da unidade de saúde do bairro Santa Cecília.","autoria":"Rogério Ramos","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154346#pesquisa"},{"data":"2026-10-23 13:19:17","titulo":"INDICAÇÃO N.º 4675/2026","ementa":"Indico ao Excelentíssimo Senhor Prefeito, Ricardo Alberto Pereira Piorino, para que realize a instalação e substituição das placas de identificação das ruas, assim como as indicativas das  entradas e saídas, visto que muitas estão inelegíveis ou ausentes, no bairro Jardim Eloyna.","autoria":"Professor Everton","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154339#pesquisa"},{"data":"2026-10-23 13:18:53","titulo":"INDICAÇÃO N.º 4674/2026","ementa":"Indico ao Excelentíssimo Senhor Prefeito, Ricardo Alberto Pereira Piorino a colocação de placas de sinalização de direção nas entradas e saídas, considerando às: Av. Manoel Cesar Ribeiro e Rodovia Presidente Dutra (sentido Norte e Sul), assim como a direção dos bairros vizinhos para melhor orientação no bairro Jardim Eloyna.","autoria":"Professor Everton","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154341#pesquisa"}],"Mocoes":[{"data":"2026-10-19 15:10:06","titulo":"MOÇÃO DE CONGRATULAÇÕES N.º 255/2026","ementa":"A Câmara de Vereadores de Pindamonhangaba, por iniciativa do vereador Carlos Moura - Magrão, apresenta Moção de Congratulações a MOÇÃO DE CONGRATULAÇÕES à Ilustríssima Senhora Ana Letícia Fernandez Gomez,  pelos relevantes serviços prestados à saúde pública de Pindamonhangaba, especialmente pela dedicação, competência e compromisso demonstrados na gestão da Unidade de Pronto Atendimento (UPA) do Araretama.","autoria":"Carlos Moura - Magrão","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154092#pesquisa"},{"data":"2026-10-15 10:03:20","titulo":"MOÇÃO DE CONGRATULAÇÕES N.º 254/2026","ementa":"Moção de  Congratulações ao Senhor Thiago da Silva Aguira, em reconhecimento aos quatro anos de dedicação e relevantes serviços prestados à comunidade à frente do Centro Comunitário da Vila Prado, no município de Pindamonhangaba.","autoria":"Marco Mayor","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153920#pesquisa"},{"data":"2026-10-13 08:42:58","titulo":"MOÇÃO DE CONGRATULAÇÕES N.º 253/2026","ementa":"Congratulações a  todos os profissionais da UNICARD – Centro Diagnóstico Cardiológico, de Pindamonhangaba, pelo trabalho desenvolvido na área da saúde, destacando-se pela qualidade dos serviços prestados, pelo atendimento humanizado e pelo compromisso com o bem-estar e a saúde da população.","autoria":"Renato Cebola","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153349#pesquisa"}],"Projetos-de-Decreto-Legislativo":[{"data":"2026-09-03 13:42:58","titulo":"PROJETO DE DECRETO LEGISLATIVO N.º 016/2026","ementa":"CONCEDE O TÍTULO DE MÉRITO LEGISLATIVO.","autoria":"Marco Mayor","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152203#pesquisa"},{"data":"2026-08-24 16:12:48","titulo":"PROJETO DE DECRETO LEGISLATIVO N.º 015/2026","ementa":"Concede a MEDALHA PERCY NEWTON DE LACERDA CÉSAR","autoria":"Carlos Moura - Magrão","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152087#pesquisa"},{"data":"2026-08-17 16:39:01","titulo":"PROJETO DE DECRETO LEGISLATIVO N.º 014/2026","ementa":"Institui o “Prêmio Mérito Educacional Professor Luiz Sávio Neto”, no âmbito da Câmara de Vereadores de Pindamonhangaba, destinado ao reconhecimento das unidades escolares que se destacarem pela qualidade e evolução dos resultados educacionais, bem como por boas práticas pedagógicas, e dá outras providências.","autoria":"Professor Felipe Guimarães","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/151733#pesquisa"}],"Projetos-de-Lei-Complementar":[{"data":"2026-09-25 08:46:22","titulo":"PROJETO DE LEI COMPLEMENTAR N.º 010/2026","ementa":"ALTERA A LEI COMPLEMENTAR N.° 48 DE 2014, QUE INSTITUI A CONTRIBUIÇÃO PARA CUSTEIO DA ILUMINAÇÃO PÚBLICA PREVISTA NO ARTIGO 149-A DA CONSTITUIÇÃO FEDERAL E DÁ OUTRAS PROVIDÊNCIAS.","autoria":"Poder Executivo","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153158#pesquisa"},{"data":"2026-09-02 15:26:15","titulo":"PROJETO DE LEI COMPLEMENTAR N.º 009/2026","ementa":"Altera a Lei Complementar nº 77, de 29 de dezembro de 2023, que dispõe sobre o Código de Posturas do Município de Pindamonhangaba, para proibir a instalação e utilização de wind banners e equipamentos publicitários similares em áreas públicas.","autoria":"Marco Mayor; Felipinho César; Professor Everton","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152422#pesquisa"},{"data":"2026-08-04 13:52:00","titulo":"PROJETO DE LEI COMPLEMENTAR N.º 008/2026","ementa":"Acrescenta dispositivo ao art. 219 da Lei Complementar nº 77, de 29 de dezembro de 2023, e dá outras providências.","autoria":"Norberto Moraes","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/151429#pesquisa"}],"Projetos-de-Lei-Ordinaria":[{"data":"2026-10-22 15:51:38","titulo":"PROJETO DE LEI ORDINÁRIA N.º 242/2026","ementa":"Dispõe sobre a abertura de crédito adicional suplementar.","autoria":"Poder Executivo","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154278#pesquisa"},{"data":"2026-10-22 09:35:56","titulo":"PROJETO DE LEI ORDINÁRIA N.º 241/2026","ementa":"ALTERA A LEI Nº 7.176, DE 23 DE SETEMBRO DE 2026, QUE AUTORIZA O PODER EXECUTIVO MUNICIPAL A TRANSFERIR RECURSOS FINANCEIROS, PARA O EXERCÍCIO DE 2026, ÀS ORGANIZAÇÕES DA SOCIEDADE CIVIL ASSISTENCIAIS, A TÍTULO DE SUBVENÇÃO SOCIAL E AUXÍLIO, E DÁ OUTRAS PROVIDÊNCIAS.","autoria":"Poder Executivo","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154219#pesquisa"},{"data":"2026-10-19 16:47:53","titulo":"PROJETO DE LEI ORDINÁRIA N.º 240/2026","ementa":"Institui o Programa Municipal de Acompanhamento da Pessoa Idosa em Consultas, Exames e Procedimentos de Saúde no Município de Pindamonhangaba e dá outras providências.","autoria":"Carlos Moura - Magrão","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154116#pesquisa"}],"Projetos-de-Resolucao":[{"data":"2026-10-16 11:19:58","titulo":"PROJETO DE RESOLUÇÃO N.º 011/2026","ementa":"ALTERA O ART. 18 DA RESOLUÇÃO N° 01/2024, QUE &#39;DISPÕE SOBRE O REGIMENTO INTERNO DA CÂMARA DE VEREADORES DE PINDAMONHANGABA, E DÁ OUTRAS PROVIDÊNCIAS&#39;.","autoria":"Marco Mayor","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154000#pesquisa"},{"data":"2026-09-25 16:53:21","titulo":"PROJETO DE RESOLUÇÃO N.º 010/2026","ementa":"MODIFICA A RESOLUÇÃO Nº 01/2024, QUE DISPÕE SOBRE O REGIMENTO INTERNO DA CÂMARA MUNICIPAL DE PINDAMONHANGABA, PARA DISPOR SOBRE A ELABORAÇÃO E APROVAÇÃO DAS EMENDAS ORÇAMENTÁRIAS IMPOSITIVAS.","autoria":"Mesa Diretora","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153226#pesquisa"},{"data":"2026-08-24 16:14:16","titulo":"PROJETO DE RESOLUÇÃO N.º 008/2026","ementa":"Altera e acrescenta dispositivos à Resolução nº 001/2024, que dispõe sobre o Regimento Interno da Câmara de Vereadores de Pindamonhangaba, para disciplinar a participação presencial e remota nas reuniões das Comissões Permanentes, vedar a substituição das reuniões por discussões e deliberações em aplicativos de mensagens instantâneas e assegurar o registro audiovisual e a publicidade dos trabalhos.","autoria":"Ana Paula Goffi","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152096#pesquisa"}],"Requerimentos":[{"data":"2026-10-23 16:21:42","titulo":"REQUERIMENTO N.º 2490/2026","ementa":"à Sabesp, solicitando providências em relação ao vazamento de esgoto de recorrente na Travessa C no bairro das Campinas.","autoria":"Rogério Ramos","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154351#pesquisa"},{"data":"2026-10-23 09:55:15","titulo":"REQUERIMENTO N.º 2489/2026","ementa":"Ao Executivo Municipal, com cópia à Secretaria de Administração, solicitando informações e providências acerca das reclamações de servidores públicos municipais sobre o atendimento do Banco Santander, instalado na sede da Prefeitura Municipal.","autoria":"Gari Abençoado","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154289#pesquisa"},{"data":"2026-10-23 09:54:58","titulo":"REQUERIMENTO N.º 2488/2026","ementa":"Ao Executivo Municipal, com cópia à Secretaria competente, solicitando informações e providências quanto à situação do prédio da antiga Escola Profª Alexandrina Gomes de Araújo Rodrigues, localizado no Bairro Cidade Jardim.","autoria":"Gari Abençoado","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154292#pesquisa"}]},"legislacoes":{"Decretos-Legislativos":[{"data":"2026-09-10 09:20:01","titulo":"DECRETO LEGISLATIVO N.º 011/2026","ementa":"CONCEDE O TÍTULO DE MÉRITO LEGISLATIVO.\r\n(Projeto de Decreto Legislativo n° 16/2026, de autoria do Vereador Marco Mayor).","autoria":"","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152579#pesquisa"},{"data":"2026-08-12 09:10:42","titulo":"DECRETO LEGISLATIVO N.º 010/2026","ementa":"CONCEDE O TÍTULO  DE CIDADÃO PINDAMONHANGABENSE.\r\n(Projeto Decreto Legislativo n° 10/2026, de autoria do Vereador Rogério Ramos).","autoria":"","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/151688#pesquisa"}],"Leis-Ordinarias":[{"data":"2026-10-21 16:06:49","titulo":"LEI ORDINÁRIA N.º 7197/2026","ementa":"INSTITUI A POLÍTICA MUNICIPAL DE TRANSPARÊNCIA DOS SERVIÇOS DE ZELADORIA URBANA NO MUNICÍPIO DE PINDAMONHANGABA E DÁ OUTRAS PROVIDÊNCIAS.\r\n(Projeto de Lei n° 148/2026, de autoria do Vereador Professor Felipe Guimarães).","autoria":"","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154259#pesquisa"},{"data":"2026-10-15 00:00:00","titulo":"LEI ORDINÁRIA N.º 7196/2026","ementa":"DISPÕE SOBRE A ABERTURA DE CRÉDITO ADICIONAL ESPECIAL.","autoria":"","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154144#pesquisa"}],"Resolucoes":[{"data":"2026-10-21 08:45:39","titulo":"RESOLUÇÃO N.º 017/2026","ementa":"ALTERA O ART. 18 DA RESOLUÇÃO N° 01/2024, QUE &#39;DISPÕE SOBRE O REGIMENTO INTERNO DA CÂMARA DE VEREADORES DE PINDAMONHANGABA, E DÁ OUTRAS PROVIDÊNCIAS&#39;.\r\n(Projeto de Resolução n° 11/2026, de autoria do Vereador Marco Mayor).","autoria":"","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154226#pesquisa"},{"data":"2026-10-21 08:40:17","titulo":"RESOLUÇÃO N.º 016/2026","ementa":"MODIFICA A RESOLUÇÃO Nº 01/2024, QUE DISPÕE SOBRE O REGIMENTO INTERNO DA CÂMARA MUNICIPAL DE PINDAMONHANGABA, PARA DISPOR SOBRE A ELABORAÇÃO E APROVAÇÃO DAS EMENDAS ORÇAMENTÁRIAS IMPOSITIVAS.\r\n(Projeto de Resolução n° 10/2026, de autoria da Mesa Diretora).","autoria":"","link":"https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154224#pesquisa"}]}}
+{
+  "vereadores": [
+    {
+      "nome": "Marco Mayor",
+      "partido": "PL",
+      "funcao": "Presidente",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2026/06/2026060311132817804960082a2df0.jpeg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/8#pesquisa"
+    },
+    {
+      "nome": "Ana Paula Goffi",
+      "partido": "União",
+      "funcao": "1º Vice-Presidente",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2025/02/20250226175434174060327471a7f0.jpeg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/204#pesquisa"
+    },
+    {
+      "nome": "Carlos Moura - Magrão",
+      "partido": "PSD",
+      "funcao": "2º Vice-Presidente",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2025/01/202501231204431737644683ccad80.jpeg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/1#pesquisa"
+    },
+    {
+      "nome": "Professor Everton",
+      "partido": "Republicanos",
+      "funcao": "1º Secretário",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2025/01/2025012816081017380912908746e0.jpeg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/202#pesquisa"
+    },
+    {
+      "nome": "Gilson Nagrin",
+      "partido": "PL",
+      "funcao": "2º Secretário",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2025/05/20250505162154174647291471e760.jpeg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/4#pesquisa"
+    },
+    {
+      "nome": "Felipinho César",
+      "partido": "PL",
+      "funcao": "Vereador",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2026/06/202606031348171780505297cdc3c0.jpeg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/205#pesquisa"
+    },
+    {
+      "nome": "Gari Abençoado",
+      "partido": "Republicanos",
+      "funcao": "Vereador",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2025/02/2025021911444817399762884c7f20.JPG",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/203#pesquisa"
+    },
+    {
+      "nome": "Norberto Moraes",
+      "partido": "PP",
+      "funcao": "Vereador",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2026/06/202606031106111780495571c37110.jpg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/3#pesquisa"
+    },
+    {
+      "nome": "Professor Felipe Guimarães",
+      "partido": "Podemos",
+      "funcao": "Vereador",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2025/01/202501061154171736175257537cf0.jpg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/2#pesquisa"
+    },
+    {
+      "nome": "Renato Cebola",
+      "partido": "União",
+      "funcao": "Vereador",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2025/03/2025032813523117431807514cac60.jpeg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/10#pesquisa"
+    },
+    {
+      "nome": "Rogério Ramos",
+      "partido": "Podemos",
+      "funcao": "Vereador",
+      "imagem": "https://www.pindamonhangaba.sp.leg.br/news/2026/06/202606031108121780495692b2e460.jpeg",
+      "link": "https://www.pindamonhangaba.sp.leg.br/camara/membros/show/11#pesquisa"
+    }
+  ],
+  "proposicoes_tipos": [
+    {
+      "contract": "Emendas",
+      "titulo": "Emendas",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Emendas#pesquisa"
+    },
+    {
+      "contract": "Indicacoes",
+      "titulo": "Indicações",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Indicacoes#pesquisa"
+    },
+    {
+      "contract": "Indicacoes-de-Projetos-de-Lei",
+      "titulo": "Indicações de Projetos de Lei",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Indicacoes-de-Projetos-de-Lei#pesquisa"
+    },
+    {
+      "contract": "Mocoes",
+      "titulo": "Moções",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Mocoes#pesquisa"
+    },
+    {
+      "contract": "Projetos-de-Decreto-Legislativo",
+      "titulo": "Projetos de Decreto Legislativo",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Decreto-Legislativo#pesquisa"
+    },
+    {
+      "contract": "Projetos-de-Lei-Complementar",
+      "titulo": "Projetos de Lei Complementar",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Lei-Complementar#pesquisa"
+    },
+    {
+      "contract": "Projetos-de-Lei-de-Iniciativa-Popular",
+      "titulo": "Projetos de Lei de Iniciativa Popular",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Lei-de-Iniciativa-Popular#pesquisa"
+    },
+    {
+      "contract": "Projetos-de-Lei-Ordinaria",
+      "titulo": "Projetos de Lei Ordinária",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Lei-Ordinaria#pesquisa"
+    },
+    {
+      "contract": "Projetos-de-Resolucao",
+      "titulo": "Projetos de Resolução",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Projetos-de-Resolucao#pesquisa"
+    },
+    {
+      "contract": "Propostas-de-Emenda-a-Lei-Organica",
+      "titulo": "Propostas de Emenda à Lei Orgânica",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Propostas-de-Emenda-a-Lei-Organica#pesquisa"
+    },
+    {
+      "contract": "Relatorio-Final---Comissao-de-Assuntos-Relevantes",
+      "titulo": "Relatório Final - Comissão de Assuntos Relevantes",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Relatorio-Final---Comissao-de-Assuntos-Relevantes#pesquisa"
+    },
+    {
+      "contract": "Representacao-ao-Conselho-de-Etica-e-Decoro-Parlamentar",
+      "titulo": "Representação ao Conselho de Ética e Decoro Parlamentar",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Representacao-ao-Conselho-de-Etica-e-Decoro-Parlamentar#pesquisa"
+    },
+    {
+      "contract": "Requerimentos",
+      "titulo": "Requerimentos",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Requerimentos#pesquisa"
+    },
+    {
+      "contract": "Vetos",
+      "titulo": "Vetos",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Vetos#pesquisa"
+    }
+  ],
+  "legislacoes_tipos": [
+    {
+      "contract": "Atos",
+      "titulo": "Atos",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Atos#pesquisa"
+    },
+    {
+      "contract": "Certidao",
+      "titulo": "Certidão",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Certidao#pesquisa"
+    },
+    {
+      "contract": "Certidao---Departamento-Legislativo",
+      "titulo": "Certidão - Departamento Legislativo",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Certidao---Departamento-Legislativo#pesquisa"
+    },
+    {
+      "contract": "Decretos-Legislativos",
+      "titulo": "Decretos Legislativos",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Decretos-Legislativos#pesquisa"
+    },
+    {
+      "contract": "Denuncias",
+      "titulo": "Denúncias",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Denuncias#pesquisa"
+    },
+    {
+      "contract": "Editais",
+      "titulo": "Editais",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Editais#pesquisa"
+    },
+    {
+      "contract": "Emendas-a-Lei-Organica",
+      "titulo": "Emendas à Lei Orgânica",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Emendas-a-Lei-Organica#pesquisa"
+    },
+    {
+      "contract": "Leis-Complementares",
+      "titulo": "Leis Complementares",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Leis-Complementares#pesquisa"
+    },
+    {
+      "contract": "Leis-Ordinarias",
+      "titulo": "Leis Ordinárias",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Leis-Ordinarias#pesquisa"
+    },
+    {
+      "contract": "Ordem-do-Dia",
+      "titulo": "Ordem do Dia",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Ordem-do-Dia#pesquisa"
+    },
+    {
+      "contract": "Portarias",
+      "titulo": "Portarias",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Portarias#pesquisa"
+    },
+    {
+      "contract": "Resolucoes",
+      "titulo": "Resoluções",
+      "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/Resolucoes#pesquisa"
+    }
+  ],
+  "pautas_p1": [
+    {
+      "data": "2026-10-27 17:00:00",
+      "titulo": "Pauta da 38ª Sessão Ordinária de 2026",
+      "link": "https://www.pindamonhangaba.sp.leg.br/pautas/0/0/0/0/1309#pesquisa"
+    },
+    {
+      "data": "2026-10-20 17:00:00",
+      "titulo": "Pauta da 37ª Sessão Ordinária de 2026",
+      "link": "https://www.pindamonhangaba.sp.leg.br/pautas/0/0/0/0/1307#pesquisa"
+    },
+    {
+      "data": "2026-10-19 14:30:00",
+      "titulo": "Pauta da 32ª Reunião Ordinária de Comissão de 2026 - (CLJR)",
+      "link": "https://www.pindamonhangaba.sp.leg.br/pautas/0/0/0/0/1308#pesquisa"
+    }
+  ],
+  "proposicoes": {
+    "Emendas": [
+      {
+        "data": "2026-10-21 16:52:51",
+        "titulo": "SUBSTITUTIVO N.º 055/2026 AO PROJETO DE LEI ORDINÁRIA N.º 234/2025",
+        "ementa": "Denomina de JOAQUIM ADEMIR DE MIRANDA, a Estrada particular saindo da Estrada Luiza Fernandes Miranda no Ribeirão Grande.",
+        "autoria": "Norberto Moraes",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154225#pesquisa"
+      },
+      {
+        "data": "2026-10-19 16:48:19",
+        "titulo": "SUBSTITUTIVO N.º 054/2026 AO PROJETO DE LEI ORDINÁRIA N.º 231/2026",
+        "ementa": "Institui o Programa Municipal “Meninas Seguras”, no âmbito do Município de Pindamonhangaba, e dá outras providências.\r\n ",
+        "autoria": "Ana Paula Goffi",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154106#pesquisa"
+      },
+      {
+        "data": "2026-10-19 13:09:15",
+        "titulo": "SUBSTITUTIVO N.º 053/2026 AO PROJETO DE LEI COMPLEMENTAR N.º 008/2026",
+        "ementa": "Acrescenta dispositivo ao art. 219 da Lei Complementar nº 77, de 29 de dezembro de 2023, e dá outras providências.",
+        "autoria": "Norberto Moraes",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153980#pesquisa"
+      },
+      {
+        "data": "2025-03-07 16:59:14",
+        "titulo": "SUBSTITUTIVO N.º 009/2025 AO PROJETO DE LEI ORDINÁRIA N.º 100/2025",
+        "ementa": "&quot;Dispõe sobre a aceitação de resultados de exames médicos realizados por clínicas e hospitais particulares no âmbito da rede pública de saúde do Município de Pindamonhangaba para continuidade de tratamentos já iniciados no SUS.”",
+        "autoria": "Gilson Nagrin",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/132667#pesquisa"
+      },
+      {
+        "data": "2025-03-27 08:31:11",
+        "titulo": "SUBSTITUTIVO N.º 013/2025 AO PROJETO DE LEI ORDINÁRIA N.º 117/2025",
+        "ementa": "DISPÕE sobre a proibição do consumo de Maconha em áreas e logradouros públicos, no município de Pindamonhangaba e dá outras providências.",
+        "autoria": "Gilson Nagrin",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/133436#pesquisa"
+      },
+      {
+        "data": "2025-02-10 14:21:05",
+        "titulo": "EMENDA MODIFICATIVA N.º 003/2025 AO PROJETO DE LEI ORDINÁRIA N.º 047/2025",
+        "ementa": "Inclui o § 3º no artigo 1º, altera o artigo 2º, altera o § 2º do artigo 3º, inclui Parágrafo Único ao artigo 5º  e altera o § 1º do artigo 7º, do Projeto de Lei nº 47/202, que dispõe sobre a remissão de créditos tributários do Município de Pindamonhangaba e dá outras providências.",
+        "autoria": "Carlos Moura - Magrão; Renato Cebola; Rogério Ramos",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/131258#pesquisa"
+      },
+      {
+        "data": "2025-03-27 08:30:19",
+        "titulo": "SUBSTITUTIVO N.º 012/2025 AO PROJETO DE LEI ORDINÁRIA N.º 105/2025",
+        "ementa": "Institui a Lei de Fiscalização e Aplicação de Penalidades às Empresas e Concessionárias de Saneamento Básico no Município de Pindamonhangaba e dá outras providências.",
+        "autoria": "Ana Paula Goffi; Norberto Moraes",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/133387#pesquisa"
+      },
+      {
+        "data": "2025-06-03 13:12:46",
+        "titulo": "EMENDA MODIFICATIVA N.º 005/2025 AO PROJETO DE LEI ORDINÁRIA N.º 205/2025",
+        "ementa": "EMENDA MODIFICATIVA AO PROJETO DE LEI N° 205/2025, QUE &#39;ALTER A LEI N° 3.429, DE 03 DE JUNHO DE 1998, QUE AUTORIZA A PREFEITURA MUNICIPAL A INSTITUIR NAS VIAS E LOGRADOUROS PÚBLICOS, ÁREAS ESPECIAIS PARA ESTACIONAMENTO POR TEMPO LIMITADO E DÁ OUTRAS PROVIDÊNCIAS&quot;.",
+        "autoria": "Marco Mayor; Professor Everton; Norberto Moraes; Renato Cebola",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/136000#pesquisa"
+      }
+    ],
+    "Indicacoes": [
+      {
+        "data": "2026-10-23 15:45:39",
+        "titulo": "INDICAÇÃO N.º 4676/2026",
+        "ementa": "Ao Executivo Municipal, com cópia ao Departamento Competente, manutenção das luminárias internas e externas da unidade de saúde do bairro Santa Cecília.",
+        "autoria": "Rogério Ramos",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154346#pesquisa"
+      },
+      {
+        "data": "2026-10-23 13:19:17",
+        "titulo": "INDICAÇÃO N.º 4675/2026",
+        "ementa": "Indico ao Excelentíssimo Senhor Prefeito, Ricardo Alberto Pereira Piorino, para que realize a instalação e substituição das placas de identificação das ruas, assim como as indicativas das  entradas e saídas, visto que muitas estão inelegíveis ou ausentes, no bairro Jardim Eloyna.",
+        "autoria": "Professor Everton",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154339#pesquisa"
+      },
+      {
+        "data": "2026-10-23 13:18:53",
+        "titulo": "INDICAÇÃO N.º 4674/2026",
+        "ementa": "Indico ao Excelentíssimo Senhor Prefeito, Ricardo Alberto Pereira Piorino a colocação de placas de sinalização de direção nas entradas e saídas, considerando às: Av. Manoel Cesar Ribeiro e Rodovia Presidente Dutra (sentido Norte e Sul), assim como a direção dos bairros vizinhos para melhor orientação no bairro Jardim Eloyna.",
+        "autoria": "Professor Everton",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154341#pesquisa"
+      },
+      {
+        "data": "2025-01-10 08:10:25",
+        "titulo": "INDICAÇÃO N.º 002/2025",
+        "ementa": "Ao Executivo Municipal, solicito a limpeza e roçada de mato na Praça localizada na Rua José Inácio, nº 27 (em frente a Igreja Assembleia de Deus - Ministério Rio de Janeiro) no bairro Araretama.",
+        "autoria": "Professor Felipe Guimarães",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130157#pesquisa"
+      },
+      {
+        "data": "2025-01-13 11:42:15",
+        "titulo": "INDICAÇÃO N.º 012/2025",
+        "ementa": "Ao Executivo Municipal, solicito a limpeza da área situada à Av. Mirabeau Antônio Pini, nas proximidades da CIRB, no bairro Araretama.",
+        "autoria": "Professor Felipe Guimarães",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130246#pesquisa"
+      },
+      {
+        "data": "2025-01-13 11:41:51",
+        "titulo": "INDICAÇÃO N.º 011/2025",
+        "ementa": "Ao Executivo Municipal, solicito a limpeza da área situada à Rua Terezinha de Souza (antiga rua 91), nas proximidades do número 10, em frente ao bar do Jacaré, no bairro Araretama.",
+        "autoria": "Professor Felipe Guimarães",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130247#pesquisa"
+      },
+      {
+        "data": "2025-01-13 16:18:30",
+        "titulo": "INDICAÇÃO N.º 014/2025",
+        "ementa": "Ao Executivo Municipal solicito poda das árvores na área institucional (onde foi instalado parquinho, AMI e construído um campinho de futebol), localizado na Rua Olavo Jorge (antiga Rua 13), no bairro Araretama.",
+        "autoria": "Professor Felipe Guimarães",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130261#pesquisa"
+      },
+      {
+        "data": "2025-01-10 08:11:40",
+        "titulo": "INDICAÇÃO N.º 004/2025",
+        "ementa": "Ao Executivo Municipal, solicito a limpeza da área situada à Avenida XV de novembro próximo à residência 718, no bairro Cidade Nova.",
+        "autoria": "Professor Felipe Guimarães",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130145#pesquisa"
+      },
+      {
+        "data": "2025-01-13 16:17:54",
+        "titulo": "INDICAÇÃO N.º 013/2025",
+        "ementa": "Ao Executivo Municipal solicito poda das árvores da Praça Euzébio de Oliveira Marques, entre as avenidas São Paulo e Princesa do Norte, no bairro Cidade Nova.",
+        "autoria": "Professor Felipe Guimarães",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130259#pesquisa"
+      },
+      {
+        "data": "2025-01-20 09:52:23",
+        "titulo": "INDICAÇÃO N.º 023/2025",
+        "ementa": "Ao executivo Municipal solicito \"Operação Tapa Buraco\" em toda extensão da Av. Rio de Janeiro, no bairro Cidade Nova.",
+        "autoria": "Professor Felipe Guimarães",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130405#pesquisa"
+      },
+      {
+        "data": "2025-02-03 15:50:29",
+        "titulo": "INDICAÇÃO N.º 129/2025",
+        "ementa": "Ao Executivo Municipla, com cópia ao departamento competente solicitando a limpeza de entulhos na Avenida São Paulo, ao lado do número 502, no bairro Cidade Nova.",
+        "autoria": "Norberto Moraes",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130832#pesquisa"
+      },
+      {
+        "data": "2025-01-10 17:08:14",
+        "titulo": "INDICAÇÃO N.º 009/2025",
+        "ementa": "Indico ao Excelentíssimo Senhor Prefeito, Ricardo Alberto Pereira Piorino, providências para colocar ponto de internet gratuita (wi-fi), na praça da Matriz São Vicente de Paulo ou no estacionamento José Antônio Machado Salgado, localizado entre as ruas José Augusto Mesquita e José Teberga, no Distrito de Moreira César.",
+        "autoria": "Professor Everton",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130201#pesquisa"
+      },
+      {
+        "data": "2025-01-31 08:03:58",
+        "titulo": "INDICAÇÃO N.º 098/2025",
+        "ementa": "Ao Executivo Municipal, com cópia à Secretaria Competente, solicitando estudos e providências para revitalização da Praça São João localizada no Bairro Moreira César.",
+        "autoria": "Gari Abençoado",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130826#pesquisa"
+      },
+      {
+        "data": "2025-02-17 17:06:17",
+        "titulo": "INDICAÇÃO N.º 416/2025",
+        "ementa": "Ao Executivo Municipal, com cópia ao departamento competente solicitando a \"operação tapa buraco\" por toda extensão da Estrada da Sapucaia, que liga os bairros de Moreira César ao Ribeirão Grande.",
+        "autoria": "Norberto Moraes",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/131584#pesquisa"
+      },
+      {
+        "data": "2025-02-24 10:17:24",
+        "titulo": "INDICAÇÃO N.º 472/2025",
+        "ementa": "Indico ao Excelentíssimo Senhor Prefeito, Ricardo Alberto Pereira Piorino, a Poda de árvores na Rua Alcídes Luís Sampaio, no Bairro Vila São Benedito, no Distrito de Moreira César.",
+        "autoria": "Renato Cebola",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/131990#pesquisa"
+      },
+      {
+        "data": "2025-01-27 09:52:32",
+        "titulo": "INDICAÇÃO N.º 048/2025",
+        "ementa": "Ao Executivo Municipal, com cópia ao departamento competente solicitando a manutenção da ciclovia no bairro Alto do Cardoso.",
+        "autoria": "Norberto Moraes",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130550#pesquisa"
+      },
+      {
+        "data": "2025-01-31 08:04:24",
+        "titulo": "INDICAÇÃO N.º 099/2025",
+        "ementa": "Ao Executivo Municipal, com cópia à Secretaria Competente, solicitando estudos e providências para limpeza da área do parque localizado na Rua Papa João XXIII, no Bairro Alto do Cardoso.",
+        "autoria": "Gari Abençoado",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130825#pesquisa"
+      },
+      {
+        "data": "2025-02-13 14:04:06",
+        "titulo": "INDICAÇÃO N.º 254/2025",
+        "ementa": "Indico ao Excelentíssimo Senhor Prefeito, Ricardo Alberto Pereira Piorino, c/c para a Secretaria de Obras e Planejamento, a adoção de providências para a construção de um parquinho infantil na praça localizada na Rua Manoel Jesus César, nº 82, no bairro Alto do Cardoso.",
+        "autoria": "Carlos Moura - Magrão",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/131203#pesquisa"
+      },
+      {
+        "data": "2025-02-17 16:55:04",
+        "titulo": "INDICAÇÃO N.º 396/2025",
+        "ementa": "Ao Executivo Municipal, com cópia ao departamento competente solicitando a limpeza e roçada da praça localizada na Rua Marcelino Machado Moreira, no bairro Alto do Cardoso.",
+        "autoria": "Norberto Moraes",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/131482#pesquisa"
+      }
+    ],
+    "Mocoes": [
+      {
+        "data": "2026-10-19 15:10:06",
+        "titulo": "MOÇÃO DE CONGRATULAÇÕES N.º 255/2026",
+        "ementa": "A Câmara de Vereadores de Pindamonhangaba, por iniciativa do vereador Carlos Moura - Magrão, apresenta Moção de Congratulações a MOÇÃO DE CONGRATULAÇÕES à Ilustríssima Senhora Ana Letícia Fernandez Gomez,  pelos relevantes serviços prestados à saúde pública de Pindamonhangaba, especialmente pela dedicação, competência e compromisso demonstrados na gestão da Unidade de Pronto Atendimento (UPA) do Araretama.",
+        "autoria": "Carlos Moura - Magrão",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154092#pesquisa"
+      },
+      {
+        "data": "2026-10-15 10:03:20",
+        "titulo": "MOÇÃO DE CONGRATULAÇÕES N.º 254/2026",
+        "ementa": "Moção de  Congratulações ao Senhor Thiago da Silva Aguira, em reconhecimento aos quatro anos de dedicação e relevantes serviços prestados à comunidade à frente do Centro Comunitário da Vila Prado, no município de Pindamonhangaba.",
+        "autoria": "Marco Mayor",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153920#pesquisa"
+      },
+      {
+        "data": "2026-10-13 08:42:58",
+        "titulo": "MOÇÃO DE CONGRATULAÇÕES N.º 253/2026",
+        "ementa": "Congratulações a  todos os profissionais da UNICARD – Centro Diagnóstico Cardiológico, de Pindamonhangaba, pelo trabalho desenvolvido na área da saúde, destacando-se pela qualidade dos serviços prestados, pelo atendimento humanizado e pelo compromisso com o bem-estar e a saúde da população.",
+        "autoria": "Renato Cebola",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153349#pesquisa"
+      },
+      {
+        "data": "2025-01-17 15:59:59",
+        "titulo": "MOÇÃO DE CONGRATULAÇÕES N.º 001/2025",
+        "ementa": "Moção de Congratulações às alunas Laura Mariano, Luana Chatarino e Letícia Pires, do Senac de Pindamonhangaba, pelo desenvolvimento do projeto &quot;Ondas Brasileiras - Meu Cabelo é Minha Identidade&quot;. Sob a orientação da Professora Milena Simões Alves, o referido projeto destacou-se por sua relevância social e cultural, sendo apresentado com êxito na Feira de Projetos do Senac Pinda, nos anos de 2023 e 2024.",
+        "autoria": "Carlos Moura - Magrão",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130322#pesquisa"
+      }
+    ],
+    "Projetos-de-Decreto-Legislativo": [
+      {
+        "data": "2026-09-03 13:42:58",
+        "titulo": "PROJETO DE DECRETO LEGISLATIVO N.º 016/2026",
+        "ementa": "CONCEDE O TÍTULO DE MÉRITO LEGISLATIVO.",
+        "autoria": "Marco Mayor",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152203#pesquisa"
+      },
+      {
+        "data": "2026-08-24 16:12:48",
+        "titulo": "PROJETO DE DECRETO LEGISLATIVO N.º 015/2026",
+        "ementa": "Concede a MEDALHA PERCY NEWTON DE LACERDA CÉSAR",
+        "autoria": "Carlos Moura - Magrão",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152087#pesquisa"
+      },
+      {
+        "data": "2026-08-17 16:39:01",
+        "titulo": "PROJETO DE DECRETO LEGISLATIVO N.º 014/2026",
+        "ementa": "Institui o “Prêmio Mérito Educacional Professor Luiz Sávio Neto”, no âmbito da Câmara de Vereadores de Pindamonhangaba, destinado ao reconhecimento das unidades escolares que se destacarem pela qualidade e evolução dos resultados educacionais, bem como por boas práticas pedagógicas, e dá outras providências.",
+        "autoria": "Professor Felipe Guimarães",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/151733#pesquisa"
+      }
+    ],
+    "Projetos-de-Lei-Complementar": [
+      {
+        "data": "2026-09-25 08:46:22",
+        "titulo": "PROJETO DE LEI COMPLEMENTAR N.º 010/2026",
+        "ementa": "ALTERA A LEI COMPLEMENTAR N.° 48 DE 2014, QUE INSTITUI A CONTRIBUIÇÃO PARA CUSTEIO DA ILUMINAÇÃO PÚBLICA PREVISTA NO ARTIGO 149-A DA CONSTITUIÇÃO FEDERAL E DÁ OUTRAS PROVIDÊNCIAS.",
+        "autoria": "Poder Executivo",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153158#pesquisa"
+      },
+      {
+        "data": "2026-09-02 15:26:15",
+        "titulo": "PROJETO DE LEI COMPLEMENTAR N.º 009/2026",
+        "ementa": "Altera a Lei Complementar nº 77, de 29 de dezembro de 2023, que dispõe sobre o Código de Posturas do Município de Pindamonhangaba, para proibir a instalação e utilização de wind banners e equipamentos publicitários similares em áreas públicas.",
+        "autoria": "Marco Mayor; Felipinho César; Professor Everton",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152422#pesquisa"
+      },
+      {
+        "data": "2026-08-04 13:52:00",
+        "titulo": "PROJETO DE LEI COMPLEMENTAR N.º 008/2026",
+        "ementa": "Acrescenta dispositivo ao art. 219 da Lei Complementar nº 77, de 29 de dezembro de 2023, e dá outras providências.",
+        "autoria": "Norberto Moraes",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/151429#pesquisa"
+      }
+    ],
+    "Projetos-de-Lei-Ordinaria": [
+      {
+        "data": "2026-10-22 15:51:38",
+        "titulo": "PROJETO DE LEI ORDINÁRIA N.º 242/2026",
+        "ementa": "Dispõe sobre a abertura de crédito adicional suplementar.",
+        "autoria": "Poder Executivo",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154278#pesquisa"
+      },
+      {
+        "data": "2026-10-22 09:35:56",
+        "titulo": "PROJETO DE LEI ORDINÁRIA N.º 241/2026",
+        "ementa": "ALTERA A LEI Nº 7.176, DE 23 DE SETEMBRO DE 2026, QUE AUTORIZA O PODER EXECUTIVO MUNICIPAL A TRANSFERIR RECURSOS FINANCEIROS, PARA O EXERCÍCIO DE 2026, ÀS ORGANIZAÇÕES DA SOCIEDADE CIVIL ASSISTENCIAIS, A TÍTULO DE SUBVENÇÃO SOCIAL E AUXÍLIO, E DÁ OUTRAS PROVIDÊNCIAS.",
+        "autoria": "Poder Executivo",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154219#pesquisa"
+      },
+      {
+        "data": "2026-10-19 16:47:53",
+        "titulo": "PROJETO DE LEI ORDINÁRIA N.º 240/2026",
+        "ementa": "Institui o Programa Municipal de Acompanhamento da Pessoa Idosa em Consultas, Exames e Procedimentos de Saúde no Município de Pindamonhangaba e dá outras providências.",
+        "autoria": "Carlos Moura - Magrão",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154116#pesquisa"
+      },
+      {
+        "data": "2025-01-01 14:44:08",
+        "titulo": "PROJETO DE LEI ORDINÁRIA N.º 001/2025",
+        "ementa": "Altera dispositivos da Lei Ordinária nº 6.194, de 20 de dezembro de 2018, que dispõe sobre a Estrutura Organizacional da Prefeitura Municipal de Pindamonhangaba e dá outras providências e altera dispositivos da Lei Ordinária nº 6.197, de 20 de dezembro de 2018, que dispõe sobre a estruturação dos cargos de secretários municipais, dos cargos de provimento em comissão, das funções de confiança e das funções gratificadas da Prefeitura Municipal de Pindamonhangaba e dá outras providências.",
+        "autoria": "Poder Executivo",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130012#pesquisa"
+      },
+      {
+        "data": "2025-01-10 15:34:58",
+        "titulo": "PROJETO DE LEI ORDINÁRIA N.º 017/2025",
+        "ementa": "Dispõe sobre a abertura de crédito adicional especial.",
+        "autoria": "Poder Executivo",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130195#pesquisa"
+      },
+      {
+        "data": "2025-01-09 11:43:24",
+        "titulo": "PROJETO DE LEI ORDINÁRIA N.º 010/2025",
+        "ementa": "Dispõe sobre a revogação de multas arbitrárias e regulamenta a notificação e aplicação de sanções administrativas no âmbito do Município de Pindamonhangaba.",
+        "autoria": "Renato Cebola; Rogério Ramos; Professor Felipe Guimarães; Carlos Moura - Magrão",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130138#pesquisa"
+      },
+      {
+        "data": "2025-01-21 10:59:09",
+        "titulo": "PROJETO DE LEI ORDINÁRIA N.º 018/2025",
+        "ementa": "Denomina de &quot;VICENTE ALVES DELGADO&quot;, uma rua entre a Avenida Gilberto dos Santos e a Rua Dr Pedro Batista Costa, ao lado da fazenda Tung, no bairro Jardim Regina.",
+        "autoria": "Norberto Moraes",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130453#pesquisa"
+      }
+    ],
+    "Projetos-de-Resolucao": [
+      {
+        "data": "2026-10-16 11:19:58",
+        "titulo": "PROJETO DE RESOLUÇÃO N.º 011/2026",
+        "ementa": "ALTERA O ART. 18 DA RESOLUÇÃO N° 01/2024, QUE &#39;DISPÕE SOBRE O REGIMENTO INTERNO DA CÂMARA DE VEREADORES DE PINDAMONHANGABA, E DÁ OUTRAS PROVIDÊNCIAS&#39;.",
+        "autoria": "Marco Mayor",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154000#pesquisa"
+      },
+      {
+        "data": "2026-09-25 16:53:21",
+        "titulo": "PROJETO DE RESOLUÇÃO N.º 010/2026",
+        "ementa": "MODIFICA A RESOLUÇÃO Nº 01/2024, QUE DISPÕE SOBRE O REGIMENTO INTERNO DA CÂMARA MUNICIPAL DE PINDAMONHANGABA, PARA DISPOR SOBRE A ELABORAÇÃO E APROVAÇÃO DAS EMENDAS ORÇAMENTÁRIAS IMPOSITIVAS.",
+        "autoria": "Mesa Diretora",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/153226#pesquisa"
+      },
+      {
+        "data": "2026-08-24 16:14:16",
+        "titulo": "PROJETO DE RESOLUÇÃO N.º 008/2026",
+        "ementa": "Altera e acrescenta dispositivos à Resolução nº 001/2024, que dispõe sobre o Regimento Interno da Câmara de Vereadores de Pindamonhangaba, para disciplinar a participação presencial e remota nas reuniões das Comissões Permanentes, vedar a substituição das reuniões por discussões e deliberações em aplicativos de mensagens instantâneas e assegurar o registro audiovisual e a publicidade dos trabalhos.",
+        "autoria": "Ana Paula Goffi",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152096#pesquisa"
+      }
+    ],
+    "Requerimentos": [
+      {
+        "data": "2026-10-23 16:21:42",
+        "titulo": "REQUERIMENTO N.º 2490/2026",
+        "ementa": "à Sabesp, solicitando providências em relação ao vazamento de esgoto de recorrente na Travessa C no bairro das Campinas.",
+        "autoria": "Rogério Ramos",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154351#pesquisa"
+      },
+      {
+        "data": "2026-10-23 09:55:15",
+        "titulo": "REQUERIMENTO N.º 2489/2026",
+        "ementa": "Ao Executivo Municipal, com cópia à Secretaria de Administração, solicitando informações e providências acerca das reclamações de servidores públicos municipais sobre o atendimento do Banco Santander, instalado na sede da Prefeitura Municipal.",
+        "autoria": "Gari Abençoado",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154289#pesquisa"
+      },
+      {
+        "data": "2026-10-23 09:54:58",
+        "titulo": "REQUERIMENTO N.º 2488/2026",
+        "ementa": "Ao Executivo Municipal, com cópia à Secretaria competente, solicitando informações e providências quanto à situação do prédio da antiga Escola Profª Alexandrina Gomes de Araújo Rodrigues, localizado no Bairro Cidade Jardim.",
+        "autoria": "Gari Abençoado",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154292#pesquisa"
+      },
+      {
+        "data": "2025-01-17 11:27:44",
+        "titulo": "REQUERIMENTO N.º 132/2025",
+        "ementa": "À Sabesp, solicitando com urgência, providências para adoção de medidas necessárias para solucionar o problema da sirene localizada na Usina Minigeradora Fotovoltaica, situada em frente do campo de futebol da Vila São José, Distrito de Moreira César, que está disparando de forma indevida e contínua, causando transtornos aos moradores local.",
+        "autoria": "Professor Everton",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130360#pesquisa"
+      },
+      {
+        "data": "2025-01-24 15:34:59",
+        "titulo": "REQUERIMENTO N.º 312/2025",
+        "ementa": "À Sabesp solicito informações e providências URGENTES para a aquisição de reservatório para expansão de água no Araretama e região oeste.",
+        "autoria": "Professor Felipe Guimarães",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130510#pesquisa"
+      }
+    ]
+  },
+  "legislacoes": {
+    "Decretos-Legislativos": [
+      {
+        "data": "2026-09-10 09:20:01",
+        "titulo": "DECRETO LEGISLATIVO N.º 011/2026",
+        "ementa": "CONCEDE O TÍTULO DE MÉRITO LEGISLATIVO.\r\n(Projeto de Decreto Legislativo n° 16/2026, de autoria do Vereador Marco Mayor).",
+        "autoria": "",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/152579#pesquisa"
+      },
+      {
+        "data": "2026-08-12 09:10:42",
+        "titulo": "DECRETO LEGISLATIVO N.º 010/2026",
+        "ementa": "CONCEDE O TÍTULO  DE CIDADÃO PINDAMONHANGABENSE.\r\n(Projeto Decreto Legislativo n° 10/2026, de autoria do Vereador Rogério Ramos).",
+        "autoria": "",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/151688#pesquisa"
+      }
+    ],
+    "Leis-Ordinarias": [
+      {
+        "data": "2026-10-21 16:06:49",
+        "titulo": "LEI ORDINÁRIA N.º 7197/2026",
+        "ementa": "INSTITUI A POLÍTICA MUNICIPAL DE TRANSPARÊNCIA DOS SERVIÇOS DE ZELADORIA URBANA NO MUNICÍPIO DE PINDAMONHANGABA E DÁ OUTRAS PROVIDÊNCIAS.\r\n(Projeto de Lei n° 148/2026, de autoria do Vereador Professor Felipe Guimarães).",
+        "autoria": "",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154259#pesquisa"
+      },
+      {
+        "data": "2026-10-15 00:00:00",
+        "titulo": "LEI ORDINÁRIA N.º 7196/2026",
+        "ementa": "DISPÕE SOBRE A ABERTURA DE CRÉDITO ADICIONAL ESPECIAL.",
+        "autoria": "",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154144#pesquisa"
+      },
+      {
+        "data": "2025-03-12 14:42:20",
+        "titulo": "LEI ORDINÁRIA N.º 6909/2025",
+        "ementa": "DISPÕE SOBRE A REVOGAÇÃO DE MULTAS ARBITRÁRIAS E REGULAMENTA A NOTIFICAÇÃO E APLICAÇÃO DE SANÇÕES ADMINISTRATIVAS NO ÂMBITO DO MUNICÍPIO DE PINDAMONHANGABA.\n(Projeto de Lei n° 10/2025, de autoria dos Vereadores Renato Nogueira Guimarães - Renato Cebola, Rogério Ramos, Professor Felipe Guimarães e Carlos Moura - Magrão)\n\n(Declarado inconstitucional o arts. 1º,  2º e 4º a 9º – ADI nº 2393521-18.2025.26.000).",
+        "autoria": "",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/132886#pesquisa"
+      },
+      {
+        "data": "2025-02-25 00:00:00",
+        "titulo": "LEI ORDINÁRIA N.º 6903/2025",
+        "ementa": "DENOMINA DE &quot;VICENTE ALVES DELGADO&quot;, UMA RUA ENTRE A AVENIDA GILBERTO DOS SANTOS E A RUA DR. PEDRO BATISTA COSTA, AO LADO DA FAZENDA TUNG, NO BAIRRO JARDIM REGINA.\n(Projeto de Lei n° 18/2025, de autoria do Vereador Norberto Moraes).",
+        "autoria": "",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/132995#pesquisa"
+      }
+    ],
+    "Resolucoes": [
+      {
+        "data": "2026-10-21 08:45:39",
+        "titulo": "RESOLUÇÃO N.º 017/2026",
+        "ementa": "ALTERA O ART. 18 DA RESOLUÇÃO N° 01/2024, QUE &#39;DISPÕE SOBRE O REGIMENTO INTERNO DA CÂMARA DE VEREADORES DE PINDAMONHANGABA, E DÁ OUTRAS PROVIDÊNCIAS&#39;.\r\n(Projeto de Resolução n° 11/2026, de autoria do Vereador Marco Mayor).",
+        "autoria": "",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154226#pesquisa"
+      },
+      {
+        "data": "2026-10-21 08:40:17",
+        "titulo": "RESOLUÇÃO N.º 016/2026",
+        "ementa": "MODIFICA A RESOLUÇÃO Nº 01/2024, QUE DISPÕE SOBRE O REGIMENTO INTERNO DA CÂMARA MUNICIPAL DE PINDAMONHANGABA, PARA DISPOR SOBRE A ELABORAÇÃO E APROVAÇÃO DAS EMENDAS ORÇAMENTÁRIAS IMPOSITIVAS.\r\n(Projeto de Resolução n° 10/2026, de autoria da Mesa Diretora).",
+        "autoria": "",
+        "link": "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/154224#pesquisa"
+      }
+    ]
+  }
+}

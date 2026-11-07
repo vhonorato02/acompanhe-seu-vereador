@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { CamaraClient, ColetaError } from "@/lib/camara/client";
 
-function cliente(respostas: Array<{ status: number; body: string } | Error>) {
+function cliente(respostas: Array<{ status: number; body: string; retryAfter?: string } | Error>) {
   const urls: string[] = [];
   const pausas: number[] = [];
   const c = new CamaraClient({
@@ -14,7 +14,7 @@ function cliente(respostas: Array<{ status: number; body: string } | Error>) {
       const r = respostas.shift();
       if (!r) throw new Error("sem resposta");
       if (r instanceof Error) throw r;
-      return { status: r.status, text: async () => r.body };
+      return { status: r.status, text: async () => r.body, headers: { get: (k: string) => (k.toLowerCase() === "retry-after" ? (r.retryAfter ?? null) : null) } };
     },
   });
   return { c, urls, pausas };
@@ -66,4 +66,21 @@ describe("CamaraClient", () => {
     );
   });
 
+
+  it("em 429 espera o Retry-After (com teto) e tenta de novo", async () => {
+    const { c, urls, pausas } = cliente([{ status: 429, body: "", retryAfter: "7" }, { status: 200, body: "[2]" }]);
+    await expect(c.get("vereadores")).resolves.toEqual([2]);
+    expect(urls).toHaveLength(2);
+    expect(pausas).toContain(7000);
+  });
+
+  it("Retry-After absurdo é limitado a 60 s; 429 persistente falha", async () => {
+    const { c, pausas } = cliente([
+      { status: 429, body: "", retryAfter: "99999" },
+      { status: 429, body: "", retryAfter: "99999" },
+      { status: 429, body: "", retryAfter: "99999" },
+    ]);
+    await expect(c.get("vereadores")).rejects.toMatchObject({ kind: "http" });
+    expect(Math.max(...pausas)).toBeLessThanOrEqual(60_000);
+  });
 });
