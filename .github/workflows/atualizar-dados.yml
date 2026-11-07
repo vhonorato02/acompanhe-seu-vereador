@@ -1,7 +1,13 @@
-# Refreshes the public data twice a day without anyone opening the Vercel dashboard.
+# Refreshes the public data about twice a day without anyone opening the Vercel dashboard.
 # The collector only runs inside the Vercel production build (the Câmara token lives there),
 # so "updating" means starting a new production build with the build cache: the collection
 # is incremental (about 60 requests, about 2 minutes) and a full one happens every 30 days.
+#
+# Why hourly: GitHub delays or drops scheduled runs under load (the first 18h17 run of
+# 07/11/2026 never happened). Every hour a cheap check reads the published manifest and
+# only triggers a build when the collection is older than IDADE_MINIMA_H and this workflow
+# did not trigger one in the last INTERVALO_FALHA_H hours (so a failing Câmara is retried every few hours,
+# not every hour). A dropped run is therefore made up within the next hour.
 #
 # Trigger: the VERCEL_DEPLOY_HOOK_URL secret when it exists; otherwise a one-line commit to
 # .github/atualizacao-agendada, authored by the owner so the Vercel Git integration builds it.
@@ -10,8 +16,7 @@ name: atualizar-dados
 
 on:
   schedule:
-    # 06h17 and 18h17 in Brasília (UTC-3). Off the hour to avoid the scheduler rush.
-    - cron: "17 9,21 * * *"
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -25,9 +30,51 @@ env:
   SITE: https://acompanhe-seu-vereador.vercel.app
   # Job-level so the step `if` can see whether it is set; GitHub masks it in logs.
   HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+  IDADE_MINIMA_H: "11"
+  INTERVALO_FALHA_H: "3"
 
 jobs:
+  decidir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      disparar: ${{ steps.decisao.outputs.disparar }}
+    steps:
+      - name: Is a refresh due?
+        id: decisao
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENTO: ${{ github.event_name }}
+        run: |
+          if [ "$EVENTO" = "workflow_dispatch" ]; then
+            echo "Disparo manual: atualizar agora."; echo "disparar=1" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          agora=$(date -u +%s)
+          coletado=$(curl -sS -m 30 -A "atualizar-dados (+https://github.com/${GITHUB_REPOSITORY})" "$SITE/dados/manifesto.json" | jq -r '.execucao.coletadoEm // empty' 2>/dev/null || true)
+          if [ -z "$coletado" ]; then
+            # Unreadable manifest: do not hammer; the watchdog reports it.
+            echo "Manifesto ilegível agora; tento na próxima hora."; echo "disparar=0" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          idade_min=$(( (agora - $(date -u -d "$coletado" +%s)) / 60 ))
+          # Last time this workflow actually triggered a build (works with the hook or the commit).
+          ultimo=""
+          for id in $(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/atualizar-dados.yml/runs?per_page=12" --jq ".workflow_runs[] | select(.id != ${GITHUB_RUN_ID}) | .id" 2>/dev/null || true); do
+            ultimo=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$id/jobs" --jq '.jobs[] | select(.name == "disparar" and .conclusion != "skipped" and .started_at != null) | .started_at' 2>/dev/null | head -1 || true)
+            [ -n "$ultimo" ] && break
+          done
+          if [ -n "$ultimo" ]; then desde_ultimo_min=$(( (agora - $(date -u -d "$ultimo" +%s)) / 60 )); else desde_ultimo_min=999999; fi
+          echo "Coleta publicada há $((idade_min / 60)) h $((idade_min % 60)) min; último disparo há $((desde_ultimo_min / 60)) h."
+          if [ "$idade_min" -ge $(( IDADE_MINIMA_H * 60 )) ] && [ "$desde_ultimo_min" -ge $(( INTERVALO_FALHA_H * 60 )) ]; then
+            echo "disparar=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "Nada a fazer nesta hora."; echo "disparar=0" >> "$GITHUB_OUTPUT"
+          fi
+
   disparar:
+    needs: decidir
+    if: needs.decidir.outputs.disparar == '1'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:

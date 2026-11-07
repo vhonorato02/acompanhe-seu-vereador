@@ -32,7 +32,7 @@ export default function Metodologia() {
   return (
     <div className="prosa">
       <h1>Metodologia</h1>
-      <p className="soft" style={{ fontSize: "var(--step-1)" }}>
+      <p className="lede">
         Como o {SITE.nome} transforma os dados abertos da Câmara em números, e o que cada número quer e não quer dizer.
       </p>
 
@@ -44,7 +44,7 @@ export default function Metodologia() {
       <p>
         Última coleta: {dataColeta(d.execucao.coletadoEm)} ({modo}
         {d.execucao.requisicoes > 0 ? `, ${n(d.execucao.requisicoes)} consultas à API` : ""}). Os dados são atualizados
-        automaticamente duas vezes por dia, por volta das 6h e das 18h; entre uma coleta e outra, o portal mostra a fotografia da
+        automaticamente cerca de duas vezes por dia (a cada 12 horas, aproximadamente); entre uma coleta e outra, o portal mostra a fotografia da
         última coleta, com a data acima. Se uma coleta falhar, o site continua com a anterior e um aviso automático chega ao
         Observatório.
       </p>

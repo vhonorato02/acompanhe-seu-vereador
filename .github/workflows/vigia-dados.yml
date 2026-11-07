@@ -1,18 +1,20 @@
-# Daily watchdog for the public data. Reads the published manifest once and, when the
-# collection is older than 36 hours, carries warnings or cannot be read, opens (or updates)
-# an issue labelled "dados-desatualizados". GitHub e-mails the owner about new issues.
-# When everything is fine again, it closes the open issue with a note.
+# Watchdog for the public data, three times a day (GitHub may drop a scheduled run; three
+# chances keep a real outage from going unnoticed). Reads the published manifest and the VPS
+# copy once each and, when the collection is older than LIMITE_HORAS, carries warnings, cannot
+# be read, or the VPS copy is down or stale, opens (or updates) an issue labelled
+# "dados-desatualizados". GitHub e-mails the owner about new issues. When everything is fine
+# again, it closes the open issue with a note.
 name: vigia-dados
 
 on:
   schedule:
-    # 10h43 in Brasília, after the 06h refresh has had time to finish.
-    - cron: "43 13 * * *"
+    # 06h43, 14h43 and 22h43 in Brasília.
+    - cron: "43 1,9,17 * * *"
   workflow_dispatch:
     inputs:
       limite_horas:
         description: "Idade máxima da coleta, em horas (use 0 para testar a abertura da issue)"
-        default: "36"
+        default: "26"
 
 permissions:
   contents: read
@@ -21,7 +23,9 @@ permissions:
 env:
   SITE: https://acompanhe-seu-vereador.vercel.app
   ROTULO: dados-desatualizados
-  LIMITE_HORAS: ${{ inputs.limite_horas || '36' }}
+  # Refreshes run about every 12 h: 26 h means two missed in a row, plus margin.
+  LIMITE_HORAS: ${{ inputs.limite_horas || '26' }}
+  COPIA_VPS: https://vereador.zewithane.vps.brz.dev.br
 
 jobs:
   vigiar:
@@ -49,7 +53,18 @@ jobs:
             avisos=$(printf '%s' "$manifesto" | jq -r '.execucao.avisos // [] | .[] | "- Aviso da coleta: " + (if type == "string" then . else tojson end)')
             echo "Coleta publicada: $coletado (há $horas h $(( minutos % 60 )) min)"
             if [ "$minutos" -gt $(( LIMITE_HORAS * 60 )) ]; then
-              problemas="- A última coleta publicada é de $coletado, há $horas horas (limite: $LIMITE_HORAS h). A atualização das 06h e das 18h pode estar falhando."
+              problemas="- A última coleta publicada é de $coletado, há $horas horas (limite: $LIMITE_HORAS h). A atualização automática (workflow atualizar-dados) pode estar falhando."
+            fi
+            # The VPS copy mirrors the canonical site after each refresh.
+            vps=$(curl -sS -m 30 -A "vigia-dados (+https://github.com/${GITHUB_REPOSITORY})" "$COPIA_VPS/api/health" | jq -r '.coletadoEm // empty' 2>/dev/null || true)
+            if [ -z "$vps" ]; then
+              problemas=$(printf '%s\n%s' "$problemas" "- A cópia da VPS ($COPIA_VPS) não respondeu em /api/health." | sed '/^$/d')
+            else
+              atraso=$(( ( $(date -u -d "$coletado" +%s) - $(date -u -d "$vps" +%s) ) / 60 ))
+              echo "Cópia da VPS: coleta de $vps (atraso de $((atraso / 60)) h em relação à Vercel)"
+              if [ "$atraso" -gt $(( LIMITE_HORAS * 60 )) ]; then
+                problemas=$(printf '%s\n%s' "$problemas" "- A cópia da VPS está com a coleta de $vps, $((atraso / 60)) h atrás da Vercel (workflow deploy-vps)." | sed '/^$/d')
+              fi
             fi
             if [ -n "$avisos" ]; then
               problemas=$(printf '%s\n%s' "$problemas" "$avisos" | sed '/^$/d')

@@ -12,6 +12,7 @@ O coletor só roda no build de produção da Vercel, onde está o token da API d
 - `atualizar-dados.yml` (GitHub Actions) dispara um build de produção às 06h17 e 18h17 de Brasília e confirma, pelo manifesto público, que a coleta mudou.
 - Gatilho: deploy hook da Vercel (segredo `VERCEL_DEPLOY_HOOK_URL`) quando existir; enquanto não existir, um commit de uma linha em `.github/atualizacao-agendada`, com a identidade do dono, ignorado pelo CI.
 - `vigia-dados.yml` lê o manifesto 1x/dia e abre/atualiza/fecha uma issue `dados-desatualizados` (limite: 36 h ou qualquer aviso).
+- **Revisão de 07/11/2026 (noite):** o agendamento das 18h17 não rodou (o GitHub descarta execuções agendadas sob carga). O `atualizar-dados` passou a checar de hora em hora e só disparar com coleta de mais de 11 h e sem disparo nas últimas 3 h; o vigia passou a 3x/dia, limite de 26 h, conferindo também a cópia da VPS.
 
 ## Consequências
 

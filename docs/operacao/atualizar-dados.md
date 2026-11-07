@@ -6,23 +6,26 @@ Os dados vêm da API da Câmara e são coletados **no build de produção da Ver
 
 | Workflow | Quando | O que faz |
 |---|---|---|
-| `.github/workflows/atualizar-dados.yml` | 06h17 e 18h17 (Brasília) | Dispara o build de produção e espera até 33 min pela nova data no manifesto. Se não mudar, a execução falha (o GitHub avisa o dono por e-mail). |
-| `.github/workflows/vigia-dados.yml` | 10h43 (Brasília), 1x/dia | Lê `/dados/manifesto.json` uma vez. Se `coletadoEm` tiver mais de 36 h, se houver `avisos` ou se não conseguir ler, abre (ou comenta) uma issue com o rótulo `dados-desatualizados`. Quando tudo volta ao normal, fecha a issue. |
+| `.github/workflows/atualizar-dados.yml` | de hora em hora (minuto 17) | Lê o manifesto. Só dispara o build de produção se a coleta publicada tiver **mais de 11 h** e o próprio workflow não tiver disparado nas **últimas 3 h**; nos outros casos termina em segundos sem fazer nada. Na prática: uma coleta a cada ~12 h, e um horário descartado pelo GitHub é recuperado na hora seguinte. Quando dispara, espera até 33 min pela nova data no manifesto; se não mudar, a execução falha (o GitHub avisa o dono por e-mail). |
+| `.github/workflows/vigia-dados.yml` | 06h43, 14h43 e 22h43 (Brasília) | Lê `/dados/manifesto.json` e o `/api/health` da cópia da VPS. Abre (ou comenta) uma issue `dados-desatualizados` se a coleta tiver mais de **26 h** (duas atualizações perdidas), se houver `avisos`, se não conseguir ler, ou se a VPS estiver fora do ar ou mais de 26 h atrás. Quando tudo volta ao normal, fecha a issue. |
+| `.github/workflows/deploy-vps.yml` | depois de cada `atualizar-dados` bem-sucedido e de cada push de código | Espelha os dados da Vercel na cópia da VPS. |
+
+**Por que de hora em hora.** O GitHub atrasa ou descarta execuções agendadas quando está sob carga: a primeira execução das 18h17 de 07/11/2026 simplesmente não aconteceu. Com uma checagem barata por hora, um horário perdido não deixa os dados meio dia atrasados. A trava de 3 h impede que uma Câmara fora do ar seja consultada de hora em hora.
 
 **Como o build é disparado.** Se o segredo `VERCEL_DEPLOY_HOOK_URL` existir no repositório, o workflow chama o deploy hook. Sem ele (situação atual), faz um commit de uma linha em `.github/atualizacao-agendada`, assinado com a identidade do dono, e a integração Git da Vercel constrói a `main`. O CI (`quality-gates`) ignora esse arquivo, então o commit não gasta execução de CI. Os dois caminhos usam o cache de build.
 
-Para trocar para o deploy hook (recomendado, evita dois commits por dia no histórico): Vercel → projeto **acompanhe-seu-vereador** → Settings → Git → **Deploy Hooks** → nome `atualizar-dados`, branch `main` → copie a URL → GitHub → repositório → Settings → Secrets and variables → Actions → **New repository secret** `VERCEL_DEPLOY_HOOK_URL`. Nada mais muda.
+Para trocar para o deploy hook (recomendado, evita os commits de atualização no histórico): Vercel → projeto **acompanhe-seu-vereador** → Settings → Git → **Deploy Hooks** → nome `atualizar-dados`, branch `main` → copie a URL → GitHub → repositório → Settings → Secrets and variables → Actions → **New repository secret** `VERCEL_DEPLOY_HOOK_URL`. Nada mais muda.
 
 **Rodar agora:** GitHub → Actions → `atualizar-dados` → **Run workflow**.
 
 ### Limites do plano gratuito (conferidos em 07/11/2026)
 
-| Recurso | Limite Hobby (Vercel) | Uso com 2 builds/dia |
+| Recurso | Limite Hobby (Vercel) | Uso com ~2 builds/dia |
 |---|---|---|
 | Deploys por dia | 100 | 2 (+ pushes de código) |
 | Builds por hora | 100 | ≤ 1 |
 | Duração de um build | 45 min | ≈ 2–4 min (completa ≈ 10 min) |
-| Deploy hooks | 60 disparos/hora | 2/dia |
+| Deploy hooks | 60 disparos/hora | ~2/dia (no máximo 1 a cada 3 h) |
 | Transformações de imagem | 5 mil/mês | redeploy **não** invalida o cache de imagens (a chave é o hash do arquivo); só fotos novas geram transformações |
 | GitHub Actions | ilimitado em repositório público | ≈ 2 × 10 min + 1 × 1 min por dia |
 
