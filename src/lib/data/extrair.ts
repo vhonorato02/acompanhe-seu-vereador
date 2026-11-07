@@ -1,44 +1,137 @@
+import { NAO_E_BAIRRO, VARIANTES_BAIRRO } from "../content/bairros";
 import { normalizar, slugify } from "./derive";
 
-/** Neighbourhoods named in the summary text ("no bairro Araretama", "distrito de Moreira César"). Derived. */
-const RE_BAIRRO =
-  /\b(?:bairros?|distrito de)\s+((?:[A-ZÁÉÍÓÚÂÊÔÃÕÇ][\wÀ-ÿ'’.-]*|I{1,3}|IV|V)(?:\s+(?:d[aeo]s?|e)?\s*(?:[A-ZÁÉÍÓÚÂÊÔÃÕÇ][\wÀ-ÿ'’.-]*|I{1,3}|IV|V)){0,4})/g;
+/*
+ * Neighbourhoods named in the summary text ("no Bairro Araretama", "nos bairros Pasin e
+ * Mantiqueira", "distrito de Moreira César"). Derived information: the Câmara does not
+ * classify records by neighbourhood.
+ */
+const GATILHO = /\b(bairros?|distrito\s+de)\b/giu;
+const ARTIGO = new Set(["de", "do", "da", "dos", "das"]);
+/** Words that end a place name (compared without accents, in lower case). */
+const FIM = new Set([
+  "a", "o", "as", "os", "ao", "aos", "na", "no", "nas", "nos", "em", "entre", "proximo", "proxima", "onde", "que", "para",
+  "pelo", "pela", "com", "sendo", "junto", "perto", "atras", "frente", "conforme", "ate", "pois", "visando", "devido",
+  "tendo", "sentido", "altura", "rua", "avenida", "av", "estrada", "travessa", "praca", "regiao", "area", "rodovia",
+  "referido", "referida", "citado", "citada", "mesmo", "mesma", "inteiro", "todo", "toda", "localizado", "localizada",
+  "localizados", "localizadas", "situado", "situada", "solicitando", "solicito", "sobre", "conhecido", "conhecida",
+  "questao", "cujo", "cuja", "seja", "sejam", "e", "ou", "x", "se", "nao", "apos", "visto", "pois",
+]);
+/** Words after which the next word belongs to the name even in lower case ("Santa luzia"). */
+const PREFIXO = new Set([
+  "santa", "santo", "sao", "vila", "jardim", "parque", "alto", "cidade", "residencial", "nova", "novo", "boa", "bela",
+  "bom", "campo", "portal", "terra", "chacara", "chacaras", "loteamento", "conjunto", "recanto", "nossa", "senhora",
+]);
+const ROMANO = /^(?:i{1,3}|iv|v|vi{1,3})$/i;
+const MAX_PALAVRAS = 6;
 
-const NAO_BAIRRO = new Set(["de", "do", "da", "dos", "das"]);
+const PARA_CANONICO = new Map<string, string>(
+  VARIANTES_BAIRRO.flatMap((g) => [g.nome, ...g.variantes].map((v) => [slugify(v), g.nome] as const)),
+);
+const BLOQUEADOS = new Set(NAO_E_BAIRRO.map(slugify));
 
-export function bairrosDe(texto: string): string[] {
-  const achados = new Map<string, string>();
-  for (const m of texto.matchAll(RE_BAIRRO)) {
-    const bruto = m[1];
-    if (!bruto) continue;
-    const prefixo = /distrito de/i.test(m[0]) ? "Distrito de " : "";
-    // Cut at the end of a sentence and split "Morumbi I e Morumbi II" into two places.
-    const frase = bruto.split(/\.(?:\s|$)/)[0] ?? "";
-    for (const parte of frase.split(/\s+e\s+(?=[A-ZÁÉÍÓÚÂÊÔÃÕÇ])/)) {
-      const nome = parte
-        .replace(/[.,;:]+$/, "")
-        .replace(/\s+(?:e|d[aeo]s?)$/i, "")
-        .replace(/^Nossa Sra\.?/i, "Nossa Senhora")
-        .trim();
-      if (nome.length < 3 || NAO_BAIRRO.has(nome.toLowerCase())) continue;
-      const canon = canonico(`${prefixo}${nome}`);
-      achados.set(slugify(canon), canon);
-    }
-  }
-  return [...achados.values()];
+const maiuscula = (p: string) => /^[\p{Lu}\d]/u.test(p) || ROMANO.test(p);
+
+function caudaMinuscula(cauda: readonly string[]): boolean {
+  return cauda.length > 0 && cauda.length <= 3 && cauda.every((w) => ARTIGO.has(normalizar(w)) || !FIM.has(normalizar(w)));
 }
 
-/** Title-case with pt-BR particles in lower case; merges spelling variants by slug. */
+/** Reads one place name from the start of `trecho`; returns null when no name starts there. */
+function lerNome(trecho: string, permitirArtigo = true): string | null {
+  const palavras = trecho.trim().split(/\s+/).filter(Boolean);
+  const nome: string[] = [];
+  let i = 0;
+  let aposArtigo = false;
+  if (permitirArtigo && palavras[0] && ARTIGO.has(normalizar(palavras[0]))) {
+    i = 1;
+    aposArtigo = true;
+  }
+  for (; i < palavras.length && nome.length < MAX_PALAVRAS; i++) {
+    const p = (palavras[i] ?? "").replace(/^["“'(]+|["”')]+$/g, "");
+    const n = normalizar(p);
+    if (!p) break;
+    if (nome.length === 0) {
+      if (FIM.has(n) || ARTIGO.has(n)) break;
+      if (!maiuscula(p) && !aposArtigo) break;
+      nome.push(p);
+      continue;
+    }
+    if (ARTIGO.has(n)) {
+      // A particle belongs to the name only when a capitalised word follows ("Parque das Nações").
+      const prox = palavras[i + 1];
+      if (prox && maiuscula(prox) && !FIM.has(normalizar(prox))) {
+        nome.push(n);
+        continue;
+      }
+      if (caudaMinuscula(palavras.slice(i))) {
+        nome.push(...palavras.slice(i));
+        break;
+      }
+      break;
+    }
+    if (FIM.has(n)) break;
+    const anterior = normalizar(nome[nome.length - 1] ?? "");
+    if (maiuscula(p) || PREFIXO.has(anterior)) {
+      nome.push(p);
+      continue;
+    }
+    // "Bairro Ouro verde.", "Bairro Terra dos ipês 2.": a short lower-case tail that ends the clause.
+    if (caudaMinuscula(palavras.slice(i))) nome.push(...palavras.slice(i));
+    break;
+  }
+  return nome.length > 0 ? nome.join(" ") : null;
+}
+
 function canonico(nome: string): string {
-  return nome
+  const titulo = nome
+    .replace(/^(?:Loteamento|Bairro)\s+/i, "")
+    .replace(/\s+([1-5])$/, (_, d: string) => ` ${["I", "II", "III", "IV", "V"][Number(d) - 1]}`)
     .split(/\s+/)
     .map((p, i) => {
       const b = p.toLocaleLowerCase("pt-BR");
       if (i > 0 && ["de", "do", "da", "dos", "das", "e"].includes(b)) return b;
-      if (/^(i{1,3}|iv|v)$/i.test(p)) return p.toUpperCase();
+      if (ROMANO.test(p)) return p.toUpperCase();
+      if (/^[A-Z]{2,5}$/.test(p)) return p; // acronyms such as CDHU
       return b.charAt(0).toLocaleUpperCase("pt-BR") + b.slice(1);
     })
     .join(" ");
+  return PARA_CANONICO.get(slugify(titulo)) ?? titulo;
+}
+
+export function bairrosDe(texto: string): string[] {
+  const achados = new Map<string, string>();
+  const guardar = (bruto: string | null, prefixo: string) => {
+    if (!bruto) return;
+    const nome = canonico(`${prefixo}${bruto}`);
+    const slug = slugify(nome);
+    if (slug.length < 3 || BLOQUEADOS.has(slug) || /^(?:zona|regiao)(?:-|$)/.test(slug)) return;
+    achados.set(slug, nome);
+  };
+  for (const m of texto.matchAll(GATILHO)) {
+    const gatilho = normalizar(m[1] ?? "");
+    const inicio = (m.index ?? 0) + m[0].length;
+    // The name ends at the end of the sentence, a bracket, a slash or a dash.
+    const resto = texto.slice(inicio).replace(/Nossa Sra\.?/gi, "Nossa Senhora").split(/[.;:!?()\n/–—]\s|[;:()\n/–—]|\.$/)[0] ?? "";
+    if (gatilho.startsWith("distrito")) {
+      guardar(lerNome(resto.split(",")[0] ?? "", false), "Distrito de ");
+    } else if (gatilho === "bairros") {
+      // "nos bairros Feital, Vista Alegre e Terra Nova": one name per item, stop at the first non-name.
+      for (const [n, item] of resto.split(/,\s*|\s+e\s+/).entries()) {
+        const nome = lerNome(item, n === 0);
+        if (!nome) break;
+        guardar(nome, "");
+      }
+    } else {
+      const trecho = (resto.split(",")[0] ?? "").replace(/\bResidencial e Comercial\b/gi, "Residencial_e_Comercial");
+      // "Morumbi I e Morumbi II": two places joined by "e".
+      for (const parte of trecho.split(/\s+e\s+(?=[\p{Lu}])/u)) {
+        const nome = lerNome(parte);
+        if (!nome) break;
+        guardar(nome.replace(/_/g, " "), "");
+      }
+    }
+  }
+  return [...achados.values()];
 }
 
 /** Who a request is addressed to, from the opening words of the summary. Derived. */

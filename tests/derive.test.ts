@@ -84,3 +84,30 @@ describe("apelidos", () => {
     expect(r.autoresVereadores).toEqual(["norberto-moraes", "rogerio-ramos"]);
   });
 });
+
+describe("entidades HTML vindas da API", () => {
+  it("converte &quot; e &#39; em caracteres na ementa, no título e na autoria", () => {
+    const r = toRegistro(
+      {
+        data: "2026-05-01 10:00:00",
+        titulo: "PROJETO DE LEI N.º 10/2026",
+        ementa: "Institui o programa &quot;Farmácia Pet Solidária&quot; e o &#39;Dia D&#39; &amp; outros",
+        autoria: "Marco Mayor",
+        link: "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/9#pesquisa",
+      },
+      "Projetos-de-Lei-Ordinaria",
+      mapaVereadores(vereadores),
+    );
+    expect(r.ementa).toBe("Institui o programa \"Farmácia Pet Solidária\" e o 'Dia D' & outros");
+  });
+
+  it("não interpreta marcação: só troca entidades conhecidas", () => {
+    expect(
+      toRegistro(
+        { data: "2026-05-01 10:00:00", titulo: "X N.º 1/2026", ementa: "a &lt;b&gt; &#x41; &foo;", autoria: "", link: "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/8" },
+        "Requerimentos",
+        new Map(),
+      ).ementa,
+    ).toBe("a <b> A &foo;");
+  });
+});

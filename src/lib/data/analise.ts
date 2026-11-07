@@ -1,7 +1,7 @@
 import { slugify } from "./derive";
 import { derivados } from "./enriquecer";
 import { DESTINOS, GRUPOS, projetoDeOrigem, type Grupo } from "./extrair";
-import { contar, type Filtro } from "./query";
+import { contar, type Contexto, type Filtro } from "./query";
 import { TEMAS } from "./temas";
 import type { Dataset, Norma, Registro } from "./types";
 
@@ -76,31 +76,35 @@ export function porTema(registros: readonly Registro[], base: Filtro = {}): Cont
     .sort((x, y) => y.n - x.n || x.nome.localeCompare(y.nome, "pt-BR"));
 }
 
+/** Display name for a neighbourhood slug: the spelling used most often (ties: alphabetical). */
+function nomeMaisUsado(grafias: Map<string, number> | undefined, slug: string): string {
+  if (!grafias) return slug;
+  return [...grafias.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "pt-BR"))[0]?.[0] ?? slug;
+}
+
 export function porBairro(registros: readonly Registro[], base: Filtro = {}, minimo = MIN_BAIRRO): Conta[] {
-  const nomes = new Map<string, string>();
+  const nomes = new Map<string, Map<string, number>>();
   const cont = new Map<string, number>();
   for (const r of registros) {
     const dv = derivados(r);
     dv.bairros.forEach((nome, i) => {
       const s = dv.bairrosSlug[i] ?? slugify(nome);
-      if (!nomes.has(s)) nomes.set(s, nome);
+      const grafias = nomes.get(s) ?? new Map<string, number>();
+      grafias.set(nome, (grafias.get(nome) ?? 0) + 1);
+      nomes.set(s, grafias);
       cont.set(s, (cont.get(s) ?? 0) + 1);
     });
   }
   return [...cont.entries()]
     .filter(([, n]) => n >= minimo)
-    .map(([slug, n]) => ({ slug, nome: nomes.get(slug) ?? slug, n, filtro: { ...base, bairro: slug } }))
+    .map(([slug, n]) => ({ slug, nome: nomeMaisUsado(nomes.get(slug), slug), n, filtro: { ...base, bairro: slug } }))
     .sort((x, y) => y.n - x.n || x.nome.localeCompare(y.nome, "pt-BR"));
 }
 
-export function porDestino(registros: readonly Registro[]): Array<{ slug: string; nome: string; n: number }> {
-  const cont = new Map<string, number>();
-  for (const r of registros) {
-    const d = derivados(r).destino;
-    if (d) cont.set(d, (cont.get(d) ?? 0) + 1);
-  }
+export function porDestino(registros: readonly Registro[], base: Filtro = {}): Conta[] {
   return [...DESTINOS.map((d) => ({ slug: d.slug as string, nome: d.nome as string })), { slug: "outros", nome: "Outros" }]
-    .map((d) => ({ ...d, n: cont.get(d.slug) ?? 0 }))
+    .map((d) => ({ ...d, filtro: { ...base, destino: d.slug } }))
+    .map((d) => ({ ...d, n: contar(registros, d.filtro) }))
     .filter((d) => d.n > 0);
 }
 
@@ -122,7 +126,7 @@ export function pares(registros: readonly Registro[]): Par[] {
 }
 
 /** Bills whose number is cited in a law's summary ("Projeto de Lei n° 148/2026"). Derived. */
-export function projetosQueViraramLei(d: Dataset): ProjetoLei[] {
+export function projetosQueViraramLei(d: Pick<Dataset, "proposicoes" | "normas">): ProjetoLei[] {
   const porChave = new Map(d.proposicoes.map((p) => [`${p.tipo}:${p.numero}/${p.ano}`, p]));
   const out: ProjetoLei[] = [];
   for (const lei of d.normas) {
@@ -134,20 +138,42 @@ export function projetosQueViraramLei(d: Dataset): ProjetoLei[] {
   return out;
 }
 
-export interface Funil {
-  autor: "vereadores" | "executivo" | "outros";
-  apresentados: number;
-  viraramLei: number;
+const memoViraram = new WeakMap<object, ReadonlySet<string>>();
+
+/** Keys `${tipo}:${id}` of bills cited as the origin of a law (derived). Memoised per dataset. */
+export function idsQueViraramLei(d: Pick<Dataset, "proposicoes" | "normas">): ReadonlySet<string> {
+  const hit = memoViraram.get(d);
+  if (hit) return hit;
+  const ids = new Set(projetosQueViraramLei(d).map((v) => `${v.projeto.tipo}:${v.projeto.id}`));
+  memoViraram.set(d, ids);
+  return ids;
 }
 
-export function funilLeis(d: Dataset, viraram: readonly ProjetoLei[]): Funil[] {
-  const quem = (r: Registro): Funil["autor"] =>
-    r.autoresVereadores.length > 0 ? "vereadores" : /poder executivo/i.test(r.autoria) ? "executivo" : "outros";
-  const proj = d.proposicoes.filter((p) => PROJETOS.includes(p.tipo));
-  const ids = new Set(viraram.filter((v) => PROJETOS.includes(v.projeto.tipo)).map((v) => `${v.projeto.tipo}:${v.projeto.id}`));
+export function contexto(d: Pick<Dataset, "proposicoes" | "normas">): Contexto {
+  return { viraramLei: idsQueViraramLei(d) };
+}
+
+export interface Funil {
+  autor: "vereadores" | "executivo";
+  apresentados: number;
+  viraramLei: number;
+  filtroApresentados: Filtro;
+  filtroViraramLei: Filtro;
+}
+
+/** Ordinary bills by who presented them, and how many are already cited by a law. Same filters as the lists. */
+export function funilLeis(d: Pick<Dataset, "proposicoes" | "normas">): Funil[] {
+  const ctx = contexto(d);
   return (["vereadores", "executivo"] as const).map((autor) => {
-    const deles = proj.filter((p) => quem(p) === autor);
-    return { autor, apresentados: deles.length, viraramLei: deles.filter((p) => ids.has(`${p.tipo}:${p.id}`)).length };
+    const filtroApresentados: Filtro = { tipo: "Projetos-de-Lei-Ordinaria", origem: autor };
+    const filtroViraramLei: Filtro = { ...filtroApresentados, lei: true };
+    return {
+      autor,
+      apresentados: contar(d.proposicoes, filtroApresentados, ctx),
+      viraramLei: contar(d.proposicoes, filtroViraramLei, ctx),
+      filtroApresentados,
+      filtroViraramLei,
+    };
   });
 }
 

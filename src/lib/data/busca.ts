@@ -1,5 +1,5 @@
 import { normalizar } from "./derive";
-import { filtrar, ordenar, type Filtro } from "./query";
+import { filtrar, ordenar, type Contexto, type Filtro } from "./query";
 import type { Registro, Vereador } from "./types";
 
 /** Words people type for each type of document. */
@@ -49,9 +49,9 @@ export function vereadoresQueCasam(q: string, vereadores: readonly Vereador[]): 
   return vereadores.filter((v) => normalizar(`${v.nome} ${v.partido}`).includes(n) || n.includes(normalizar(v.nome)));
 }
 
-export function buscar<T extends Registro>(registros: readonly T[], q: string, extra: Filtro = {}): T[] {
+export function buscar<T extends Registro>(registros: readonly T[], q: string, extra: Filtro = {}, ctx: Contexto = {}): T[] {
   const c = interpretar(q);
-  const base = filtrar(registros, { ...extra, tipo: extra.tipo ?? c.tipo, q: c.texto || undefined });
+  const base = filtrar(registros, { ...extra, tipo: extra.tipo ?? c.tipo, q: c.texto || undefined }, ctx);
   const porNumero =
     c.numero !== undefined
       ? base.filter((r) => r.numero === c.numero && (c.ano === undefined || r.ano === c.ano))

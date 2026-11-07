@@ -4,11 +4,11 @@ import { Icon } from "@/components/Icon";
 import { Feed } from "@/components/Item";
 import { Avatar } from "@/components/Rosto";
 import { CURTO } from "@/lib/content/tipos";
-import { GRUPOS } from "@/lib/data/extrair";
+import { contexto, porBairro } from "@/lib/data/analise";
+import { DESTINOS, GRUPOS } from "@/lib/data/extrair";
 import { tema as temaPorSlug } from "@/lib/data/temas";
 import { buscar } from "@/lib/data/busca";
-import { derivados } from "@/lib/data/enriquecer";
-import { contar, hrefLista, lerFiltro, paginar, type Filtro } from "@/lib/data/query";
+import { contar, hrefLista, lerFiltro, paginar, paramsDoFiltro, type Filtro } from "@/lib/data/query";
 import type { Dataset, Registro } from "@/lib/data/types";
 import { n, nomeMes } from "@/lib/format";
 
@@ -35,15 +35,16 @@ export function PaginaLista({
   const tipos = d.tipos.filter((t) => t.grupo === grupo);
   const f = lerFiltro(searchParams, new Set(tipos.map((t) => t.contract)), new Set(d.vereadores.map((v) => v.slug)));
   const { pagina, ...filtro } = f;
+  const ctx = contexto(d);
   // Smart search (numbers, type words) when there is a query; plain filter otherwise.
-  const resultado = buscar(registros, filtro.q ?? "", { ...filtro, q: undefined });
+  const resultado = buscar(registros, filtro.q ?? "", { ...filtro, q: undefined }, ctx);
   const pag = paginar(resultado, pagina, POR_PAGINA);
   const anos = [...new Set(registros.map((r) => r.ano).filter((a): a is number => a !== null))].sort((a, b) => b - a);
   const autor = d.vereadores.find((v) => v.slug === filtro.autor);
   const nomeBairro = filtro.bairro ? bairroNome(registros, filtro.bairro) : undefined;
   const semTipo: Filtro = { ...filtro, tipo: undefined };
   const contaTipo = (tipo?: string) =>
-    filtro.q ? buscar(registros, filtro.q, { ...semTipo, q: undefined, tipo }).length : contar(registros, { ...semTipo, tipo });
+    filtro.q ? buscar(registros, filtro.q, { ...semTipo, q: undefined, tipo }, ctx).length : contar(registros, { ...semTipo, tipo }, ctx);
   const tiposComConta = tipos.map((t) => ({ t, c: contaTipo(t.contract) })).filter((x) => x.c > 0 || x.t.contract === filtro.tipo);
 
   return (
@@ -60,9 +61,7 @@ export function PaginaLista({
         <div className="busca-campo">
           <Icon nome="buscar" />
           <input id="q" name="q" type="search" defaultValue={filtro.q ?? ""} placeholder="Bairro, assunto, número" enterKeyHint="search" />
-          {filtro.tipo && <input type="hidden" name="tipo" value={filtro.tipo} />}
-          {filtro.ano && <input type="hidden" name="ano" value={filtro.ano} />}
-          {filtro.autor && <input type="hidden" name="autor" value={filtro.autor} />}
+          <CamposOcultos filtro={filtro} exceto={["q"]} />
           <button type="submit">Buscar</button>
         </div>
       </form>
@@ -119,6 +118,26 @@ export function PaginaLista({
             {GRUPOS.find((g) => g.slug === filtro.grupo)?.nome ?? filtro.grupo} ✕
           </Link>
         )}
+        {filtro.destino && (
+          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, destino: undefined })} aria-label="Remover filtro de destinatário">
+            Pedido a: {nomeDestino(filtro.destino)} ✕
+          </Link>
+        )}
+        {filtro.conjunto && (
+          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, conjunto: undefined })} aria-label="Remover filtro de coautoria">
+            Assinadas por mais de um vereador ✕
+          </Link>
+        )}
+        {filtro.origem && (
+          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, origem: undefined })} aria-label="Remover filtro de autoria">
+            {filtro.origem === "executivo" ? "Autoria do Poder Executivo" : "Com vereador em exercício entre os autores"} ✕
+          </Link>
+        )}
+        {filtro.lei && (
+          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, lei: undefined })} aria-label="Remover filtro de projetos citados em lei">
+            Citados como origem de uma lei ✕
+          </Link>
+        )}
         {filtro.pub && (
           <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, pub: undefined })} aria-label="Remover filtro de mês">
             Publicadas em {nomeMes(Number(filtro.pub.slice(5, 7)), true)} de {filtro.pub.slice(0, 4)} ✕
@@ -131,8 +150,7 @@ export function PaginaLista({
           <Icon nome="filtro" tamanho={18} /> Mais filtros
         </summary>
         <form className="form-filtros" action={base} method="get">
-          {filtro.q && <input type="hidden" name="q" value={filtro.q} />}
-          {filtro.tipo && <input type="hidden" name="tipo" value={filtro.tipo} />}
+          <CamposOcultos filtro={filtro} exceto={grupo === "proposicao" ? ["ano", "autor"] : ["ano"]} />
           <div>
             <label htmlFor="ano">Ano do número</label>
             <select id="ano" name="ano" defaultValue={filtro.ano ? String(filtro.ano) : ""}>
@@ -209,11 +227,22 @@ export function PaginaLista({
   );
 }
 
+function CamposOcultos({ filtro, exceto }: { filtro: Filtro; exceto: readonly string[] }) {
+  return (
+    <>
+      {paramsDoFiltro(filtro)
+        .filter(([k]) => !exceto.includes(k))
+        .map(([k, v]) => (
+          <input key={k} type="hidden" name={k} value={v} />
+        ))}
+    </>
+  );
+}
+
+function nomeDestino(slug: string): string {
+  return DESTINOS.find((x) => x.slug === slug)?.nome ?? (slug === "outros" ? "outros destinatários" : slug);
+}
+
 function bairroNome(registros: readonly Registro[], slug: string): string | undefined {
-  for (const r of registros) {
-    const dv = derivados(r);
-    const i = dv.bairrosSlug.indexOf(slug);
-    if (i >= 0) return dv.bairros[i];
-  }
-  return undefined;
+  return porBairro(registros, {}, 1).find((b) => b.slug === slug)?.nome;
 }

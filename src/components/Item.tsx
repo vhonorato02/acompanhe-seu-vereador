@@ -1,13 +1,17 @@
 import Link from "next/link";
 import { Icon, iconeDoTipo } from "./Icon";
 import { Avatar } from "./Rosto";
+import { APELIDOS } from "@/lib/content/apelidos";
 import { legivel, nomeItem } from "@/lib/content/tipos";
+import { normalizar } from "@/lib/data/derive";
 import { dataCurta } from "@/lib/format";
 import type { Registro, Vereador } from "@/lib/data/types";
 
 export function Item({ r, porSlug }: { r: Registro; porSlug: ReadonlyMap<string, Vereador> }) {
   const vereadores = r.autoresVereadores.map((s) => porSlug.get(s)).filter((v): v is Vereador => v !== undefined);
-  const outros = r.autores.filter((a) => !vereadores.some((v) => v.nome === a));
+  // Names already shown as a linked councillor (including older parliamentary names) are not repeated.
+  const conhecidos = new Set(vereadores.flatMap((v) => [v.nome, ...(APELIDOS[v.slug] ?? [])].map(normalizar)));
+  const outros = r.autores.filter((a) => !conhecidos.has(normalizar(a)));
   return (
     <article className="item">
       <span className="item-ico">

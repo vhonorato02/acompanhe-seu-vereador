@@ -1,6 +1,9 @@
 import { normalizar } from "./derive";
 import { derivados } from "./enriquecer";
+import { DESTINOS } from "./extrair";
 import type { Registro } from "./types";
+
+const DESTINOS_VALIDOS = new Set<string>([...DESTINOS.map((d) => d.slug), "outros"]);
 
 export interface Filtro {
   tipo?: string;
@@ -19,14 +22,30 @@ export interface Filtro {
   grupo?: string;
   /** Publication month, "YYYY-MM". */
   pub?: string;
+  /** Derived addressee slug of a request (see extrair.ts). */
+  destino?: string;
+  /** Signed by more than one sitting councillor. */
+  conjunto?: true;
+  /** Who presented it: at least one sitting councillor, or the Executive (and no sitting councillor). */
+  origem?: "vereadores" | "executivo";
+  /** Bill cited as the origin of a published law (derived; needs `Contexto.viraramLei`). */
+  lei?: true;
+}
+
+/** Dataset-wide facts that a single record cannot know about itself. */
+export interface Contexto {
+  /** Keys `${tipo}:${id}` of bills cited as the origin of a law. */
+  viraramLei?: ReadonlySet<string>;
 }
 
 /**
  * The single filter used both for the lists and for every count shown on the site,
  * so a published number always equals the length of the list it links to.
  */
-export function filtrar<T extends Registro>(registros: readonly T[], f: Filtro): T[] {
+export function filtrar<T extends Registro>(registros: readonly T[], f: Filtro, ctx: Contexto = {}): T[] {
   const termos = f.q ? normalizar(f.q).split(" ").filter(Boolean) : [];
+  const viraram = ctx.viraramLei;
+  if (f.lei && !viraram) throw new Error("O filtro 'lei' precisa do conjunto de projetos ligados a leis (Contexto.viraramLei).");
   return registros.filter((r) => {
     if (f.tipo && r.tipo !== f.tipo) return false;
     if (f.ano !== undefined && r.ano !== f.ano) return false;
@@ -34,11 +53,16 @@ export function filtrar<T extends Registro>(registros: readonly T[], f: Filtro):
     if (f.autor && !r.autoresVereadores.includes(f.autor)) return false;
     if (f.coautor && !r.autoresVereadores.includes(f.coautor)) return false;
     if (f.pub && r.data.slice(0, 7) !== f.pub) return false;
-    if (f.tema || f.bairro || f.grupo) {
+    if (f.conjunto && r.autoresVereadores.length < 2) return false;
+    if (f.origem === "vereadores" && r.autoresVereadores.length === 0) return false;
+    if (f.origem === "executivo" && (r.autoresVereadores.length > 0 || !/poder executivo/i.test(r.autoria))) return false;
+    if (f.lei && !viraram?.has(`${r.tipo}:${r.id}`)) return false;
+    if (f.tema || f.bairro || f.grupo || f.destino) {
       const dv = derivados(r);
       if (f.tema && !dv.temas.includes(f.tema)) return false;
       if (f.bairro && !dv.bairrosSlug.includes(f.bairro)) return false;
       if (f.grupo && dv.grupo !== f.grupo) return false;
+      if (f.destino && dv.destino !== f.destino) return false;
     }
     if (termos.length > 0) {
       const alvo = normalizar(`${r.titulo} ${r.ementa} ${r.autoria}`);
@@ -48,8 +72,8 @@ export function filtrar<T extends Registro>(registros: readonly T[], f: Filtro):
   });
 }
 
-export function contar(registros: readonly Registro[], f: Filtro): number {
-  return filtrar(registros, f).length;
+export function contar(registros: readonly Registro[], f: Filtro, ctx: Contexto = {}): number {
+  return filtrar(registros, f, ctx).length;
 }
 
 /** Newest first; ties broken by number, then id, so the order is stable. */
@@ -73,18 +97,31 @@ export function paginar<T>(xs: readonly T[], pagina: number, porPagina: number) 
   };
 }
 
+/** Query-string pairs for a filter, in a stable order (shared by links and hidden form fields). */
+export function paramsDoFiltro(f: Filtro): Array<[string, string]> {
+  const p: Array<[string, string]> = [];
+  const por = (k: string, v: string | number | undefined) => {
+    if (v !== undefined && v !== "") p.push([k, String(v)]);
+  };
+  por("tipo", f.tipo);
+  por("ano", f.ano);
+  por("mes", f.mes);
+  por("autor", f.autor);
+  por("coautor", f.coautor);
+  por("q", f.q);
+  por("tema", f.tema);
+  por("bairro", f.bairro);
+  por("grupo", f.grupo);
+  por("pub", f.pub);
+  por("destino", f.destino);
+  if (f.conjunto) p.push(["conjunto", "1"]);
+  por("origem", f.origem);
+  if (f.lei) p.push(["lei", "1"]);
+  return p;
+}
+
 export function hrefLista(base: "/proposicoes" | "/normas", f: Filtro, pagina?: number): string {
-  const p = new URLSearchParams();
-  if (f.tipo) p.set("tipo", f.tipo);
-  if (f.ano !== undefined) p.set("ano", String(f.ano));
-  if (f.mes !== undefined) p.set("mes", String(f.mes));
-  if (f.autor) p.set("autor", f.autor);
-  if (f.coautor) p.set("coautor", f.coautor);
-  if (f.q) p.set("q", f.q);
-  if (f.tema) p.set("tema", f.tema);
-  if (f.bairro) p.set("bairro", f.bairro);
-  if (f.grupo) p.set("grupo", f.grupo);
-  if (f.pub) p.set("pub", f.pub);
+  const p = new URLSearchParams(paramsDoFiltro(f));
   if (pagina && pagina > 1) p.set("pagina", String(pagina));
   const s = p.toString();
   return s ? `${base}?${s}` : base;
@@ -111,6 +148,8 @@ export function lerFiltro(
     return v && /^[a-z0-9-]{2,80}$/.test(v) ? v : undefined;
   };
   const pagina = Number(um("pagina"));
+  const destino = um("destino");
+  const origem = um("origem");
   return {
     tipo: tipo && tiposValidos.has(tipo) ? tipo : undefined,
     ano: Number.isInteger(ano) && ano >= 1900 && ano <= 2100 ? ano : undefined,
@@ -122,6 +161,10 @@ export function lerFiltro(
     bairro: slug("bairro"),
     grupo: slug("grupo"),
     pub: /^\d{4}-\d{2}$/.test(um("pub") ?? "") ? um("pub") : undefined,
+    destino: destino && DESTINOS_VALIDOS.has(destino) ? destino : undefined,
+    conjunto: um("conjunto") === "1" ? true : undefined,
+    origem: origem === "vereadores" || origem === "executivo" ? origem : undefined,
+    lei: um("lei") === "1" ? true : undefined,
     pagina: Number.isInteger(pagina) && pagina > 0 ? pagina : 1,
   };
 }

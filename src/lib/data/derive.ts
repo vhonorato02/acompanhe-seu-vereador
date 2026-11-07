@@ -12,6 +12,22 @@ export function normalizar(texto: string): string {
     .trim();
 }
 
+const ENTIDADES: Record<string, string> = { quot: '"', apos: "'", amp: "&", lt: "<", gt: ">", nbsp: " " };
+
+/**
+ * The API sends some text HTML-escaped ("&quot;"). Decode the few entities it uses so the
+ * text reads as published; unknown entities are left untouched. React escapes on render.
+ */
+export function decodificarEntidades(texto: string): string {
+  return texto.replace(/&(#x[0-9a-f]{1,6}|#\d{1,7}|[a-z]+);/gi, (inteira, corpo: string) => {
+    if (corpo.startsWith("#")) {
+      const cp = corpo[1] === "x" || corpo[1] === "X" ? parseInt(corpo.slice(2), 16) : parseInt(corpo.slice(1), 10);
+      return Number.isInteger(cp) && cp > 0 && cp <= 0x10ffff ? String.fromCodePoint(cp) : inteira;
+    }
+    return ENTIDADES[corpo.toLowerCase()] ?? inteira;
+  });
+}
+
 export function slugify(texto: string): string {
   return normalizar(texto)
     .replace(/[^a-z0-9]+/g, "-")
@@ -63,17 +79,18 @@ export function toVereador(v: VereadorApi, foto: string | null): Vereador {
 export function toRegistro(p: ProposicaoApi, tipo: string, vereadores: Map<string, string>): Registro {
   const id = idDoLink(p.link);
   if (id === null) throw new Error(`Link sem id numérico: ${p.link}`);
-  const autores = separarAutores(p.autoria);
+  const autoria = decodificarEntidades(p.autoria);
+  const autores = separarAutores(autoria);
   const autoresVereadores = unique(
     autores.map((a) => vereadores.get(normalizar(a))).filter((s): s is string => s !== undefined),
   );
   return {
     id,
     tipo,
-    titulo: p.titulo.trim(),
+    titulo: decodificarEntidades(p.titulo).trim(),
     ...numeroAno(p.titulo),
-    ementa: p.ementa.replace(/\r\n?/g, "\n").trim(),
-    autoria: p.autoria.trim(),
+    ementa: decodificarEntidades(p.ementa).replace(/\r\n?/g, "\n").trim(),
+    autoria: autoria.trim(),
     autores,
     autoresVereadores,
     data: p.data,

@@ -22,19 +22,19 @@ export const TEMAS: Tema[] = [
     slug: "iluminacao",
     nome: "Iluminação",
     descricao: "Lâmpadas, postes e iluminação pública.",
-    termos: /\b(ilumina\w*|lampada\w*|poste\w*|luminaria\w*|reator\w*|led)\b/,
+    termos: /\b(ilumina\w*|lampada\w*|poste(?:s|amento)?|luminaria\w*|reator\w*|led)\b/,
   },
   {
     slug: "limpeza-e-meio-ambiente",
     nome: "Limpeza e meio ambiente",
     descricao: "Roçada, poda, capina, limpeza, lixo, entulho, árvores e áreas verdes.",
-    termos: /\b(meio ambiente|ambienta\w*|ecologic\w*|lixeira\w*|reciclage\w*|rocad\w*|roca\w*|poda\w*|capina\w*|mato\w*|limpeza\w*|entulho\w*|lixo\w*|coleta de lixo|varricao|corte de arvore\w*|supressao de arvore\w*|arvore\w*)\b/,
+    termos: /\b(meio ambiente|ambienta\w*|ecologic\w*|lixeira\w*|reciclage\w*|rocad\w*|roca\w*|poda\w*|capina\w*|mato|matagal\w*|limpeza\w*|entulho\w*|lixo\w*|coleta de lixo|varricao|corte de arvore\w*|supressao de arvore\w*|arvore\w*)\b/,
   },
   {
     slug: "agua-esgoto-drenagem",
     nome: "Água, esgoto e drenagem",
     descricao: "Sabesp, vazamentos, esgoto, galerias, bueiros e alagamentos.",
-    termos: /\b(sabesp|esgoto\w*|vazament\w*|agua\w*|pluvia\w*|drenage\w*|bueiro\w*|galeria\w*|bocas? de lobo|alagament\w*|enchente\w*|enxurrada\w*|saneamento|corrego\w*|canalizacao)\b/,
+    termos: /\b(sabesp|esgoto\w*|vazament\w*|aguas?|pluvia\w*|drenage\w*|bueiro\w*|galeria\w*|bocas? de lobo|alagament\w*|enchente\w*|enxurrada\w*|saneamento|corrego\w*|canalizacao)\b/,
   },
   {
     slug: "transito-e-transporte",
@@ -46,7 +46,7 @@ export const TEMAS: Tema[] = [
     slug: "saude",
     nome: "Saúde",
     descricao: "UBS, hospitais, médicos, remédios e vacinas.",
-    termos: /\b(saude|ubs|hospita\w*|medic\w*|remedio\w*|vacina\w*|posto de saude|pronto.?socorro|upa|samu|consulta\w*|exame\w*|dengue|enfermag\w*)\b/,
+    termos: /\b(saude|ubs|hospita\w*|medic(?!ao|oes)\w*|remedio\w*|vacina\w*|posto de saude|pronto.?socorro|upa|samu|consultas?(?! publica)|exame\w*|dengue|enfermag\w*)\b/,
   },
   {
     slug: "educacao",
@@ -58,7 +58,7 @@ export const TEMAS: Tema[] = [
     slug: "esporte-lazer-cultura",
     nome: "Esporte, lazer e cultura",
     descricao: "Praças, quadras, parques, eventos e cultura.",
-    termos: /\b(parque infantil|centro comunitari\w*|centro de convivencia|praca\w*|quadra\w*|campo de futebol|esport\w*|lazer|parquinho\w*|playground|academia ao ar livre|cultur\w*|evento\w*|festa\w*|biblioteca\w*|teatro)\b/,
+    termos: /\b(parque infantil|centro comunitari\w*|centro de convivencia|praca\w*|quadras?|campo de futebol|esport\w*|lazer|parquinho\w*|playground|academia ao ar livre|cultur\w*|evento\w*|festa\w*|biblioteca\w*|teatro)\b/,
   },
   {
     slug: "assistencia-social",
@@ -76,7 +76,7 @@ export const TEMAS: Tema[] = [
     slug: "animais",
     nome: "Animais",
     descricao: "Castração, abandono, zoonoses e bem-estar animal.",
-    termos: /\b(anima\w*|cao|caes|cachorro\w*|gato\w*|castracao\w*|zoonose\w*|pet\w*|cavalo\w*|equino\w*|veterinari\w*)\b/,
+    termos: /\b(anima\w*|cao|caes|cachorro\w*|gato\w*|castracao\w*|zoonose\w*|(?<!garrafas? )pets?|cavalo\w*|equino\w*|veterinari\w*)\b/,
   },
   {
     slug: "homenagens",

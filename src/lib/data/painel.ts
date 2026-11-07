@@ -19,7 +19,7 @@ function calcular(d: Dataset) {
     destinos: porDestino(d.proposicoes),
     pares: pares(d.proposicoes),
     viraram,
-    funil: funilLeis(d, viraram),
+    funil: funilLeis(d),
   };
 }
 
