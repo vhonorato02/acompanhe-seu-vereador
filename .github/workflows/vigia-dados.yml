@@ -43,10 +43,12 @@ jobs:
             problemas="- Não consegui ler $SITE/dados/manifesto.json (resposta vazia, erro ou desafio anti-robô)."
           else
             coletado=$(printf '%s' "$manifesto" | jq -r '.execucao.coletadoEm')
-            horas=$(( ( $(date -u +%s) - $(date -u -d "$coletado" +%s) ) / 3600 ))
+            # Compared in minutes so limite_horas=0 also catches a collection under an hour old.
+            minutos=$(( ( $(date -u +%s) - $(date -u -d "$coletado" +%s) ) / 60 ))
+            horas=$(( minutos / 60 ))
             avisos=$(printf '%s' "$manifesto" | jq -r '.execucao.avisos // [] | .[] | "- Aviso da coleta: " + (if type == "string" then . else tojson end)')
-            echo "Coleta publicada: $coletado (há $horas h)"
-            if [ "$horas" -gt "$LIMITE_HORAS" ]; then
+            echo "Coleta publicada: $coletado (há $horas h $(( minutos % 60 )) min)"
+            if [ "$minutos" -gt $(( LIMITE_HORAS * 60 )) ]; then
               problemas="- A última coleta publicada é de $coletado, há $horas horas (limite: $LIMITE_HORAS h). A atualização das 06h e das 18h pode estar falhando."
             fi
             if [ -n "$avisos" ]; then
