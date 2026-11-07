@@ -1,10 +1,10 @@
-# Câmara à Vista — Pindamonhangaba
+# Acompanhe seu Vereador — Pindamonhangaba
 
 Portal independente do **Observatório Social do Brasil – Pindamonhangaba** para acompanhar o que os vereadores de Pindamonhangaba apresentam na Câmara Municipal (legislatura 2025–2028). Cada número leva à lista que o compõe, e cada item leva ao documento oficial.
 
-**Endereço:** https://camara-a-vista.vercel.app (o antigo `acompanhe-seu-vereador.vercel.app` redireciona para cá).
+**Endereço:** https://acompanhe-seu-vereador.vercel.app.
 
-Não é o site oficial da Câmara e não republica seus documentos: mostra título, ementa, autoria e data, com link para o original. Até novembro de 2026 se chamava “Acompanhe seu Vereador” ([ADR 0001](docs/adr/0001-nome-camara-a-vista.md)).
+Não é o site oficial da Câmara e não republica seus documentos: mostra título, ementa, autoria e data, com link para o original. Identidade do projeto: [ADR 0001](docs/adr/0001-identidade-do-projeto.md).
 
 ## Como funciona
 
@@ -16,7 +16,7 @@ Não é o site oficial da Câmara e não republica seus documentos: mostra títu
 
 ## Atualizar os dados (a cada 15 dias)
 
-Vercel → projeto **camara-a-vista** → **Deployments** → no deploy de produção mais recente, **⋯ → Redeploy** (deixe “Use existing Build Cache” marcado). Em cerca de 5 minutos o rodapé de cada página mostra a nova data de coleta. Se o deploy falhar, o site antigo continua no ar e o log diz o motivo.
+Vercel → projeto **acompanhe-seu-vereador** → **Deployments** → no deploy de produção mais recente, **⋯ → Redeploy** (deixe “Use existing Build Cache” marcado). Em cerca de 5 minutos o rodapé de cada página mostra a nova data de coleta. Se o deploy falhar, o site antigo continua no ar e o log diz o motivo.
 
 ## Desenvolvimento
 

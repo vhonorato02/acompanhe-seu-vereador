@@ -64,10 +64,10 @@ test.describe("SEO, compartilhamento e cabeçalhos", () => {
     for (const rota of ["/", "/vereadores", "/vereadores/marco-mayor", "/bairros", "/metodologia", "/dados"]) {
       await page.goto(rota);
       const titulo = await page.title();
-      expect(titulo).toContain("Câmara à Vista");
+      expect(titulo).toContain("Acompanhe seu Vereador");
       titulos.add(titulo);
       const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
-      expect(canonical, rota).toBe(`https://camara-a-vista.vercel.app${rota === "/" ? "" : rota}`);
+      expect(canonical, rota).toBe(`https://acompanhe-seu-vereador.vercel.app${rota === "/" ? "" : rota}`);
       expect(await page.locator('meta[name="description"]').getAttribute("content")).toBeTruthy();
       expect(await page.locator('meta[property="og:image"]').first().getAttribute("content")).toMatch(/^https:\/\//);
     }
@@ -78,12 +78,12 @@ test.describe("SEO, compartilhamento e cabeçalhos", () => {
 
   test("robots, sitemap e manifest", async ({ request }) => {
     const robots = await (await request.get("/robots.txt")).text();
-    expect(robots).toContain("Sitemap: https://camara-a-vista.vercel.app/sitemap.xml");
+    expect(robots).toContain("Sitemap: https://acompanhe-seu-vereador.vercel.app/sitemap.xml");
     const sitemap = await (await request.get("/sitemap.xml")).text();
-    expect(sitemap).toContain("<loc>https://camara-a-vista.vercel.app/vereadores/marco-mayor</loc>");
+    expect(sitemap).toContain("<loc>https://acompanhe-seu-vereador.vercel.app/vereadores/marco-mayor</loc>");
     expect(sitemap).not.toContain("/api/");
     const manifest = (await (await request.get("/manifest.webmanifest")).json()) as { name: string; icons: Array<{ src: string; purpose?: string }> };
-    expect(manifest.name).toContain("Câmara à Vista");
+    expect(manifest.name).toContain("Acompanhe seu Vereador");
     for (const i of manifest.icons) expect((await request.get(i.src)).status(), i.src).toBe(200);
     expect(manifest.icons.some((i) => i.purpose === "maskable")).toBe(true);
   });

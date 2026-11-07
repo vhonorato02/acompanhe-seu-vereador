@@ -1,8 +1,8 @@
 {
-  "name": "camara-a-vista",
-  "version": "0.2.0",
+  "name": "acompanhe-seu-vereador",
+  "version": "0.2.1",
   "private": true,
-  "description": "Câmara à Vista: portal independente do Observatório Social do Brasil – Pindamonhangaba para acompanhar o que os vereadores de Pindamonhangaba apresentam na Câmara.",
+  "description": "Acompanhe seu Vereador: portal independente do Observatório Social do Brasil – Pindamonhangaba para acompanhar o que os vereadores de Pindamonhangaba apresentam na Câmara.",
   "license": "MIT",
   "engines": {
     "node": "24.x"

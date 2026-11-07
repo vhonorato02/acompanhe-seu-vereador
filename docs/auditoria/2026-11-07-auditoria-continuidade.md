@@ -43,9 +43,9 @@ Prioridade pela chance de induzir o cidadão ao erro. P1 = muda o significado de
 | B21 | P3 | Sem página de privacidade nem créditos de fotos/fontes | `/sobre` | Seção de privacidade e créditos | revisão | — | corrigido |
 | B22 | P3 | Apelido antigo de vereador podia aparecer duplicado na autoria | `Item.tsx` | Compara nome normalizado e apelidos | revisão | 0 casos no snapshot atual | corrigido |
 
-## Troca de nome: “Acompanhe seu Vereador” → **Câmara à Vista**
+## Identidade
 
-O portal mostra a Câmara inteira (pedidos, projetos, leis, bairros), não só vereadores, e o repositório (`obs-vereador`), o pacote e o site tinham nomes diferentes. Decisão e detalhes em [ADR 0001](../adr/0001-nome-camara-a-vista.md). Identidade centralizada em `src/lib/site.ts`.
+Nome, endereço e repositório padronizados como **Acompanhe seu Vereador — Pindamonhangaba** (`acompanhe-seu-vereador.vercel.app`, `vhonorato02/acompanhe-seu-vereador`), centralizados em `src/lib/site.ts`. [ADR 0001](../adr/0001-identidade-do-projeto.md).
 
 ## Testes executados (exit codes)
 

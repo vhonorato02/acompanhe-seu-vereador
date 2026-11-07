@@ -16,10 +16,6 @@ export default function Sobre() {
         O {SITE.nome} é um projeto independente do {SITE.organizacao} para que qualquer pessoa possa ver, em poucos toques, o que
         os vereadores da cidade apresentaram na Câmara, e conferir cada número no documento oficial.
       </p>
-      <p>
-        Até novembro de 2026 o portal se chamava “Acompanhe seu Vereador”. O nome mudou para deixar claro que ele mostra a Câmara
-        inteira (pedidos, projetos, leis, bairros), sempre à vista do documento original.
-      </p>
 
       <h2>Princípios</h2>
       <ul>

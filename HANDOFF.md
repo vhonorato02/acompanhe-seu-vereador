@@ -1,13 +1,13 @@
-# HANDOFF — Câmara à Vista (ex-Acompanhe seu Vereador)
+# HANDOFF — Acompanhe seu Vereador (Pindamonhangaba)
 
 > Arquivo de continuidade entre sessões. Atualize ao fim de cada bloco de trabalho.
-> Última atualização: 07/11/2026 (auditoria de continuidade, versão 0.2.0, troca de nome).
+> Última atualização: 07/11/2026 (auditoria de continuidade, versão 0.2.0; nome e endereço padronizados).
 
 ## Onde estamos
 
-- **Produção:** https://camara-a-vista.vercel.app — o endereço antigo `acompanhe-seu-vereador.vercel.app` redireciona (308).
-- **Vercel:** projeto `camara-a-vista` (id `prj_tduqr6ZAVAtyEGz5mJJ5JgbTOaZe`, time `team_43xSvVJZ9lHuy6K7NNxlMhXG`), Node 24.x, branch de produção `main`.
-- **GitHub:** `vhonorato02/camara-a-vista` (o nome antigo `obs-vereador` redireciona). Branch padrão: `main` (corrigida em 06/11).
+- **Produção:** https://acompanhe-seu-vereador.vercel.app.
+- **Vercel:** projeto `acompanhe-seu-vereador` (id `prj_tduqr6ZAVAtyEGz5mJJ5JgbTOaZe`, time `team_43xSvVJZ9lHuy6K7NNxlMhXG`), Node 24.x, branch de produção `main`.
+- **GitHub:** `vhonorato02/acompanhe-seu-vereador` (antes `obs-vereador`; o GitHub redireciona). Branch padrão: `main` (corrigida em 06/11).
 - Trabalho direto na `main`, sem PR, por decisão do dono — mas cada push dispara uma coleta real na Vercel: rode `npm test`, `npm run build` e `npm run test:e2e` antes.
 - Publicação desta versão, SHA, deployment e coleta: ver “Última publicação” abaixo.
 - Auditorias: [ciclo 1](docs/auditoria/2026-11-04-ciclo-1.md) e [ciclo 2 — continuidade](docs/auditoria/2026-11-07-auditoria-continuidade.md).
@@ -18,14 +18,14 @@
 |---|---|
 | Versão | 0.2.0 (sem tag `stable`; motivos na auditoria) |
 | Commit da coleta | `f31b3be` na `main` |
-| Deployment | `dpl_GL98fDVSwhskN26Qzd4mrKDzQvGF`, READY, alias `camara-a-vista.vercel.app` e `acompanhe-seu-vereador.vercel.app` |
+| Deployment | `dpl_GL98fDVSwhskN26Qzd4mrKDzQvGF`, READY, alias `acompanhe-seu-vereador.vercel.app` |
 | Coleta | 07/11/2026 00h33 (Brasília), **completa**, 384 consultas, 9 min 43 s, nenhum aviso |
 | Totais | **17.205 proposições, 407 normas, 11 vereadores** (05/11: 17.196 / 403 / 11) |
 | Por que completa | o cache de build não foi reaproveitado depois da troca de Node/dependências; a próxima tende a ser incremental |
 | CI | `quality-gates` verde no commit `f31b3be` (run 42333636433), incluindo E2E no Linux |
-| Smoke em produção | 30 testes E2E (`E2E_URL=https://camara-a-vista.vercel.app`) verdes: número = lista em bairros, destinatários e funil, dados abertos = manifesto, axe, SEO, cabeçalhos |
+| Smoke em produção | 30 testes E2E (`E2E_URL=https://acompanhe-seu-vereador.vercel.app`) verdes: número = lista em bairros, destinatários e funil, dados abertos = manifesto, axe, SEO, cabeçalhos |
 
-O commit seguinte (redirecionamento 308 do endereço antigo, feito no `next.config.ts`) gera mais um deploy; confira o mais recente na Vercel.
+
 
 ## Decisões do dono (24/10/2026, valem até nova decisão)
 
@@ -35,7 +35,7 @@ O commit seguinte (redirecionamento 308 do endereço antigo, feito no `next.conf
 4. Sem votações e sem presença.
 5. **Atualização quinzenal feita pelo dono**: Vercel → Deployments → produção → ⋯ → Redeploy (com build cache).
 6. Implementar e publicar direto na `main`.
-7. (07/11/2026) Nome **Câmara à Vista** — [ADR 0001](docs/adr/0001-nome-camara-a-vista.md).
+7. (07/11/2026) Nome **Acompanhe seu Vereador — Pindamonhangaba**, do Observatório Social do Brasil – Pindamonhangaba; endereço `acompanhe-seu-vereador.vercel.app` — [ADR 0001](docs/adr/0001-identidade-do-projeto.md).
 
 ## Arquitetura
 
@@ -63,7 +63,7 @@ Para rodar o E2E localmente sem encher o C:, instale os navegadores no Z: (`PLAY
 
 ## Rollback
 
-1. Vercel → projeto `camara-a-vista` → Deployments → escolha o último deployment de produção íntegro → ⋯ → **Promote to Production** (ou “Instant Rollback”). Funciona no plano gratuito.
+1. Vercel → projeto `acompanhe-seu-vereador` → Deployments → escolha o último deployment de produção íntegro → ⋯ → **Promote to Production** (ou “Instant Rollback”). Funciona no plano gratuito.
 2. Referências: `dpl_ALemJf7XU5NhA4wq34WZURUQheCo` (SHA `703c11c`, coleta de 05/11, nome antigo) é o último deployment anterior a esta versão.
 3. Para desfazer código: `git revert` dos commits na `main` (nunca force push).
 
@@ -72,13 +72,13 @@ Para rodar o E2E localmente sem encher o C:, instale os navegadores no Z: (`PLAY
 1. **Contato sem GitHub:** confirmar com o Observatório um e-mail ativo e preencher `contatoEmail` em `src/lib/site.ts`. O único achado (`pindamonhangaba@osbrasil.org.br`, relatório de 2021) não foi confirmado, e o site `pindamonhangaba.osbrasil.org.br` não respondia em 06/11.
 2. Teste em aparelho físico (Android/One UI e iPhone) e com leitor de tela real (TalkBack/VoiceOver) — só houve emulação.
 3. Confirmar com quem conhece a cidade nomes de bairro parecidos ainda separados (“Andrade” × “Residencial Andrade”, “Ipê” × “Ipê I”, “Morumbi” × “Jardim Morumbi”) e acrescentar em `src/lib/content/bairros.ts`.
-4. Opcional: renomear a pasta local `Z:\Dev\projetos\obs-vereador` e a pasta do Google Drive para o novo nome (fora do repositório; ajustar o projeto no T3 Code junto).
+4. Opcional: renomear a pasta local `Z:\Dev\projetos\obs-vereador` para `acompanhe-seu-vereador` (fora do repositório; ajustar o projeto no T3 Code junto).
 5. Evoluções fora do escopo atual (exigem decisão do dono): despesas/diárias/emendas (SIAPE/TCE), histórico 2021–2024, votações e presença.
 
 ## Limites de segurança (não contornar)
 
 - Nunca contornar o anti-robô da Câmara; o coletor para se o detectar.
-- Sem proxy de terceiros, sem variar User-Agent; o coletor se identifica como `CamaraAVista/1.0`.
+- Sem proxy de terceiros, sem variar User-Agent; o coletor se identifica como `AcompanheSeuVereador/1.1`.
 - Token só na Vercel; nunca em commit, log ou chat.
 
 ## Identidade Git

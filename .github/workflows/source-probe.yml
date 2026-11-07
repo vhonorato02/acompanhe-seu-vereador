@@ -20,7 +20,7 @@ jobs:
         run: curl -sS -m 15 https://ipinfo.io/json | grep -E '"(ip|city|country|org)"' || true
       - name: Reach official sources
         run: |
-          UA="CamaraAVista-probe/0.1 (+https://github.com/${GITHUB_REPOSITORY})"
+          UA="AcompanheSeuVereador-probe/0.2 (+https://github.com/${GITHUB_REPOSITORY})"
           for url in \
             "https://www.pindamonhangaba.sp.leg.br/" \
             "https://www.pindamonhangaba.sp.leg.br/jsonweb/web-rss.php" \

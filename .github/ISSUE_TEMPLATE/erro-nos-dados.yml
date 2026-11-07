@@ -11,7 +11,7 @@ body:
     id: pagina
     attributes:
       label: Endereço da página do portal
-      placeholder: https://camara-a-vista.vercel.app/vereadores/...
+      placeholder: https://acompanhe-seu-vereador.vercel.app/vereadores/...
     validations:
       required: true
   - type: textarea

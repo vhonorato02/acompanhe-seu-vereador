@@ -1,4 +1,4 @@
-# CLAUDE.md — Câmara à Vista (ex-Acompanhe seu Vereador)
+# CLAUDE.md — Acompanhe seu Vereador (Pindamonhangaba)
 
 Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** para o cidadão acompanhar a Câmara Municipal de Pindamonhangaba-SP e seus vereadores. Substitui um Power BI de contagens manuais.
 
@@ -6,7 +6,7 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 
 ## Fase atual
 
-**0.2.0 em produção** em https://camara-a-vista.vercel.app (Vercel, branch `main`). O dono autorizou trabalhar direto em produção na `main`; valide antes (testes + E2E) porque cada push dispara coleta real. Nome e endereço centralizados em `src/lib/site.ts` (ADR 0001). Arquitetura real e próximos passos em `HANDOFF.md`; pesquisa em `docs/research/`.
+**0.2.0 em produção** em https://acompanhe-seu-vereador.vercel.app (Vercel, branch `main`). O dono autorizou trabalhar direto em produção na `main`; valide antes (testes + E2E) porque cada push dispara coleta real. Nome e endereço centralizados em `src/lib/site.ts` (ADR 0001). Arquitetura real e próximos passos em `HANDOFF.md`; pesquisa em `docs/research/`.
 
 ## Decisões do dono do projeto (24/10/2026)
 
@@ -68,6 +68,11 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 ## Ferramentas do Claude Code
 
 Superpowers (planejamento, TDD, debugging, verificação), frontend-design e Playwright MCP estão habilitados no escopo do projeto. Use `superpowers:brainstorming` antes de trabalho criativo, `superpowers:writing-plans` antes de implementar e `superpowers:verification-before-completion` antes de declarar algo pronto. Use o MCP Context7 para documentação atual de bibliotecas.
+
+## Chats no T3
+
+- **Acompanhe seu Vereador — Atualização de dados:** quando o pedido for “atualize os dados”, siga `docs/operacao/atualizar-dados.md` e não altere código.
+- **Acompanhe seu Vereador — Manutenção e auditoria:** correções, design, auditorias e versões. Atualize `HANDOFF.md` e `docs/auditoria/` ao fim de cada rodada.
 
 ## Comandos
 

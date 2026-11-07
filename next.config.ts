@@ -39,13 +39,6 @@ const config: NextConfig = {
   },
   async redirects() {
     return [
-      // Old address (the portal was called "Acompanhe seu Vereador"): keep shared links working.
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "acompanhe-seu-vereador.vercel.app" }],
-        destination: "https://camara-a-vista.vercel.app/:path*",
-        permanent: true,
-      },
       // The privacy section lives in /sobre.
       { source: "/privacidade", destination: "/sobre#privacidade", permanent: true },
     ];
