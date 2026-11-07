@@ -11,13 +11,15 @@ export function Rosto({ v, prioridade = false }: { v: Vereador; prioridade?: boo
       <ViewTransition name={`foto-${v.slug}`}>
         <div className="rosto-foto">
           {v.foto ? (
-            <Image src={v.foto} alt="" fill sizes="(min-width: 52rem) 12rem, 45vw" priority={prioridade} />
+            <Image src={v.foto} alt="" fill sizes="(min-width: 52rem) 8rem, 30vw" priority={prioridade} />
           ) : null}
-          {papel && <span className="papel">{papel}</span>}
         </div>
       </ViewTransition>
       <div className="rosto-nome">{v.nome}</div>
-      <div className="rosto-partido">{v.partido}</div>
+      <div className="rosto-partido">
+        {v.partido}
+        {papel ? `, ${papel.toLowerCase()}` : ""}
+      </div>
     </Link>
   );
 }

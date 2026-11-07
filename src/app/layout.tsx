@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
-import { Marca } from "@/components/Icon";
 import { NavTopo, TabBar } from "@/components/Navegacao";
 import { SITE, URL_REPORTAR_ERRO } from "@/lib/site";
 import "./globals.css";
@@ -24,8 +23,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f3f6f2" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f1813" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
 };
 
@@ -39,11 +38,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header className="topbar">
           <div className="page">
             <Link href="/" className="marca">
-              <Marca />
-              <span>
-                {SITE.nome}
-                <small>{SITE.cidade} · projeto independente</small>
-              </span>
+              {SITE.nome}
+              <small>{SITE.cidade} · Observatório Social do Brasil</small>
             </Link>
             <NavTopo />
           </div>

@@ -53,7 +53,7 @@ export function Rede({ nos, pares, inicial = null }: { nos: No[]; pares: Array<{
               y1={a.y}
               x2={b.x}
               y2={b.y}
-              stroke={sel && ativo ? "var(--g1)" : "var(--rede-linha)"}
+              stroke={sel && ativo ? "var(--green)" : "var(--rede-linha)"}
               strokeWidth={0.5 + Math.pow(p.n / max, 1.4) * 8}
               strokeLinecap="round"
               opacity={ativo ? (sel ? 0.95 : 0.12 + 0.75 * Math.pow(p.n / max, 1.2)) : 0.05}
@@ -66,11 +66,11 @@ export function Rede({ nos, pares, inicial = null }: { nos: No[]; pares: Array<{
           const r = sel === v.slug ? 22 : 18;
           return (
             <g key={v.slug} className="rede-no" onClick={() => setSel(sel === v.slug ? null : v.slug)}>
-              <circle cx={p.x} cy={p.y} r={r + 2.5} fill={sel === v.slug ? "var(--g1)" : "var(--surface)"} />
+              <circle cx={p.x} cy={p.y} r={r + 2.5} fill={sel === v.slug ? "var(--green)" : "var(--bg)"} />
               {v.foto ? (
                 <image href={`/_next/image?url=${encodeURIComponent(v.foto)}&w=96&q=75`} x={p.x - r} y={p.y - r} width={r * 2} height={r * 2} clipPath={`url(#clip-${v.slug})`} preserveAspectRatio="xMidYMin slice" />
               ) : (
-                <circle cx={p.x} cy={p.y} r={r} fill="var(--sunken)" />
+                <circle cx={p.x} cy={p.y} r={r} fill="var(--fill-2)" />
               )}
             </g>
           );

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Icon } from "./Icon";
 
 const ABAS = [
-  { href: "/", rotulo: "Panorama", icone: "inicio", ativo: (p: string) => p === "/" },
+  { href: "/", rotulo: "Início", icone: "inicio", ativo: (p: string) => p === "/" },
   { href: "/vereadores", rotulo: "Vereadores", icone: "pessoas", ativo: (p: string) => p.startsWith("/vereadores") || p.startsWith("/comparar") },
   { href: "/bairros", rotulo: "Bairros", icone: "mapa", ativo: (p: string) => p.startsWith("/bairros") },
   { href: "/buscar", rotulo: "Buscar", icone: "buscar", ativo: (p: string) => p.startsWith("/buscar") || p.startsWith("/proposicoes") || p.startsWith("/normas") },

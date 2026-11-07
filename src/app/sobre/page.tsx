@@ -56,12 +56,12 @@ export default function Sobre() {
       <h2 id="creditos">Fotos, textos e código</h2>
       <ul>
         <li>
-          <strong>Fotos dos vereadores:</strong> retratos oficiais publicados pela Câmara Municipal de Pindamonhangaba, usados sem
-          edição (apenas enquadradas para caber na tela), para identificar cada parlamentar. Crédito: Câmara Municipal de Pindamonhangaba.
+          <strong>Fotos dos vereadores:</strong> retratos oficiais publicados pela Câmara Municipal de Pindamonhangaba, exibidos em
+          preto e branco e enquadrados em círculo, iguais para todos, para identificar cada parlamentar sem destacar ninguém. Crédito: Câmara Municipal de Pindamonhangaba.
         </li>
         <li><strong>Dados:</strong> Câmara Municipal de Pindamonhangaba, API de Dados Abertos. Cite a fonte ao reutilizar.</li>
         <li><strong>Marca e ícones:</strong> desenhados para o portal, sem uso de brasão ou logotipo oficial.</li>
-        <li><strong>Fontes tipográficas:</strong> Bricolage Grotesque e Atkinson Hyperlegible Next, licença SIL Open Font License.</li>
+        <li><strong>Tipografia:</strong> a fonte do próprio aparelho (San Francisco no iPhone, Segoe no Windows, Roboto no Android); nada é baixado de terceiros.</li>
         <li>
           <strong>Código:</strong> aberto, licença MIT, em <a href={SITE.repositorio}>{SITE.repositorio.replace("https://", "")}</a>.
         </li>

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Icon, iconeDoTipo } from "./Icon";
 import { Avatar } from "./Rosto";
 import { APELIDOS } from "@/lib/content/apelidos";
 import { legivel, nomeItem } from "@/lib/content/tipos";
@@ -14,9 +13,6 @@ export function Item({ r, porSlug }: { r: Registro; porSlug: ReadonlyMap<string,
   const outros = r.autores.filter((a) => !conhecidos.has(normalizar(a)));
   return (
     <article className="item">
-      <span className="item-ico">
-        <Icon nome={iconeDoTipo(r.tipo)} />
-      </span>
       <div className="item-topo">
         <a className="item-nome" href={r.link}>
           {nomeItem(r.tipo, r.numero, r.ano, r.titulo)}

@@ -107,13 +107,3 @@ export function iconeDoTipo(tipo: string): string {
 }
 
 /** Brand mark: a magnifier over a leaf, after the Observatório Social logo. */
-export function Marca() {
-  return (
-    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true" focusable="false">
-      <rect width="34" height="34" rx="10" fill="var(--forest)" />
-      <path d="M9 22c0-7 5-11.5 13-12-0.5 8-5 13-12 13z" fill="var(--leaf)" />
-      <circle cx="19.5" cy="15.5" r="5" fill="none" stroke="var(--sun)" strokeWidth="2.4" />
-      <path d="m23.2 19.2 3.6 3.6" stroke="var(--sun)" strokeWidth="2.6" strokeLinecap="round" />
-    </svg>
-  );
-}

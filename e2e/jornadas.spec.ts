@@ -22,9 +22,9 @@ async function itensDaLista(page: Page) {
 test.describe("jornadas do cidadão", () => {
   test("início → vereador → lista dele → documento oficial @cross", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("proposições apresentadas");
-    const cartao = page.locator(".cartoes-vereador a.cartao-v").first();
-    const nome = (await cartao.locator(".nome").textContent())?.trim() ?? "";
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("vereadores apresentam");
+    const cartao = page.locator(".galeria a.rosto").first();
+    const nome = (await cartao.locator(".rosto-nome").textContent())?.trim() ?? "";
     await cartao.click();
     await expect(page.getByRole("heading", { level: 1, name: nome })).toBeVisible();
 
@@ -62,12 +62,24 @@ test.describe("jornadas do cidadão", () => {
     expect(await totalDaLista(page)).toBe(total);
   });
 
-  test("coautoria: o percentual leva às proposições assinadas em conjunto", async ({ page }) => {
+  test("perfil: projetos citados como origem de lei levam à lista com o mesmo número", async ({ page }) => {
+    await page.goto("/proposicoes?tipo=Projetos-de-Lei-Ordinaria&origem=vereadores&lei=1");
+    const perfil = await page.locator(".feed .item-pe a").first().getAttribute("href");
+    await page.goto(perfil ?? "/");
+    const link = page.locator(".fato", { hasText: "origem de" }).locator("span a");
+    const n = numero(await link.textContent());
+    expect(n).toBeGreaterThan(0);
+    await link.click();
+    await expect(page).toHaveURL(/lei=1/);
+    expect(await totalDaLista(page)).toBe(n);
+  });
+
+  test("coautoria: o número leva às proposições assinadas em conjunto", async ({ page }) => {
     await page.goto("/proposicoes?conjunto=1");
     const perfil = await page.locator(".feed .item-pe a").first().getAttribute("href");
     await page.goto(perfil ?? "/");
     const fato = page.locator(".fato", { hasText: "assinadas junto" });
-    const n = numero((await fato.textContent())?.match(/\((\d[\d.]*)\)/)?.[1] ?? "");
+    const n = numero(await fato.locator("strong a").textContent());
     await fato.getByRole("link").click();
     await expect(page).toHaveURL(/conjunto=1/);
     await expect(page.getByText("Assinadas por mais de um vereador")).toBeVisible();

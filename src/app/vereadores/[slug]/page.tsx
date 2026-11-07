@@ -4,11 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ViewTransition } from "react";
 import { Fonte } from "@/components/Fonte";
-import { Barras, Colunas, Proporcao } from "@/components/graficos/Graficos";
-import { Rede } from "@/components/graficos/Rede";
+import { Barras } from "@/components/graficos/Graficos";
 import { Icon } from "@/components/Icon";
 import { Feed } from "@/components/Item";
 import { PainelVereador } from "@/components/PainelVereador";
+import { Avatar } from "@/components/Rosto";
 import { GLOSSARIO } from "@/lib/content/glossario";
 import { CURTO } from "@/lib/content/tipos";
 import { percent, percent1 } from "@/lib/data/analise";
@@ -38,6 +38,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+/** Laws shown before the rest fold away; keeps the profile short on a phone. */
+const LEIS_VISIVEIS = 3;
+
 export default async function PaginaVereador({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const p = panorama();
@@ -50,44 +53,47 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
   const pctPedidos = percent(x.grupos.find((g) => g.slug === "pedidos")?.n ?? 0, x.deles.length);
   const tema1 = x.temas[0];
   const bairro1 = x.bairros[0];
-  const leis = x.viraram.filter((y) => y.lei.tipo.startsWith("Leis"));
-  const leisDePL = x.leisDeProjetos.length;
-  const parceiros = p.pares
-    .filter((q) => q.a === v.slug || q.b === v.slug)
-    .sort((a, b) => b.n - a.n);
+  const leis = ordenar(x.viraram.filter((y) => y.lei.tipo.startsWith("Leis")).map((y) => y.lei));
+  const parceiros = p.pares.filter((q) => q.a === v.slug || q.b === v.slug).sort((a, b) => b.n - a.n);
   const parceiro = parceiros[0];
   const nomeDe = (s: string) => d.vereadores.find((y) => y.slug === s)?.nome ?? s;
 
   return (
     <>
+      <Link href="/vereadores" className="voltar">
+        Vereadores
+      </Link>
       <header className="perfil-hero">
         <ViewTransition name={`foto-${v.slug}`}>
           {v.foto ? (
             <div className="perfil-foto">
-              <Image src={v.foto} alt={`Foto oficial de ${v.nome}`} width={480} height={600} priority sizes="(min-width: 46rem) 17rem, 100vw" />
+              <Image src={v.foto} alt={`Foto oficial de ${v.nome}`} width={288} height={288} priority sizes="(min-width: 46rem) 9rem, 5.5rem" />
             </div>
           ) : (
             <div className="perfil-foto sem-foto" aria-hidden="true">
-              {v.nome.split(/\s+/).filter((p) => /^\p{Lu}/u.test(p)).slice(0, 2).map((p) => p[0]).join("")}
+              {v.nome
+                .split(/\s+/)
+                .filter((p) => /^\p{Lu}/u.test(p))
+                .slice(0, 2)
+                .map((p) => p[0])
+                .join("")}
             </div>
           )}
         </ViewTransition>
-        <div className="entrada">
+        <div>
           <h1 className="perfil-nome">{v.nome}</h1>
-          <div className="etiquetas">
-            <span className="etiqueta">{v.partido}</span>
-            {papel && <span className="etiqueta destaque">{papel}</span>}
-            <span className="etiqueta">Mandato 2025–2028</span>
-          </div>
-          <p className="small soft" style={{ marginTop: "0.85rem" }}>
-            {v.foto ? "Foto: Câmara Municipal. " : "Foto oficial indisponível nesta coleta. "}<a href={v.link.replace(/#.*$/, "")}>Perfil no site oficial</a>
-            {" "}
-            <Link href={`/comparar?v=${v.slug}`}>Comparar com outro vereador</Link>
+          <p className="perfil-meta">
+            {v.partido}
+            {papel ? `, ${papel.toLowerCase()}` : ""}. Mandato 2025–2028.
+          </p>
+          <p className="perfil-links">
+            <a href={v.link.replace(/#.*$/, "")}>Perfil no site oficial</a>
+            <Link href={`/comparar?v=${v.slug}`}>Comparar</Link>
           </p>
         </div>
       </header>
 
-      <section className="section" aria-labelledby="t-resumo">
+      <section aria-labelledby="t-resumo" style={{ marginTop: "2rem" }}>
         <h2 id="t-resumo" className="sr-only">
           Em resumo
         </h2>
@@ -96,20 +102,26 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
             <strong>
               <Link href={hrefLista("/proposicoes", { autor: v.slug })}>{n(x.deles.length)}</Link>
             </strong>
-            proposições desde 2025, {pctPedidos}% delas pedidos (indicações e requerimentos)
+            <span>proposições desde 2025, {pctPedidos}% delas pedidos</span>
           </li>
           <li className="fato">
             <strong>
               <Link href={hrefLista("/proposicoes", { autor: v.slug, tipo: "Projetos-de-Lei-Ordinaria" })}>{n(x.projetos.length)}</Link>
             </strong>
-            projetos de lei com autoria ou coautoria; {n(leisDePL)} já citados como origem de uma lei
+            <span>
+              projetos de lei com autoria ou coautoria;{" "}
+              <Link href={hrefLista("/proposicoes", x.filtroProjetosLei)}>{n(x.nProjetosLei)}</Link> já citados como origem de
+              uma lei
+            </span>
           </li>
           <li className="fato">
             <strong>
-              <Link href={hrefLista("/proposicoes", { autor: v.slug, conjunto: true })}>{percent(x.coautoria, x.deles.length)}%</Link>
+              <Link href={hrefLista("/proposicoes", { autor: v.slug, conjunto: true })}>{n(x.coautoria)}</Link>
             </strong>
-            ({n(x.coautoria)}) assinadas junto com outro vereador
-            {parceiro ? `, com mais frequência ${nomeDe(parceiro.a === v.slug ? parceiro.b : parceiro.a)}` : ""}
+            <span>
+              assinadas junto com outro vereador ({percent(x.coautoria, x.deles.length)}% do total)
+              {parceiro ? `, com mais frequência ${nomeDe(parceiro.a === v.slug ? parceiro.b : parceiro.a)}` : ""}
+            </span>
           </li>
         </ul>
         {papel === "Presidente" && (
@@ -119,109 +131,115 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
         )}
       </section>
 
-      <PainelVereador slug={v.slug} nome={v.nome} recortes={recortes(d.proposicoes, v.slug)} rotulos={CURTO} explicacoes={explicacoes} />
-
       <div className="section">
-        <article className="historia" aria-labelledby="h-ritmo">
-          <h2 id="h-ritmo">Ritmo desde janeiro de 2025</h2>
-          <p className="lede">Proposições publicadas por mês, separadas por tipo. Toque numa coluna para ver a lista.</p>
-          <Colunas
-            dados={x.mensal}
-            empilhado
-            altura={140}
-            titulo={`Proposições de ${v.nome} por mês`}
-            href={(mes) => hrefLista("/proposicoes", { autor: v.slug, pub: mes })}
+        <PainelVereador slug={v.slug} nome={v.nome} recortes={recortes(d.proposicoes, v.slug)} rotulos={CURTO} explicacoes={explicacoes} />
+      </div>
+
+      <div className="duas-colunas section">
+        <article className="historia" aria-labelledby="h-temas">
+          <span className="rotulo-derivado">
+            <Icon nome="info" tamanho={14} /> Classificação automática pelo texto
+          </span>
+          <h2 id="h-temas">Do que tratam os pedidos</h2>
+          {tema1 ? (
+            <p className="lede">
+              {tema1.nome} aparece em {percent(tema1.n, x.pedidos.length)}% dos pedidos. O traço cinza marca a proporção na Câmara inteira,
+              para comparar o perfil sem fazer ranking.
+            </p>
+          ) : (
+            <p className="lede">Nenhum pedido classificado no período.</p>
+          )}
+          <Barras
+            titulo="Pedidos por assunto, em porcentagem"
+            unidade="%"
+            visiveis={6}
+            max={Math.max(10, ...x.temas.map((t) => percent(t.n, x.pedidos.length)), ...[...x.refTema.values()].map(Math.round))}
+            referencia
+            rotuloReferencia="Proporção na Câmara inteira"
+            itens={x.temas.map((t) => ({
+              chave: t.slug,
+              nome: t.nome,
+              n: percent1(t.n, x.pedidos.length),
+              nota: `${n(t.n)} pedidos`,
+              ref: Math.round(x.refTema.get(t.slug) ?? 0),
+              href: hrefLista("/proposicoes", t.filtro),
+            }))}
           />
         </article>
 
-        <div className="duas-colunas" style={{ marginTop: "1rem" }}>
-          <article className="historia" aria-labelledby="h-temas">
-            <span className="rotulo-derivado">
-              <Icon nome="info" tamanho={14} /> Classificação automática pelo texto
-            </span>
-            <h2 id="h-temas">Do que tratam os pedidos</h2>
-            {tema1 ? (
-              <p className="lede">
-                {tema1.nome} aparece em {percent(tema1.n, x.pedidos.length)}% dos pedidos de {v.nome}. A marca mostra a proporção na Câmara
-                inteira, para comparar o perfil sem fazer ranking.
-              </p>
-            ) : (
-              <p className="lede">Nenhum pedido classificado no período.</p>
-            )}
-            <Barras
-              titulo="Pedidos por assunto, em porcentagem"
-              unidade="%"
-              max={Math.max(10, ...x.temas.map((t) => percent(t.n, x.pedidos.length)), ...[...x.refTema.values()].map(Math.round))}
-              referencia
-              rotuloReferencia="Proporção na Câmara inteira"
-              itens={x.temas.map((t) => ({
-                chave: t.slug,
-                nome: t.nome,
-                n: percent1(t.n, x.pedidos.length),
-                nota: `${n(t.n)} pedidos`,
-                ref: Math.round(x.refTema.get(t.slug) ?? 0),
-                href: hrefLista("/proposicoes", t.filtro),
-              }))}
-            />
-          </article>
-
-          <article className="historia" aria-labelledby="h-bairros">
-            <span className="rotulo-derivado">
-              <Icon nome="info" tamanho={14} /> Bairros citados no texto
-            </span>
-            <h2 id="h-bairros">Bairros mais citados</h2>
-            <p className="lede">
-              {bairro1 ? `${bairro1.nome} aparece em ${n(bairro1.n)} proposições de ${v.nome}.` : "Nenhum bairro citado com frequência."}
-            </p>
-            <Barras
-              titulo="Bairros mais citados"
-              itens={x.bairros.slice(0, 8).map((b) => ({ chave: b.slug, nome: b.nome, n: b.n, href: hrefLista("/proposicoes", b.filtro) }))}
-            />
-          </article>
-        </div>
-
-        <div className="duas-colunas" style={{ marginTop: "1rem" }}>
-          <article className="historia" aria-labelledby="h-grupos">
-            <h2 id="h-grupos">Tipos de proposição</h2>
-            <p className="lede">Como as proposições de {v.nome} se dividem.</p>
-            <Proporcao
-              partes={x.grupos.map((g) => ({ slug: g.slug as "pedidos", nome: g.nome, n: g.n }))}
-              href={(s) => hrefLista("/proposicoes", { autor: v.slug, grupo: s })}
-            />
-          </article>
-
-          <article className="historia" aria-labelledby="h-rede">
-            <h2 id="h-rede">Com quem assina junto</h2>
-            <p className="lede">
-              {percent(x.coautoria, x.deles.length)}% das proposições têm mais de um vereador como autor.
-            </p>
-            <Rede nos={d.vereadores.map((y) => ({ slug: y.slug, nome: y.nome, foto: y.foto }))} pares={p.pares} inicial={v.slug} />
-          </article>
-        </div>
+        <article className="historia" aria-labelledby="h-bairros">
+          <span className="rotulo-derivado">
+            <Icon nome="info" tamanho={14} /> Bairros citados no texto
+          </span>
+          <h2 id="h-bairros">Bairros mais citados</h2>
+          <p className="lede">{bairro1 ? `${bairro1.nome} aparece em ${n(bairro1.n)} proposições.` : "Nenhum bairro citado com frequência."}</p>
+          <Barras
+            titulo="Bairros mais citados"
+            visiveis={6}
+            itens={x.bairros.slice(0, 12).map((b) => ({ chave: b.slug, nome: b.nome, n: b.n, href: hrefLista("/proposicoes", b.filtro) }))}
+          />
+        </article>
       </div>
 
-      <section className="section" aria-labelledby="t-leis">
-        <span className="rotulo-derivado">
-          <Icon nome="info" tamanho={14} /> Ligação feita pelo número do projeto citado na lei
-        </span>
-        <h2 id="t-leis">Projetos que viraram lei</h2>
-        <p className="soft" style={{ margin: "0.5rem 0 1rem" }}>
-          Leis desta legislatura cuja ementa cita um projeto com autoria ou coautoria de {v.nome}.
-        </p>
-        {leis.length > 0 ? (
-          <Feed itens={ordenar(leis.map((y) => y.lei))} vereadores={d.vereadores} />
-        ) : (
-          <p className="nota">Nenhuma lei desta legislatura cita um projeto de {v.nome} até a última atualização.</p>
-        )}
-      </section>
+      <div className="duas-colunas">
+        <article className="historia" aria-labelledby="h-rede">
+          <h2 id="h-rede">Com quem assina junto</h2>
+          <p className="lede">Os vereadores com quem {v.nome} mais divide a autoria. Cada número abre as proposições em comum.</p>
+          {parceiros.length > 0 ? (
+            <ul className="parceiros">
+              {parceiros.slice(0, 5).map((q) => {
+                const outro = q.a === v.slug ? q.b : q.a;
+                const ov = d.vereadores.find((y) => y.slug === outro);
+                return (
+                  <li key={outro}>
+                    <Link href={hrefLista("/proposicoes", { autor: v.slug, coautor: outro })}>
+                      {ov ? <Avatar v={ov} tamanho={32} /> : <span />}
+                      <span className="p-nome">{nomeDe(outro)}</span>
+                      <span className="p-num">{n(q.n)}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="soft">Nenhuma proposição assinada em conjunto.</p>
+          )}
+        </article>
 
-      <section className="section" aria-labelledby="t-recentes">
+        <article className="historia" aria-labelledby="t-leis">
+          <span className="rotulo-derivado">
+            <Icon nome="info" tamanho={14} /> Ligação feita pelo número do projeto citado na lei
+          </span>
+          <h2 id="t-leis">Projetos que viraram lei</h2>
+          <p className="lede">
+            {leis.length > 0
+              ? `${n(leis.length)} ${leis.length === 1 ? "lei desta legislatura cita" : "leis desta legislatura citam"} na ementa um projeto com autoria ou coautoria de ${v.nome}.`
+              : `Nenhuma lei desta legislatura cita um projeto de ${v.nome} até a última atualização.`}
+          </p>
+          {leis.length > 0 && (
+            <div style={{ marginTop: "1rem" }}>
+              <Feed itens={leis.slice(0, LEIS_VISIVEIS)} vereadores={d.vereadores} />
+              {leis.length > LEIS_VISIVEIS && (
+                <details className="mais-barras">
+                  <summary>Mostrar as outras {n(leis.length - LEIS_VISIVEIS)}</summary>
+                  <Feed itens={leis.slice(LEIS_VISIVEIS)} vereadores={d.vereadores} />
+                </details>
+              )}
+            </div>
+          )}
+        </article>
+      </div>
+
+      <section className="historia" aria-labelledby="t-recentes">
         <div className="section-head">
           <h2 id="t-recentes">Mais recentes</h2>
           {x.deles.length > 0 && <Link href={hrefLista("/proposicoes", { autor: v.slug })}>Ver as {n(x.deles.length)}</Link>}
         </div>
-        <Feed itens={ordenar(x.deles).slice(0, 6)} vereadores={d.vereadores} />
+        <Feed itens={ordenar(x.deles).slice(0, 5)} vereadores={d.vereadores} />
       </section>
+      <p className="small soft" style={{ marginTop: "1rem" }}>
+        {v.foto ? "Foto: Câmara Municipal." : "Foto oficial indisponível nesta coleta."}
+      </p>
       <Fonte d={d} />
     </>
   );

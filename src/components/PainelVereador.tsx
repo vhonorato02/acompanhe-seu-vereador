@@ -29,8 +29,8 @@ export function PainelVereador({
 
   return (
     <section aria-labelledby="painel-titulo">
-      <h2 id="painel-titulo" className="sr-only">
-        O que {nome} apresentou
+      <h2 id="painel-titulo" style={{ marginBottom: "1rem" }}>
+        Ano a ano
       </h2>
       <div className="segmentos" role="group" aria-label="Período">
         {anos.map((r) => (

@@ -105,7 +105,9 @@ export function porDestino(registros: readonly Registro[], base: Filtro = {}): C
   return [...DESTINOS.map((d) => ({ slug: d.slug as string, nome: d.nome as string })), { slug: "outros", nome: "Outros" }]
     .map((d) => ({ ...d, filtro: { ...base, destino: d.slug } }))
     .map((d) => ({ ...d, n: contar(registros, d.filtro) }))
-    .filter((d) => d.n > 0);
+    .filter((d) => d.n > 0)
+    // Largest first; "Outros" stays last because it is a remainder, not a recipient.
+    .sort((a, b) => (a.slug === "outros" ? 1 : b.slug === "outros" ? -1 : b.n - a.n));
 }
 
 /** Co-authorship among sitting councillors: one edge per pair, weight = shared propositions. */

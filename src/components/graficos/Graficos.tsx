@@ -146,6 +146,7 @@ export function Barras({
   referencia,
   rotuloReferencia,
   visiveis,
+  duasColunas = false,
 }: {
   itens: Array<{ chave: string; nome: string; n: number; href?: string; nota?: string; ref?: number }>;
   titulo: string;
@@ -155,6 +156,8 @@ export function Barras({
   rotuloReferencia?: string;
   /** Show this many rows; the rest open on demand. */
   visiveis?: number;
+  /** Split the list into two columns on wide screens. */
+  duasColunas?: boolean;
 }) {
   const max = maxFixo ?? Math.max(1, ...itens.map((i) => Math.max(i.n, i.ref ?? 0)));
   return (
@@ -182,7 +185,7 @@ export function Barras({
         const k = visiveis && itens.length > visiveis + 1 ? visiveis : itens.length;
         return (
           <>
-            <ul className="barras" aria-label={titulo}>
+            <ul className={duasColunas ? "barras duas" : "barras"} aria-label={titulo}>
               {itens.slice(0, k).map(linha)}
             </ul>
             {k < itens.length && (

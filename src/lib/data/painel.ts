@@ -1,7 +1,7 @@
 import "server-only";
-import { funilLeis, meses, pares, porBairro, porDestino, porGrupo, porMes, porTema, projetosQueViraramLei } from "./analise";
+import { contexto, funilLeis, meses, pares, porBairro, porDestino, porGrupo, porMes, porTema, projetosQueViraramLei } from "./analise";
 import { dataset } from "./load";
-import { filtrar } from "./query";
+import { contar, filtrar, type Filtro } from "./query";
 import type { Dataset } from "./types";
 
 function calcular(d: Dataset) {
@@ -47,6 +47,9 @@ export function raioX(slug: string) {
   const viraram = p.viraram.filter((v) => v.projeto.autoresVereadores.includes(slug));
   // Laws traced back to this councillor's ordinary bills (same base as `projetos`).
   const leisDeProjetos = viraram.filter((v) => v.projeto.tipo === "Projetos-de-Lei-Ordinaria");
+  // Distinct bills cited by a law: the same filter as the list the profile links to.
+  const filtroProjetosLei: Filtro = { autor: slug, tipo: "Projetos-de-Lei-Ordinaria", lei: true };
+  const nProjetosLei = contar(d.proposicoes, filtroProjetosLei, contexto(d));
   const coautoria = deles.filter((r) => r.autoresVereadores.length > 1).length;
   return {
     deles,
@@ -60,6 +63,8 @@ export function raioX(slug: string) {
     projetos,
     viraram,
     leisDeProjetos,
+    filtroProjetosLei,
+    nProjetosLei,
     coautoria,
   };
 }
