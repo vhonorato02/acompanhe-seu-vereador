@@ -43,6 +43,10 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
   useEffect(() => {
     if (!vivo) return;
     if (timer.current) clearTimeout(timer.current);
+    ctrl.current?.abort();
+    ctrl.current = null;
+    setCarregando(false);
+    setErro(false);
     const termo = q.trim();
     if (termo.length < 2) {
       setRes(null);
@@ -56,7 +60,9 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
       try {
         const r = await fetch(`/api/busca?q=${encodeURIComponent(termo)}`, { signal: c.signal });
         if (!r.ok) throw new Error(String(r.status));
-        setRes((await r.json()) as Resposta);
+        const resposta = (await r.json()) as Resposta;
+        if (c.signal.aborted) return;
+        setRes(resposta);
         setErro(false);
       } catch (e) {
         if ((e as Error).name !== "AbortError") setErro(true);
@@ -66,6 +72,7 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
     }, 220);
     return () => {
       if (timer.current) clearTimeout(timer.current);
+      ctrl.current?.abort();
     };
   }, [q, vivo]);
 
@@ -88,6 +95,7 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
             placeholder="Bairro, assunto, número"
             autoComplete="off"
             enterKeyHint="search"
+            maxLength={120}
           />
           <button type="submit">Buscar</button>
         </div>
@@ -95,6 +103,7 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
 
       {vivo && termo.length >= 2 && (
         <div className={`resultados-vivos${carregando ? " carregando" : ""}`} aria-live="polite">
+          {carregando && <p className="soft" role="status">Buscando…</p>}
           {erro && <p className="soft">A busca não respondeu. Toque em Buscar para tentar de novo.</p>}
           {res && res.q === termo && (
             <>
