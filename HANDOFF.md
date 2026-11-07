@@ -19,11 +19,10 @@
 | Item | Valor |
 |---|---|
 | Versão | **0.3.0** (tag `v0.3.0` e release no GitHub) |
-| Coleta publicada | `c302694` — primeiro commit do workflow `atualizar-dados` (run 42411500764, disparo manual de teste) |
-| Deployment | Vercel `CsjAn4a6cBMSre3Hc8y7rRvbtLzs`, READY, alias `acompanhe-seu-vereador.vercel.app` |
-| Coleta | 07/11/2026 17h33 (Brasília), **incremental**, 62 consultas, 1 min 25 s, nenhum aviso |
+| Primeira atualização automática | `c302694` — commit do workflow `atualizar-dados` (run 42411500764, disparo manual de teste), coleta 17h33 |
+| Última coleta verificada | `6861cf7`, Vercel `2hHNLt3vBVnkqQjZ7D2iyFiyvuYf`, READY — 07/11/2026 17h52 (Brasília), **incremental**, 62 consultas, 1 min 25 s, nenhum aviso. Commits posteriores geram coletas novas; a fonte de verdade é `/dados/manifesto.json` |
 | Totais | **17.205 proposições, 407 normas, 11 vereadores** |
-| Cópia na VPS | `deploy-vps` disparado sozinho pela atualização (run 42411762833); `/api/health` da VPS e da Vercel com o mesmo `coletadoEm` |
+| Cópia na VPS | `deploy-vps` disparado sozinho pela atualização (run 42411762833) e pelo push (42412991114); `/api/health` da VPS e da Vercel com o mesmo `coletadoEm` |
 | CI | `quality-gates` verde (126 testes unitários, 110 E2E no Linux) |
 | Smoke em produção | 225 testes E2E em 3 navegadores contra produção: 224 verdes + 1 intermitente (dados abertos, passou 13/13 ao repetir) |
 
