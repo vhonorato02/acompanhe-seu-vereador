@@ -11,3 +11,7 @@ next-env.d.ts
 data/generated/
 public/dados/
 public/fotos/
+# Local QA output and scratch.
+e2e-artifacts/
+.tmp-audit/
+.coleta-tmp-*/

@@ -2,32 +2,56 @@ name: quality-gates
 
 on:
   push:
-    branches: [main, audit/2026-11-04-integridade]
+    branches: [main]
   pull_request:
     branches: [main]
 
 permissions:
   contents: read
 
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: "22"
+          node-version-file: ".nvmrc"
           cache: npm
       - name: Install locked dependencies
         run: npm ci
+      - name: Dependency audit (high and critical)
+        run: npm audit --audit-level=high
+      - name: Secret scan (no API token or key material in the tree)
+        run: |
+          if git grep -nIE "keysoft=[A-Za-z0-9]{8,}|CAMARA_API_TOKEN=[^[:space:]]+|-----BEGIN [A-Z ]*PRIVATE KEY-----" -- . ':!.github/workflows/quality-gates.yml'; then
+            echo "Possible secret committed"; exit 1
+          fi
       - name: Typecheck
         run: npm run typecheck
-      - name: Unit and contract tests
+      - name: Unit, contract and collector integration tests
         run: npm test
-      - name: Build with labelled development fixtures (never deploy this build)
+      - name: Build with labelled development sample (never deploy this build)
         run: npm run build
         env:
           CI: "true"
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+      - name: E2E journeys, accessibility (axe) and SEO on desktop and Android viewports
+        run: npx playwright test --project=desktop-chromium --project=android-412
+        env:
+          CI: "true"
+      - name: Keep screenshots and the E2E report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: e2e-${{ github.sha }}
+          path: e2e-artifacts/
+          retention-days: 14
