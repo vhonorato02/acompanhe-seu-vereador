@@ -1,7 +1,7 @@
 # HANDOFF — Acompanhe seu Vereador (Pindamonhangaba)
 
 > Arquivo de continuidade entre sessões. Atualize ao fim de cada bloco de trabalho.
-> Última atualização: 07/11/2026 (ciclo 3: redesenho preto e branco + verde, atualização automática 2x/dia, versão 0.3.0).
+> Última atualização: 07/11/2026, noite (ciclo 4: atualização tolerante a horários perdidos, PWA, busca rápida, versão 0.4.0).
 
 ## Onde estamos
 
@@ -11,22 +11,21 @@
 - **GitHub:** `vhonorato02/acompanhe-seu-vereador` (antes `obs-vereador`; o GitHub redireciona). Branch padrão: `main` (corrigida em 06/11).
 - Trabalho direto na `main`, sem PR, por decisão do dono — mas cada push dispara uma coleta real na Vercel: rode `npm test`, `npm run build` e `npm run test:e2e` antes.
 - Publicação desta versão, SHA, deployment e coleta: ver “Última publicação” abaixo.
-- Auditorias: [ciclo 1](docs/auditoria/2026-11-04-ciclo-1.md), [ciclo 2 — continuidade](docs/auditoria/2026-11-07-auditoria-continuidade.md) e [ciclo 3 — redesenho e automação](docs/auditoria/2026-11-07-ciclo-3.md).
-- **Dados atualizam sozinhos 2x/dia** (06h17 e 18h17) e um vigia abre issue `dados-desatualizados` se a coleta passar de 36 h — [guia](docs/operacao/atualizar-dados.md), [ADR 0003](docs/adr/0003-atualizacao-automatica.md).
+- Auditorias: [ciclo 1](docs/auditoria/2026-11-04-ciclo-1.md), [ciclo 2 — continuidade](docs/auditoria/2026-11-07-auditoria-continuidade.md) , [ciclo 3 — redesenho e automação](docs/auditoria/2026-11-07-ciclo-3.md) e [ciclo 4 — autonomia, PWA e busca](docs/auditoria/2026-11-07-ciclo-4.md).
+- **Dados atualizam sozinhos ~2x/dia** (checagem de hora em hora, dispara com coleta de mais de 11 h) e um vigia 3x/dia abre issue `dados-desatualizados` se a coleta passar de 26 h ou a VPS ficar fora/atrasada — [guia](docs/operacao/atualizar-dados.md), [ADR 0003](docs/adr/0003-atualizacao-automatica.md).
 
 ## Última publicação
 
 | Item | Valor |
 |---|---|
-| Versão | **0.3.0** (tag `v0.3.0` e release no GitHub) |
-| Primeira atualização automática | `c302694` — commit do workflow `atualizar-dados` (run 42411500764, disparo manual de teste), coleta 17h33 |
-| Última coleta verificada | `6861cf7`, Vercel `2hHNLt3vBVnkqQjZ7D2iyFiyvuYf`, READY — 07/11/2026 17h52 (Brasília), **incremental**, 62 consultas, 1 min 25 s, nenhum aviso. Commits posteriores geram coletas novas; a fonte de verdade é `/dados/manifesto.json` |
+| Versão | **0.4.0** (tag `v0.4.0` e release no GitHub) |
+| Commit | `2387e10` na `main` (CI `quality-gates` verde: 127 testes unitários, 116 E2E no Linux) |
+| Coleta | 07/11/2026 20h45 (Brasília), **incremental**, 62 consultas, nenhum aviso — Vercel e VPS com o mesmo `coletadoEm` |
 | Totais | **17.205 proposições, 407 normas, 11 vereadores** |
-| Cópia na VPS | `deploy-vps` disparado sozinho pela atualização (run 42411762833) e pelo push (42412991114); `/api/health` da VPS e da Vercel com o mesmo `coletadoEm` |
-| CI | `quality-gates` verde (126 testes unitários, 110 E2E no Linux) |
-| Smoke em produção | 225 testes E2E em 3 navegadores contra produção: 224 verdes + 1 intermitente (dados abertos, passou 13/13 ao repetir) |
-
-
+| Cópia na VPS | `deploy-vps` run 42426560091 (1ª tentativa expirou no SSH com a VPS sob carga; reexecutado com sucesso; agora há novas tentativas automáticas) |
+| PWA | `sw.js` só para estáticos, `/offline`, atalhos no manifesto ([ADR 0004](docs/adr/0004-service-worker-sem-dados.md)) |
+| Busca | API ~0,22 s em produção (era ~1,2 s) |
+| **A verificar** | Execuções `schedule` reais do `atualizar-dados` (de hora em hora) e do `vigia-dados` (3x/dia): `gh run list --workflow atualizar-dados.yml --event schedule` |
 
 ## Decisões do dono (24/10/2026, valem até nova decisão)
 
@@ -34,7 +33,7 @@
 2. Só free tier: sem cartão, sem domínio comprado, sem IA paga.
 3. Portal para acompanhar a Câmara e todos os vereadores, não clone do site da Câmara.
 4. Sem votações e sem presença.
-5. ~~Atualização quinzenal feita pelo dono~~ → (07/11/2026) **atualização automática 2x/dia** pelo GitHub Actions, com vigia diário — [ADR 0003](docs/adr/0003-atualizacao-automatica.md). O redeploy manual continua valendo como reserva.
+5. ~~Atualização quinzenal feita pelo dono~~ → (07/11/2026) **atualização automática ~2x/dia** pelo GitHub Actions (checagem de hora em hora), com vigia 3x/dia — [ADR 0003](docs/adr/0003-atualizacao-automatica.md). O redeploy manual continua valendo como reserva.
 6. Implementar e publicar direto na `main`.
 7. (07/11/2026) Nome **Acompanhe seu Vereador — Pindamonhangaba**, do Observatório Social do Brasil – Pindamonhangaba; endereço `acompanhe-seu-vereador.vercel.app` — [ADR 0001](docs/adr/0001-identidade-do-projeto.md).
 8. (07/11/2026) Visual **minimalista, preto e branco, destaques em verde, estilo Apple**: fonte do sistema, verde só no que se toca e no estado ativo, retratos em preto e branco para todos.
@@ -54,8 +53,8 @@
 
 | Camada | Onde | Estado em 07/11 |
 |---|---|---|
-| Unitários, contratos, integração do coletor | `tests/` (Vitest) | 119 testes |
-| E2E, acessibilidade (axe WCAG 2.2 AA), SEO, capturas | `e2e/` (Playwright) | 222 testes em 5 perfis emulados |
+| Unitários, contratos, integração do coletor e do espelho, tokens de design | `tests/` (Vitest) | 127 testes |
+| E2E, acessibilidade (axe WCAG 2.2 AA), SEO, PWA, capturas | `e2e/` (Playwright) | 234 testes em 5 perfis emulados |
 | CI | `.github/workflows/quality-gates.yml` | npm ci, audit, varredura de segredos, typecheck, testes, build com amostra, E2E Chromium desktop + Android, artefatos |
 | Revisão das heurísticas | `npm run auditar:heuristicas` | rodar a cada trimestre |
 
