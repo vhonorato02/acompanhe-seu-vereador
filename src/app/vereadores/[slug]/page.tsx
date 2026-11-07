@@ -30,8 +30,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!v) return {};
   return {
     title: v.nome,
-    description: `Raio-X de ${v.nome} (${v.partido}) na Câmara de Pindamonhangaba: assuntos, bairros, projetos e leis.`,
-    openGraph: v.foto ? { images: [{ url: v.foto }] } : undefined,
+    description: `O que ${v.nome} (${v.partido}) apresentou na Câmara de Pindamonhangaba desde 2025: pedidos, projetos, assuntos e bairros, com link para cada documento oficial.`,
+    alternates: { canonical: `/vereadores/${v.slug}` },
+    openGraph: {
+      images: v.foto ? [{ url: v.foto, alt: `Foto oficial de ${v.nome} (Câmara Municipal)` }] : ["/opengraph-image"],
+    },
   };
 }
 
@@ -59,9 +62,15 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
     <>
       <header className="perfil-hero">
         <ViewTransition name={`foto-${v.slug}`}>
-          <div className="perfil-foto">
-            {v.foto && <Image src={v.foto} alt={`Foto oficial de ${v.nome}`} width={480} height={600} priority sizes="(min-width: 46rem) 17rem, 100vw" />}
-          </div>
+          {v.foto ? (
+            <div className="perfil-foto">
+              <Image src={v.foto} alt={`Foto oficial de ${v.nome}`} width={480} height={600} priority sizes="(min-width: 46rem) 17rem, 100vw" />
+            </div>
+          ) : (
+            <div className="perfil-foto sem-foto" aria-hidden="true">
+              {v.nome.split(/\s+/).filter((p) => /^\p{Lu}/u.test(p)).slice(0, 2).map((p) => p[0]).join("")}
+            </div>
+          )}
         </ViewTransition>
         <div className="entrada">
           <h1 className="perfil-nome">{v.nome}</h1>
@@ -71,7 +80,7 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
             <span className="etiqueta">Mandato 2025–2028</span>
           </div>
           <p className="small soft" style={{ marginTop: "0.85rem" }}>
-            Foto: Câmara Municipal. <a href={v.link.replace(/#.*$/, "")}>Perfil no site oficial</a>
+            {v.foto ? "Foto: Câmara Municipal. " : "Foto oficial indisponível nesta coleta. "}<a href={v.link.replace(/#.*$/, "")}>Perfil no site oficial</a>
             {" "}
             <Link href={`/comparar?v=${v.slug}`}>Comparar com outro vereador</Link>
           </p>
@@ -96,8 +105,10 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
             projetos de lei com autoria ou coautoria; {n(leisDePL)} já citados como origem de uma lei
           </li>
           <li className="fato">
-            <strong>{percent(x.coautoria, x.deles.length)}%</strong>
-            assinadas junto com outro vereador
+            <strong>
+              <Link href={hrefLista("/proposicoes", { autor: v.slug, conjunto: true })}>{percent(x.coautoria, x.deles.length)}%</Link>
+            </strong>
+            ({n(x.coautoria)}) assinadas junto com outro vereador
             {parceiro ? `, com mais frequência ${nomeDe(parceiro.a === v.slug ? parceiro.b : parceiro.a)}` : ""}
           </li>
         </ul>

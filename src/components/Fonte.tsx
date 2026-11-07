@@ -11,7 +11,7 @@ export function Fonte({ d }: { d: Dataset }) {
       </p>
       <p>
         <Link href="/metodologia">Como contamos</Link>, <Link href="/dados">baixar os dados</Link> ou{" "}
-        <a href="https://github.com/vhonorato02/obs-vereador/issues/new?title=Erro%20nos%20dados">avisar de um erro</a>.
+        <Link href="/correcoes">avisar de um erro</Link>.
       </p>
       {d.execucao.modo === "amostra" && (
         <p className="nota aviso" style={{ marginTop: "0.75rem" }}>

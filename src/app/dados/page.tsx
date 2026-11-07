@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { dataset } from "@/lib/data/load";
 import { dataColeta, n } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Dados abertos",
   description: "Baixe as proposições, normas e vereadores usados pelo portal, em CSV e JSON.",
+  alternates: { canonical: "/dados" },
 };
 
 export default function Dados() {
@@ -21,8 +23,9 @@ export default function Dados() {
     <div className="prosa">
       <h1>Dados abertos</h1>
       <p>
-        Os mesmos dados que o portal mostra, como foram coletados em {dataColeta(d.execucao.coletadoEm)}. Reutilize à vontade,
-        citando a fonte original (Câmara Municipal de Pindamonhangaba) e este portal.
+        Os mesmos dados que o portal mostra, como foram coletados em {dataColeta(d.execucao.coletadoEm)}
+        {d.execucao.modo === "amostra" ? " (amostra de desenvolvimento, não a coleta real)" : ""}. Reutilize à vontade, citando a
+        fonte original (Câmara Municipal de Pindamonhangaba).
       </p>
       <ul>
         {arquivos.map((a) => (
@@ -35,7 +38,7 @@ export default function Dados() {
         ))}
       </ul>
       <h2>Dicionário</h2>
-      <div style={{ overflowX: "auto" }}>
+      <div style={{ overflowX: "auto" }} tabIndex={0} role="region" aria-label="Dicionário dos campos">
         <table className="tabela">
           <thead>
             <tr>
@@ -56,7 +59,36 @@ export default function Dados() {
         </table>
       </div>
       <p className="soft">
-        Os CSV usam “;” como separador e codificação UTF-8, para abrir direto em planilhas configuradas em português.
+        Os CSV usam “;” como separador e codificação UTF-8 com BOM, para abrir direto em planilhas configuradas em português. Textos
+        que começam com =, +, - ou @ recebem um apóstrofo na frente, para a planilha não executá-los como fórmula.
+      </p>
+      <h2>Campos extras nos arquivos JSON</h2>
+      <div style={{ overflowX: "auto" }} tabIndex={0} role="region" aria-label="Campos extras dos arquivos JSON">
+        <table className="tabela">
+          <thead>
+            <tr>
+              <th scope="col">Campo</th>
+              <th scope="col">Significado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">data</th><td>Mesmo que data_publicacao: “AAAA-MM-DD hh:mm:ss”, horário de Brasília, sem fuso</td></tr>
+            <tr><th scope="row">autores</th><td>Lista de autores, separada a partir de “autoria”</td></tr>
+            <tr><th scope="row">autoresVereadores</th><td>Endereços (slugs) dos vereadores em exercício encontrados entre os autores</td></tr>
+            <tr><th scope="row">autoriaCitadaNaEmenta</th><td>Só em normas. <em>Derivado</em>: vereadores citados na ementa com “de autoria do Vereador…”</td></tr>
+            <tr><th scope="row">foto, fotoOrigem</th><td>Só em vereadores: caminho da foto no portal e endereço original no site da Câmara</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p className="soft">
+        Assuntos, bairros e destinatários não estão nos arquivos: são classificações automáticas, recalculadas pelas regras públicas
+        da <Link href="/metodologia#derivados">metodologia</Link>. O manifesto traz data, modo da coleta, número de consultas e
+        avisos; os totais dele são os mesmos mostrados no site.
+      </p>
+      <h2>Licença e uso</h2>
+      <p>
+        Os dados são públicos, da Câmara Municipal de Pindamonhangaba. Ao reutilizar, cite a Câmara como fonte e informe a data da
+        coleta. Ementas podem citar nomes de cidadãos: use com cuidado e para fins de interesse público.
       </p>
     </div>
   );

@@ -8,6 +8,7 @@ import { panorama } from "@/lib/data/painel";
 export const metadata: Metadata = {
   title: "Bairros",
   description: "O que os vereadores de Pindamonhangaba pediram para cada bairro.",
+  alternates: { canonical: "/bairros" },
 };
 
 export default function Bairros() {

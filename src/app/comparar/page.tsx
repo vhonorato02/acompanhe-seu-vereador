@@ -11,6 +11,7 @@ import { n } from "@/lib/format";
 export const metadata: Metadata = {
   title: "Comparar vereadores",
   description: "Compare lado a lado o que até três vereadores de Pindamonhangaba apresentaram, na mesma escala.",
+  alternates: { canonical: "/comparar" },
 };
 
 const MAX = 3;
@@ -58,12 +59,13 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
         <div className="comparacao section" style={{ ["--cols" as string]: dados.length }}>
           {dados.map(({ v, x }) => (
             <article key={v.slug} className="historia" aria-labelledby={`c-${v.slug}`}>
+              <h2 className="sr-only" id={`c-${v.slug}`}>
+                {v.nome}
+              </h2>
               <Link href={`/vereadores/${v.slug}`} className="cartao-v" style={{ border: 0, padding: 0 }}>
                 <span className="foto">{v.foto && <Image src={v.foto} alt="" width={136} height={136} />}</span>
                 <span>
-                  <span className="nome" id={`c-${v.slug}`}>
-                    {v.nome}
-                  </span>
+                  <span className="nome">{v.nome}</span>
                   <span className="meta"> {v.partido}{v.funcao !== "Vereador" ? `, ${v.funcao}` : ""}</span>
                 </span>
               </Link>

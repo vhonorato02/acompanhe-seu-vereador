@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Busca } from "@/components/Busca";
@@ -8,7 +9,12 @@ import { Icon } from "@/components/Icon";
 import { percent, porMes, porTema } from "@/lib/data/analise";
 import { panorama } from "@/lib/data/painel";
 import { filtrar, hrefLista } from "@/lib/data/query";
+import { SITE } from "@/lib/site";
 import { dataColeta, n, nomeMes } from "@/lib/format";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Panorama() {
   const p = panorama();
@@ -27,6 +33,8 @@ export default function Panorama() {
   const paresTodos = p.pares.length;
   const possiveis = (d.vereadores.length * (d.vereadores.length - 1)) / 2;
   const leisDeVereador = p.viraram.filter((v) => v.projeto.autoresVereadores.length > 0 && v.lei.tipo.startsWith("Leis")).length;
+  const nVereadores = d.vereadores.length;
+  const unicoAutor = d.proposicoes.filter((r) => r.autoresVereadores.length === 1).length;
 
   return (
     <>
@@ -34,7 +42,10 @@ export default function Panorama() {
         <p className="soft">Câmara Municipal de Pindamonhangaba, desde janeiro de 2025</p>
         <div className="numerao">{n(total)}</div>
         <h1 style={{ fontSize: "var(--step-3)", marginTop: "0.5rem" }}>proposições apresentadas. Veja o que elas dizem.</h1>
-        <p>Pedidos, projetos e leis dos 11 vereadores, contados direto dos dados oficiais da Câmara.</p>
+        <p>
+          Pedidos, projetos e leis dos {nVereadores} vereadores, contados direto dos dados oficiais da Câmara. {SITE.nome} é um
+          projeto independente do {SITE.organizacao}.
+        </p>
         <Busca />
       </section>
 
@@ -132,7 +143,13 @@ export default function Panorama() {
               {percent(prefeitura, totalDestinos)}% dos pedidos vão para a Prefeitura. O resto se divide entre concessionárias como EDP e
               Sabesp, o DER, a empresa de ônibus e a própria Mesa da Câmara.
             </p>
-            <Barras titulo="Pedidos por destinatário" itens={p.destinos.map((x) => ({ chave: x.slug, nome: x.nome, n: x.n }))} />
+            <Barras
+              titulo="Pedidos por destinatário"
+              itens={p.destinos.map((x) => ({ chave: x.slug, nome: x.nome, n: x.n, href: hrefLista("/proposicoes", x.filtro) }))}
+            />
+            <div className="rodape-historia">
+              <Link href="/metodologia#destinos">Como identificamos</Link>
+            </div>
           </article>
 
           <article className="historia" aria-labelledby="h-leis">
@@ -148,9 +165,10 @@ export default function Panorama() {
               <div className="funil">
                 <div className="funil-linha">
                   <div className="rotulos">
-                    <span>Projetos de lei de vereadores</span>
+                    <span>Projetos de lei de vereadores em exercício</span>
                     <span>
-                      {n(fVer.viraramLei)} de {n(fVer.apresentados)}
+                      <Link href={hrefLista("/proposicoes", fVer.filtroViraramLei)}>{n(fVer.viraramLei)}</Link> de{" "}
+                      <Link href={hrefLista("/proposicoes", fVer.filtroApresentados)}>{n(fVer.apresentados)}</Link>
                     </span>
                   </div>
                   <div className="funil-barra" aria-hidden="true">
@@ -161,8 +179,9 @@ export default function Panorama() {
               </div>
             )}
             <p className="small soft" style={{ marginTop: "1rem" }}>
-              Não dá para fazer a mesma conta com os {n(fExe?.apresentados ?? 0)} projetos do Poder Executivo: as leis que vêm deles não
-              citam o projeto de origem na ementa. Projetos ainda em tramitação também entram no total, então a proporção é um retrato
+              Não dá para fazer a mesma conta com os{" "}
+              {fExe ? <Link href={hrefLista("/proposicoes", fExe.filtroApresentados)}>{n(fExe.apresentados)} projetos do Poder Executivo</Link> : "projetos do Poder Executivo"}:
+              as leis que vêm deles em geral não citam o projeto de origem na ementa. Projetos ainda em tramitação também entram no total, então a proporção é um retrato
               parcial.
             </p>
             <div className="rodape-historia">
@@ -174,7 +193,7 @@ export default function Panorama() {
         <article className="historia" aria-labelledby="h-rede" style={{ marginTop: "1rem" }}>
           <h2 id="h-rede">Quem assina junto com quem</h2>
           <p className="lede">
-            A maior parte das proposições tem um único autor. Ainda assim, {paresTodos === possiveis ? "todos os pares de vereadores" : `${paresTodos} dos ${possiveis} pares possíveis`}{" "}
+            {n(unicoAutor)} das {n(total)} proposições ({percent(unicoAutor, total)}%) têm um único vereador como autor. Ainda assim, {paresTodos === possiveis ? "todos os pares de vereadores" : `${paresTodos} dos ${possiveis} pares possíveis`}{" "}
             já assinaram pelo menos uma proposição juntos. Quanto mais grossa a linha, mais proposições em comum.
           </p>
           <Rede nos={d.vereadores.map((v) => ({ slug: v.slug, nome: v.nome, foto: v.foto }))} pares={p.pares} />
@@ -183,7 +202,7 @@ export default function Panorama() {
 
       <section className="section" aria-labelledby="t-vereadores">
         <div className="section-head">
-          <h2 id="t-vereadores">Os 11 vereadores</h2>
+          <h2 id="t-vereadores">Os {nVereadores} vereadores em exercício</h2>
           <Link href="/comparar">Comparar</Link>
         </div>
         <p className="soft" style={{ marginBottom: "1rem" }}>

@@ -220,7 +220,8 @@ export function Tabela({ titulo, colunas, linhas }: { titulo: string; colunas: s
   return (
     <details className="como-tabela">
       <summary>Ver como tabela</summary>
-      <div className="tabela-rolagem">
+      {/* Focusable so keyboard users can scroll a wide table (WCAG 2.1.1). */}
+      <div className="tabela-rolagem" tabIndex={0} role="region" aria-label={titulo}>
         <table className="tabela">
           <caption className="sr-only">{titulo}</caption>
           <thead>

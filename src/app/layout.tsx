@@ -2,17 +2,21 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Marca } from "@/components/Icon";
 import { NavTopo, TabBar } from "@/components/Navegacao";
+import { SITE, URL_REPORTAR_ERRO } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
+  applicationName: SITE.nome,
   title: {
-    default: "Acompanhe seu Vereador | Pindamonhangaba",
-    template: "%s | Acompanhe seu Vereador",
+    default: `${SITE.nome} · Vereadores de ${SITE.cidade}`,
+    template: `%s · ${SITE.nome}`,
   },
-  description:
-    "O que cada vereador de Pindamonhangaba apresentou na Câmara, com link para o documento oficial. Mantido pelo Observatório Social do Brasil – Pindamonhangaba.",
-  openGraph: { locale: "pt_BR", type: "website", siteName: "Acompanhe seu Vereador" },
-  appleWebApp: { capable: true, title: "Vereadores Pinda", statusBarStyle: "default" },
+  description: `${SITE.lema} Projeto independente do ${SITE.organizacao}; não é o site oficial da Câmara.`,
+  openGraph: { locale: "pt_BR", type: "website", siteName: SITE.nome },
+  twitter: { card: "summary_large_image" },
+  appleWebApp: { capable: true, title: SITE.nome, statusBarStyle: "default" },
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
@@ -37,28 +41,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/" className="marca">
               <Marca />
               <span>
-                Acompanhe seu Vereador
-                <small>Pindamonhangaba</small>
+                {SITE.nome}
+                <small>{SITE.cidade} · projeto independente</small>
               </span>
             </Link>
             <NavTopo />
           </div>
         </header>
-        <main id="conteudo" className="page">
+        <main id="conteudo" className="page" tabIndex={-1}>
           {children}
         </main>
         <footer className="rodape">
           <div className="page">
             <p>
-              Mantido pelo Observatório Social do Brasil – Pindamonhangaba. Este não é o site oficial da Câmara; os documentos
-              oficiais estão em <a href="https://www.pindamonhangaba.sp.leg.br">pindamonhangaba.sp.leg.br</a>.
+              <strong>{SITE.nome}</strong> é mantido pelo {SITE.organizacao}. Não é o site oficial da Câmara Municipal; os
+              documentos oficiais estão em <a href="https://www.pindamonhangaba.sp.leg.br">pindamonhangaba.sp.leg.br</a>.
             </p>
             <ul>
               <li><Link href="/como-funciona">Como funciona</Link></li>
               <li><Link href="/metodologia">Metodologia</Link></li>
               <li><Link href="/dados">Dados abertos</Link></li>
-              <li><Link href="/sobre">Sobre</Link></li>
-              <li><a href="https://github.com/vhonorato02/obs-vereador/issues/new?title=Erro%20nos%20dados">Reportar erro</a></li>
+              <li><Link href="/correcoes">Correções</Link></li>
+              <li><Link href="/sobre">Sobre e privacidade</Link></li>
+              <li><a href={URL_REPORTAR_ERRO}>Reportar erro</a></li>
             </ul>
           </div>
         </footer>

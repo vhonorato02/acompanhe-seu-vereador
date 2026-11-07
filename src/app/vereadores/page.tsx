@@ -10,7 +10,8 @@ import { n } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Vereadores",
-  description: "Os 11 vereadores em exercício na Câmara Municipal de Pindamonhangaba, legislatura 2025–2028.",
+  description: "Os vereadores em exercício na Câmara Municipal de Pindamonhangaba, legislatura 2025–2028, com o que cada um apresentou.",
+  alternates: { canonical: "/vereadores" },
 };
 
 export default function Vereadores() {

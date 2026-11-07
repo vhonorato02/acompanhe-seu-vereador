@@ -7,6 +7,7 @@ import { hrefLista } from "@/lib/data/query";
 export const metadata: Metadata = {
   title: "Como funciona",
   description: "A Câmara de Pindamonhangaba em poucas linhas e o que significa cada tipo de proposição.",
+  alternates: { canonical: "/como-funciona" },
 };
 
 export default function ComoFunciona() {

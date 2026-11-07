@@ -32,6 +32,13 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
   const id = useId();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const ctrl = useRef<AbortController | null>(null);
+  const campo = useRef<HTMLInputElement>(null);
+
+  // On slow phones people start typing before the page hydrates; keep what they typed.
+  useEffect(() => {
+    const digitado = campo.current?.value ?? "";
+    if (digitado && digitado !== inicial) setQ(digitado);
+  }, [inicial]);
 
   useEffect(() => {
     if (!vivo) return;
@@ -72,6 +79,7 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
         <div className="busca-campo">
           <Icon nome="buscar" />
           <input
+            ref={campo}
             id={id}
             name="q"
             type="search"

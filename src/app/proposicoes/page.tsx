@@ -6,6 +6,7 @@ import { dataset } from "@/lib/data/load";
 export const metadata: Metadata = {
   title: "Proposições",
   description: "Requerimentos, indicações, moções, emendas e projetos apresentados na Câmara de Pindamonhangaba.",
+  alternates: { canonical: "/proposicoes" },
 };
 
 export default async function Proposicoes({

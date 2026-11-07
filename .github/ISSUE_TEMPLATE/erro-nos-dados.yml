@@ -1,0 +1,27 @@
+name: Erro nos dados
+description: Algo no portal não bate com o documento oficial da Câmara.
+title: "Erro nos dados: "
+labels: ["correção"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por avisar. Cada aviso é conferido contra o documento oficial. Este aviso é público: não inclua dados pessoais além do necessário.
+  - type: input
+    id: pagina
+    attributes:
+      label: Endereço da página do portal
+      placeholder: https://camara-a-vista.vercel.app/vereadores/...
+    validations:
+      required: true
+  - type: textarea
+    id: erro
+    attributes:
+      label: O que está errado e o que deveria aparecer
+    validations:
+      required: true
+  - type: input
+    id: fonte
+    attributes:
+      label: Link do documento oficial (se tiver)
+      placeholder: https://www.pindamonhangaba.sp.leg.br/...

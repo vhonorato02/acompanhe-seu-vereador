@@ -19,7 +19,13 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const b = panorama().bairros.find((x) => x.slug === slug);
-  return b ? { title: b.nome, description: `O que os vereadores de Pindamonhangaba pediram para ${b.nome}.` } : {};
+  return b
+    ? {
+        title: b.nome,
+        description: `O que os vereadores de Pindamonhangaba pediram para ${b.nome}: ${b.n} proposições citam o bairro desde 2025.`,
+        alternates: { canonical: `/bairros/${b.slug}` },
+      }
+    : {};
 }
 
 export default async function PaginaBairro({ params }: { params: Promise<{ slug: string }> }) {
