@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 const ROTAS = [
   "/", "/vereadores", "/vereadores/marco-mayor", "/comparar?v=marco-mayor&v=ana-paula-goffi", "/bairros", "/proposicoes",
-  "/proposicoes?q=sabesp", "/normas", "/metodologia", "/como-funciona", "/dados", "/correcoes", "/sobre",
+  "/proposicoes?q=sabesp", "/normas", "/metodologia", "/como-funciona", "/dados", "/correcoes", "/sobre", "/privacidade", "/termos",
 ];
 
 test.describe("acessibilidade (axe, WCAG 2.2 A/AA)", () => {
@@ -86,6 +86,23 @@ test.describe("SEO, compartilhamento e cabeçalhos", () => {
     expect(manifest.name).toContain("Acompanhe seu Vereador");
     for (const i of manifest.icons) expect((await request.get(i.src)).status(), i.src).toBe(200);
     expect(manifest.icons.some((i) => i.purpose === "maskable")).toBe(true);
+  });
+
+  test("dados estruturados (JSON-LD) e llms.txt", async ({ page, request }) => {
+    const tipos = async (rota: string) => {
+      await page.goto(rota);
+      const blocos = await page.locator('script[type="application/ld+json"]').allTextContents();
+      return blocos.flatMap((b) => [JSON.parse(b)].flat().map((x: { "@type": string }) => x["@type"]));
+    };
+    expect(await tipos("/")).toEqual(expect.arrayContaining(["NGO", "WebSite"]));
+    expect(await tipos("/dados")).toContain("Dataset");
+    expect(await tipos("/vereadores/marco-mayor")).toContain("Person");
+    const llms = await request.get("/llms.txt");
+    expect(llms.status()).toBe(200);
+    const texto = await llms.text();
+    expect(texto).toContain("# Acompanhe seu Vereador");
+    expect(texto).toContain("/vereadores/marco-mayor");
+    expect(texto).toMatch(/não faz ranking/);
   });
 
   test("cabeçalhos de segurança e página sem erros no console @cross", async ({ page }) => {

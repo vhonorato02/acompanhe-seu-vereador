@@ -8,10 +8,11 @@
  * from the network, so the portal can never show an old collection as if it were current.
  * Without a connection, navigation shows /offline, which says so plainly.
  */
-const VERSAO = "v1";
+// Bump when a cached icon or logo changes under the same URL: the old cache is then discarded.
+const VERSAO = "v2";
 const CACHE = `acompanhe-${VERSAO}`;
 const OFFLINE = "/offline";
-const PRECACHE = [OFFLINE, "/icones/icone-192.png", "/icon.svg"];
+const PRECACHE = [OFFLINE, "/icones/icone-192.png", "/icon.png", "/marca/emblema.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -35,7 +36,8 @@ function estatico(url) {
   return (
     url.pathname.startsWith("/_next/static/") ||
     url.pathname.startsWith("/icones/") ||
-    url.pathname === "/icon.svg" ||
+    url.pathname.startsWith("/marca/") ||
+    url.pathname === "/icon.png" ||
     url.pathname === "/apple-icon.png"
   );
 }
