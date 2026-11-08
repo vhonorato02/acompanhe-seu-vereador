@@ -1,5 +1,6 @@
 import type { ProposicaoApi, VereadorApi } from "../camara/schema";
 import { APELIDOS } from "../content/apelidos";
+import { CHAVES_OMITIDAS, TEXTO_OMITIDO } from "../content/omissoes";
 import type { Norma, Registro, Vereador } from "./types";
 
 /** Lowercase, no accents, single spaces. Used for matching and search. */
@@ -76,7 +77,12 @@ export function toVereador(v: VereadorApi, foto: string | null): Vereador {
   };
 }
 
-export function toRegistro(p: ProposicaoApi, tipo: string, vereadores: Map<string, string>): Registro {
+export function toRegistro(
+  p: ProposicaoApi,
+  tipo: string,
+  vereadores: Map<string, string>,
+  omitidas: ReadonlySet<string> = CHAVES_OMITIDAS,
+): Registro {
   const id = idDoLink(p.link);
   if (id === null) throw new Error(`Link sem id numérico: ${p.link}`);
   const autoria = decodificarEntidades(p.autoria);
@@ -89,7 +95,8 @@ export function toRegistro(p: ProposicaoApi, tipo: string, vereadores: Map<strin
     tipo,
     titulo: decodificarEntidades(p.titulo).trim(),
     ...numeroAno(p.titulo),
-    ementa: decodificarEntidades(p.ementa).replace(/\r\n?/g, "\n").trim(),
+    // Withheld at a cited person's request (src/lib/content/omissoes.ts); the record stays listed.
+    ementa: omitidas.has(`${tipo}:${id}`) ? TEXTO_OMITIDO : decodificarEntidades(p.ementa).replace(/\r\n?/g, "\n").trim(),
     autoria: autoria.trim(),
     autores,
     autoresVereadores,
@@ -111,9 +118,16 @@ export function autoriaCitada(ementa: string, vereadores: readonly Pick<Vereador
   return vereadores.filter((v) => resto.includes(normalizar(v.nome))).map((v) => v.slug);
 }
 
-export function toNorma(p: ProposicaoApi, tipo: string, vereadores: readonly Vereador[]): Norma {
-  const base = toRegistro(p, tipo, mapaVereadores(vereadores));
-  return { ...base, autoriaCitadaNaEmenta: autoriaCitada(base.ementa, vereadores) };
+export function toNorma(
+  p: ProposicaoApi,
+  tipo: string,
+  vereadores: readonly Vereador[],
+  omitidas: ReadonlySet<string> = CHAVES_OMITIDAS,
+): Norma {
+  const base = toRegistro(p, tipo, mapaVereadores(vereadores), omitidas);
+  // Authorship by a councillor is public information: read it from the original text even when
+  // the summary is withheld.
+  return { ...base, autoriaCitadaNaEmenta: autoriaCitada(decodificarEntidades(p.ementa), vereadores) };
 }
 
 function unique<T>(xs: T[]): T[] {

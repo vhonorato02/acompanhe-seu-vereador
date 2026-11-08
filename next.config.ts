@@ -49,12 +49,6 @@ const config: NextConfig = {
       { source: "/sw.js", headers: [{ key: "Cache-Control", value: "no-cache, max-age=0, must-revalidate" }] },
     ];
   },
-  async redirects() {
-    return [
-      // The privacy section lives in /sobre.
-      { source: "/privacidade", destination: "/sobre#privacidade", permanent: true },
-    ];
-  },
 };
 
 export default config;

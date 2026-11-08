@@ -1,11 +1,10 @@
 # Acompanhe seu Vereador — Pindamonhangaba
 
-Portal do **Observatório Social do Brasil – Pindamonhangaba** para acompanhar o que os vereadores de Pindamonhangaba apresentam na Câmara Municipal (legislatura 2025–2028). Cada número leva à lista que o compõe, e cada item leva ao documento oficial.
+Portal do **Observatório Social do Brasil – Pindamonhangaba** (associação civil apartidária, CNPJ 30.197.903/0001-75) para acompanhar o que os vereadores de Pindamonhangaba apresentam na Câmara Municipal (legislatura 2025–2028). Cada número leva à lista que o compõe, e cada item leva ao documento oficial.
 
-**Endereço:** https://acompanhe-seu-vereador.vercel.app (canônico, Vercel).
-Cópia na VPS do Observatório: https://vereador.zewithane.vps.brz.dev.br (mesmos dados, sem indexação; ver abaixo).
+**Endereço:** https://acompanhe-seu-vereador.vercel.app · **Contato:** pindamonhangaba@osbrasil.org.br · **Observatório:** https://pindamonhangaba.sistemaosb.com.br
 
-Não é o site oficial da Câmara e não republica seus documentos: mostra título, ementa, autoria e data, com link para o original. Identidade do projeto: [ADR 0001](docs/adr/0001-identidade-do-projeto.md).
+Não é o site oficial da Câmara e não republica seus documentos: mostra título, ementa, autoria e data, com link para o original. Identidade do projeto: [ADR 0001](docs/adr/0001-identidade-do-projeto.md). Termos de uso e política de privacidade (LGPD): [/termos](https://acompanhe-seu-vereador.vercel.app/termos) e [/privacidade](https://acompanhe-seu-vereador.vercel.app/privacidade).
 
 ## Como funciona
 
@@ -17,11 +16,7 @@ Não é o site oficial da Câmara e não republica seus documentos: mostra títu
 
 ## Atualização dos dados (automática, 2x/dia)
 
-O workflow `.github/workflows/atualizar-dados.yml` confere o manifesto de hora em hora e dispara um build de produção na Vercel quando a coleta publicada passa de 11 h (na prática, a cada ~12 h; um horário perdido pelo GitHub é recuperado na hora seguinte). O workflow `vigia-dados.yml` roda 3x/dia e abre uma issue `dados-desatualizados` se a coleta passar de 26 h, trouxer avisos ou se a cópia da VPS estiver fora do ar ou atrasada (o GitHub avisa por e-mail). Detalhes, limites do plano gratuito e como atualizar à mão: [`docs/operacao/atualizar-dados.md`](docs/operacao/atualizar-dados.md).
-
-## Cópia na VPS (zewithane)
-
-A Vercel é a única que fala com a API da Câmara. A cópia da VPS (`.github/workflows/deploy-vps.yml`) roda `npm run espelhar`, que baixa os dados abertos do próprio portal (`/dados/*.json`, `/fotos/*`), valida cada registro com Zod, confere os totais com o manifesto e só então monta a imagem (`Dockerfile`, Next standalone, `ESPELHO=1` → `X-Robots-Tag: noindex` e robots fechado). A imagem vai para o GHCR e é publicada com `site deploy vereador <tag>` (plataforma `vps-platform`, sem downtime). Roda depois de cada atualização da Vercel e a cada push de código. Saúde: `/api/health`.
+O workflow `.github/workflows/atualizar-dados.yml` confere o manifesto de hora em hora e dispara um build de produção na Vercel quando a coleta publicada passa de 11 h (na prática, a cada ~12 h; um horário perdido pelo GitHub é recuperado na hora seguinte). O workflow `vigia-dados.yml` roda 3x/dia e abre uma issue `dados-desatualizados` se a coleta passar de 26 h, trouxer avisos ou se uma cópia publicada estiver fora do ar ou atrasada (o GitHub avisa por e-mail). Detalhes, limites do plano gratuito e como atualizar à mão: [`docs/operacao/atualizar-dados.md`](docs/operacao/atualizar-dados.md).
 
 ## Desenvolvimento
 
@@ -46,6 +41,11 @@ Em produção o token fica na variável `CAMARA_API_TOKEN` da Vercel (só produ�
 - `docs/research/` — pesquisa da Fase 1 (fontes, API, Power BI, design, free tiers)
 - `CLAUDE.md` — princípios e convenções
 
+## Pedidos sobre dados pessoais e segurança
+
+- Pessoa citada numa ementa ou pedido de titular (LGPD): **não abra issue** (é público). Escreva para pindamonhangaba@osbrasil.org.br; o procedimento está na [política de privacidade](https://acompanhe-seu-vereador.vercel.app/privacidade#direitos) e as omissões atendidas ficam em `src/lib/content/omissoes.ts` (sem nomes).
+- Falha de segurança: veja [`SECURITY.md`](.github/SECURITY.md).
+
 ## Licença
 
-Código: MIT. Dados: públicos, da Câmara Municipal de Pindamonhangaba; cite a fonte e a data da coleta ao reutilizar.
+Código: MIT, © Observatório Social do Brasil – Pindamonhangaba. A licença não se estende ao nome e ao logotipo do Observatório Social do Brasil. Dados: públicos, da Câmara Municipal de Pindamonhangaba; cite a fonte e a data da coleta ao reutilizar.

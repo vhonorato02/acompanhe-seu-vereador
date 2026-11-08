@@ -6,7 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Obrigado por avisar. Cada aviso é conferido contra o documento oficial. Este aviso é público: não inclua dados pessoais além do necessário.
+        Obrigado por avisar. Cada aviso é conferido contra o documento oficial.
+
+        **Este aviso é público.** Não escreva CPF, telefone, endereço ou outros dados pessoais. Se o erro envolve você ou outra pessoa citada numa ementa, escreva para pindamonhangaba@osbrasil.org.br em vez de abrir este aviso.
   - type: input
     id: pagina
     attributes:

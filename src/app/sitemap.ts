@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const d = dataset();
   const coleta = new Date(d.execucao.coletadoEm);
-  const fixas = ["/", "/vereadores", "/bairros", "/proposicoes", "/normas", "/comparar", "/metodologia", "/como-funciona", "/dados", "/correcoes", "/sobre"];
+  const fixas = ["/", "/vereadores", "/bairros", "/proposicoes", "/normas", "/comparar", "/metodologia", "/como-funciona", "/dados", "/correcoes", "/sobre", "/privacidade", "/termos"];
   return [
     ...fixas.map((p) => ({ url: `${SITE.url}${p === "/" ? "" : p}`, lastModified: coleta })),
     ...d.vereadores.map((v) => ({ url: `${SITE.url}/vereadores/${v.slug}`, lastModified: coleta })),

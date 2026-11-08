@@ -3,8 +3,8 @@ import Link from "next/link";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Sobre e privacidade",
-  description: `Quem mantém o ${SITE.nome}, seus princípios, o que o portal faz com dados pessoais e de onde vêm fotos e textos.`,
+  title: "Sobre",
+  description: `Quem mantém o ${SITE.nome}, seus princípios e de onde vêm dados, fotos e textos.`,
   alternates: { canonical: "/sobre" },
 };
 
@@ -13,8 +13,14 @@ export default function Sobre() {
     <div className="prosa">
       <h1>Sobre o {SITE.nome}</h1>
       <p className="lede">
-        O {SITE.nome} é um projeto independente do {SITE.organizacao} para que qualquer pessoa possa ver, em poucos toques, o que
-        os vereadores da cidade apresentaram na Câmara, e conferir cada número no documento oficial.
+        O {SITE.nome} é um projeto do {SITE.organizacao} para que qualquer pessoa possa ver, em poucos toques, o que os
+        vereadores da cidade apresentaram na Câmara, e conferir cada número no documento oficial.
+      </p>
+      <p>
+        O Observatório é uma associação civil sem fins lucrativos e apartidária, parte da{" "}
+        <a href={SITE.osb.rede}>rede Observatório Social do Brasil</a>, formada por voluntários que buscam {SITE.missao}. O portal
+        substitui o antigo painel do projeto, que era atualizado à mão uma vez por mês: agora a coleta é automática, cerca de duas
+        vezes por dia. Conheça o trabalho do Observatório em <a href={SITE.osb.site}>{SITE.osb.site.replace("https://", "")}</a>.
       </p>
 
       <h2>Princípios</h2>
@@ -43,26 +49,12 @@ export default function Sobre() {
         os dados são atualizados duas vezes ao dia, e a última coleta válida continua disponível se uma atualização falhar.
       </p>
 
-      <h2 id="privacidade">Privacidade</h2>
-      <ul>
-        <li>O portal não usa cookies, não tem login, não coleta dados de quem visita e não usa ferramentas de rastreamento ou anúncios.</li>
-        <li>
-          A hospedagem (Vercel) registra dados técnicos de acesso, como endereço IP, para segurança e funcionamento, conforme a
-          política dela. O Observatório não usa esses registros para identificar visitantes.
-        </li>
-        <li>
-          A busca é processada no servidor e não é guardada pelo portal.
-        </li>
-        <li>
-          Os dados exibidos são de interesse público: atos de agentes públicos no exercício do mandato, publicados pela própria
-          Câmara (Lei de Acesso à Informação, Lei 12.527/2011). Ementas podem citar nomes de cidadãos (por exemplo, em homenagens).
-          O portal mostra apenas título, ementa, autoria e data, como publicados, e não republica o texto integral dos documentos.
-        </li>
-        <li>
-          Se você é citado em uma ementa e tem uma preocupação, <Link href="/correcoes">fale com o Observatório</Link>; o texto
-          original continua sendo responsabilidade da Câmara.
-        </li>
-      </ul>
+      <h2 id="privacidade">Privacidade e termos</h2>
+      <p>
+        O portal não tem cadastro, cookies nem rastreadores. Como os dados pessoais são tratados, inclusive os de pessoas citadas em
+        ementas, está na <Link href="/privacidade">política de privacidade</Link>. As condições de uso e de reutilização dos dados
+        estão nos <Link href="/termos">termos de uso</Link>.
+      </p>
 
       <h2 id="creditos">Fotos, textos e código</h2>
       <ul>
@@ -71,7 +63,7 @@ export default function Sobre() {
           preto e branco e enquadrados em círculo, iguais para todos, para identificar cada parlamentar sem destacar ninguém. Crédito: Câmara Municipal de Pindamonhangaba.
         </li>
         <li><strong>Dados:</strong> Câmara Municipal de Pindamonhangaba, API de Dados Abertos. Cite a fonte ao reutilizar.</li>
-        <li><strong>Marca e ícones:</strong> desenhados para o portal, sem uso de brasão ou logotipo oficial.</li>
+        <li><strong>Marca:</strong> logotipo e emblema do {SITE.organizacao}. O portal não usa brasão nem logotipo da Câmara ou da Prefeitura.</li>
         <li><strong>Tipografia:</strong> a fonte do próprio aparelho (San Francisco no iPhone, Segoe no Windows, Roboto no Android); nada é baixado de terceiros.</li>
         <li>
           <strong>Código:</strong> aberto, licença MIT, em <a href={SITE.repositorio}>{SITE.repositorio.replace("https://", "")}</a>.

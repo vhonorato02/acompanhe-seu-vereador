@@ -48,3 +48,8 @@ export function n(x: number): string {
 export function plural(x: number, um: string, varios: string): string {
   return `${n(x)} ${x === 1 ? um : varios}`;
 }
+
+/** "8 de novembro de 2026" from an ISO day. */
+export function dataLonga(dia: string): string {
+  return new Intl.DateTimeFormat("pt-BR", { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${dia}T12:00:00Z`));
+}

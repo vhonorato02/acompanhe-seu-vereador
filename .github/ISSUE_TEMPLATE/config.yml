@@ -1,1 +1,11 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
+contact_links:
+  - name: Sou citado numa ementa / pedido sobre dados pessoais (LGPD)
+    url: https://acompanhe-seu-vereador.vercel.app/privacidade#direitos
+    about: Não abra aviso público. Escreva para pindamonhangaba@osbrasil.org.br, como explica a política de privacidade.
+  - name: Falha de segurança
+    url: https://github.com/vhonorato02/acompanhe-seu-vereador/security/advisories/new
+    about: Comunique de forma privada. Não abra aviso público.
+  - name: Dúvidas sobre o Observatório Social de Pindamonhangaba
+    url: https://pindamonhangaba.sistemaosb.com.br
+    about: Site institucional, redes e contato do Observatório.

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Contato } from "@/components/Contato";
 import { SITE, URL_REPORTAR_ERRO } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -32,19 +33,13 @@ export default function Correcoes() {
           <a href={URL_REPORTAR_ERRO}>Abrir um aviso no GitHub</a>. O formulário já vem com os campos acima. Exige uma conta gratuita
           no GitHub, e o aviso fica público.
         </li>
-        {SITE.contatoEmail ? (
-          <li>
-            Sem conta no GitHub: escreva para <a href={`mailto:${SITE.contatoEmail}`}>{SITE.contatoEmail}</a>.
-          </li>
-        ) : (
-          <li>
-            Sem conta no GitHub: procure o {SITE.organizacao} pelos canais dele. Um endereço de contato direto será publicado aqui
-            assim que for confirmado pelo Observatório.
-          </li>
-        )}
+        <li>
+          Sem conta no GitHub, ou se o aviso envolver dados pessoais: escreva para <Contato assunto="Erro no portal" />.
+        </li>
       </ul>
       <p className="nota">
-        Não envie dados pessoais seus ou de terceiros além do necessário para localizar o erro.
+        Não envie dados pessoais seus ou de terceiros além do necessário para localizar o erro. Pedidos de quem é citado em uma
+        ementa seguem a <Link href="/privacidade#direitos">política de privacidade</Link>.
       </p>
 
       <h2>O que acontece depois</h2>
