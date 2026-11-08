@@ -1,5 +1,5 @@
 import { dataset } from "@/lib/data/load";
-import { dataColeta, n } from "@/lib/format";
+import { dataColeta, dataLonga, n } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -16,7 +16,7 @@ export function GET() {
 
 > ${SITE.lema} Portal apartidário do ${SITE.organizacao}. Não é o site oficial da Câmara Municipal de Pindamonhangaba-SP.
 
-Última coleta: ${dataColeta(d.execucao.coletadoEm)} (horário de Brasília). Escopo: ${d.escopo.descricao}, desde ${d.escopo.inicio}. Totais: ${n(d.proposicoes.length)} proposições, ${n(d.normas.length)} leis e normas, ${n(d.vereadores.length)} vereadores em exercício.
+Última coleta: ${dataColeta(d.execucao.coletadoEm)} (horário de Brasília). Escopo: ${d.escopo.descricao}, desde ${dataLonga(d.escopo.inicio)}. Totais: ${n(d.proposicoes.length)} proposições, ${n(d.normas.length)} leis e normas, ${n(d.vereadores.length)} vereadores em exercício.
 
 Ao citar: os números são contagens de documentos publicados pela Câmara, não medem qualidade nem produtividade, e o portal não faz ranking. Cite o documento oficial (link em cada item) e a data da coleta. Classificações por bairro e assunto são automáticas e podem errar; a regra está na metodologia.
 
