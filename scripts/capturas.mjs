@@ -30,6 +30,13 @@ for (const tema of temas) {
       locale: "pt-BR",
     });
     const page = await ctx.newPage();
+    // A stale server on the same port serves HTML whose CSS/JS no longer exist: the screenshot
+    // looks unstyled but "succeeds". Fail loudly instead.
+    const quebrados = [];
+    page.on("response", (res) => {
+      const tipo = res.request().resourceType();
+      if ((tipo === "stylesheet" || tipo === "script") && res.status() >= 400) quebrados.push(`${res.status()} ${res.url()}`);
+    });
     for (const r of rotas) {
       let rota = r;
       if (rota.includes("{primeiro}")) {
@@ -39,7 +46,12 @@ for (const tema of temas) {
         }
         rota = primeiro ?? "/vereadores";
       }
-      await page.goto(new URL(rota, base).href, { waitUntil: "networkidle" });
+      const resposta = await page.goto(new URL(rota, base).href, { waitUntil: "networkidle" });
+      if (resposta && resposta.url() !== new URL(rota, base).href) console.warn(`aviso: ${rota} redirecionou para ${resposta.url()}`);
+      if (quebrados.length > 0) {
+        console.error(`CSS/JS com erro em ${rota} (servidor antigo na porta?): ${quebrados.join(" | ")}`);
+        process.exit(1);
+      }
       const arquivo = `${out}/${l.nome}-${tema}${rota.replace(/[/?=&]+/g, "_") || "_"}.png`;
       await page.screenshot({ path: arquivo, fullPage: true });
       // Readable slices of the page (two screens each) for review.
