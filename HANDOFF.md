@@ -1,7 +1,7 @@
 # HANDOFF — Acompanhe seu Vereador (Pindamonhangaba)
 
 > Arquivo de continuidade entre sessões. Atualize ao fim de cada bloco de trabalho.
-> Última atualização: 07/11/2026, noite (ciclo 4: atualização tolerante a horários perdidos, PWA, busca rápida, versão 0.4.0).
+> Última atualização: 08/11/2026, madrugada (ciclo 5: termos, privacidade/LGPD, marca do Observatório, JSON-LD e llms.txt, versão 0.5.0).
 
 ## Onde estamos
 
@@ -11,21 +11,20 @@
 - **GitHub:** `vhonorato02/acompanhe-seu-vereador` (antes `obs-vereador`; o GitHub redireciona). Branch padrão: `main` (corrigida em 06/11).
 - Trabalho direto na `main`, sem PR, por decisão do dono — mas cada push dispara uma coleta real na Vercel: rode `npm test`, `npm run build` e `npm run test:e2e` antes.
 - Publicação desta versão, SHA, deployment e coleta: ver “Última publicação” abaixo.
-- Auditorias: [ciclo 1](docs/auditoria/2026-11-04-ciclo-1.md), [ciclo 2 — continuidade](docs/auditoria/2026-11-07-auditoria-continuidade.md) , [ciclo 3 — redesenho e automação](docs/auditoria/2026-11-07-ciclo-3.md) e [ciclo 4 — autonomia, PWA e busca](docs/auditoria/2026-11-07-ciclo-4.md).
+- Auditorias: [ciclo 1](docs/auditoria/2026-11-04-ciclo-1.md), [ciclo 2 — continuidade](docs/auditoria/2026-11-07-auditoria-continuidade.md), [ciclo 3 — redesenho e automação](docs/auditoria/2026-11-07-ciclo-3.md), [ciclo 4 — autonomia, PWA e busca](docs/auditoria/2026-11-07-ciclo-4.md) e [ciclo 5 — jurídico, marca e SEO/GEO](docs/auditoria/2026-11-08-ciclo-5.md).
 - **Dados atualizam sozinhos ~2x/dia** (checagem de hora em hora, dispara com coleta de mais de 11 h) e um vigia 3x/dia abre issue `dados-desatualizados` se a coleta passar de 26 h ou a VPS ficar fora/atrasada — [guia](docs/operacao/atualizar-dados.md), [ADR 0003](docs/adr/0003-atualizacao-automatica.md).
 
 ## Última publicação
 
 | Item | Valor |
 |---|---|
-| Versão | **0.4.0** (tag `v0.4.0` e release no GitHub) |
-| Commit | `2387e10` na `main` (CI `quality-gates` verde: 127 testes unitários, 116 E2E no Linux) |
-| Coleta | 07/11/2026 20h45 (Brasília), **incremental**, 62 consultas, nenhum aviso — Vercel e VPS com o mesmo `coletadoEm` |
+| Versão | **0.5.0** |
+| Commit | `bcd346f` na `main` (CI `quality-gates` verde; local: 140 unitários, 257 E2E em 5 perfis) |
+| Coleta | 08/11/2026 03h26 (Brasília), **incremental**, nenhum aviso — Vercel e VPS com o mesmo `coletadoEm` |
 | Totais | **17.205 proposições, 407 normas, 11 vereadores** |
-| Cópia na VPS | `deploy-vps` run 42426560091 (1ª tentativa expirou no SSH com a VPS sob carga; reexecutado com sucesso; agora há novas tentativas automáticas) |
-| PWA | `sw.js` só para estáticos, `/offline`, atalhos no manifesto ([ADR 0004](docs/adr/0004-service-worker-sem-dados.md)) |
-| Busca | API ~0,22 s em produção (era ~1,2 s) |
-| **A verificar** | Execuções `schedule` reais do `atualizar-dados` (de hora em hora) e do `vigia-dados` (3x/dia): `gh run list --workflow atualizar-dados.yml --event schedule` |
+| Cópia na VPS | `deploy-vps` run 42454646265, `/api/health` ok |
+| Novidades | `/privacidade` e `/termos` (LGPD), omissão de ementa a pedido (`src/lib/content/omissoes.ts`), contato `pindamonhangaba@osbrasil.org.br`, logotipo e verde do Observatório, rodapé institucional (CNPJ, endereço), JSON-LD (NGO, WebSite, Dataset, Person) e `/llms.txt` |
+| Agendador | **Provado:** 1ª execução `schedule` do `atualizar-dados` em 08/11 05h56 UTC (run 42452683022). **A verificar:** `vigia-dados` ainda sem execução `schedule` |
 
 ## Decisões do dono (24/10/2026, valem até nova decisão)
 
@@ -47,18 +46,20 @@
 - Sem token fora de produção: usa `fixtures/camara-amostra.json` (amostra real, ampliada em 07/11 com registros do snapshot de produção) e mostra aviso.
 - Identidade (nome, endereço, repositório, contato) em `src/lib/site.ts`.
 - Filtro único em `src/lib/data/query.ts`: todo número do site é `contar()` com o mesmo filtro da lista para a qual aponta (inclusive destinatário, coautoria e “virou lei”).
-- Instalável (manifest + ícones) e **sem service worker** de propósito — [ADR 0002](docs/adr/0002-instalavel-sem-service-worker.md). Push: N/A justificado.
+- Instalável, com service worker **só para estáticos** e página `/offline`; páginas e dados nunca vêm do cache — [ADR 0004](docs/adr/0004-service-worker-sem-dados.md) (substitui a [ADR 0002](docs/adr/0002-instalavel-sem-service-worker.md)). O precache de `public/sw.js` é conferido por `tests/sw-precache.test.ts`. Push: N/A justificado.
 
 ## Qualidade
 
-| Camada | Onde | Estado em 07/11 |
+| Camada | Onde | Estado em 08/11 |
 |---|---|---|
-| Unitários, contratos, integração do coletor e do espelho, tokens de design | `tests/` (Vitest) | 127 testes |
-| E2E, acessibilidade (axe WCAG 2.2 AA), SEO, PWA, capturas | `e2e/` (Playwright) | 234 testes em 5 perfis emulados |
+| Unitários, contratos, integração do coletor e do espelho, tokens de design | `tests/` (Vitest) | 140 testes |
+| E2E, acessibilidade (axe WCAG 2.2 AA), SEO, PWA, capturas | `e2e/` (Playwright) | 257 testes em 5 perfis emulados (inclui JSON-LD e `llms.txt`) |
 | CI | `.github/workflows/quality-gates.yml` | npm ci, audit, varredura de segredos, typecheck, testes, build com amostra, E2E Chromium desktop + Android, artefatos |
 | Revisão das heurísticas | `npm run auditar:heuristicas` | rodar a cada trimestre |
 
 O CI usa a amostra rotulada: **não prova a coleta real**. A coleta real só é provada pelo build de produção da Vercel.
+
+**Porta 3100 ocupada por outro projeto** (ex.: `cmdca-main`) faz o Playwright testar o site errado. Confira com `netstat -ano | grep :3100`; se estiver ocupada, rode `npx next start -p 3197 -H 127.0.0.1` e `E2E_URL=http://127.0.0.1:3197 npm run test:e2e`, e encerre o servidor no fim.
 
 Para rodar o E2E localmente sem encher o C:, instale os navegadores no Z: (`PLAYWRIGHT_BROWSERS_PATH=Z:\Dev\.cache\ms-playwright npx playwright install chromium firefox webkit`) e use a mesma variável ao rodar `npm run test:e2e`.
 
@@ -71,7 +72,7 @@ Para rodar o E2E localmente sem encher o C:, instale os navegadores no Z: (`PLAY
 ## Pendências reais (por prioridade)
 
 0. **Vercel (só o dono consegue):** (a) remover o domínio `camara-a-vista.vercel.app` — Vercel → acompanhe-seu-vereador → Settings → Domains → ⋯ → Remove; hoje ele serve uma cópia do site. (b) Opcional: criar o deploy hook e o segredo `VERCEL_DEPLOY_HOOK_URL` (passo a passo em `docs/operacao/atualizar-dados.md`) para a atualização automática parar de gerar 2 commits/dia.
-1. **Contato sem GitHub:** confirmar com o Observatório um e-mail ativo e preencher `contatoEmail` em `src/lib/site.ts`. O único achado (`pindamonhangaba@osbrasil.org.br`, relatório de 2021) não foi confirmado, e o site `pindamonhangaba.osbrasil.org.br` não respondia em 06/11.
+1. **Observatório:** (a) revisar `/termos` e `/privacidade` (advogado ou coordenação), em especial o prazo de 15 dias; (b) confirmar quem lê `pindamonhangaba@osbrasil.org.br` e atende pedidos de titular. Para atender uma omissão: acrescentar `{ chave: "<tipo>:<id>", desde, referencia }` em `src/lib/content/omissoes.ts` (nunca o nome) e publicar.
 2. Teste em aparelho físico (Android/One UI e iPhone) e com leitor de tela real (TalkBack/VoiceOver) — só houve emulação.
 3. Confirmar com quem conhece a cidade nomes de bairro parecidos ainda separados (“Andrade” × “Residencial Andrade”, “Ipê” × “Ipê I”, “Morumbi” × “Jardim Morumbi”) e acrescentar em `src/lib/content/bairros.ts`.
 4. Opcional: renomear a pasta local `Z:\Dev\projetos\obs-vereador` para `acompanhe-seu-vereador` (fora do repositório; ajustar o projeto no T3 Code junto).
