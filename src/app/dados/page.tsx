@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/JsonLd";
 import { dataset } from "@/lib/data/load";
 import { dataColeta, n } from "@/lib/format";
+import { datasetLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = {
   title: "Dados abertos",
@@ -21,6 +23,7 @@ export default function Dados() {
   ];
   return (
     <div className="prosa">
+      <JsonLd dados={datasetLd(d)} />
       <h1>Dados abertos</h1>
       <p>
         Os mesmos dados que o portal mostra, como foram coletados em {dataColeta(d.execucao.coletadoEm)}

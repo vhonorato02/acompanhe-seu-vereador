@@ -6,6 +6,7 @@ import { ViewTransition } from "react";
 import { Fonte } from "@/components/Fonte";
 import { Barras } from "@/components/graficos/Graficos";
 import { Icon } from "@/components/Icon";
+import { JsonLd } from "@/components/JsonLd";
 import { Feed } from "@/components/Item";
 import { PainelVereador } from "@/components/PainelVereador";
 import { Avatar } from "@/components/Rosto";
@@ -17,6 +18,7 @@ import { panorama, raioX } from "@/lib/data/painel";
 import { recortes } from "@/lib/data/perfil";
 import { hrefLista, ordenar } from "@/lib/data/query";
 import { n } from "@/lib/format";
+import { vereadorLd } from "@/lib/seo/jsonld";
 
 export function generateStaticParams() {
   return dataset().vereadores.map((v) => ({ slug: v.slug }));
@@ -60,6 +62,7 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
 
   return (
     <>
+      <JsonLd dados={vereadorLd(v)} />
       <Link href="/vereadores" className="voltar">
         Vereadores
       </Link>
