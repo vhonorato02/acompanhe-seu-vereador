@@ -6,7 +6,7 @@
 ## Onde estamos
 
 - **Produção (canônico):** https://acompanhe-seu-vereador.vercel.app — o domínio público continua na Vercel por decisão do dono (07/11).
-- **Cópia na VPS zehonorato:** https://vereador.zehonorato.vps.brz.dev.br (site `vereador` da `vps-platform`, 256 MB, sem banco, `noindex`). Espelha os dados abertos da Vercel, validados; nunca fala com a Câmara. Workflow `deploy-vps.yml` (após cada atualização e cada push); operação: `ssh zehonorato-vps 'site lista; site logs vereador 100; site rollback vereador'`.
+- **Cópia na VPS zewithane:** https://vereador.zewithane.vps.brz.dev.br (site `vereador` da `vps-platform`, 256 MB, sem banco, `noindex`). Espelha os dados abertos da Vercel, validados; nunca fala com a Câmara. Workflow `deploy-vps.yml` (após cada atualização e cada push); operação: `ssh zewithane-vps 'site lista; site logs vereador 100; site rollback vereador'`.
 - **Vercel:** projeto `acompanhe-seu-vereador` (id `prj_tduqr6ZAVAtyEGz5mJJ5JgbTOaZe`, time `team_43xSvVJZ9lHuy6K7NNxlMhXG`), Node 24.x, branch de produção `main`.
 - **GitHub:** `vhonorato02/acompanhe-seu-vereador` (antes `obs-vereador`; o GitHub redireciona). Branch padrão: `main` (corrigida em 06/11).
 - Trabalho direto na `main`, sem PR, por decisão do dono — mas cada push dispara uma coleta real na Vercel: rode `npm test`, `npm run build` e `npm run test:e2e` antes.

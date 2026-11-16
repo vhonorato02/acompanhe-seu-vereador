@@ -27,9 +27,9 @@ concurrency:
 
 env:
   IMAGE: ghcr.io/vhonorato02/acompanhe-seu-vereador
-  DEPLOY_HOST: ssh.zehonorato.vps.brz.dev.br
+  DEPLOY_HOST: ssh.zewithane.vps.brz.dev.br
   DEPLOY_PORT: "22322"
-  SITE_URL: https://vereador.zehonorato.vps.brz.dev.br
+  SITE_URL: https://vereador.zewithane.vps.brz.dev.br
   HEALTH_PATH: /api/health
 
 jobs:
