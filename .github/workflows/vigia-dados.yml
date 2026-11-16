@@ -25,7 +25,7 @@ env:
   ROTULO: dados-desatualizados
   # Refreshes run about every 12 h: 26 h means two missed in a row, plus margin.
   LIMITE_HORAS: ${{ inputs.limite_horas || '26' }}
-  COPIA_VPS: https://vereador.zewithane.vps.brz.dev.br
+  COPIA_VPS: https://vereador.zehonorato.vps.brz.dev.br
 
 jobs:
   vigiar:
