@@ -61,7 +61,11 @@ export default async function PaginaBairro({ params }: { params: Promise<{ slug:
           {b.nome}
         </h1>
         <p className="lede">
-          Citado em <Link href={hrefLista("/proposicoes", { bairro: slug })}>{n(b.n)} proposições</Link> desde 2025
+          Citado em{" "}
+          <Link href={hrefLista("/proposicoes", { bairro: slug })}>
+            {n(b.n)} {b.n === 1 ? "proposição" : "proposições"}
+          </Link>{" "}
+          desde 2025
           {tema1 ? `, sobretudo sobre ${tema1.nome.toLowerCase()} (${percent(tema1.n, b.n)}%)` : ""}.
         </p>
         <span className="rotulo-derivado">

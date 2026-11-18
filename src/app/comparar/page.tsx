@@ -85,15 +85,16 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
                   <strong>
                     <Link href={hrefLista("/proposicoes", { autor: v.slug })}>{n(x.deles.length)}</Link>
                   </strong>
-                  <span>proposições desde 2025</span>
+                  <span>{x.deles.length === 1 ? "proposição" : "proposições"} desde 2025</span>
                 </li>
                 <li className="fato">
                   <strong>
                     <Link href={hrefLista("/proposicoes", { autor: v.slug, tipo: "Projetos-de-Lei-Ordinaria" })}>{n(x.projetos.length)}</Link>
                   </strong>
                   <span>
-                    projetos de lei;{" "}
-                    <Link href={hrefLista("/proposicoes", x.filtroProjetosLei)}>{n(x.nProjetosLei)}</Link> já citados como origem de uma lei
+                    {x.projetos.length === 1 ? "projeto de lei" : "projetos de lei"};{" "}
+                    <Link href={hrefLista("/proposicoes", x.filtroProjetosLei)}>{n(x.nProjetosLei)}</Link>{" "}
+                    {x.nProjetosLei === 1 ? "já citado" : "já citados"} como origem de uma lei
                   </span>
                 </li>
               </ul>

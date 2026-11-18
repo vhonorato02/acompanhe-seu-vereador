@@ -44,7 +44,7 @@ export function Colunas({
     <figure className="grafico">
       <div className="colunas" style={{ height: altura }} role="list" aria-label={titulo}>
         {dados.map((d) => {
-          const rotulo = `${rotuloMes(d.mes, true)}: ${n(d.total)} proposições`;
+          const rotulo = `${rotuloMes(d.mes, true)}: ${n(d.total)} ${d.total === 1 ? "proposição" : "proposições"}`;
           const conteudo = (
             <>
               <span className="col-pilha" style={{ height: `${pct(d.total, max)}%` }}>

@@ -30,8 +30,8 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
-      - name: Dependency audit (high and critical)
-        run: npm audit --audit-level=high
+      - name: Dependency audit (moderate, high and critical)
+        run: npm audit --audit-level=moderate
       - name: Secret scan (no API token or key material in the tree)
         run: |
           if git grep -nIE "keysoft=[A-Za-z0-9]{8,}|CAMARA_API_TOKEN=[^[:space:]]+|-----BEGIN [A-Z ]*PRIVATE KEY-----" -- . ':!.github/workflows/quality-gates.yml'; then

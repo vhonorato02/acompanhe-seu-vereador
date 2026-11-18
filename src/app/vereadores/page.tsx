@@ -39,7 +39,8 @@ export default function Vereadores() {
                   <span className="meta">
                     {" "}
                     {v.partido}
-                    {v.funcao && v.funcao !== "Vereador" ? `, ${v.funcao.toLowerCase()}` : ""}. {n(deles.length)} proposições
+                    {v.funcao && v.funcao !== "Vereador" ? `, ${v.funcao.toLowerCase()}` : ""}. {n(deles.length)}{" "}
+                    {deles.length === 1 ? "proposição" : "proposições"}
                     {tema ? `, mais sobre ${tema.nome.toLowerCase()}` : ""}
                   </span>
                   <Faisca valores={porMes(deles, p.listaMeses).map((m) => m.total)} />

@@ -15,7 +15,7 @@ const FIM = new Set([
   "tendo", "sentido", "altura", "rua", "avenida", "av", "estrada", "travessa", "praca", "regiao", "area", "rodovia",
   "referido", "referida", "citado", "citada", "mesmo", "mesma", "inteiro", "todo", "toda", "localizado", "localizada",
   "localizados", "localizadas", "situado", "situada", "solicitando", "solicito", "sobre", "conhecido", "conhecida",
-  "questao", "cujo", "cuja", "seja", "sejam", "e", "ou", "x", "se", "nao", "apos", "visto", "pois",
+  "questao", "cujo", "cuja", "seja", "sejam", "e", "ou", "x", "se", "nao", "apos", "visto",
 ]);
 /** Words after which the next word belongs to the name even in lower case ("Santa luzia"). */
 const PREFIXO = new Set([

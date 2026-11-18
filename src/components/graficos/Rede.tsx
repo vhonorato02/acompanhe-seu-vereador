@@ -112,7 +112,10 @@ export function Rede({ nos, pares, inicial = null }: { nos: No[]; pares: Array<{
                 return (
                   <li key={outro}>
                     <Link href={hrefLista("/proposicoes", { autor: sel, coautor: outro })}>
-                      {nome(outro)} <span className="soft">{n(p.n)} proposições</span>
+                      {nome(outro)}{" "}
+                      <span className="soft">
+                        {n(p.n)} {p.n === 1 ? "proposição" : "proposições"}
+                      </span>
                     </Link>
                   </li>
                 );

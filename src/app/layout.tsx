@@ -68,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </a>
               <div>
                 <p>
-                  <strong>{SITE.nome}</strong> é um projeto do {SITE.organizacao}, associação civil apartidária que {SITE.missao}.
+                  <strong>{SITE.nome}</strong> é um projeto do {SITE.organizacao}, associação civil apartidária que busca {SITE.missao}.
                   Não é o site oficial da Câmara Municipal; os documentos oficiais estão em{" "}
                   <a href="https://www.pindamonhangaba.sp.leg.br">pindamonhangaba.sp.leg.br</a>.
                 </p>
