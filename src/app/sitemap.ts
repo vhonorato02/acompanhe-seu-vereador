@@ -4,7 +4,6 @@ import { panorama } from "@/lib/data/painel";
 import { SITE } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  if (process.env.ESPELHO === "1") return [];
   const d = dataset();
   const coleta = new Date(d.execucao.coletadoEm);
   const fixas = ["/", "/vereadores", "/bairros", "/proposicoes", "/normas", "/comparar", "/metodologia", "/como-funciona", "/dados", "/correcoes", "/sobre", "/privacidade", "/termos"];

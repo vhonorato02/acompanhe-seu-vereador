@@ -1,7 +1,7 @@
 # Watchdog for the public data, three times a day (GitHub may drop a scheduled run; three
-# chances keep a real outage from going unnoticed). Reads the published manifest and the VPS
-# copy once each and, when the collection is older than LIMITE_HORAS, carries warnings, cannot
-# be read, or the VPS copy is down or stale, opens (or updates) an issue labelled
+# chances keep a real outage from going unnoticed). Reads the published manifest and /api/health
+# once each and, when the collection is older than LIMITE_HORAS, carries warnings, cannot be
+# read, or /api/health is down or stale, opens (or updates) an issue labelled
 # "dados-desatualizados". GitHub e-mails the owner about new issues. When everything is fine
 # again, it closes the open issue with a note.
 name: vigia-dados
@@ -25,7 +25,6 @@ env:
   ROTULO: dados-desatualizados
   # Refreshes run about every 12 h: 26 h means two missed in a row, plus margin.
   LIMITE_HORAS: ${{ inputs.limite_horas || '26' }}
-  COPIA_VPS: https://vereador.zewithane.vps.brz.dev.br
 
 jobs:
   vigiar:
@@ -55,16 +54,15 @@ jobs:
             if [ "$minutos" -gt $(( LIMITE_HORAS * 60 )) ]; then
               problemas="- A última coleta publicada é de $coletado, há $horas horas (limite: $LIMITE_HORAS h). A atualização automática (workflow atualizar-dados) pode estar falhando."
             fi
-            # The VPS copy mirrors the canonical site after each refresh.
-            vps=$(curl -sS -m 30 -A "vigia-dados (+https://github.com/${GITHUB_REPOSITORY})" "$COPIA_VPS/api/health" | jq -r '.coletadoEm // empty' 2>/dev/null || true)
-            if [ -z "$vps" ]; then
-              problemas=$(printf '%s\n%s' "$problemas" "- A cópia da VPS ($COPIA_VPS) não respondeu em /api/health." | sed '/^$/d')
+            health=$(curl -sS -m 30 -A "vigia-dados (+https://github.com/${GITHUB_REPOSITORY})" "$SITE/api/health" || true)
+            health_ok=$(printf '%s' "$health" | jq -r '.ok // false' 2>/dev/null || echo false)
+            health_coletado=$(printf '%s' "$health" | jq -r '.coletadoEm // empty' 2>/dev/null || true)
+            if [ "$health_ok" != "true" ] || [ -z "$health_coletado" ]; then
+              problemas=$(printf '%s\n%s' "$problemas" "- O endpoint de saúde ($SITE/api/health) não respondeu com ok: true." | sed '/^$/d')
+            elif [ "$health_coletado" != "$coletado" ]; then
+              problemas=$(printf '%s\n%s' "$problemas" "- O endpoint $SITE/api/health reporta $health_coletado, diferente do manifesto ($coletado)." | sed '/^$/d')
             else
-              atraso=$(( ( $(date -u -d "$coletado" +%s) - $(date -u -d "$vps" +%s) ) / 60 ))
-              echo "Cópia da VPS: coleta de $vps (atraso de $((atraso / 60)) h em relação à Vercel)"
-              if [ "$atraso" -gt $(( LIMITE_HORAS * 60 )) ]; then
-                problemas=$(printf '%s\n%s' "$problemas" "- A cópia da VPS está com a coleta de $vps, $((atraso / 60)) h atrás da Vercel (workflow deploy-vps)." | sed '/^$/d')
-              fi
+              echo "Health Vercel OK: $health_coletado"
             fi
             if [ -n "$avisos" ]; then
               problemas=$(printf '%s\n%s' "$problemas" "$avisos" | sed '/^$/d')
