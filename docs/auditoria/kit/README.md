@@ -56,6 +56,10 @@ Se a resposta vier sem prova, a fase não terminou.
 
 Cada ficha lista os momentos do dono. Os que valem para todos: liberar acesso de leitura ao servidor, escolher domínios, confirmar autorizações de imagem/marca/conteúdo, levar a lista legal a um advogado quando o agente indicar, e o aceite final no seu celular.
 
+## Faxina que vale para todos (achada ao montar o kit)
+
+A conta da Vercel tem **29 projetos**. Os ligados a esta auditoria e a situação em 18/11/2026: `acompanhe-seu-vereador` (produção, com o alias extra `camara-a-vista.vercel.app`), `clinica-dias` (só redireciona, 307), `cmdca` (pausado), `quarau` (404 com `noindex`), `english-talklab` (sem deployment), `osb-pinda-camara-1s2026` (página "placeholder"). Os demais não são destes repositórios. Projeto esquecido é endereço público que ninguém vigia: cada auditoria deve fechar o seu, e o dono decide sobre os outros.
+
 ## Validade
 
-As fichas foram conferidas em 17/11/2026 nos commits citados em cada uma. Envelhecem rápido: o prompt mestre manda o agente conferir tudo de novo, inclusive a ficha.
+As fichas foram conferidas em 17/11/2026 nos commits citados em cada uma; as seções "Observado" vêm de checagens externas em modo leitura feitas em 18/11/2026. Envelhecem rápido: o prompt mestre manda o agente conferir tudo de novo, inclusive a ficha.

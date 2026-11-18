@@ -14,6 +14,10 @@ Auditar e estabilizar o site do Conselho Municipal dos Direitos da Criança e do
 - `AGENTS.md` só contém o aviso gerado pelo Next ("leia os docs em `node_modules/next/dist/docs`"): **obedeça**, a versão instalada é mais nova que a sua memória.
 - Scripts de carga de conteúdo (`seed`, `apply:confirmados`, `apply:content-pack`) rodam contra o banco.
 
+## Observado em 18/11/2026 (modo leitura)
+
+- Existe um projeto `cmdca` na Vercel, **pausado** (`DEPLOYMENT_PAUSED`). Descobrir se algum link, QR code, material impresso ou cadastro em órgão público ainda aponta para `cmdca.vercel.app`; se sim, redirecionar com 301 em vez de deixar 503. Se não, remover o projeto.
+
 ## Perguntas que a auditoria precisa responder com prova
 
 1. **Todo push no `main` publica.** Os gates do `quality.yml` bloqueiam de verdade? Um E2E "em produção" escreve algo no banco real?

@@ -1,6 +1,6 @@
 # Ficha do projeto — Acompanhe seu Vereador (URGENTE, 1º da fila)
 
-> Cole **depois** do `PROMPT-MESTRE.md`. Pistas conferidas no código em 17/11/2026, commit `2c4ecaf`. Se o código de hoje disser outra coisa, o código ganha.
+> Cole **depois** do `PROMPT-MESTRE.md`. Pistas conferidas no código em 17/11/2026 (commit `2c4ecaf`) e fatos observados de fora em 18/11/2026 (seção "Observado"). Se o código ou a produção de hoje disserem outra coisa, eles ganham.
 
 ## Missão desta rodada
 
@@ -28,6 +28,23 @@
 - `atualizar-dados.yml` roda **de hora em hora** e, quando a coleta está velha, dispara build na Vercel por deploy hook ou por commit em `.github/atualizacao-agendada`.
 - Existe `public/sw.js` e uma rota `/offline`.
 
+## Observado em 18/11/2026 (modo leitura, por quem escreveu esta ficha)
+
+Fatos com data, não garantias. Reconfirme.
+
+| Fato | Como foi visto | Consequência para a auditoria |
+|---|---|---|
+| Produção da Vercel = commit `ac4e518` (o `main` do momento, um commit automático de dados) | API da Vercel, lista de deployments | ok naquele instante; o SHA muda duas vezes por dia sozinho |
+| `/api/health` devolve só `ok`, `coletadoEm` e o total de proposições: **nem SHA nem versão** | `curl` na produção | de fora, ninguém prova qual código está no ar. Achado P2: expor SHA e versão (sem segredo) na saúde e no rodapé técnico |
+| **`camara-a-vista.vercel.app` continua servindo o site inteiro** (canonical aponta para o endereço principal) | API da Vercel + `curl` | sobra de um renome que um agente fez sem pedir (ciclo 2). Está "pendente com o dono" desde 07/11. Remover no painel leva 1 minuto; além disso o nome sugere ser da Câmara (risco de parecer oficial) |
+| `CAMARA_API_TOKEN` existe **só** no ambiente de produção | API da Vercel (só nomes, sem valor) | correto |
+| Build de **preview** usa a amostra de `fixtures/` (52 proposições, 0 requisições à Câmara) e previews exigem login da Vercel | log do build do preview `607c61a` | empurrar ramos é seguro para a Câmara. O que coleta é o build de **produção**: merge no `main` e o gatilho horário |
+| PR do Dependabot aberto: `next` 16.4.3 → 16.4.5 | lista de deployments | confirmar se é correção de segurança e por que ainda não entrou |
+| Avisos no build: `npm warn install-scripts … esbuild` (scripts de instalação não aprovados) e `Unknown env config "cache-dir"` | log do build | investigar se o `esbuild` precisa do `postinstall` e registrar a decisão; política de scripts de instalação é cadeia de suprimentos (M6.6) |
+| `zehonorato.vps.brz.dev.br` **não resolve**; `vereador.zewithane.vps.brz.dev.br` resolve, mas a conexão HTTPS foi derrubada a partir da rede deste ambiente | DNS e `curl` | `[BLOQUEADO]` daqui: conferir o espelho de outra rede antes de concluir que está fora do ar |
+| Projeto `osb-pinda-camara-1s2026` na mesma conta da Vercel responde 200 em `osb-pinda-camara-1s2026.vercel.app` com a palavra "placeholder" e nada mais | API da Vercel + `curl` | sobra com o nome do OSB e da Câmara, indexável. Perguntar ao dono e remover (P3) |
+| Domínios do Observatório: `osbrasil.org.br` (rede nacional, atrás de CDN) e `pindamonhangaba.sistemaosb.com.br` (plataforma do OSB) existem; não existe domínio próprio do OSB Pindamonhangaba | DNS | ver Missão C |
+
 ## Divergências já flagradas (a documentação mente; ache as outras)
 
 1. `CLAUDE.md` diz "0.3.0 em produção"; `package.json` e `HANDOFF.md` dizem 0.5.0. **Qual SHA e qual versão estão de fato no ar?**
@@ -42,7 +59,8 @@
 
 ## Zonas de perigo
 
-- **Cada build de produção na Vercel consulta a Câmara.** Não empurre commits em série para o `main`. Trabalhe em ramo, com `npm run collect` sem token (usa `fixtures/`), e junte as mudanças em poucas publicações. Descubra se builds de *preview* também coletam e, se sim, evite-os ou desligue a coleta neles.
+- **Cada build de produção na Vercel consulta a Câmara** (merge no `main`, deploy hook, commit em `.github/atualizacao-agendada`). Não empurre commits em série para o `main`: trabalhe em ramo (previews usam a amostra e não consultam a Câmara — reconfirme no log) e junte as mudanças em poucas publicações.
+- Uma amostra de 52 proposições num preview **parece** um site real. Garanta que a amostra é sinalizada na própria interface e que nenhum preview fica público sem login.
 - Não rode testes de carga, rastreadores ou scanners contra a Câmara nem contra a produção da Vercel além do tráfego de um visitante.
 - Dataset é dado real: o teste "número = lista" precisa passar sobre o dataset de produção, não só sobre a amostra.
 - Mudança de origem (domínio novo) desinstala na prática o PWA de quem instalou e zera o cache do service worker: planeje.
@@ -81,15 +99,23 @@ Não compre nada (a compra de domínio está negada nas permissões; mantenha). 
 | Controle de DNS e HTTPS automático | médio |
 | Tempo até ficar no ar | baixo |
 
-Candidatas a investigar (não confie nesta lista: confirme):
+Regra de nome: **nada que pareça oficial da Câmara** (sem "camara" no endereço). O portal é do Observatório e apartidário; o endereço não pode sugerir outra coisa. Uso da marca "OSB" no endereço só com autorização.
 
-1. **Subdomínio institucional do Observatório** (por exemplo sob o domínio que o OSB já usa). Custo zero para o projeto, a maior credibilidade; depende de um pedido do dono ao OSB e de um registro DNS (CNAME). Redija o pedido pronto para ele enviar.
-2. **Subdomínio `*.vercel.app` mais curto e claro**, mantendo o antigo com redirecionamento 301. Imediato, sem risco de renovação; credibilidade média.
-3. **Registro gratuito de longa data sem fins lucrativos** (tipo `eu.org`): aprovação lenta, aparência estrangeira.
-4. Subdomínios gratuitos de serviços recentes ou com histórico de abuso: provavelmente **descartar**, e dizer por quê (bloqueio por filtros, sumiço do serviço).
-5. Domínio `.br` (`.org.br`, `.app.br`): **pago**. Só mencionar o valor anual como alternativa caso o Observatório queira bancar; fora do escopo de custo zero.
+Pesquisa feita em 18/11/2026 (reconfirme: disponibilidade muda):
 
-Decida também, com o dono, **para onde o endereço aponta**: Vercel (onde a coleta acontece) ou VPS (que hoje é espelho sem indexação). Traga os prós e contras medidos (latência, disponibilidade, limites do free tier, dependência do build da Vercel para coletar, a Câmara recusa alguns datacenters — prove com `source-probe`).
+| Opção | Custo | Prazo | Risco de perder | Credibilidade | Situação observada |
+|---|---|---|---|---|---|
+| **A. Subdomínio do Observatório** sob `osbrasil.org.br` (rede nacional) ou sob a plataforma `sistemaosb.com.br` | R$ 0 | dias a semanas (depende do OSB nacional criar um CNAME) | baixo enquanto a parceria existir; o DNS é deles | **máxima** | os dois domínios existem; não há subdomínio para o portal |
+| **B. Manter `acompanhe-seu-vereador.vercel.app`** (ou um `*.vercel.app` mais curto com a cidade, por exemplo `vereadores-pinda`) | R$ 0 | imediato | baixo; preso à conta e ao plano gratuito da Vercel | média | nomes curtos testados estavam livres |
+| C. `eu.org` | R$ 0 | **imprevisível** (há relatos de pedidos parados por anos) | médio | baixa (aparência estrangeira) | descartar para algo urgente |
+| D. Serviços de subdomínio grátis recentes (`is-a.dev` e afins) | R$ 0 | rápido | **alto** (regras de uso pessoal, serviço pode sumir, listas de bloqueio) | baixa | descartar |
+| E. `.org.br` em nome do OSB Pindamonhangaba (CNPJ dele) | ~R$ 40/ano (fontes secundárias; conferir em registro.br) | 1 dia | baixo se a renovação for automática | **máxima** e independente | `acompanheseuvereador.org.br`, `vereadorespinda.org.br`, `osbpinda.org.br` e `observatoriosocialpinda.org.br` retornaram 404 no RDAP do Registro.br, ou seja, não estavam registrados. **Fora do custo zero**: só se o Observatório quiser bancar |
+
+**Recomendação para o dono:** ficar em **B agora** (remover `camara-a-vista`; renomear o `*.vercel.app` rende pouco e custa a migração do PWA e do SEO) e pedir **A** ao Observatório já, com a mensagem pronta (o agente redige). Se o OSB nacional demorar, **E** é a saída definitiva por R$ 40/ano, decisão do Observatório, não do projeto. Trocar de `*.vercel.app` para outro `*.vercel.app` só faz sentido se o nome atual for um problema real; diga qual.
+
+**Risco do plano gratuito da Vercel:** os termos restringem o plano Hobby a uso pessoal ou não comercial, e a política de uso justo fala em "não comercial pessoal". Um portal operado para uma associação é zona cinzenta. Vai para `07-legal-para-revisao-humana.md`, com duas saídas: confirmar com a Vercel (ou um programa de apoio a código aberto/sem fins lucrativos, se existir na data) ou tornar a VPS o canônico.
+
+Decida também, com o dono, **para onde o endereço aponta**: Vercel (onde a coleta acontece hoje) ou VPS (hoje espelho sem indexação). Traga os prós e contras medidos: latência a partir do Brasil (a Vercel builda e serve de Washington, `iad1`), disponibilidade, limites e termos do plano gratuito, dependência do build da Vercel para coletar, e se a Câmara aceita requisições da VPS (prove com `source-probe` executado de lá; o GitHub Actions alcança a API `/jsonweb/`, então coletar no Actions e publicar na VPS é uma arquitetura possível, sem Vercel).
 
 Depois do "sim" do dono, a troca é uma operação só, ensaiada:
 
@@ -107,6 +133,7 @@ Plataforma `vps-platform`, site `vereador`, comando `site` (ver ficha `vps-platf
 
 ## Momentos do dono 🔑
 
+0. **Já, 1 minuto, independe da auditoria:** Vercel → projeto `acompanhe-seu-vereador` → Settings → Domains → `camara-a-vista.vercel.app` → ⋯ → Remove.
 1. Escolher o endereço (Missão C) e, se for institucional, enviar o pedido ao Observatório.
 2. Confirmar autorização de uso de marca, CNPJ e endereço do Observatório.
 3. Search Console e atualização dos links nas redes.

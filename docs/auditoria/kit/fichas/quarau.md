@@ -27,7 +27,7 @@ Site institucional de consultoria socioambiental, educativa e cultural, ainda em
 1. O "mapa do código" do `CLAUDE.md` aponta `src/collections|globals|blocks`; o código real está em `src/cms/…`. O mapa está velho: quanto mais está?
 2. O `CLAUDE.md` ainda fala em `[locale]` "que sai na S02" e em sessões S00–S14 de um plano. Em que sessão o projeto está **de verdade**? Reconstrua pelo código e pelo que está no ar, não pelo `PROGRESSO.md`.
 3. Node mínimo declarado (22.12) × Node do CI (24) × Node da imagem: qual roda em produção?
-4. Existe `apps/web/vercel.json` embora a Vercel "não seja mais usada". O projeto da Vercel ainda existe, está no ar, indexável?
+4. Existe `apps/web/vercel.json` embora a Vercel "não seja mais usada". Observado em 18/11/2026: o projeto `quarau` ainda existe na Vercel e `quarau.vercel.app` responde 404 com `noindex` e `Disallow: /` (não indexável, mas vivo). Decidir: remover o projeto e o `vercel.json`, ou manter de propósito e documentar por quê.
 5. "Sexta rodada de design" segundo o último commit de documentação: seis rodadas e ainda em homologação. Descubra o que emperra o aceite.
 
 ## Perguntas que a auditoria precisa responder com prova

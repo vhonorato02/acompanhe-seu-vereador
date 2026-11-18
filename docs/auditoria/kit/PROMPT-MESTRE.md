@@ -139,7 +139,7 @@ Audite o ambiente antes de auditar o produto. Registre em `00-bancada.md`.
 | Carga | k6 ou equivalente, **só** em ambiente próprio e em dose pequena |
 | Python (se houver) | ruff, pyright/mypy, bandit, pip-audit, `manage.py check --deploy` |
 
-5. **Skills e plugins:** liste os disponíveis; use os de planejamento, depuração sistemática, revisão de código, revisão de segurança, design de interface e verificação antes de concluir quando existirem. Skill é método, não prova: a prova continua sendo a evidência.
+5. **Skills e plugins:** liste os disponíveis; use os de planejamento, depuração sistemática, revisão de código, revisão de segurança, design de interface e verificação antes de concluir quando existirem (no Claude Code, por exemplo: planejamento, TDD, depuração sistemática e verificação antes de concluir do `superpowers`; `frontend-design`; Playwright MCP; Context7; `/security-review`; `/code-review`). Skill é método, não prova: a prova continua sendo a evidência.
 
 ### Fase 1 — Descoberta e perfil
 
@@ -147,8 +147,10 @@ Audite o ambiente antes de auditar o produto. Registre em `00-bancada.md`.
 2. **Topologia real, de fora para dentro:** DNS → TLS → proxy → app → banco → storage → e-mail → filas → cron → CI → registro de imagens. Compare o SHA em produção com o `main`. Liste **tudo** o que roda no servidor, inclusive o que não tem repositório.
 3. **Produto real:** para que serve, para quem, quais tarefas promete, quais cumpre. Produto declarado × implementado × utilizável.
 4. **Livro de divergências (`02-divergencias.md`):** percorra cada documento de estado e marque cada afirmação verificável como confirmada, falsa, desatualizada ou não verificável. Documentação que mente é achado, e o padrão das mentiras diz onde cavar.
-5. **Git:** ramos, PRs, tags, commits automáticos, arquivos grandes, coisas versionadas que não deviam (build, dump, chave, dado pessoal), proteção do `main`, quem pode publicar.
-6. **Matriz de módulos:** para cada módulo M1–M16 da Fase 4, decida `aplica / aplica em parte / N/A` com a evidência. Perfis típicos:
+5. **Git:** ramos, PRs (inclusive os de dependência abertos há dias: por que não entraram?), tags, commits automáticos, arquivos grandes, coisas versionadas que não deviam (build, dump, chave, dado pessoal), proteção do `main`, quem pode publicar.
+6. **Todos os endereços que servem o produto:** domínios, aliases e subdomínios da hospedagem, espelhos, ambientes esquecidos, projetos antigos ainda publicados. Liste pela API/painel do provedor, não pela documentação. Endereço extra servindo cópia é achado.
+7. **Pendências antigas "do dono":** varra handoffs e auditorias anteriores atrás de ações atribuídas ao dono. Para cada uma: ainda vale? há quanto tempo? Reapresente as vivas, agrupadas, com o passo a passo de cliques. Pendência que ninguém cobra vira risco permanente.
+8. **Matriz de módulos:** para cada módulo M1–M16 da Fase 4, decida `aplica / aplica em parte / N/A` com a evidência. Perfis típicos:
 
 | Sinal encontrado | Consequência |
 |---|---|
@@ -239,6 +241,7 @@ Classifique: **comprovada** (com prova de conceito inofensiva), **potencial**, *
 - **Crianças e adolescentes (ECA e Lei 15.211/2025):** imagem, identificação, coleta de dados, conteúdo.
 - **Setoriais:** saúde (publicidade médica do CFM, identificação profissional, promessa de resultado, antes e depois), órgãos e conselhos públicos (Lei de Acesso à Informação, publicidade de atos), período eleitoral (Lei 9.504/1997), ensino, financeiro. Descubra qual se aplica ao domínio.
 - **Propriedade intelectual:** licença de cada fonte tipográfica, foto, ícone, ilustração, mapa, dado e dependência; direito de imagem de pessoas retratadas; atribuições obrigatórias; licença do próprio repositório; marcas de terceiros.
+- **Termos dos serviços usados:** cada hospedagem, CDN, API e plano gratuito tem termos (por exemplo, plano restrito a uso pessoal ou não comercial, limites de uso justo, proibição de certos conteúdos). O uso real do projeto é compatível? Zona cinzenta vai para a lista de revisão humana com plano B.
 - **Textos legais:** termos e política existem, estão datados, versionados, acessíveis de toda página, sem cláusula copiada que não se aplica.
 - **Conteúdo sobre pessoas:** exatidão, fonte, canal de correção e de resposta, risco de difamação por erro de dado ou por apresentação tendenciosa.
 - **IA:** conteúdo gerado é rotulado, revisado e nunca apresentado como fato.
@@ -259,19 +262,19 @@ Corrija o que é técnico. O que depende de decisão ou parecer vai para o dono 
 
 Se **não** há CMS: decida se faz falta. Conteúdo que muda uma vez por ano não precisa de painel.
 
-**M9 — SEO e descoberta, URL por URL.** Matriz `URL | indexável? | intenção | title | description | H1 | hierarquia | canonical | robots | dados estruturados | links internos | mídia | performance | problema | correção | status`. Verifique no **HTML servido**, não no código: códigos HTTP certos, redirecionamentos sem cadeia, `robots.txt`, sitemap só com canônicas e datas reais, canonical coerente com parâmetros e paginação, páginas órfãs, conteúdo duplicado ou fino gerado por template, dados estruturados válidos e **verdadeiros** (nada de avaliação, preço ou autor inventado), imagem social por página, 404 útil, ambientes de teste e espelhos com `noindex` **e** fora do sitemap. Arquivos para agentes (`llms.txt` e afins) coerentes com o site. Search Console: use se houver acesso; senão `[BLOQUEADO]`.
+**M9 — SEO e descoberta, URL por URL.** Matriz `URL | indexável? | intenção | title | description | H1 | hierarquia | canonical | robots | dados estruturados | links internos | mídia | performance | problema | correção | status`. Verifique no **HTML servido**, não no código: códigos HTTP certos, redirecionamentos sem cadeia, `robots.txt`, sitemap só com canônicas e datas reais, canonical coerente com parâmetros e paginação, páginas órfãs, conteúdo duplicado ou fino gerado por template, dados estruturados válidos e **verdadeiros** (nada de avaliação, preço ou autor inventado), imagem social por página, 404 útil, ambientes de teste e espelhos com `noindex` **e** fora do sitemap, e nenhum domínio ou alias extra servindo cópia indexável (redirecione com 301 ou remova). Arquivos para agentes (`llms.txt` e afins) coerentes com o site. Search Console: use se houver acesso; senão `[BLOQUEADO]`.
 
 **M10 — PWA e mobile (se fizer sentido).** Primeiro: há valor real em instalar isto? Se não, recomende remover manifest e service worker (e planeje a desinstalação segura do service worker já distribuído). Se sim: manifest válido (`id`, `scope`, `start_url`, ícones maskable), service worker com responsabilidade clara, **o que nunca pode ser servido do cache** (dado que parece atual e não é), atualização sem usuário preso em versão antiga, página offline honesta, logout efetivo, comportamento de instalação em Android/Chrome e iOS/Safari testado separadamente, mudança de domínio (origem nova = app novo). Emulador não prova iPhone.
 
 **M11 — Performance e custo.** LCP, INP e CLS em laboratório com limitação de rede e CPU de celular médio, por rota-tipo; dado de campo se existir. Orçamento de JS/CSS/imagem por rota; fontes; imagens responsivas; cache HTTP e de CDN; renderização adequada por rota; consultas e tempo de resposta do servidor; memória e CPU do contêiner sob carga pequena; tempo de build; consumo de free tier (banda, minutos de build, invocações, minutos de CI) contra o limite real. Orçamentos viram gate de CI.
 
-**M12 — Infraestrutura, deploy e operação.** Leia a configuração **no servidor**, não só no repo (comece em modo leitura). Publicação reproduzível a partir de um commit; imagem construída no CI, nunca na produção; saúde verificada antes de trocar; rollback **ensaiado**; migração ordenada com o deploy; logs com rotação e sem dado pessoal; monitoramento externo e alerta que chega a um humano; disco, memória e swap com folga; certificados renovando; relógio; atualizações de segurança; o que acontece se o servidor reiniciar agora. Ambientes separados; teste nunca toca dado real. Documente RPO e RTO realistas.
+**M12 — Infraestrutura, deploy e operação.** Leia a configuração **no servidor**, não só no repo (comece em modo leitura). Publicação reproduzível a partir de um commit; **a versão no ar é verificável de fora** (saúde ou cabeçalho expõe versão e SHA, nunca segredo); imagem construída no CI, nunca na produção; saúde verificada antes de trocar; rollback **ensaiado**; migração ordenada com o deploy; logs com rotação e sem dado pessoal; monitoramento externo e alerta que chega a um humano; disco, memória e swap com folga; certificados renovando; relógio; atualizações de segurança; o que acontece se o servidor reiniciar agora. Ambientes separados; teste nunca toca dado real. Documente RPO e RTO realistas.
 
 **M13 — CI/CD e Git.** Gates que **bloqueiam** de verdade: formatação, lint, tipos, testes, build, auditoria de dependência, segredos, a11y, orçamento de performance, E2E. Workflows lidos linha a linha (M6.6). `main` protegido conforme a política do projeto. Ramos e PRs mortos inventariados (apagar remoto só com aval). Versão única e verdadeira (pacote, tag, changelog, o que está no ar). Commits automáticos não poluem o histórico nem disparam o que não devem.
 
 **M14 — Testes existentes sob suspeita.** Para o núcleo de domínio, rode teste de mutação ou quebre o código à mão em pontos sorteados: o teste percebe? Procure asserção fraca (`toBeTruthy`, "não lança"), teste que repete a implementação, mock demais, fixture irreal, E2E que só confere que a página abriu, teste pulado, teste instável, snapshot gigante.
 
-**M15 — Documentação e instruções de agente.** Depois de corrigir o produto, reescreva a documentação para descrever **o que existe**. Um documento de estado só (não três concorrentes). Instruções de agente curtas, verdadeiras, sem estado volátil (versão, "fase atual") que apodrece. Apague documentação de processo morto.
+**M15 — Documentação e instruções de agente.** Depois de corrigir o produto, reescreva a documentação para descrever **o que existe**. Um documento de estado só (não três concorrentes). Instruções de agente curtas, verdadeiras, sem estado volátil (versão, "fase atual") que apodrece. Apague documentação de processo morto. Conjunto mínimo, adaptado ao projeto e sem arquivo vazio por ritual: `README` (o que é, para quem, como rodar), arquitetura, desenvolvimento, publicação e rollback, segurança, produto (perfis e jornadas), conteúdo e SEO, PWA (se houver), `CHANGELOG`, e a pasta da auditoria.
 
 **M16 — Integrações externas.** E-mail (entrega real numa caixa de teste, SPF/DKIM/DMARC, texto, link, descadastro), pagamento (sandbox, webhook assinado, idempotência, conciliação), mensageria, mapas, analytics, armazenamento, APIs de terceiros: contrato, timeout, falha, limite, custo, termos de uso, o que o usuário vê quando cai.
 
@@ -307,7 +310,7 @@ Bloqueado nunca vira verde.
 3. Publique pelo caminho oficial do projeto (CI), nunca construindo no servidor.
 4. Depois: saúde, **SHA em produção = SHA auditado**, fumaça E2E contra a URL real, headers, TLS, robots/noindex corretos para aquele ambiente, logs sem erro, consumo de memória, monitor externo verde.
 5. **Ensaie o rollback** uma vez e volte.
-6. Domínio e DNS: mudança só com aval, com redirecionamento 301 do endereço antigo, canonical/sitemap/manifest/dados estruturados/e-mails/monitores/variáveis atualizados, e conferência de que nada ficou apontando para o antigo (busque o host antigo no repo, nos workflows e na configuração do servidor).
+6. Domínio e DNS: o nome não pode sugerir ser de órgão, empresa ou pessoa que não é dona do site; marca de terceiro só com autorização. Mudança só com aval, com redirecionamento 301 do endereço antigo, canonical/sitemap/manifest/dados estruturados/e-mails/monitores/variáveis atualizados, e conferência de que nada ficou apontando para o antigo (busque o host antigo no repo, nos workflows e na configuração do servidor).
 7. Nunca toque em contêiner, banco ou configuração de outro projeto no mesmo servidor.
 
 ### Fase 9 — Segunda auditoria adversarial

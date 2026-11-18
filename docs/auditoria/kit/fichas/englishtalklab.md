@@ -18,6 +18,10 @@
 - Página em Astro, publicada por GitHub Actions em `englishtalklab.com` via nginx, em `/opt/talklab/site/current`. Cita um portal em `app.englishtalklab.com` "mantido separadamente".
 - Raiz cheia de relatórios (`QA_REPORT`, `CRITIQUE_FINAL`, `WORKLOG`, `OPEN_ITEMS`, `SECURITY-NOTES`): depoimentos, não fatos.
 
+## Observado em 18/11/2026 (modo leitura)
+
+- Existe um projeto `english-talklab` na Vercel **sem deployment** (`english-talklab.vercel.app` → `DEPLOYMENT_NOT_FOUND`). Sobra a remover, depois de conferir que nada aponta para ele.
+
 ## Primeira pergunta, antes de tudo
 
 **O que responde hoje em `englishtalklab.com` e em `app.englishtalklab.com`?** Astro antigo, Wagtail novo, o sistema v1 (removido do repositório, guardado na tag `legacy-final`)? A virada aconteceu? Em qual servidor? Com quais dados? A resposta decide o plano:

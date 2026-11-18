@@ -21,6 +21,10 @@ Auditar e estabilizar o site da clínica. É **saúde**: publicidade médica reg
 - `vercel.json` transforma o projeto da Vercel num redirecionador para o endereço da VPS, com redirecionamento **temporário** e host fixo no arquivo.
 - `package.json` está em versão `0.0.0` embora exista `CHANGELOG.md` e a regra de tags semver.
 
+## Observado em 18/11/2026 (modo leitura)
+
+- `clinica-dias.vercel.app` responde **307 (temporário)** para `https://clinica.zewithane.vps.brz.dev.br/`. Redirecionamento temporário não transfere autoridade; e o destino é um nome de host que o provedor anunciou que vai mudar (o nome novo ainda não resolve).
+
 ## Perguntas que a auditoria precisa responder com prova
 
 1. **Qual é o endereço oficial hoje?** Domínio próprio, Vercel, VPS? Para onde aponta o DNS? O site antigo (WordPress) ainda existe? Os 301 legados cobrem **todas** as URLs antigas com tráfego (teste a lista real, inclusive `wp-content/uploads`)?
