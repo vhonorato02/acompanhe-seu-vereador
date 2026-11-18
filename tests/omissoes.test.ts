@@ -33,10 +33,20 @@ describe("omissão de ementa a pedido de pessoa citada (LGPD)", () => {
   });
 
   it("a lista pública só tem chaves válidas, data e referência — nunca um nome", () => {
+    expect(OMISSOES.length).toBeGreaterThanOrEqual(3);
     for (const o of OMISSOES) {
       expect(o.chave).toMatch(/^[A-Za-z-]+:\d+$/);
       expect(o.desde).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(o.referencia).toMatch(/^[\w#.-]+$/);
     }
+  });
+
+  it("aplica a lista de omissões padrão da auditoria LGPD ao converter registros", () => {
+    const r = toRegistro(
+      { ...homenagem, link: "https://www.pindamonhangaba.sp.leg.br/proposicoes/0/0/0/0/130774#pesquisa" },
+      "Requerimentos",
+      new Map(),
+    );
+    expect(r.ementa).toBe(TEXTO_OMITIDO);
   });
 });

@@ -32,7 +32,7 @@ export const SITE = {
     rede: "https://www.osbrasil.org.br",
   },
   /** Date the current terms and privacy policy took effect (ISO). Bump when either changes. */
-  vigenciaPoliticas: "2026-11-08",
+  vigenciaPoliticas: "2026-11-18",
 } as const;
 
 export const URL_REPORTAR_ERRO = `${SITE.repositorio}/issues/new?template=erro-nos-dados.yml`;
