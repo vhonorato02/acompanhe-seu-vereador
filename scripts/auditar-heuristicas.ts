@@ -7,6 +7,7 @@
  */
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { CHAVES_OMITIDAS } from "../src/lib/content/omissoes";
 import { decodificarEntidades } from "../src/lib/data/derive";
 import { porBairro } from "../src/lib/data/analise";
 import { derivados } from "../src/lib/data/enriquecer";
@@ -46,6 +47,19 @@ async function main() {
     destinos.set(d, (destinos.get(d) ?? 0) + 1);
   }
   linhas.push(``, `## Destinatários`, ``, ...[...destinos].map(([d, n]) => `- ${d}: ${n}`));
+
+  const ativos = props.filter((r) => !CHAVES_OMITIDAS.has(`${r.tipo}:${r.id}`));
+  const padroesLgpd: Array<[string, RegExp]> = [
+    ["CPF", /\b\d{3}\.\d{3}\.\d{3}-\d{2}\b/],
+    ["E-mail", /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/],
+    ["Telefone", /\(\d{2}\)\s*\d{4,5}-\d{4}/],
+    ["Prontuário/Patologia/Paciente nomeado", /\b(prontu[aá]rio\s*n?[º°.]?\s*\d+|patologia\s+d[aeo]\s+paciente|paciente\s+\p{Lu}\p{L}+)/u],
+  ];
+  linhas.push(``, `## Varredura LGPD (dados sensíveis / identificadores em ementas)`, ``);
+  for (const [rotulo, re] of padroesLgpd) {
+    const hits = ativos.filter((r) => re.test(r.ementa));
+    linhas.push(`- ${rotulo}: ${hits.length} registro(s)${hits.length ? ` (${hits.slice(0, 5).map((r) => `${r.tipo}:${r.id}`).join(", ")})` : ""}`);
+  }
   console.log(linhas.join("\n"));
 }
 

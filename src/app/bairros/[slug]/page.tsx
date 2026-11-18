@@ -5,10 +5,12 @@ import { Fonte } from "@/components/Fonte";
 import { Barras, Colunas } from "@/components/graficos/Graficos";
 import { Icon } from "@/components/Icon";
 import { Feed } from "@/components/Item";
+import { JsonLd } from "@/components/JsonLd";
 import { percent, porMes, porTema } from "@/lib/data/analise";
 import { panorama } from "@/lib/data/painel";
 import { contar, filtrar, hrefLista, ordenar } from "@/lib/data/query";
 import { n } from "@/lib/format";
+import { breadcrumbLd } from "@/lib/seo/jsonld";
 
 export function generateStaticParams() {
   return panorama().bairros.map((b) => ({ slug: b.slug }));
@@ -44,6 +46,13 @@ export default async function PaginaBairro({ params }: { params: Promise<{ slug:
 
   return (
     <>
+      <JsonLd
+        dados={breadcrumbLd([
+          { nome: "Início", url: "/" },
+          { nome: "Bairros", url: "/bairros" },
+          { nome: b.nome, url: `/bairros/${b.slug}` },
+        ])}
+      />
       <div className="prosa">
         <p className="soft">
           <Link href="/bairros">Bairros</Link>
@@ -52,7 +61,11 @@ export default async function PaginaBairro({ params }: { params: Promise<{ slug:
           {b.nome}
         </h1>
         <p className="lede">
-          Citado em <Link href={hrefLista("/proposicoes", { bairro: slug })}>{n(b.n)} proposições</Link> desde 2025
+          Citado em{" "}
+          <Link href={hrefLista("/proposicoes", { bairro: slug })}>
+            {n(b.n)} {b.n === 1 ? "proposição" : "proposições"}
+          </Link>{" "}
+          desde 2025
           {tema1 ? `, sobretudo sobre ${tema1.nome.toLowerCase()} (${percent(tema1.n, b.n)}%)` : ""}.
         </p>
         <span className="rotulo-derivado">

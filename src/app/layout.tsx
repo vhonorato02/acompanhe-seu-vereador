@@ -10,6 +10,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   applicationName: SITE.nome,
+  authors: [{ name: SITE.organizacao, url: SITE.osb.site }],
+  creator: SITE.organizacao,
+  publisher: SITE.organizacao,
+  category: "government",
   title: {
     default: `${SITE.nome} · Vereadores de ${SITE.cidade}`,
     template: `%s · ${SITE.nome}`,
@@ -25,6 +29,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  colorScheme: "light dark",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#000000" },
@@ -63,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </a>
               <div>
                 <p>
-                  <strong>{SITE.nome}</strong> é um projeto do {SITE.organizacao}, associação civil apartidária que {SITE.missao}.
+                  <strong>{SITE.nome}</strong> é um projeto do {SITE.organizacao}, associação civil apartidária que busca {SITE.missao}.
                   Não é o site oficial da Câmara Municipal; os documentos oficiais estão em{" "}
                   <a href="https://www.pindamonhangaba.sp.leg.br">pindamonhangaba.sp.leg.br</a>.
                 </p>

@@ -22,18 +22,24 @@ Ao citar: os números são contagens de documentos publicados pela Câmara, não
 
 ## Páginas principais
 - [Vereadores](${u}/vereadores): os vereadores em exercício, em ordem alfabética
+- [Comparar vereadores](${u}/comparar): comparação lado a lado de até três vereadores na mesma escala
 - [Proposições](${u}/proposicoes): requerimentos, indicações, moções e projetos, com filtros
 - [Leis e normas](${u}/normas): o que virou lei, decreto ou resolução
 - [Bairros](${u}/bairros): pedidos que citam bairros de Pindamonhangaba
+- [Como funciona](${u}/como-funciona): o que significa cada tipo de proposição e limites dos dados
 - [Metodologia](${u}/metodologia): fontes, regras de contagem e limitações
 - [Dados abertos](${u}/dados): CSV e JSON com dicionário de campos
+- [Correções](${u}/correcoes): como apontar erros nos dados ou na classificação
 
 ## Vereadores
 ${vereadores}
 
 ## Dados
 - [Proposições (CSV)](${u}/dados/proposicoes.csv)
+- [Proposições (JSON)](${u}/dados/proposicoes.json)
 - [Leis e normas (CSV)](${u}/dados/normas.csv)
+- [Leis e normas (JSON)](${u}/dados/normas.json)
+- [Vereadores em exercício (JSON)](${u}/dados/vereadores.json)
 - [Manifesto da coleta](${u}/dados/manifesto.json): data, fonte e avisos
 
 ## Institucional

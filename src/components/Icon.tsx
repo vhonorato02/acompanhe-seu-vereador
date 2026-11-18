@@ -95,15 +95,3 @@ export function Icon({ nome, tamanho = 22 }: { nome: keyof typeof PATHS | string
     </svg>
   );
 }
-
-export function iconeDoTipo(tipo: string): string {
-  if (/^Requerimentos/.test(tipo)) return "pedido";
-  if (/^Indicacoes/.test(tipo)) return "sugestao";
-  if (/^Mocoes/.test(tipo)) return "mocao";
-  if (/^Emendas$/.test(tipo)) return "emenda";
-  if (/^Vetos/.test(tipo)) return "veto";
-  if (/^(Leis|Resolucoes|Decretos|Emendas-a-Lei)/.test(tipo)) return "lei";
-  return "doc";
-}
-
-/** Brand mark: a magnifier over a leaf, after the Observatório Social logo. */

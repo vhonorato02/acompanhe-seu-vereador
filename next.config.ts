@@ -19,12 +19,6 @@ const csp = [
   "object-src 'none'",
 ].join("; ");
 
-/**
- * ESPELHO=1 builds the copy that runs on the owner's VPS: standalone server, and a noindex
- * header so search engines keep only the canonical address (SITE.url, on Vercel).
- */
-const espelho = process.env.ESPELHO === "1";
-
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -34,17 +28,16 @@ const securityHeaders = [
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   // The dev server needs eval for fast refresh, so the policy only applies to production builds.
   ...(process.env.NODE_ENV === "production" ? [{ key: "Content-Security-Policy", value: csp }] : []),
-  ...(espelho ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] : []),
 ];
 
 const config: NextConfig = {
   poweredByHeader: false,
-  ...(espelho ? { output: "standalone" as const } : {}),
   // The dataset is read from disk by server routes; make sure it ships with them.
   outputFileTracingIncludes: { "/**": ["./data/generated/**"] },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
+      { source: "/api/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
       // The service worker must always be revalidated, or a fix to it could take days to arrive.
       { source: "/sw.js", headers: [{ key: "Cache-Control", value: "no-cache, max-age=0, must-revalidate" }] },
     ];

@@ -24,3 +24,24 @@ describe("service worker: precache só com arquivos que existem", () => {
     expect(candidatos.some((x) => existsSync(path.join(process.cwd(), x))), c).toBe(true);
   });
 });
+
+describe("ícones e ativos da marca em PNG", () => {
+  const PNG_SIG = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+  const ativos: ReadonlyArray<[string, number, number]> = [
+    ["public/icones/icone-192.png", 192, 192],
+    ["public/icones/icone-512.png", 512, 512],
+    ["public/icones/icone-maskable-512.png", 512, 512],
+    ["src/app/icon.png", 64, 64],
+    ["src/app/apple-icon.png", 180, 180],
+    ["public/marca/emblema.png", 98, 96],
+    ["public/marca/logo-osb.png", 672, 246],
+  ];
+
+  it.each(ativos)("%s existe, tem assinatura PNG e dimensões %ix%i", (arquivo, larg, alt) => {
+    const bytes = readFileSync(path.join(process.cwd(), arquivo));
+    expect(bytes.subarray(0, 8)).toEqual(PNG_SIG);
+    expect(bytes.toString("ascii", 12, 16)).toBe("IHDR");
+    expect(bytes.readUInt32BE(16)).toBe(larg);
+    expect(bytes.readUInt32BE(20)).toBe(alt);
+  });
+});

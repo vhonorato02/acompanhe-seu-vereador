@@ -72,6 +72,7 @@ test.describe("SEO, compartilhamento e cabeçalhos", () => {
       expect(await page.locator('meta[property="og:image"]').first().getAttribute("content")).toMatch(/^https:\/\//);
     }
     expect(titulos.size).toBe(6);
+    expect(await page.locator('meta[name="color-scheme"]').getAttribute("content")).toBe("light dark");
     const og = await request.get("/opengraph-image");
     expect(og.headers()["content-type"]).toContain("image/png");
   });
@@ -89,14 +90,19 @@ test.describe("SEO, compartilhamento e cabeçalhos", () => {
   });
 
   test("dados estruturados (JSON-LD) e llms.txt", async ({ page, request }) => {
-    const tipos = async (rota: string) => {
+    const blocosDe = async (rota: string) => {
       await page.goto(rota);
       const blocos = await page.locator('script[type="application/ld+json"]').allTextContents();
-      return blocos.flatMap((b) => [JSON.parse(b)].flat().map((x: { "@type": string }) => x["@type"]));
+      return blocos.flatMap((b) => [JSON.parse(b)].flat() as Array<Record<string, unknown>>);
     };
-    expect(await tipos("/")).toEqual(expect.arrayContaining(["NGO", "WebSite"]));
+    const tipos = async (rota: string) => (await blocosDe(rota)).map((x) => String(x["@type"] ?? ""));
+    const inicio = await blocosDe("/");
+    expect(inicio.map((x) => x["@type"])).toEqual(expect.arrayContaining(["NGO", "WebSite"]));
+    const site = inicio.find((x) => x["@type"] === "WebSite");
+    expect(site?.potentialAction).toMatchObject({ "@type": "SearchAction" });
     expect(await tipos("/dados")).toContain("Dataset");
-    expect(await tipos("/vereadores/marco-mayor")).toContain("Person");
+    expect(await tipos("/vereadores/marco-mayor")).toEqual(expect.arrayContaining(["Person", "BreadcrumbList"]));
+    expect(await tipos("/bairros/araretama")).toContain("BreadcrumbList");
     const llms = await request.get("/llms.txt");
     expect(llms.status()).toBe(200);
     const texto = await llms.text();
@@ -121,6 +127,25 @@ test.describe("SEO, compartilhamento e cabeçalhos", () => {
     await page.getByRole("searchbox").first().fill("rua");
     await page.waitForTimeout(600);
     expect(erros).toEqual([]);
+  });
+
+  test("endpoints de API expõem noindex e política de cache sem segredos", async ({ request }) => {
+    const res = await request.get("/api/health");
+    expect(res.status()).toBe(200);
+    expect(res.headers()["cache-control"]).toContain("no-store");
+    expect(res.headers()["x-robots-tag"]).toBe("noindex, nofollow");
+    const body = (await res.json()) as Record<string, unknown>;
+    expect(body.ok).toBe(true);
+    expect(typeof body.versao).toBe("string");
+    expect(typeof body.sha).toBe("string");
+    expect(String(body.sha).length).toBeGreaterThan(0);
+    expect(typeof body.coletadoEm).toBe("string");
+    expect(Number(body.proposicoes)).toBeGreaterThan(0);
+
+    const busca = await request.get("/api/busca?q=rua");
+    expect(busca.status()).toBe(200);
+    expect(busca.headers()["cache-control"]).toContain("no-store");
+    expect(busca.headers()["x-robots-tag"]).toBe("noindex, nofollow");
   });
 });
 

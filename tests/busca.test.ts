@@ -29,9 +29,13 @@ describe("busca inteligente", () => {
     expect(buscar(regs, "araretama").map((r) => r.id)).toEqual(["3"]);
   });
 
-  it("sugere vereador pelo nome", () => {
-    const vs = [{ slug: "ana", nome: "Ana Paula Goffi", partido: "União" }] as Vereador[];
+  it("sugere vereador pelo nome e por apelido histórico", () => {
+    const vs = [
+      { slug: "ana", nome: "Ana Paula Goffi", partido: "União" },
+      { slug: "norberto-moraes", nome: "Norberto Moraes", partido: "PP" },
+    ] as Vereador[];
     expect(vereadoresQueCasam("goffi", vs)).toHaveLength(1);
+    expect(vereadoresQueCasam("norbertinho", vs).map((v) => v.slug)).toEqual(["norberto-moraes"]);
     expect(vereadoresQueCasam("go", vs)).toHaveLength(0);
   });
 

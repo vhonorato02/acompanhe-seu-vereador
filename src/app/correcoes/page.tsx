@@ -45,6 +45,10 @@ export default function Correcoes() {
       <h2>O que acontece depois</h2>
       <ul>
         <li>
+          <strong>Prazo de resposta:</strong> cada aviso enviado por e-mail ou pelo GitHub é conferido contra o documento oficial e
+          respondido em até 15 dias.
+        </li>
+        <li>
           <strong>Erro do portal</strong> (contagem, classificação, nome): é corrigido no código, com um teste para não voltar, e
           vale a partir da próxima atualização.
         </li>

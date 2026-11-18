@@ -104,7 +104,11 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
       {vivo && termo.length >= 2 && (
         <div className={`resultados-vivos${carregando ? " carregando" : ""}`} aria-live="polite">
           {carregando && <p className="soft" role="status">Buscando…</p>}
-          {erro && <p className="soft">A busca não respondeu. Toque em Buscar para tentar de novo.</p>}
+          {erro && (
+            <p className="soft" role="alert">
+              A busca não respondeu. Toque em Buscar para tentar de novo.
+            </p>
+          )}
           {res && res.q === termo && (
             <>
               {res.vereadores.length > 0 && (

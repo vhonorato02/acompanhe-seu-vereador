@@ -4,17 +4,18 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 
 **Antes de qualquer trabalho, leia `HANDOFF.md`** (estado atual e próximos passos).
 
-## Fase atual
+## Estado e arquitetura
 
-**0.3.0 em produção** em https://acompanhe-seu-vereador.vercel.app (Vercel, branch `main`; endereço canônico). Cópia sem indexação na VPS zewithane (`vereador.zewithane.vps.brz.dev.br`), que espelha os dados abertos da Vercel e nunca consulta a Câmara. O dono autorizou trabalhar direto em produção na `main`; valide antes (testes + E2E) porque cada push dispara coleta real. Nome e endereço centralizados em `src/lib/site.ts` (ADR 0001). Arquitetura real e próximos passos em `HANDOFF.md`; pesquisa em `docs/research/`.
+`HANDOFF.md` é o **documento único de estado** (versão publicada, última coleta, pendências e rollback). Portal público único e canônico em `SITE.url` (`src/lib/site.ts`), hospedado exclusivamente na Vercel ([ADR 0005](docs/adr/0005-hospedagem-unica-vercel.md)). Sem banco de dados, CMS ou login; PWA instalável com service worker exclusivo para estáticos (`public/sw.js`, ADR 0004). Pesquisa inicial em `docs/research/`.
 
 ## Decisões do dono do projeto (24/10/2026)
 
 - **Só Pindamonhangaba:** Observatório Social do Brasil – Pindamonhangaba e Câmara Municipal de Pindamonhangaba. Nada de outros observatórios ou municípios.
-- **Só free tier:** nenhum serviço pago, nenhum cartão, nenhum domínio comprado (endereço `*.vercel.app`). Sem IA paga.
-- **Atualização automática 2x/dia** (decisão de 07/11/2026, substitui a quinzenal manual de 24/10): GitHub Actions dispara o build de produção na Vercel com cache; um vigia diário abre issue se os dados ficarem velhos. Ver `docs/operacao/atualizar-dados.md`.
+- **Só free tier:** nenhum serviço pago, nenhum cartão, nenhum domínio comprado. Sem IA paga.
+- **Atualização automática 2x/dia** (decisão de 07/11/2026): GitHub Actions dispara o build de produção na Vercel com cache; o vigia 3x/dia abre issue se os dados ficarem velhos. Ver `docs/operacao/atualizar-dados.md`.
 - **Não é um clone do site da Câmara:** é um portal para acompanhar todos os vereadores. Mostra ementa, metadados e contexto, e linka para o documento oficial; não republica texto integral.
 - **Sem votações e sem presença na v1.** O coletor roda no build da Vercel.
+- **Ramos de trabalho:** validar alterações em ramo local (`lint`, `typecheck`, `npm test`, `npm run build` e E2E) antes de publicar na `main`, pois cada push na `main` dispara coleta real na Câmara.
 
 ## Princípios inegociáveis
 
@@ -48,6 +49,7 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 | Caminho | Conteúdo |
 |---|---|
 | `HANDOFF.md` | estado atual e próximos passos |
+| `docs/GUIA-DO-OBSERVATORIO.md` | guia didático completo para diretoria, jurídico e operação |
 | `docs/research/fase-1-relatorio.md` | relatório completo da Fase 1 (decisões pendentes na seção 20) |
 | `docs/research/camara-site.md` | mapa do site e da API da Câmara |
 | `docs/research/camara-api.md` | API validada com token: campos, coautoria, profundidade |
@@ -56,24 +58,14 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 | `src/lib/site.ts` | nome, endereço, repositório e contato do projeto |
 | `src/lib/content/bairros.ts` | vocabulário versionado de grafias de bairros |
 | `e2e/` | Playwright + axe (jornadas, acessibilidade, SEO, capturas) |
-| `docs/auditoria/` | auditorias com matriz de achados e evidências |
-| `docs/adr/` | decisões (nome, PWA sem service worker) |
+| `docs/auditoria/` | auditorias e livros de cobertura (`2026-11-18-profunda/` é a vigente) |
+| `docs/adr/` | decisões (identidade, atualização automática, PWA/service worker só de estáticos) |
 | `src/lib/data/` | modelo, derivações e filtros (número = lista) |
 | `docs/research/power-bi.md` | engenharia reversa do Power BI + baseline histórico |
 | `docs/research/benchmark-design.md` | benchmark cívico, princípios de UI/dataviz, IA, URLs |
-| `docs/research/stack-free-tiers.md` | stack e limites de free tier verificados (a decisão final está na seção 8 do relatório) |
-| `docs/environment.md` | ferramentas do Claude Code instaladas e por quê |
+| `docs/research/stack-free-tiers.md` | stack e limites de free tier verificados na pesquisa |
 | `.github/workflows/source-probe.yml` | sondagem manual de alcance das fontes a partir do GitHub Actions |
-
-## Ferramentas do Claude Code
-
-Superpowers (planejamento, TDD, debugging, verificação), frontend-design e Playwright MCP estão habilitados no escopo do projeto. Use `superpowers:brainstorming` antes de trabalho criativo, `superpowers:writing-plans` antes de implementar e `superpowers:verification-before-completion` antes de declarar algo pronto. Use o MCP Context7 para documentação atual de bibliotecas.
-
-## Chats no T3
-
-- **Acompanhe seu Vereador — Atualização de dados:** quando o pedido for “atualize os dados”, siga `docs/operacao/atualizar-dados.md` e não altere código.
-- **Acompanhe seu Vereador — Manutenção e auditoria:** correções, design, auditorias e versões. Atualize `HANDOFF.md` e `docs/auditoria/` ao fim de cada rodada.
 
 ## Comandos
 
-`npm run collect` (sem `CAMARA_API_TOKEN` usa a amostra de `fixtures/`) · `npm run dev` · `npm test` · `npm run typecheck` · `npm run build` · `npm run test:e2e` · `npm run auditar:heuristicas`
+`npm run collect` (sem `CAMARA_API_TOKEN` usa a amostra de `fixtures/`) · `npm run dev` · `npm run lint` · `npm run typecheck` · `npm test` · `npm run build` · `npm run test:e2e` · `npm run auditar:heuristicas` · `npm run auditar:cobertura`

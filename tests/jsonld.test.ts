@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Dataset, Vereador } from "@/lib/data/types";
-import { datasetLd, organizacaoLd, serializarLd, vereadorLd, websiteLd } from "@/lib/seo/jsonld";
+import { breadcrumbLd, datasetLd, organizacaoLd, serializarLd, vereadorLd, websiteLd } from "@/lib/seo/jsonld";
 import { SITE } from "@/lib/site";
 
 const vereador: Vereador = {
@@ -20,7 +20,27 @@ describe("dados estruturados (schema.org)", () => {
     expect(o.taxID).toBe(SITE.cnpj);
     expect(o.email).toBe(SITE.contatoEmail);
     expect(JSON.stringify(o.address)).toContain("Pindamonhangaba");
-    expect(websiteLd().publisher).toEqual({ "@id": o["@id"] });
+    const ws = websiteLd();
+    expect(ws.publisher).toEqual({ "@id": o["@id"] });
+    expect(ws.potentialAction).toMatchObject({
+      "@type": "SearchAction",
+      target: `${SITE.url}/proposicoes?q={search_term_string}`,
+    });
+  });
+
+  it("breadcrumb: monta trilha hierárquica com URLs absolutas", () => {
+    const b = breadcrumbLd([
+      { nome: "Início", url: "/" },
+      { nome: "Vereadores", url: "/vereadores" },
+      { nome: "Ana", url: "/vereadores/ana" },
+    ]);
+    expect(b["@type"]).toBe("BreadcrumbList");
+    const itens = b.itemListElement as Array<{ position: number; name: string; item: string }>;
+    expect(itens).toEqual([
+      { "@type": "ListItem", position: 1, name: "Início", item: SITE.url },
+      { "@type": "ListItem", position: 2, name: "Vereadores", item: `${SITE.url}/vereadores` },
+      { "@type": "ListItem", position: 3, name: "Ana", item: `${SITE.url}/vereadores/ana` },
+    ]);
   });
 
   it("dataset: um download por arquivo publicado e data da coleta", () => {

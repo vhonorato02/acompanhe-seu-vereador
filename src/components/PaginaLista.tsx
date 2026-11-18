@@ -46,6 +46,15 @@ export function PaginaLista({
   const contaTipo = (tipo?: string) =>
     filtro.q ? buscar(registros, filtro.q, { ...semTipo, q: undefined, tipo }, ctx).length : contar(registros, { ...semTipo, tipo }, ctx);
   const tiposComConta = tipos.map((t) => ({ t, c: contaTipo(t.contract) })).filter((x) => x.c > 0 || x.t.contract === filtro.tipo);
+  const coautorNome = filtro.coautor ? (d.vereadores.find((v) => v.slug === filtro.coautor)?.nome ?? filtro.coautor) : undefined;
+  const grupoNome = filtro.grupo ? (GRUPOS.find((g) => g.slug === filtro.grupo)?.nome ?? filtro.grupo) : undefined;
+  const origemNome =
+    filtro.origem === "executivo"
+      ? "Autoria do Poder Executivo"
+      : filtro.origem
+        ? "Com vereador em exercício entre os autores"
+        : undefined;
+  const pubNome = filtro.pub ? `Publicadas em ${nomeMes(Number(filtro.pub.slice(5, 7)), true)} de ${filtro.pub.slice(0, 4)}` : undefined;
 
   return (
     <>
@@ -60,7 +69,7 @@ export function PaginaLista({
         </label>
         <div className="busca-campo">
           <Icon nome="buscar" />
-          <input id="q" name="q" type="search" defaultValue={filtro.q ?? ""} placeholder="Bairro, assunto, número" enterKeyHint="search" />
+          <input id="q" name="q" type="search" defaultValue={filtro.q ?? ""} placeholder="Bairro, assunto, número" autoComplete="off" enterKeyHint="search" maxLength={120} />
           <CamposOcultos filtro={filtro} exceto={["q"]} />
           <button type="submit">Buscar</button>
         </div>
@@ -84,63 +93,63 @@ export function PaginaLista({
 
       <div className="etiquetas" style={{ marginTop: "0.25rem" }}>
         {autor && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, autor: undefined })} aria-label={`Remover filtro: ${autor.nome}`}>
-            <Avatar v={autor} tamanho={22} /> {autor.nome} ✕
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, autor: undefined })} aria-label={`Remover filtro: ${autor.nome}`}>
+            <Avatar v={autor} tamanho={22} /> {autor.nome} <span aria-hidden="true">✕</span>
           </Link>
         )}
         {filtro.ano && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, ano: undefined, mes: undefined })} aria-label={`Remover filtro: ${filtro.ano}`}>
-            {filtro.ano} ✕
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, ano: undefined, mes: undefined })} aria-label={`Remover filtro: ${filtro.ano}`}>
+            {filtro.ano} <span aria-hidden="true">✕</span>
           </Link>
         )}
         {filtro.mes && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, mes: undefined })} aria-label={`Remover filtro: ${nomeMes(filtro.mes, true)}`}>
-            {nomeMes(filtro.mes, true)} ✕
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, mes: undefined })} aria-label={`Remover filtro: ${nomeMes(filtro.mes, true)}`}>
+            {nomeMes(filtro.mes, true)} <span aria-hidden="true">✕</span>
           </Link>
         )}
-        {filtro.coautor && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, coautor: undefined })} aria-label="Remover filtro de coautoria">
-            junto com {d.vereadores.find((v) => v.slug === filtro.coautor)?.nome} ✕
+        {filtro.coautor && coautorNome && (
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, coautor: undefined })} aria-label={`Remover filtro: junto com ${coautorNome}`}>
+            junto com {coautorNome} <span aria-hidden="true">✕</span>
           </Link>
         )}
         {filtro.tema && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, tema: undefined })} aria-label="Remover filtro de assunto">
-            Assunto: {temaPorSlug(filtro.tema)?.nome ?? filtro.tema} ✕
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, tema: undefined })} aria-label={`Remover filtro: Assunto: ${temaPorSlug(filtro.tema)?.nome ?? filtro.tema}`}>
+            Assunto: {temaPorSlug(filtro.tema)?.nome ?? filtro.tema} <span aria-hidden="true">✕</span>
           </Link>
         )}
         {filtro.bairro && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, bairro: undefined })} aria-label="Remover filtro de bairro">
-            Bairro: {nomeBairro ?? filtro.bairro} ✕
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, bairro: undefined })} aria-label={`Remover filtro: Bairro: ${nomeBairro ?? filtro.bairro}`}>
+            Bairro: {nomeBairro ?? filtro.bairro} <span aria-hidden="true">✕</span>
           </Link>
         )}
-        {filtro.grupo && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, grupo: undefined })} aria-label="Remover filtro de grupo">
-            {GRUPOS.find((g) => g.slug === filtro.grupo)?.nome ?? filtro.grupo} ✕
+        {filtro.grupo && grupoNome && (
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, grupo: undefined })} aria-label={`Remover filtro: ${grupoNome}`}>
+            {grupoNome} <span aria-hidden="true">✕</span>
           </Link>
         )}
         {filtro.destino && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, destino: undefined })} aria-label="Remover filtro de destinatário">
-            Pedido a: {nomeDestino(filtro.destino)} ✕
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, destino: undefined })} aria-label={`Remover filtro: Pedido a: ${nomeDestino(filtro.destino)}`}>
+            Pedido a: {nomeDestino(filtro.destino)} <span aria-hidden="true">✕</span>
           </Link>
         )}
         {filtro.conjunto && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, conjunto: undefined })} aria-label="Remover filtro de coautoria">
-            Assinadas por mais de um vereador ✕
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, conjunto: undefined })} aria-label="Remover filtro: Assinadas por mais de um vereador">
+            Assinadas por mais de um vereador <span aria-hidden="true">✕</span>
           </Link>
         )}
-        {filtro.origem && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, origem: undefined })} aria-label="Remover filtro de autoria">
-            {filtro.origem === "executivo" ? "Autoria do Poder Executivo" : "Com vereador em exercício entre os autores"} ✕
+        {origemNome && (
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, origem: undefined })} aria-label={`Remover filtro: ${origemNome}`}>
+            {origemNome} <span aria-hidden="true">✕</span>
           </Link>
         )}
         {filtro.lei && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, lei: undefined })} aria-label="Remover filtro de projetos citados em lei">
-            Citados como origem de uma lei ✕
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, lei: undefined })} aria-label="Remover filtro: Citados como origem de uma lei">
+            Citados como origem de uma lei <span aria-hidden="true">✕</span>
           </Link>
         )}
-        {filtro.pub && (
-          <Link className="chip" aria-current="true" href={hrefLista(base, { ...filtro, pub: undefined })} aria-label="Remover filtro de mês">
-            Publicadas em {nomeMes(Number(filtro.pub.slice(5, 7)), true)} de {filtro.pub.slice(0, 4)} ✕
+        {pubNome && (
+          <Link className="chip ativo" href={hrefLista(base, { ...filtro, pub: undefined })} aria-label={`Remover filtro: ${pubNome}`}>
+            {pubNome} <span aria-hidden="true">✕</span>
           </Link>
         )}
       </div>

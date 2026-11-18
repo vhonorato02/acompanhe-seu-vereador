@@ -1,3 +1,4 @@
+import { APELIDOS } from "../content/apelidos";
 import { normalizar } from "./derive";
 import { filtrar, ordenar, type Contexto, type Filtro } from "./query";
 import type { Registro, Vereador } from "./types";
@@ -46,7 +47,10 @@ export function interpretar(q: string): Consulta {
 export function vereadoresQueCasam(q: string, vereadores: readonly Vereador[]): Vereador[] {
   const n = normalizar(q);
   if (n.length < 3) return [];
-  return vereadores.filter((v) => normalizar(`${v.nome} ${v.partido}`).includes(n) || n.includes(normalizar(v.nome)));
+  return vereadores.filter((v) => {
+    const alvos = [`${v.nome} ${v.partido}`, ...(APELIDOS[v.slug] ?? [])].map(normalizar);
+    return alvos.some((a) => a.includes(n)) || n.includes(normalizar(v.nome));
+  });
 }
 
 export function buscar<T extends Registro>(registros: readonly T[], q: string, extra: Filtro = {}, ctx: Contexto = {}): T[] {

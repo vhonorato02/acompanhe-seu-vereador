@@ -28,7 +28,7 @@ export function ListaBairros({ bairros }: { bairros: Array<{ slug: string; nome:
         </label>
         <div className="busca-campo">
           <Icon nome="buscar" />
-          <input id="filtro-bairro" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Digite o nome do seu bairro" autoComplete="off" />
+          <input id="filtro-bairro" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Digite o nome do seu bairro" autoComplete="off" maxLength={120} />
         </div>
       </div>
       <div className="etiquetas" role="group" aria-label="Ordenar">
@@ -57,7 +57,7 @@ export function ListaBairros({ bairros }: { bairros: Array<{ slug: string; nome:
       </ul>
       {lista.length === 0 && (
         <p className="nota" style={{ marginTop: "1rem" }}>
-          Nenhum bairro com esse nome aparece pelo menos três vezes. Tente a <Link href={`/proposicoes?q=${encodeURIComponent(q)}`}>busca no texto</Link>.
+          Nenhum bairro com esse nome aparece pelo menos três vezes. Tente a <Link href={`/proposicoes?q=${encodeURIComponent(q.trim())}`}>busca no texto</Link>.
         </p>
       )}
     </>

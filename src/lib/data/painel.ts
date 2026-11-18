@@ -45,8 +45,6 @@ export function raioX(slug: string) {
   const refTema = new Map(p.temasPedidos.map((t) => [t.slug, (t.n / Math.max(1, p.pedidos.length)) * 100]));
   const projetos = filtrar(deles, { tipo: "Projetos-de-Lei-Ordinaria" });
   const viraram = p.viraram.filter((v) => v.projeto.autoresVereadores.includes(slug));
-  // Laws traced back to this councillor's ordinary bills (same base as `projetos`).
-  const leisDeProjetos = viraram.filter((v) => v.projeto.tipo === "Projetos-de-Lei-Ordinaria");
   // Distinct bills cited by a law: the same filter as the list the profile links to.
   const filtroProjetosLei: Filtro = { autor: slug, tipo: "Projetos-de-Lei-Ordinaria", lei: true };
   const nProjetosLei = contar(d.proposicoes, filtroProjetosLei, contexto(d));
@@ -62,7 +60,6 @@ export function raioX(slug: string) {
     destinos: porDestino(deles),
     projetos,
     viraram,
-    leisDeProjetos,
     filtroProjetosLei,
     nProjetosLei,
     coautoria,
