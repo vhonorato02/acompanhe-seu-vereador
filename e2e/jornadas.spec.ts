@@ -107,6 +107,11 @@ test.describe("jornadas do cidadão", () => {
     await expect(page.locator(".comparacao > article")).toHaveCount(2);
     await page.goto(compartilhada);
     await expect(page.locator(".comparacao > article")).toHaveCount(2);
+    const linkLei = page.locator('.comparacao > article').first().locator('a[href*="lei=1"]');
+    const nLei = numero(await linkLei.textContent());
+    await linkLei.click();
+    await expect(page).toHaveURL(/lei=1/);
+    expect(await totalDaLista(page)).toBe(nLei);
   });
 
   test("busca: acento, apelido de tipo com número, termo inexistente e entrada hostil", async ({ page }) => {
