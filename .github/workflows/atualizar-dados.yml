@@ -20,7 +20,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: atualizar-dados
@@ -78,6 +78,8 @@ jobs:
   disparar:
     needs: decidir
     if: needs.decidir.outputs.disparar == '1'
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
