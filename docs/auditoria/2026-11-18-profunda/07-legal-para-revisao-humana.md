@@ -67,16 +67,16 @@ Verificação direta em `rdap.registro.br` e HTTPS na data de `18/11/2026` (`[OB
 | **B. Manter `acompanhe-seu-vereador.vercel.app`** (removendo imediatamente `camara-a-vista.vercel.app`) — **OPÇÃO ESCOLHIDA** | **R$ 0** | **Imediato** | Baixo técnico; sujeito aos termos Hobby da Vercel | Média (URL de plataforma técnica, porém limpa e consolidada) | No ar, indexado, único domínio canônico definido pelo dono em 18/11/2026 ([ADR 0005](../../adr/0005-hospedagem-unica-vercel.md)). `[OBSERVADO]` |
 | **E. Domínio `.org.br` próprio do OSB Pindamonhangaba** (`acompanheseuvereador.org.br`, `vereadorespinda.org.br`, `osbpinda.org.br`) | **~R$ 40/ano** (fora da regra R$ 0) | 1 dia (requer CNPJ do OSB) | Mínimo | **Máxima** | Todos retornaram `HTTP 404` no RDAP do `registro.br` em 18/11/2026 (disponíveis). Descartado pela regra R$ 0. `[OBSERVADO]` |
 
-*(Decisão executada: mantido apenas `https://acompanhe-seu-vereador.vercel.app`; remoção dos projetos/domínios antigos `camara-a-vista.vercel.app` e `osb-pinda-camara-1s2026` na Vercel segue pendente de autorização final do dono em R7).*
+*(Decisão executada em 18/11/2026: `camara-a-vista.vercel.app` foi removido do projeto e `osb-pinda-camara-1s2026` foi deletado via Vercel CLI, ambos comprovados com `HTTP 404`; permanece apenas `https://acompanhe-seu-vereador.vercel.app`).*
 
 ---
 
 ## 6. Lista Consolidada para Decisão e Revisão Humana (Dono / Jurídico / OSB)
 
-1. **Remoção imediata de aliases Vercel (🔑 Dono):** autorizar remover `camara-a-vista.vercel.app` do projeto `acompanhe-seu-vereador` e excluir/pausar `osb-pinda-camara-1s2026` (além de desligar o contêiner antigo `vereador` na VPS fora do repositório, se não for mais usado).
+1. **Limpeza Vercel (✅ Executado em 18/11/2026):** `camara-a-vista.vercel.app` removido e `osb-pinda-camara-1s2026` deletado (`HTTP 404`); resta apenas desligar o contêiner antigo `vereador` na VPS externa fora do repositório, se não for mais usado.
 2. **Uso formal de marca, CNPJ, endereço e caixa de e-mail (🔑 OSB):** confirmar por escrito que o OSB Pindamonhangaba autoriza a exibição de nome, logotipo, CNPJ `30.197.903/0001-75`, endereço e que a caixa `pindamonhangaba@osbrasil.org.br` é monitorada para responder em até **15 dias** pedidos LGPD e avisos de correção.
-3. **Revisão jurídica de `/termos`, `/privacidade` e fotos oficiais (⚖️ Advogado/DPO):** validar o prazo de 15 dias, as omissões preventivas (`omissoes.ts`), a declaração de ausência de perfilamento/decisão automatizada (LGPD, art. 20), a proteção a menores (art. 14), a referência à Lei Eleitoral (Lei 9.504/1997), a hospedagem única na Vercel e a política de fotos em `/termos` §5.
-4. **Elegibilidade Vercel Hobby (🔑 Dono / Vercel):** confirmar enquadramento não comercial / voluntário / MIT junto à Vercel agora que a VPS foi descomissionada.
+3. **Revisão jurídica de `/termos`, `/privacidade` e fotos oficiais (⚖️ Advogado/DPO):** validar o prazo de 15 dias, as omissões preventivas (`omissoes.ts`), a declaração de ausência de perfilamento/decisão automatizada (LGPD, art. 20), a proteção a menores (art. 14), a referência à Lei Eleitoral (Lei 9.504/1997), a hospedagem única na Vercel e a política de fotos em `/termos` §5 (guia completo em [docs/GUIA-DO-OBSERVATORIO.md](../../GUIA-DO-OBSERVATORIO.md) §6.1).
+4. **Elegibilidade Vercel Hobby × VPS para ONG (🔑 Dono / Vercel):** confirmar enquadramento não comercial / voluntário / MIT junto à Vercel ou avaliar migração futura para VPS simples de baixo custo (~R$ 30/mês) ou hospedagem estática gratuita, conforme comparativo em [docs/GUIA-DO-OBSERVATORIO.md](../../GUIA-DO-OBSERVATORIO.md) §6.3.
 5. **Deploy hook opcional (`VERCEL_DEPLOY_HOOK_URL`):** criar na Vercel para eliminar os 2 commits automáticos diários (`chore(data): scheduled refresh`) na `main`.
 6. **Teste físico e leitor de tela:** testar instalação PWA e navegação em aparelho Android/iPhone real com TalkBack/VoiceOver.
 7. **Vocabulário de bairros ambíguos:** confirmar com morador/equipe local se `"Andrade"` = `"Residencial Andrade"` e `"Ipê"` = `"Ipê I"` antes de unir em `src/lib/content/bairros.ts`.

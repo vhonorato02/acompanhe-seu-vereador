@@ -1,13 +1,13 @@
 rota,perfil,estado,viewport,tema,evidência,console limpo?,rede ok?,a11y,achados,status
-/,Cidadão,populado/amostra,"360,390,412,1280,1440,1920",light/dark,e2e/qualidade.spec.ts + captura desktop/mobile,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
-/vereadores,Cidadão,populado/amostra,"360,412,1440",light/dark,e2e/qualidade.spec.ts + jornadas,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
-/vereadores/[slug],Cidadão,populado/sem foto,"360,412,1440",light/dark,e2e/qualidade.spec.ts (/vereadores/marco-mayor),sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
-/bairros,Cidadão,populado/filtro vazio,"360,412,1440",light/dark,e2e/qualidade.spec.ts + captura bairros,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
-/bairros/[slug],Cidadão,populado,"360,412,1440",light/dark,e2e/jornadas.spec.ts (Araretama) + build SSG,sim,sim,h1 padrão e rótulo derivado ok,nenhum,aprovado
-/proposicoes,Cidadão,"inicial,filtrado,vazio,erro XSS","360,412,1440",light/dark,e2e/qualidade.spec.ts + jornadas.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
+/,Cidadão,populado/amostra,"360,390,412,1280,1440,1920",light/dark,e2e/qualidade.spec.ts + captura desktop/mobile + SearchAction + rodapé R3,sim,sim,WCAG 2.2 AA 0 violações axe,"ACH-14,ACH-15",aprovado
+/vereadores,Cidadão,populado/amostra,"360,412,1440",light/dark,e2e/qualidade.spec.ts + jornadas + singular R3,sim,sim,WCAG 2.2 AA 0 violações axe,ACH-15,aprovado
+/vereadores/[slug],Cidadão,populado/sem foto,"360,412,1440",light/dark,e2e/qualidade.spec.ts (/vereadores/marco-mayor) + BreadcrumbList + singular R3,sim,sim,WCAG 2.2 AA 0 violações axe,"ACH-14,ACH-15",aprovado
+/bairros,Cidadão,populado/filtro vazio,"360,412,1440",light/dark,e2e/qualidade.spec.ts + maxLength=120 R3,sim,sim,WCAG 2.2 AA 0 violações axe,ACH-15,aprovado
+/bairros/[slug],Cidadão,populado,"360,412,1440",light/dark,e2e/jornadas.spec.ts + BreadcrumbList + singular R3,sim,sim,h1 padrão e rótulo derivado ok,"ACH-14,ACH-15",aprovado
+/proposicoes,Cidadão,"inicial,filtrado,vazio,erro XSS","360,412,1440",light/dark,e2e/qualidade.spec.ts + jornadas.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe,ACH-14,aprovado
 /normas,Cidadão,"inicial,filtrado,vazio","360,412,1440",light/dark,e2e/qualidade.spec.ts + jornadas.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
-/comparar,Cidadão,"vazio,1 a 3 selecionados","360,412,1440",light/dark,e2e/qualidade.spec.ts + captura comparar Rodada 2,sim,sim,WCAG 2.2 AA 0 violações axe,"ACH-02,ACH-13",aprovado
-/buscar,Cidadão,redirecionamento para /proposicoes,"360,412,1440",light/dark,e2e/jornadas.spec.ts (submit busca ao vivo),sim,sim,N/A (redirect 307),nenhum,aprovado
+/comparar,Cidadão,"vazio,1 a 3 selecionados","360,412,1440",light/dark,e2e/qualidade.spec.ts + captura comparar + singular R3,sim,sim,WCAG 2.2 AA 0 violações axe,"ACH-02,ACH-13,ACH-15",aprovado
+/buscar,Cidadão,redirecionamento para /proposicoes,"360,412,1440",light/dark,e2e/jornadas.spec.ts + q.slice(0 120) R3,sim,sim,N/A (redirect 307),ACH-15,aprovado
 /como-funciona,Cidadão,populado,"360,412,1440",light/dark,e2e/qualidade.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
 /metodologia,Cidadão,populado/avisos,"360,412,1440",light/dark,e2e/qualidade.spec.ts + captura metodologia,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
 /dados,Pesquisador,populado/download,"360,412,1440",light/dark,e2e/qualidade.spec.ts + jornadas.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe + JSON-LD Dataset,nenhum,aprovado
