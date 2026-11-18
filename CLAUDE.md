@@ -6,7 +6,7 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 
 ## Estado e arquitetura
 
-`HANDOFF.md` é o **documento único de estado** (versão publicada, última coleta, pendências e rollback). Portal público canônico em `SITE.url` (`src/lib/site.ts`), com cópia espelhada sem indexação (`ESPELHO=1`). Sem banco de dados, CMS ou login; PWA instalável com service worker exclusivo para estáticos (`public/sw.js`, ADR 0004). Pesquisa inicial em `docs/research/`.
+`HANDOFF.md` é o **documento único de estado** (versão publicada, última coleta, pendências e rollback). Portal público único e canônico em `SITE.url` (`src/lib/site.ts`), hospedado exclusivamente na Vercel ([ADR 0005](docs/adr/0005-hospedagem-unica-vercel.md)). Sem banco de dados, CMS ou login; PWA instalável com service worker exclusivo para estáticos (`public/sw.js`, ADR 0004). Pesquisa inicial em `docs/research/`.
 
 ## Decisões do dono do projeto (24/10/2026)
 

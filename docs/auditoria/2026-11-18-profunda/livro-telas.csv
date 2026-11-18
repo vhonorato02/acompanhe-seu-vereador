@@ -6,21 +6,21 @@ rota,perfil,estado,viewport,tema,evidência,console limpo?,rede ok?,a11y,achados
 /bairros/[slug],Cidadão,populado,"360,412,1440",light/dark,e2e/jornadas.spec.ts (Araretama) + build SSG,sim,sim,h1 padrão e rótulo derivado ok,nenhum,aprovado
 /proposicoes,Cidadão,"inicial,filtrado,vazio,erro XSS","360,412,1440",light/dark,e2e/qualidade.spec.ts + jornadas.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
 /normas,Cidadão,"inicial,filtrado,vazio","360,412,1440",light/dark,e2e/qualidade.spec.ts + jornadas.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
-/comparar,Cidadão,"vazio,1 a 3 selecionados","360,412,1440",light/dark,e2e/qualidade.spec.ts + captura comparar,sim,sim,WCAG 2.2 AA 0 violações axe,"ACH-02,ACH-13",aprovado
+/comparar,Cidadão,"vazio,1 a 3 selecionados","360,412,1440",light/dark,e2e/qualidade.spec.ts + captura comparar Rodada 2,sim,sim,WCAG 2.2 AA 0 violações axe,"ACH-02,ACH-13",aprovado
 /buscar,Cidadão,redirecionamento para /proposicoes,"360,412,1440",light/dark,e2e/jornadas.spec.ts (submit busca ao vivo),sim,sim,N/A (redirect 307),nenhum,aprovado
 /como-funciona,Cidadão,populado,"360,412,1440",light/dark,e2e/qualidade.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
 /metodologia,Cidadão,populado/avisos,"360,412,1440",light/dark,e2e/qualidade.spec.ts + captura metodologia,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
 /dados,Pesquisador,populado/download,"360,412,1440",light/dark,e2e/qualidade.spec.ts + jornadas.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe + JSON-LD Dataset,nenhum,aprovado
 /correcoes,Cidadão,populado,"360,412,1440",light/dark,e2e/qualidade.spec.ts + inspeção SLA 15 dias,sim,sim,WCAG 2.2 AA 0 violações axe,ACH-09,aprovado
 /sobre,Cidadão,populado,"360,412,1440",light/dark,e2e/qualidade.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
-/privacidade,Titular LGPD,populado,"360,412,1440",light/dark,e2e/qualidade.spec.ts + inspeção vigência 18/11,sim,sim,WCAG 2.2 AA 0 violações axe,ACH-01,aprovado
-/termos,Cidadão,populado,"360,412,1440",light/dark,e2e/qualidade.spec.ts,sim,sim,WCAG 2.2 AA 0 violações axe,nenhum,aprovado
+/privacidade,Titular LGPD,populado,"360,412,1440",light/dark,e2e/qualidade.spec.ts + inspeção LGPD art. 14/20/33,sim,sim,WCAG 2.2 AA 0 violações axe,"ACH-01,ACH-14",aprovado
+/termos,Cidadão,populado,"360,412,1440",light/dark,e2e/qualidade.spec.ts + inspeção Lei 9.504 e fotos §5,sim,sim,WCAG 2.2 AA 0 violações axe,ACH-14,aprovado
 /offline,Mobile PWA,offline sem internet,"360,412,1440",light/dark,e2e/pwa.spec.ts,sim,N/A (offline),noindex + título único h1,nenhum,aprovado
-/404,Qualquer,rota inexistente,"360,412,1440",light/dark,e2e/jornadas.spec.ts (/nao-existe-mesmo),sim,sim,link voltar ao início visível,nenhum,aprovado
+/404,Qualquer,rota inexistente,"360,412,1440",light/dark,e2e/jornadas.spec.ts (/nao-existe-mesmo) + atalhos .prosa,sim,sim,link voltar ao início visível,ACH-14,aprovado
 /api/busca,Cliente JS,"q curta, q normal, q > 120, 503",API,N/A,e2e/jornadas.spec.ts + busca-resiliencia.spec.ts,N/A,sim (200 JSON),N/A,nenhum,aprovado
-/api/health,Monitor/SRE,"ok, versao, sha, coletadoEm",API,N/A,tests/health.test.ts + e2e/qualidade.spec.ts + curl prod/VPS,N/A,sim (200 no-store),N/A,ACH-03,aprovado
-/llms.txt,Agentes IA,texto plano estático,HTTP,N/A,e2e/qualidade.spec.ts + curl,N/A,sim (200 text/plain),N/A,nenhum,aprovado
-/robots.txt,Buscador,"canônico vs ESPELHO=1",HTTP,N/A,e2e/qualidade.spec.ts + curl VPS/Vercel,N/A,sim (200),N/A,nenhum,aprovado
-/sitemap.xml,Buscador,"canônico vs ESPELHO=1",HTTP,N/A,e2e/qualidade.spec.ts + código ACH-09,N/A,sim (200),N/A,ACH-09,aprovado
+/api/health,Monitor/SRE,"ok, versao, sha, coletadoEm",API,N/A,tests/health.test.ts + e2e/qualidade.spec.ts + curl prod,N/A,sim (200 no-store),N/A,ACH-03,aprovado
+/llms.txt,Agentes IA,texto plano estático,HTTP,N/A,e2e/qualidade.spec.ts + rotas/JSON ampliados,N/A,sim (200 text/plain),N/A,ACH-14,aprovado
+/robots.txt,Buscador,canônico Vercel,HTTP,N/A,e2e/qualidade.spec.ts + ADR 0005,N/A,sim (200),N/A,ACH-14,aprovado
+/sitemap.xml,Buscador,canônico Vercel,HTTP,N/A,e2e/qualidade.spec.ts + ADR 0005,N/A,sim (200),N/A,"ACH-09,ACH-14",aprovado
 /manifest.webmanifest,Navegador PWA,instalável com atalhos e maskable,HTTP,N/A,e2e/qualidade.spec.ts + pwa.spec.ts,N/A,sim (200 JSON),N/A,nenhum,aprovado
 /opengraph-image,Rede social,imagem PNG 1200x630 gerada no build,HTTP,N/A,e2e/qualidade.spec.ts,N/A,sim (200 image/png),alt descritivo presente,nenhum,aprovado

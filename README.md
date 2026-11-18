@@ -16,7 +16,7 @@ Não é o site oficial da Câmara e não republica seus documentos: mostra títu
 
 ## Atualização dos dados (automática, 2x/dia)
 
-O workflow `.github/workflows/atualizar-dados.yml` confere o manifesto de hora em hora e dispara um build de produção na Vercel quando a coleta publicada passa de 11 h (na prática, a cada ~12 h; um horário perdido pelo GitHub é recuperado na hora seguinte). O workflow `vigia-dados.yml` roda 3x/dia e abre uma issue `dados-desatualizados` se a coleta passar de 26 h, trouxer avisos ou se uma cópia publicada estiver fora do ar ou atrasada (o GitHub avisa por e-mail). Detalhes, limites do plano gratuito e como atualizar à mão: [`docs/operacao/atualizar-dados.md`](docs/operacao/atualizar-dados.md).
+O workflow `.github/workflows/atualizar-dados.yml` confere o manifesto de hora em hora e dispara um build de produção na Vercel quando a coleta publicada passa de 11 h (na prática, a cada ~12 h; um horário perdido pelo GitHub é recuperado na hora seguinte). O workflow `vigia-dados.yml` roda 3x/dia e abre uma issue `dados-desatualizados` se a coleta passar de 26 h, trouxer avisos ou se o portal (`/api/health` ou manifesto) responder com erro ou divergência (o GitHub avisa por e-mail). Detalhes, limites do plano gratuito e como atualizar à mão: [`docs/operacao/atualizar-dados.md`](docs/operacao/atualizar-dados.md). Hospedagem exclusivamente na Vercel ([ADR 0005](docs/adr/0005-hospedagem-unica-vercel.md)).
 
 ## Desenvolvimento
 

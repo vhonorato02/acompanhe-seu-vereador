@@ -1,27 +1,25 @@
 caminho,tipo,linhas,lido,proposito real,usado por,veredito,achados,status
 .claude/settings.json,Configuração,39,integral,Permissões allow/deny de ferramentas do agente local,Claude Code,corrigir,ACH-08,corrigido
-.dockerignore,Configuração,16,integral,Exclusões de contexto no build da imagem Docker,Dockerfile,ok,-,auditado-ok
-.env.example,Configuração,3,integral,"Modelo de variáveis de ambiente suportadas (ORIGEM_CANONICA, ESPELHO, GIT_COMMIT_SHA)",Operação local e CI/CD,ok,-,auditado-ok
+.env.example,Configuração,3,integral,Modelo de variáveis de ambiente suportadas (CAMARA_API_TOKEN),Operação local e CI/CD,ok,-,auditado-ok
 .github/ISSUE_TEMPLATE/config.yml,Configuração,11,integral,Configuração de abertura de issues de erro nos dados,GitHub Issues / /correcoes,ok,-,auditado-ok
 .github/ISSUE_TEMPLATE/erro-nos-dados.yml,Template,29,integral,Formulário estruturado de contestação/erro nos dados,GitHub Issues / /correcoes,ok,-,auditado-ok
 .github/SECURITY.md,Documentação,19,integral,Política de reporte responsável de vulnerabilidades,Mantenedores GitHub,ok,-,auditado-ok
 .github/atualizacao-agendada,Marcador,1,integral,Arquivo-marcador versionado atualizado pelo workflow diário para acionar rebuild,atualizar-dados.yml / Vercel,ok,-,auditado-ok
 .github/workflows/atualizar-dados.yml,CI/CD,138,integral,"Coleta incremental na Câmara, auditorias, commit e rebuild na Vercel",GitHub Actions (cron/manual),corrigir,ACH-07,corrigido
-.github/workflows/deploy-vps.yml,CI/CD,143,integral,Build de qualidade + imagem ghcr.io e espelhamento para a VPS,GitHub Actions (push main/workflow_run),corrigir,ACH-03; ACH-07,corrigido
 .github/workflows/quality-gates.yml,CI/CD,62,integral,"Gates de lint, typecheck, testes unitários, heurísticas, build e E2E",GitHub Actions (push/PR),corrigir,ACH-05,corrigido
 .github/workflows/source-probe.yml,CI/CD,35,integral,Sonda periódica de disponibilidade dos endpoints da Câmara,GitHub Actions (cron/manual),ok,-,auditado-ok
-.github/workflows/vigia-dados.yml,CI/CD,108,integral,Auditoria e conciliação periódica com referência Power BI,GitHub Actions (cron/manual),ok,-,auditado-ok
+.github/workflows/vigia-dados.yml,CI/CD,106,integral,Auditoria periódica do manifesto e /api/health na Vercel,GitHub Actions (cron/manual),corrigir,ACH-14,corrigido
 .gitignore,Configuração,17,integral,"Ignora node_modules, .next, dados gerados, artefatos E2E e temporários",Git,ok,-,auditado-ok
 .nvmrc,Configuração,1,integral,Versão alvo do Node.js (24),CI e ambiente local,ok,-,auditado-ok
-CLAUDE.md,Documentação,70,integral,"Regras de arquitetura, invariantes, comandos e convenções do repositório",Agentes e mantenedores,corrigir,ACH-12,corrigido
-Dockerfile,Infraestrutura,35,integral,Imagem standalone Next.js com DATA_DIR=/app/data/generated e GIT_COMMIT_SHA,deploy-vps.yml / VPS Docker,corrigir,ACH-03,corrigido
-HANDOFF.md,Documentação,55,integral,"Documento único de estado técnico, operação, domínio e pendências",Mantenedores e dono,corrigir,ACH-12,corrigido
+CLAUDE.md,Documentação,70,integral,"Regras de arquitetura, invariantes, comandos e convenções do repositório",Agentes e mantenedores,corrigir,ACH-12; ACH-14,corrigido
+HANDOFF.md,Documentação,54,integral,"Documento único de estado técnico, operação, domínio e pendências",Mantenedores e dono,corrigir,ACH-12; ACH-14,corrigido
 LICENSE,Licença,21,integral,Licença MIT de código aberto do projeto,Repositório e rodapé,ok,-,auditado-ok
-README.md,Documentação,53,integral,"Visão geral pública, comandos e estrutura do portal",Repositório / GitHub,corrigir,ACH-12,corrigido
-docs/adr/0001-identidade-do-projeto.md,ADR,12,integral,Registro de decisão arquitetural histórica,Documentação técnica,ok,-,auditado-ok
-docs/adr/0002-instalavel-sem-service-worker.md,ADR,17,integral,Registro de decisão arquitetural histórica,Documentação técnica,ok,-,auditado-ok
-docs/adr/0003-atualizacao-automatica.md,ADR,22,integral,Registro de decisão arquitetural histórica,Documentação técnica,ok,-,auditado-ok
-docs/adr/0004-service-worker-sem-dados.md,ADR,24,integral,Registro de decisão arquitetural histórica,Documentação técnica,ok,-,auditado-ok
+README.md,Documentação,53,integral,"Visão geral pública, comandos e estrutura do portal",Repositório / GitHub,corrigir,ACH-12; ACH-14,corrigido
+docs/adr/0001-identidade-do-projeto.md,ADR,12,integral,Registro de decisão arquitetural,Documentação técnica,ok,-,auditado-ok
+docs/adr/0002-instalavel-sem-service-worker.md,ADR,17,integral,Registro de decisão arquitetural,Documentação técnica,ok,-,auditado-ok
+docs/adr/0003-atualizacao-automatica.md,ADR,23,integral,Registro de decisão arquitetural,Documentação técnica,corrigir,ACH-14,corrigido
+docs/adr/0004-service-worker-sem-dados.md,ADR,24,integral,Registro de decisão arquitetural,Documentação técnica,ok,-,auditado-ok
+docs/adr/0005-hospedagem-unica-vercel.md,ADR,21,integral,Registro de decisão arquitetural,Documentação técnica,ok,ACH-14,adicionado-verificado
 docs/auditoria/2026-11-04-ciclo-1.md,Auditoria Histórica,72,integral,Registro de ciclos anteriores 1–5 (fonte tratada como depoimento),Histórico do repositório,ok,-,auditado-ok
 docs/auditoria/2026-11-07-auditoria-continuidade.md,Auditoria Histórica,87,integral,Registro de ciclos anteriores 1–5 (fonte tratada como depoimento),Histórico do repositório,ok,-,auditado-ok
 docs/auditoria/2026-11-07-ciclo-3.md,Auditoria Histórica,107,integral,Registro de ciclos anteriores 1–5 (fonte tratada como depoimento),Histórico do repositório,ok,-,auditado-ok
@@ -33,16 +31,16 @@ docs/auditoria/2026-11-18-profunda/02-divergencias.md,Auditoria,19,integral,Arte
 docs/auditoria/2026-11-18-profunda/03-plano.md,Auditoria,23,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
 docs/auditoria/2026-11-18-profunda/04-refutacao-do-plano.md,Auditoria,21,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
 docs/auditoria/2026-11-18-profunda/05-qa.md,Auditoria,70,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
-docs/auditoria/2026-11-18-profunda/06-segunda-auditoria.md,Auditoria,33,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
-docs/auditoria/2026-11-18-profunda/07-legal-para-revisao-humana.md,Auditoria,99,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
-docs/auditoria/2026-11-18-profunda/08-relatorio-final.md,Auditoria,127,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
+docs/auditoria/2026-11-18-profunda/06-segunda-auditoria.md,Auditoria,31,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
+docs/auditoria/2026-11-18-profunda/07-legal-para-revisao-humana.md,Auditoria,82,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
+docs/auditoria/2026-11-18-profunda/08-relatorio-final.md,Auditoria,116,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
 docs/auditoria/2026-11-18-profunda/ESTADO.md,Auditoria,15,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
-docs/auditoria/2026-11-18-profunda/achados.csv,Auditoria,14,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
-docs/auditoria/2026-11-18-profunda/livro-arquivos.csv,Auditoria,1,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
+docs/auditoria/2026-11-18-profunda/achados.csv,Auditoria,15,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
+docs/auditoria/2026-11-18-profunda/livro-arquivos.csv,Auditoria,163,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
 docs/auditoria/2026-11-18-profunda/livro-fluxos.csv,Auditoria,15,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
 docs/auditoria/2026-11-18-profunda/livro-telas.csv,Auditoria,26,integral,Artefato de evidência e rastreabilidade da auditoria profunda v2,Dossiê e scripts/verificar-auditoria.ts,ok,-,auditado-ok
 docs/design/critica.md,Documentação Design,43,integral,Crítica e diretrizes visuais da interface,Design system / globals.css,ok,-,auditado-ok
-docs/operacao/atualizar-dados.md,Documentação Operação,50,integral,Runbook de coleta e atualização de dados públicos,Operação / CI/CD,ok,-,auditado-ok
+docs/operacao/atualizar-dados.md,Documentação Operação,49,integral,Runbook de coleta e atualização de dados públicos,Operação / CI/CD,corrigir,ACH-14,corrigido
 docs/research/benchmark-design.md,Pesquisa,645,parcial-amostral,"Notas de pesquisa sobre Câmara, Power BI, design e free tiers",Referência técnica histórica,ok,-,auditado-ok
 docs/research/camara-api.md,Pesquisa,55,integral,"Notas de pesquisa sobre Câmara, Power BI, design e free tiers",Referência técnica histórica,ok,-,auditado-ok
 docs/research/camara-site.md,Pesquisa,136,integral,"Notas de pesquisa sobre Câmara, Power BI, design e free tiers",Referência técnica histórica,ok,-,auditado-ok
@@ -54,9 +52,9 @@ e2e/jornadas.spec.ts,Teste E2E,255,integral,"Suíte Playwright automatizada de r
 e2e/pwa.spec.ts,Teste E2E,42,integral,"Suíte Playwright automatizada de rotas, jornadas, busca e PWA",npm run test:e2e / quality-gates.yml,ok,-,auditado-ok
 e2e/qualidade.spec.ts,Teste E2E,154,integral,"Suíte Playwright automatizada de rotas, jornadas, busca e PWA",npm run test:e2e / quality-gates.yml,corrigir,ACH-03,corrigido
 fixtures/camara-amostra.json,Fixture,678,integral,Amostra determinística (52 proposições e 8 normas) para testes e fallback offline,tests/* e coleta fallback,ok,-,auditado-ok
-next.config.ts,Configuração,54,integral,"Configuração Next.js standalone, headers de segurança/X-Robots-Tag no espelho e images unoptimized",Next.js CLI / runtime,ok,-,auditado-ok
+next.config.ts,Configuração,46,integral,Configuração Next.js na Vercel com headers de segurança e dataset tracing,Next.js CLI / runtime,corrigir,ACH-14,corrigido
 package-lock.json,Lockfile,2695,parcial-amostral,Árvore exata e integridade SHA de pacotes npm,npm ci,corrigir,ACH-04,corrigido
-package.json,Manifesto,42,integral,"Dependências, scripts de build/coleta/lint/testes e versão 1.0.0",npm / Node.js,corrigir,ACH-04; ACH-05,corrigido
+package.json,Manifesto,41,integral,"Dependências, scripts de build/coleta/lint/testes e versão 1.0.0",npm / Node.js,corrigir,ACH-04; ACH-05; ACH-14,corrigido
 playwright.config.ts,Configuração,36,integral,"Configuração E2E across desktop-chromium, android-412 e samsung-360",npx playwright test,ok,-,auditado-ok
 public/icones/icone-192.png,Imagem PNG,0,binário,Ícone PWA/favicon validado por IHDR,manifest.ts / Next.js head,ok,-,auditado-ok
 public/icones/icone-512.png,Imagem PNG,0,binário,Ícone PWA/favicon validado por IHDR,manifest.ts / Next.js head,ok,-,auditado-ok
@@ -64,66 +62,65 @@ public/icones/icone-maskable-512.png,Imagem PNG,0,binário,Ícone PWA/favicon va
 public/marca/emblema.png,Imagem PNG,0,binário,Ativo gráfico institucional (emblema/logo OSB),Navegacao.tsx / layout.tsx,ok,-,auditado-ok
 public/marca/logo-osb.png,Imagem PNG,0,binário,Ativo gráfico institucional (emblema/logo OSB),Navegacao.tsx / layout.tsx,ok,-,auditado-ok
 public/sw.js,Service Worker,72,integral,"Cache apenas de casca UI e /offline, sem cachear dados ou APIs",Navegador via RegistrarSW.tsx,ok,-,auditado-ok
-scripts/auditar-dados-producao.ts,Script CLI,295,integral,"Script de coleta, auditoria, captura, espelho ou lint",package.json / workflows GitHub,ok,Missão A,adicionado-verificado
-scripts/auditar-heuristicas.ts,Script CLI,69,integral,"Script de coleta, auditoria, captura, espelho ou lint",package.json / workflows GitHub,corrigir,ACH-01,corrigido
-scripts/capturas.mjs,Script CLI,72,integral,"Script de coleta, auditoria, captura, espelho ou lint",package.json / workflows GitHub,ok,-,auditado-ok
-scripts/collect.ts,Script CLI,34,integral,"Script de coleta, auditoria, captura, espelho ou lint",package.json / workflows GitHub,ok,-,auditado-ok
-scripts/espelhar.ts,Script CLI,17,integral,"Script de coleta, auditoria, captura, espelho ou lint",package.json / workflows GitHub,ok,-,auditado-ok
-scripts/lint.ts,Script CLI,89,integral,"Script de coleta, auditoria, captura, espelho ou lint",package.json / workflows GitHub,ok,ACH-05,adicionado-verificado
-scripts/reconcile-powerbi.ts,Script CLI,51,integral,"Script de coleta, auditoria, captura, espelho ou lint",package.json / workflows GitHub,ok,-,auditado-ok
-scripts/verificar-auditoria.ts,Script CLI,182,integral,"Script de coleta, auditoria, captura, espelho ou lint",package.json / workflows GitHub,ok,R3,adicionado-verificado
+scripts/auditar-dados-producao.ts,Script CLI,295,integral,"Script de coleta, auditoria, captura ou lint",package.json / workflows GitHub,ok,Missão A,adicionado-verificado
+scripts/auditar-heuristicas.ts,Script CLI,69,integral,"Script de coleta, auditoria, captura ou lint",package.json / workflows GitHub,corrigir,ACH-01,corrigido
+scripts/capturas.mjs,Script CLI,72,integral,"Script de coleta, auditoria, captura ou lint",package.json / workflows GitHub,ok,-,auditado-ok
+scripts/collect.ts,Script CLI,34,integral,"Script de coleta, auditoria, captura ou lint",package.json / workflows GitHub,ok,-,auditado-ok
+scripts/lint.ts,Script CLI,89,integral,"Script de coleta, auditoria, captura ou lint",package.json / workflows GitHub,ok,ACH-05,adicionado-verificado
+scripts/reconcile-powerbi.ts,Script CLI,51,integral,"Script de coleta, auditoria, captura ou lint",package.json / workflows GitHub,ok,-,auditado-ok
+scripts/verificar-auditoria.ts,Script CLI,182,integral,"Script de coleta, auditoria, captura ou lint",package.json / workflows GitHub,ok,R3,adicionado-verificado
 src/app/api/busca/route.ts,API Route,23,integral,"Busca textual paginada por tipo, vereador, assunto e bairro",Busca.tsx / clientes,ok,-,auditado-ok
-src/app/api/health/route.ts,API Route,17,integral,"Endpoint de saúde retornando versao, sha, coletadoEm e proposicoes",deploy-vps.yml / monitoramento,corrigir,ACH-03,corrigido
+src/app/api/health/route.ts,API Route,17,integral,"Endpoint de saúde retornando versao, sha, coletadoEm e proposicoes",vigia-dados.yml / monitoramento,corrigir,ACH-03; ACH-14,corrigido
 src/app/apple-icon.png,Imagem PNG,0,binário,Ícone PWA/favicon validado por IHDR,manifest.ts / Next.js head,ok,-,auditado-ok
-src/app/bairros/[slug]/page.tsx,Página App Router,110,integral,Rota pública Next.js (/bairros/[slug]),Next.js App Router / visitantes,ok,-,auditado-ok
+src/app/bairros/[slug]/page.tsx,Página App Router,119,integral,Rota pública Next.js (/bairros/[slug]),Next.js App Router / visitantes,corrigir,ACH-14,corrigido
 src/app/bairros/page.tsx,Página App Router,34,integral,Rota pública Next.js (/bairros),Next.js App Router / visitantes,ok,-,auditado-ok
 src/app/buscar/page.tsx,Página App Router,10,integral,Rota pública Next.js (/buscar),Next.js App Router / visitantes,ok,-,auditado-ok
 src/app/como-funciona/page.tsx,Página App Router,55,integral,Rota pública Next.js (/como-funciona),Next.js App Router / visitantes,ok,-,auditado-ok
-src/app/comparar/page.tsx,Página App Router,123,integral,Rota pública Next.js (/comparar),Next.js App Router / visitantes,corrigir,ACH-02; ACH-13,p0-p2-corrigido; p3-aberto
+src/app/comparar/page.tsx,Página App Router,148,integral,Rota pública Next.js (/comparar),Next.js App Router / visitantes,corrigir,ACH-02; ACH-13,corrigido
 src/app/correcoes/page.tsx,Página App Router,66,integral,Rota pública Next.js (/correcoes),Next.js App Router / visitantes,corrigir,ACH-09,corrigido
 src/app/dados/page.tsx,Página App Router,98,integral,Rota pública Next.js (/dados),Next.js App Router / visitantes,ok,-,auditado-ok
-src/app/globals.css,Estilo CSS,1698,integral,"Tokens de design, temas claro/escuro, tipografia e componentes visuais",src/app/layout.tsx,ok,-,auditado-ok
+src/app/globals.css,Estilo CSS,1781,integral,"Tokens de design, temas claro/escuro, alto contraste, impressão e componentes visuais",src/app/layout.tsx,corrigir,ACH-14,corrigido
 src/app/icon.png,Imagem PNG,0,binário,Ícone PWA/favicon validado por IHDR,manifest.ts / Next.js head,ok,-,auditado-ok
-src/app/layout.tsx,App Router,97,integral,"Layout raiz HTML, fontes, SkipLink, Navegacao, Rodape, Contato e SW",Todas as rotas App Router,ok,-,auditado-ok
-src/app/llms.txt/route.ts,Rota Texto,47,integral,Descrição estruturada do portal e fontes para indexadores/LLMs,Rota /llms.txt,ok,-,auditado-ok
+src/app/layout.tsx,App Router,102,integral,"Layout raiz HTML, viewport colorScheme, fontes, SkipLink, Navegacao, Rodape e SW",Todas as rotas App Router,corrigir,ACH-14,corrigido
+src/app/llms.txt/route.ts,Rota Texto,53,integral,"Descrição estruturada do portal, datasets e rotas para indexadores/LLMs",Rota /llms.txt,corrigir,ACH-14,corrigido
 src/app/manifest.ts,Metadados PWA,34,integral,"Web App Manifest (nome, cores, ícones 192/512/maskable)",Rota /manifest.webmanifest,ok,-,auditado-ok
 src/app/metodologia/page.tsx,Página App Router,180,integral,Rota pública Next.js (/metodologia),Next.js App Router / visitantes,ok,-,auditado-ok
 src/app/normas/page.tsx,Página App Router,35,integral,Rota pública Next.js (/normas),Next.js App Router / visitantes,ok,-,auditado-ok
-src/app/not-found.tsx,Página,12,integral,Página 404 com orientação de retorno e busca,Fallback App Router / /404,ok,-,auditado-ok
+src/app/not-found.tsx,Página,24,integral,"Página 404 com noindex, retorno à capa e atalhos principais",Fallback App Router / /404,corrigir,ACH-14,corrigido
 src/app/offline/page.tsx,Página App Router,25,integral,Rota pública Next.js (/offline),Next.js App Router / visitantes,ok,-,auditado-ok
 src/app/opengraph-image.tsx,Metadados OG,38,integral,Imagem Open Graph dinâmica do portal,Rota /opengraph-image,ok,-,auditado-ok
 src/app/page.tsx,Página,223,integral,"Capa com resumo de atividade, destaques da legislatura e atalhos principais",Rota /,ok,-,auditado-ok
-src/app/privacidade/page.tsx,Página App Router,132,integral,Rota pública Next.js (/privacidade),Next.js App Router / visitantes,corrigir,ACH-01,corrigido
+src/app/privacidade/page.tsx,Página App Router,134,integral,Rota pública Next.js (/privacidade),Next.js App Router / visitantes,corrigir,ACH-01; ACH-14,corrigido
 src/app/proposicoes/page.tsx,Página App Router,34,integral,Rota pública Next.js (/proposicoes),Next.js App Router / visitantes,ok,-,auditado-ok
-src/app/robots.ts,SEO,12,integral,Diretivas de rastreamento (bloqueia tudo quando ESPELHO=1),Rota /robots.txt,ok,-,auditado-ok
-src/app/sitemap.ts,SEO,16,integral,Mapa de rotas públicas (retorna vazio quando ESPELHO=1),Rota /sitemap.xml,corrigir,ACH-09,corrigido
+src/app/robots.ts,SEO,10,integral,Diretivas de rastreamento apontando para sitemap.xml canônico,Rota /robots.txt,corrigir,ACH-14,corrigido
+src/app/sitemap.ts,SEO,15,integral,Mapa de rotas públicas na Vercel,Rota /sitemap.xml,corrigir,ACH-09; ACH-14,corrigido
 src/app/sobre/page.tsx,Página App Router,74,integral,Rota pública Next.js (/sobre),Next.js App Router / visitantes,ok,-,auditado-ok
-src/app/termos/page.tsx,Página App Router,111,integral,Rota pública Next.js (/termos),Next.js App Router / visitantes,ok,-,auditado-ok
-src/app/vereadores/[slug]/page.tsx,Página App Router,249,integral,Rota pública Next.js (/vereadores/[slug]),Next.js App Router / visitantes,ok,-,auditado-ok
+src/app/termos/page.tsx,Página App Router,115,integral,Rota pública Next.js (/termos),Next.js App Router / visitantes,corrigir,ACH-14,corrigido
+src/app/vereadores/[slug]/page.tsx,Página App Router,266,integral,Rota pública Next.js (/vereadores/[slug]),Next.js App Router / visitantes,corrigir,ACH-14,corrigido
 src/app/vereadores/page.tsx,Página App Router,55,integral,Rota pública Next.js (/vereadores),Next.js App Router / visitantes,ok,-,auditado-ok
 src/components/Busca.tsx,Componente React,145,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
 src/components/Contato.tsx,Componente React,6,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
 src/components/Fonte.tsx,Componente React,23,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
-src/components/Icon.tsx,Componente React,109,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
+src/components/Icon.tsx,Componente React,97,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-14,corrigido
 src/components/Item.tsx,Componente React,63,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
 src/components/JsonLd.tsx,Componente React,5,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
 src/components/ListaBairros.tsx,Componente React,65,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
 src/components/Navegacao.tsx,Componente React,51,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
-src/components/PaginaLista.tsx,Componente React,248,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
-src/components/PainelVereador.tsx,Componente React,114,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
+src/components/PaginaLista.tsx,Componente React,257,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-14,corrigido
+src/components/PainelVereador.tsx,Componente React,114,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-14,corrigido
 src/components/RegistrarSW.tsx,Componente React,15,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
 src/components/Rosto.tsx,Componente React,42,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
 src/components/graficos/Graficos.tsx,Componente React,250,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
-src/components/graficos/Rede.tsx,Componente React,111,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
+src/components/graficos/Rede.tsx,Componente React,128,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-14,corrigido
 src/lib/camara/client.ts,Cliente/Schema Fonte,116,integral,"Integração, tipagem e URLs oficiais da Câmara de Pindamonhangaba","Coleta, derivação e interface",ok,-,auditado-ok
 src/lib/camara/foto.ts,Cliente/Schema Fonte,54,integral,"Integração, tipagem e URLs oficiais da Câmara de Pindamonhangaba","Coleta, derivação e interface",ok,-,auditado-ok
 src/lib/camara/origem.ts,Cliente/Schema Fonte,18,integral,"Integração, tipagem e URLs oficiais da Câmara de Pindamonhangaba","Coleta, derivação e interface",ok,-,auditado-ok
 src/lib/camara/schema.ts,Cliente/Schema Fonte,56,integral,"Integração, tipagem e URLs oficiais da Câmara de Pindamonhangaba","Coleta, derivação e interface",ok,-,auditado-ok
-src/lib/coleta/coletar.ts,Pipeline Coleta,415,integral,Orquestrador de coleta incremental/completa da Câmara,scripts/collect.ts,ok,-,auditado-ok
+src/lib/coleta/coletar.ts,Pipeline Coleta,415,integral,Orquestrador de coleta incremental/completa da Câmara,scripts/collect.ts,corrigir,ACH-14,corrigido
 src/lib/content/apelidos.ts,Conteúdo/Domínio,9,integral,"Vocabulário editorial, bairros, tipos, apelidos e omissões LGPD","Derivação, busca e UI",ok,-,auditado-ok
 src/lib/content/bairros.ts,Conteúdo/Domínio,31,integral,"Vocabulário editorial, bairros, tipos, apelidos e omissões LGPD","Derivação, busca e UI",ok,-,auditado-ok
 src/lib/content/glossario.ts,Conteúdo/Domínio,88,integral,"Vocabulário editorial, bairros, tipos, apelidos e omissões LGPD","Derivação, busca e UI",ok,-,auditado-ok
-src/lib/content/omissoes.ts,Conteúdo/Domínio,27,integral,"Vocabulário editorial, bairros, tipos, apelidos e omissões LGPD","Derivação, busca e UI",corrigir,ACH-01,corrigido
+src/lib/content/omissoes.ts,Conteúdo/Domínio,27,integral,"Vocabulário editorial, bairros, tipos, apelidos e omissões LGPD","Derivação, busca e UI",corrigir,ACH-01; ACH-14,corrigido
 src/lib/content/tipos.ts,Conteúdo/Domínio,62,integral,"Vocabulário editorial, bairros, tipos, apelidos e omissões LGPD","Derivação, busca e UI",ok,-,auditado-ok
 src/lib/data/analise.ts,Núcleo Dados,193,integral,"Leitura, derivação, análise, filtro, busca e exportação CSV","Páginas RSC, API /busca e testes",ok,-,auditado-ok
 src/lib/data/busca.ts,Núcleo Dados,60,integral,"Leitura, derivação, análise, filtro, busca e exportação CSV","Páginas RSC, API /busca e testes",ok,-,auditado-ok
@@ -137,9 +134,8 @@ src/lib/data/perfil.ts,Núcleo Dados,35,integral,"Leitura, derivação, análise
 src/lib/data/query.ts,Núcleo Dados,185,integral,"Leitura, derivação, análise, filtro, busca e exportação CSV","Páginas RSC, API /busca e testes",ok,-,auditado-ok
 src/lib/data/temas.ts,Núcleo Dados,96,integral,"Leitura, derivação, análise, filtro, busca e exportação CSV","Páginas RSC, API /busca e testes",ok,-,auditado-ok
 src/lib/data/types.ts,Núcleo Dados,67,integral,"Leitura, derivação, análise, filtro, busca e exportação CSV","Páginas RSC, API /busca e testes",ok,-,auditado-ok
-src/lib/espelho/espelhar.ts,Sincronismo VPS,199,integral,Lógica de download/validação atômica do snapshot na VPS,scripts/espelhar.ts,ok,-,auditado-ok
 src/lib/format.ts,Utilitário,55,integral,Constantes de configuração do portal e formatação pt-BR,Aplicação e scripts,ok,-,auditado-ok
-src/lib/seo/jsonld.ts,SEO/JSON-LD,113,integral,Gerador de dados estruturados Schema.org seguros,layout.tsx / páginas públicas,ok,-,auditado-ok
+src/lib/seo/jsonld.ts,SEO/JSON-LD,131,integral,"Gerador de dados estruturados Schema.org (NGO, WebSite, Dataset, Person, BreadcrumbList)",layout.tsx / páginas públicas,corrigir,ACH-14,corrigido
 src/lib/site.ts,Utilitário,48,integral,Constantes de configuração do portal e formatação pt-BR,Aplicação e scripts,corrigir,ACH-01; ACH-03,corrigido
 tests/analise.test.ts,Teste Unitário,91,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
 tests/bairros.test.ts,Teste Unitário,97,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
@@ -148,10 +144,9 @@ tests/client.test.ts,Teste Unitário,86,integral,"Testes Vitest de domínio, col
 tests/coleta.test.ts,Teste Unitário,239,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
 tests/csv.test.ts,Teste Unitário,23,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
 tests/derive.test.ts,Teste Unitário,113,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
-tests/espelho.test.ts,Teste Unitário,130,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
 tests/foto.test.ts,Teste Unitário,47,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
 tests/health.test.ts,Teste Unitário,44,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,ACH-03,adicionado-verificado
-tests/jsonld.test.ts,Teste Unitário,48,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
+tests/jsonld.test.ts,Teste Unitário,68,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,corrigir,ACH-14,corrigido
 tests/numero-lista.test.ts,Teste Unitário,85,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
 tests/omissoes.test.ts,Teste Unitário,52,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,corrigir,ACH-01,corrigido
 tests/query.test.ts,Teste Unitário,81,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
