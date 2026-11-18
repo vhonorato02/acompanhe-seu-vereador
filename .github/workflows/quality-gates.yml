@@ -37,6 +37,8 @@ jobs:
           if git grep -nIE "keysoft=[A-Za-z0-9]{8,}|CAMARA_API_TOKEN=[^[:space:]]+|-----BEGIN [A-Z ]*PRIVATE KEY-----" -- . ':!.github/workflows/quality-gates.yml'; then
             echo "Possible secret committed"; exit 1
           fi
+      - name: Static lint rules
+        run: npm run lint
       - name: Typecheck
         run: npm run typecheck
       - name: Unit, contract and collector integration tests
