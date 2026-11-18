@@ -5,6 +5,7 @@
  * and its registration data.
  */
 export const SITE = {
+  versao: "1.0.0",
   nome: "Acompanhe seu Vereador",
   cidade: "Pindamonhangaba",
   /** One-line promise, used in the header, metadata and share previews. */
@@ -39,3 +40,9 @@ export const URL_REPORTAR_ERRO = `${SITE.repositorio}/issues/new?template=erro-n
 
 /** Honest user agent for the collector: names the project and where to reach it. */
 export const USER_AGENT_COLETOR = `AcompanheSeuVereador/1.1 (Observatorio Social do Brasil - Pindamonhangaba; ${SITE.contatoEmail}; +${SITE.repositorio})`;
+
+/** Short commit SHA exposed by health checks (no secrets). */
+export function shaPublicado(env: Record<string, string | undefined> = process.env): string {
+  const bruto = env.VERCEL_GIT_COMMIT_SHA?.trim() || env.GIT_COMMIT_SHA?.trim() || "local";
+  return bruto.slice(0, 12);
+}

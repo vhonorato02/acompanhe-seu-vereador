@@ -122,6 +122,19 @@ test.describe("SEO, compartilhamento e cabeçalhos", () => {
     await page.waitForTimeout(600);
     expect(erros).toEqual([]);
   });
+
+  test("endpoint de saúde expõe versão, SHA e coleta sem expor segredos", async ({ request }) => {
+    const res = await request.get("/api/health");
+    expect(res.status()).toBe(200);
+    expect(res.headers()["cache-control"]).toContain("no-store");
+    const body = (await res.json()) as Record<string, unknown>;
+    expect(body.ok).toBe(true);
+    expect(typeof body.versao).toBe("string");
+    expect(typeof body.sha).toBe("string");
+    expect(String(body.sha).length).toBeGreaterThan(0);
+    expect(typeof body.coletadoEm).toBe("string");
+    expect(Number(body.proposicoes)).toBeGreaterThan(0);
+  });
 });
 
 test.describe("capturas por viewport", () => {

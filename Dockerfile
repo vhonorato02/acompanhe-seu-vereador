@@ -5,7 +5,9 @@
 
 FROM node:24-alpine AS build
 WORKDIR /app
-ENV NEXT_TELEMETRY_DISABLED=1
+ARG GIT_COMMIT_SHA="local"
+ENV NEXT_TELEMETRY_DISABLED=1 \
+    GIT_COMMIT_SHA=$GIT_COMMIT_SHA
 COPY package.json package-lock.json ./
 RUN npm ci --ignore-scripts
 COPY . .
@@ -15,9 +17,11 @@ RUN ESPELHO=1 npx next build
 
 FROM node:24-alpine AS run
 WORKDIR /app
+ARG GIT_COMMIT_SHA="local"
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     ESPELHO=1 \
+    GIT_COMMIT_SHA=$GIT_COMMIT_SHA \
     PORT=3000 \
     HOSTNAME=0.0.0.0
 COPY --from=build --chown=node:node /app/.next/standalone ./
