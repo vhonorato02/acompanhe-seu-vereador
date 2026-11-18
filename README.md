@@ -22,28 +22,30 @@ O workflow `.github/workflows/atualizar-dados.yml` confere o manifesto de hora e
 
 ```bash
 npm ci
-npm run collect            # sem CAMARA_API_TOKEN usa a amostra real e rotulada de fixtures/
+npm run collect              # sem CAMARA_API_TOKEN usa a amostra real e rotulada de fixtures/
 npm run dev
-npm test                   # unitários, contratos e integração do coletor (número = lista)
+npm run lint                 # gate estático (proíbe any, catch vazio, drift de versão)
 npm run typecheck
+npm test                     # unitários, contratos e integração do coletor (número = lista)
 npm run build
-npm run test:e2e           # Playwright + axe contra o build (precisa de `npx playwright install`)
-npm run auditar:heuristicas  # revisão de bairros/assuntos sobre os dados abertos publicados
+npm run test:e2e             # Playwright + axe contra o build (precisa de `npx playwright install`)
+npm run auditar:heuristicas  # revisão de bairros/assuntos e sentinela LGPD sobre dados abertos
+npm run auditar:cobertura    # confere 100% dos arquivos e rotas nos livros de auditoria
 ```
 
 Em produção o token fica na variável `CAMARA_API_TOKEN` da Vercel (só produção). Sem ele, o build de produção falha de propósito.
 
 ## Documentação
 
-- `HANDOFF.md` — estado atual, operação e rollback
-- `docs/auditoria/` — auditorias com achados, testes e evidências
+- `HANDOFF.md` — documento único de estado, operação e rollback
+- `docs/auditoria/2026-11-18-profunda/` — auditoria profunda com livros de cobertura, achados, QA e lista jurídica
 - `docs/adr/` — decisões de arquitetura e produto
 - `docs/research/` — pesquisa da Fase 1 (fontes, API, Power BI, design, free tiers)
 - `CLAUDE.md` — princípios e convenções
 
 ## Pedidos sobre dados pessoais e segurança
 
-- Pessoa citada numa ementa ou pedido de titular (LGPD): **não abra issue** (é público). Escreva para pindamonhangaba@osbrasil.org.br; o procedimento está na [política de privacidade](https://acompanhe-seu-vereador.vercel.app/privacidade#direitos) e as omissões atendidas ficam em `src/lib/content/omissoes.ts` (sem nomes).
+- Pessoa citada numa ementa ou pedido de titular (LGPD): **não abra issue** (é público). Escreva para pindamonhangaba@osbrasil.org.br (prazo de resposta: até 15 dias); o procedimento está na [política de privacidade](https://acompanhe-seu-vereador.vercel.app/privacidade#direitos) e as omissões preventivas ou a pedido ficam em `src/lib/content/omissoes.ts` (sem nomes).
 - Falha de segurança: veja [`SECURITY.md`](.github/SECURITY.md).
 
 ## Licença
