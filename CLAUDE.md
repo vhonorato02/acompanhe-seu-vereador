@@ -49,6 +49,7 @@ Plataforma pública do **Observatório Social do Brasil – Pindamonhangaba** pa
 | Caminho | Conteúdo |
 |---|---|
 | `HANDOFF.md` | estado atual e próximos passos |
+| `docs/GUIA-DO-OBSERVATORIO.md` | guia didático completo para diretoria, jurídico e operação |
 | `docs/research/fase-1-relatorio.md` | relatório completo da Fase 1 (decisões pendentes na seção 20) |
 | `docs/research/camara-site.md` | mapa do site e da API da Câmara |
 | `docs/research/camara-api.md` | API validada com token: campos, coautoria, profundidade |

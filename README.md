@@ -37,6 +37,7 @@ Em produção o token fica na variável `CAMARA_API_TOKEN` da Vercel (só produ�
 
 ## Documentação
 
+- [`docs/GUIA-DO-OBSERVATORIO.md`](docs/GUIA-DO-OBSERVATORIO.md) — **guia humano completo** (como funciona em linguagem simples, metodologia em profundidade, operação, revisão jurídica, domínio e custos de hospedagem para ONG)
 - `HANDOFF.md` — documento único de estado, operação e rollback
 - `docs/auditoria/2026-11-18-profunda/` — auditoria profunda com livros de cobertura, achados, QA e lista jurídica
 - `docs/adr/` — decisões de arquitetura e produto
