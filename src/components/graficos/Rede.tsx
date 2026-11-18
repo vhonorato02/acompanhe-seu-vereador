@@ -64,13 +64,25 @@ export function Rede({ nos, pares, inicial = null }: { nos: No[]; pares: Array<{
           const p = pos.get(v.slug);
           if (!p) return null;
           const r = sel === v.slug ? 22 : 18;
+          const iniciais = v.nome
+            .split(/\s+/)
+            .filter((parte) => /^\p{Lu}/u.test(parte))
+            .slice(0, 2)
+            .map((parte) => parte[0])
+            .join("");
           return (
             <g key={v.slug} className="rede-no" onClick={() => setSel(sel === v.slug ? null : v.slug)}>
+              <title>{v.nome}</title>
               <circle cx={p.x} cy={p.y} r={r + 2.5} fill={sel === v.slug ? "var(--green)" : "var(--bg)"} />
               {v.foto ? (
                 <image href={`/_next/image?url=${encodeURIComponent(v.foto)}&w=96&q=75`} x={p.x - r} y={p.y - r} width={r * 2} height={r * 2} clipPath={`url(#clip-${v.slug})`} preserveAspectRatio="xMidYMin slice" />
               ) : (
-                <circle cx={p.x} cy={p.y} r={r} fill="var(--fill-2)" />
+                <>
+                  <circle cx={p.x} cy={p.y} r={r} fill="var(--fill-2)" />
+                  <text x={p.x} y={p.y} textAnchor="middle" dominantBaseline="central" fontSize="11" fontWeight="700" fill="var(--ink)">
+                    {iniciais}
+                  </text>
+                </>
               )}
             </g>
           );
@@ -82,6 +94,11 @@ export function Rede({ nos, pares, inicial = null }: { nos: No[]; pares: Array<{
             {v.nome}
           </button>
         ))}
+        {sel !== null && (
+          <button type="button" className="chip" onClick={() => setSel(null)}>
+            Mostrar todos
+          </button>
+        )}
       </div>
       <div aria-live="polite">
         {sel && selNome ? (

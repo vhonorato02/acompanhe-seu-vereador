@@ -18,7 +18,8 @@ import { panorama, raioX } from "@/lib/data/painel";
 import { recortes } from "@/lib/data/perfil";
 import { hrefLista, ordenar } from "@/lib/data/query";
 import { n } from "@/lib/format";
-import { vereadorLd } from "@/lib/seo/jsonld";
+import { breadcrumbLd, vereadorLd } from "@/lib/seo/jsonld";
+import { SITE } from "@/lib/site";
 
 export function generateStaticParams() {
   return dataset().vereadores.map((v) => ({ slug: v.slug }));
@@ -30,11 +31,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const v = dataset().vereadores.find((x) => x.slug === slug);
   if (!v) return {};
+  const description = `O que ${v.nome} (${v.partido}) apresentou na Câmara de Pindamonhangaba desde 2025: pedidos, projetos, assuntos e bairros, com link para cada documento oficial.`;
   return {
     title: v.nome,
-    description: `O que ${v.nome} (${v.partido}) apresentou na Câmara de Pindamonhangaba desde 2025: pedidos, projetos, assuntos e bairros, com link para cada documento oficial.`,
+    description,
     alternates: { canonical: `/vereadores/${v.slug}` },
     openGraph: {
+      title: `${v.nome} · ${SITE.nome}`,
+      description,
+      url: `/vereadores/${v.slug}`,
+      siteName: SITE.nome,
+      locale: "pt_BR",
+      type: "profile",
       images: v.foto ? [{ url: v.foto, alt: `Foto oficial de ${v.nome} (Câmara Municipal)` }] : ["/opengraph-image"],
     },
   };
@@ -62,7 +70,16 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
 
   return (
     <>
-      <JsonLd dados={vereadorLd(v)} />
+      <JsonLd
+        dados={[
+          vereadorLd(v),
+          breadcrumbLd([
+            { nome: "Início", url: "/" },
+            { nome: "Vereadores", url: "/vereadores" },
+            { nome: v.nome, url: `/vereadores/${v.slug}` },
+          ]),
+        ]}
+      />
       <Link href="/vereadores" className="voltar">
         Vereadores
       </Link>

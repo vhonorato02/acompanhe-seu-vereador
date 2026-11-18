@@ -10,6 +10,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   applicationName: SITE.nome,
+  authors: [{ name: SITE.organizacao, url: SITE.osb.site }],
+  creator: SITE.organizacao,
+  publisher: SITE.organizacao,
+  category: "government",
   title: {
     default: `${SITE.nome} · Vereadores de ${SITE.cidade}`,
     template: `%s · ${SITE.nome}`,
@@ -25,6 +29,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  colorScheme: "light dark",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#000000" },

@@ -58,6 +58,24 @@ export function websiteLd(): Ld {
     inLanguage: "pt-BR",
     publisher: { "@id": ORG_ID },
     about: CAMARA,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${SITE.url}/proposicoes?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+export function breadcrumbLd(itens: ReadonlyArray<{ nome: string; url: string }>): Ld {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: itens.map((item, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      name: item.nome,
+      item: item.url.startsWith("http") ? item.url : `${SITE.url}${item.url === "/" ? "" : item.url}`,
+    })),
   };
 }
 

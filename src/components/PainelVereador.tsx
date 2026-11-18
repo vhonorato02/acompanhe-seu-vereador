@@ -66,7 +66,7 @@ export function PainelVereador({
                 const altura = `${Math.round((c / maxMes) * 100)}%`;
                 const rotulo = `${nomeMes(mes, true)}: ${n(c)} ${c === 1 ? "proposição" : "proposições"}`;
                 return c > 0 ? (
-                  <Link key={mes} role="listitem" className="mes" href={hrefLista("/proposicoes", { ...f, mes })} aria-label={rotulo} title={rotulo}>
+                  <Link key={mes} role="listitem" className="mes" href={hrefLista("/proposicoes", { ...f, mes })} aria-label={rotulo}>
                     <span className="barra" style={{ height: altura }} />
                   </Link>
                 ) : (

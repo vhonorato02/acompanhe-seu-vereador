@@ -91,9 +91,11 @@
 html {
   /* Explicit on the root too: without it WebKit reports a white canvas under the dark theme. */
   background: var(--bg);
+  accent-color: var(--green);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   scroll-padding-top: 4.5rem;
+  scroll-padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 1rem);
 }
 body {
   margin: 0;
@@ -109,6 +111,9 @@ body {
   padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
 }
 @media (min-width: 52rem) {
+  html {
+    scroll-padding-bottom: 0;
+  }
   body {
     padding-bottom: 0;
   }
@@ -183,11 +188,18 @@ select {
   left: -999px;
   z-index: 50;
 }
-.skip:focus {
+.skip:focus,
+.skip:focus-visible {
   left: var(--gutter);
   top: 0.5rem;
   background: var(--bg);
+  color: var(--ink);
   padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .page {
@@ -304,10 +316,14 @@ main.page {
   opacity: 1;
   text-decoration: none;
 }
-.topnav a[aria-current="page"] {
+.topnav a[aria-current="page"],
+.topnav a[aria-current="page"]:hover {
   color: var(--green);
   opacity: 1;
   font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.45rem;
 }
 
 /* ---------- tab bar (phones) ---------- */
@@ -348,8 +364,13 @@ main.page {
 .tabbar a:hover {
   text-decoration: none;
 }
-.tabbar a[aria-current="page"] {
+.tabbar a[aria-current="page"],
+.tabbar a[aria-current="page"]:hover {
   color: var(--green);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2rem;
 }
 .tab-ico {
   display: grid;
@@ -488,12 +509,14 @@ main.page {
   font-weight: 600;
 }
 .chip[aria-pressed="true"],
-.chip[aria-current] {
+.chip[aria-current],
+.chip.ativo {
   background: var(--green);
   color: var(--on-green);
 }
 .chip[aria-pressed="true"] .conta,
-.chip[aria-current] .conta {
+.chip[aria-current] .conta,
+.chip.ativo .conta {
   color: var(--on-green);
 }
 .chip .avatar {
@@ -1694,5 +1717,65 @@ details.mais-barras summary {
   ::view-transition-old(*),
   ::view-transition-new(*) {
     animation: none !important;
+  }
+}
+
+/* ---------- high contrast & print ---------- */
+@media (forced-colors: active) {
+  .barra,
+  .b-valor,
+  .col-pilha .seg,
+  .proporcao span,
+  .composicao .trilha span,
+  .funil-barra span,
+  .faisca span {
+    forced-color-adjust: none;
+    background: CanvasText !important;
+    box-shadow: inset 0 0 0 1px Canvas;
+  }
+  .b-trilha,
+  .composicao .trilha,
+  .funil-barra,
+  .mes.vazio .barra {
+    border: 1px solid CanvasText;
+  }
+  .chip[aria-pressed="true"],
+  .chip[aria-current],
+  .chip.ativo,
+  .segmentos button[aria-pressed="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  .topnav a[aria-current="page"],
+  .tabbar a[aria-current="page"] {
+    outline: 1px solid Highlight;
+    outline-offset: 2px;
+  }
+}
+
+@media print {
+  :root {
+    color-scheme: light;
+  }
+  .topbar,
+  .tabbar,
+  .skip,
+  .busca,
+  details.mais-filtros,
+  .seletor,
+  .rede-botoes {
+    display: none !important;
+  }
+  body {
+    padding-bottom: 0;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .banda {
+    margin-inline: 0;
+    padding-block: 1.5rem;
+  }
+  .banda > * {
+    padding-inline: 0;
   }
 }

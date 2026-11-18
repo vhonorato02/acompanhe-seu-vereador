@@ -81,7 +81,9 @@ export default function Termos() {
       <ul>
         <li>
           Títulos, ementas e fotos oficiais dos vereadores são publicados pela Câmara Municipal de Pindamonhangaba e continuam sob
-          responsabilidade dela.
+          responsabilidade dela. Os retratos oficiais são exibidos em preto e branco apenas para identificação cívica uniforme dos
+          parlamentares em exercício; qualquer gabinete pode solicitar atualização ou substituição por iniciais pelo e-mail institucional
+          do Observatório.
         </li>
         <li>
           O nome e o logotipo do Observatório Social do Brasil são marcas da rede OSB e do Observatório local. Não os use para
@@ -96,8 +98,10 @@ export default function Termos() {
       <h2>6. Neutralidade, inclusive em período eleitoral</h2>
       <p>
         O portal trata todos os vereadores da mesma forma: ordem alfabética, mesmo layout, mesmas informações e nenhuma cor de
-        partido. Ele não faz propaganda, não pede voto e não muda de comportamento em período eleitoral. Uso de capturas ou dados
-        do portal em campanha é de responsabilidade de quem os usa e deve respeitar a legislação eleitoral.
+        partido. Ele não faz propaganda, não pede voto, não aceita patrocínio, anúncios ou impulsionamento pago e não muda de
+        comportamento em período eleitoral (Lei nº 9.504/1997). É vedado o uso do nome ou das marcas do Observatório em peças ou
+        impulsionamentos de campanha; quem republica capturas ou dados abertos responde integralmente pelo respeito à legislação
+        eleitoral.
       </p>
 
       <h2>7. Mudanças, lei e foro</h2>

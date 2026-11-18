@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Fonte } from "@/components/Fonte";
+import { Icon } from "@/components/Icon";
 import { Barras, Colunas, Proporcao } from "@/components/graficos/Graficos";
 import { percent, percent1 } from "@/lib/data/analise";
 import { panorama, raioX } from "@/lib/data/painel";
@@ -49,10 +50,20 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
             </Link>
           );
         })}
+        {sel.length > 0 && (
+          <Link className="chip" href="/comparar" scroll={false}>
+            Limpar seleção
+          </Link>
+        )}
       </nav>
 
       {dados.length === 0 && (
         <p className="nota section">Toque em dois ou três nomes acima para começar.</p>
+      )}
+      {dados.length === 1 && (
+        <p className="small soft" style={{ marginTop: "0.75rem" }}>
+          Toque em mais um ou dois nomes acima para comparar lado a lado.
+        </p>
       )}
 
       {dados.length > 0 && (
@@ -69,7 +80,7 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
                   <span className="meta"> {v.partido}{v.funcao && v.funcao !== "Vereador" ? `, ${v.funcao.toLowerCase()}` : ""}</span>
                 </span>
               </Link>
-              <ul className="fatos" style={{ gridTemplateColumns: "1fr", marginTop: "1rem" }}>
+              <ul className="fatos">
                 <li className="fato">
                   <strong>
                     <Link href={hrefLista("/proposicoes", { autor: v.slug })}>{n(x.deles.length)}</Link>
@@ -86,7 +97,7 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
                   </span>
                 </li>
               </ul>
-              <h3 style={{ marginTop: "1.25rem", fontSize: "1rem" }}>Por mês</h3>
+              <h3>Por mês</h3>
               <Colunas
                 dados={x.mensal.map((m) => ({ ...m, total: m.total }))}
                 altura={90}
@@ -94,25 +105,39 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
                 href={(mes) => hrefLista("/proposicoes", { autor: v.slug, pub: mes })}
                 escalaMax={maxMes}
               />
-              <h3 style={{ marginTop: "1.25rem", fontSize: "1rem" }}>Tipos</h3>
+              <h3>Tipos</h3>
               <Proporcao partes={x.grupos.map((g) => ({ slug: g.slug as "pedidos", nome: g.nome, n: g.n }))} />
-              <h3 style={{ marginTop: "1.25rem", fontSize: "1rem" }}>Assuntos dos pedidos (%)</h3>
-              <Barras
-                titulo={`Assuntos de ${v.nome}`}
-                unidade="%"
-                max={maxTemaPct}
-                itens={x.temas.slice(0, 5).map((t) => ({
-                  chave: t.slug,
-                  nome: t.nome,
-                  n: percent1(t.n, x.pedidos.length),
-                  href: hrefLista("/proposicoes", t.filtro),
-                }))}
-              />
-              <h3 style={{ marginTop: "1.25rem", fontSize: "1rem" }}>Bairros mais citados</h3>
-              <Barras
-                titulo={`Bairros de ${v.nome}`}
-                itens={x.bairros.slice(0, 5).map((b) => ({ chave: b.slug, nome: b.nome, n: b.n, href: hrefLista("/proposicoes", b.filtro) }))}
-              />
+              <span className="rotulo-derivado" style={{ marginTop: "1.75rem", marginBottom: 0 }}>
+                <Icon nome="info" tamanho={14} /> Classificação automática pelo texto
+              </span>
+              <h3 style={{ marginTop: "0.35rem" }}>Assuntos dos pedidos (%)</h3>
+              {x.temas.length > 0 ? (
+                <Barras
+                  titulo={`Assuntos de ${v.nome}`}
+                  unidade="%"
+                  max={maxTemaPct}
+                  itens={x.temas.slice(0, 5).map((t) => ({
+                    chave: t.slug,
+                    nome: t.nome,
+                    n: percent1(t.n, x.pedidos.length),
+                    href: hrefLista("/proposicoes", t.filtro),
+                  }))}
+                />
+              ) : (
+                <p className="small soft">Nenhum pedido classificado neste período.</p>
+              )}
+              <span className="rotulo-derivado" style={{ marginTop: "1.75rem", marginBottom: 0 }}>
+                <Icon nome="info" tamanho={14} /> Classificação automática pelo texto
+              </span>
+              <h3 style={{ marginTop: "0.35rem" }}>Bairros mais citados</h3>
+              {x.bairros.length > 0 ? (
+                <Barras
+                  titulo={`Bairros de ${v.nome}`}
+                  itens={x.bairros.slice(0, 5).map((b) => ({ chave: b.slug, nome: b.nome, n: b.n, href: hrefLista("/proposicoes", b.filtro) }))}
+                />
+              ) : (
+                <p className="small soft">Nenhum bairro citado com frequência.</p>
+              )}
             </article>
           ))}
         </div>

@@ -50,12 +50,11 @@ export default function Privacidade() {
           limpe os dados do site no navegador. A preferência de tema segue a configuração do aparelho.
         </li>
         <li>
-          <strong>Hospedagem:</strong> como em qualquer site, o provedor de hospedagem principal (Vercel Inc., que atua como
-          operador) e a infraestrutura de espelho operada pelo projeto no Brasil registram dados técnicos padrão de conexão (como
-          endereço IP, data, página pedida e navegador) para segurança, disponibilidade e prevenção de abuso. Os registros da
-          Vercel ficam com o provedor, pelo prazo da política dele, e podem ser processados fora do Brasil, com as garantias
-          contratuais do provedor (LGPD, art. 33). O Observatório não usa esses registros para identificar visitantes e só os
-          acessaria para investigar ataque ou mau uso.
+          <strong>Hospedagem:</strong> como em qualquer site, o provedor de hospedagem (Vercel Inc., que atua como operador)
+          registra dados técnicos padrão de conexão (como endereço IP, data, página pedida e navegador) para segurança,
+          disponibilidade e prevenção de abuso. Esses registros ficam com o provedor, pelo prazo da política dele, e podem ser
+          processados fora do Brasil, com as garantias contratuais do provedor (LGPD, art. 33). O Observatório não usa esses
+          registros para identificar visitantes e só os acessaria para investigar ataque ou mau uso.
         </li>
         <li>
           <strong>Links externos:</strong> ao abrir um documento no site da Câmara, uma rede social ou o GitHub, vale a política
@@ -84,8 +83,11 @@ export default function Privacidade() {
         Observatório. <strong>Bases legais:</strong> tratamento de dados tornados públicos pela própria Câmara, respeitados a
         finalidade, a boa-fé e o interesse público que justificaram a publicação (LGPD, art. 7º, §§ 3º, 4º e 7º), o direito de
         acesso à informação pública (Lei 12.527/2011) e o legítimo interesse do Observatório e da sociedade na transparência (LGPD,
-        art. 7º, IX). O portal não cria perfis de cidadãos, não cruza dados com outras fontes e não busca tratar dados sensíveis;
-        quando identifica preventivamente dado sensível de saúde de cidadão comum em ementa, o resumo também é omitido.
+        art. 7º, IX). As classificações automáticas do portal (assunto, bairro, destinatário e vínculo projeto-lei) incidem
+        exclusivamente sobre o texto dos atos legislativos públicos e não constituem decisão automatizada nem perfilamento de pessoa
+        natural (LGPD, art. 20). O portal não cruza dados com outras fontes e não busca tratar dados sensíveis; quando identifica
+        preventivamente dado sensível de saúde ou vulnerabilidade de cidadão comum, ou menção identificável a criança ou adolescente
+        (LGPD, art. 14), o resumo também é omitido.
       </p>
       <p>
         Os mesmos dados ficam disponíveis em <Link href="/dados">formato aberto</Link>. Eles são atualizados a cada coleta e
