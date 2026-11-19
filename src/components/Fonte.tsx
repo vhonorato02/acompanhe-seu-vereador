@@ -7,11 +7,11 @@ export function Fonte({ d }: { d: Dataset }) {
   return (
     <aside className="fonte" aria-label="Fonte dos dados">
       <p>
-        Fonte: <a href={d.fonte.url}>{d.fonte.nome}</a>, coletado em {dataColeta(d.execucao.coletadoEm)}. Período: {d.escopo.descricao}.
+        Dados públicos obtidos da <a href={d.fonte.url}>{d.fonte.nome}</a>, coletados em {dataColeta(d.execucao.coletadoEm)} ({d.escopo.descricao}).
       </p>
       <p>
-        <Link href="/metodologia">Como contamos</Link>, <Link href="/dados">baixar os dados</Link> ou{" "}
-        <Link href="/correcoes">avisar de um erro</Link>.
+        <Link href="/como-funciona">O que significa cada tipo</Link>, <Link href="/metodologia">como contamos</Link>,{" "}
+        <Link href="/dados">baixar tabelas abertas</Link> ou <Link href="/correcoes">avisar de um erro</Link>.
       </p>
       {d.execucao.modo === "amostra" && (
         <p className="nota aviso" style={{ marginTop: "0.75rem" }}>

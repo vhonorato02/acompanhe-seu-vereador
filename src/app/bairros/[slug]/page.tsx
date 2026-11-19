@@ -77,7 +77,7 @@ export default async function PaginaBairro({ params }: { params: Promise<{ slug:
         <div className="duas-colunas">
           <article className="historia" aria-labelledby="h-temas">
             <h2 id="h-temas">Assuntos</h2>
-            <p className="lede">Um pedido pode tratar de mais de um assunto.</p>
+            <p className="lede">Um mesmo pedido pode tratar de mais de um assunto ao mesmo tempo (por exemplo, asfalto e iluminação).</p>
             <Barras
               titulo={`Assuntos em ${b.nome}`}
               itens={temas.map((t) => ({ chave: t.slug, nome: t.nome, n: t.n, href: hrefLista("/proposicoes", t.filtro) }))}
@@ -85,7 +85,9 @@ export default async function PaginaBairro({ params }: { params: Promise<{ slug:
           </article>
           <article className="historia" aria-labelledby="h-quem">
             <h2 id="h-quem">Quem pediu</h2>
-            <p className="lede">Vereadores em ordem alfabética. Proposições assinadas em conjunto contam para cada autor.</p>
+            <p className="lede">
+              Em ordem alfabética. Quando dois ou mais vereadores assinam juntos a mesma proposição, ela conta no total de cada autor.
+            </p>
             <Barras
               titulo={`Vereadores que citaram ${b.nome}`}
               itens={porVereador.map(({ v, c }) => ({

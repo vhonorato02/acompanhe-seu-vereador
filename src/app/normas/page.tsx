@@ -25,9 +25,9 @@ export default async function Normas({
       searchParams={await searchParams}
       intro={
         <p className="soft">
-          Leis, resoluções e decretos legislativos publicados desde 2025. Quando a ementa da lei cita o número do projeto de origem
-          (“Projeto de Lei nº 148/2026”), a lei também aparece no perfil dos autores desse projeto.{" "}
-          <Link href="/metodologia#leis">Como ligamos lei e projeto</Link>
+          Leis ordinárias, leis complementares, resoluções e decretos legislativos publicados desde 2025. Sempre que o resumo da lei cita
+          o número do projeto de origem (“Projeto de Lei nº 148/2026”), o portal liga os dois e exibe a lei no perfil de quem assinou o
+          projeto. <Link href="/metodologia#leis">Como ligamos lei e projeto</Link>
         </p>
       }
     />

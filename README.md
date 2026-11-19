@@ -1,54 +1,58 @@
 # Acompanhe seu Vereador — Pindamonhangaba
 
-Portal do **Observatório Social do Brasil – Pindamonhangaba** (associação civil apartidária, CNPJ 30.197.903/0001-75) para acompanhar o que os vereadores de Pindamonhangaba apresentam na Câmara Municipal (legislatura 2025–2028). Cada número leva à lista que o compõe, e cada item leva ao documento oficial.
+Portal cívico aberto e apartidário do **Observatório Social do Brasil – Pindamonhangaba** (associação civil sem fins lucrativos, CNPJ `30.197.903/0001-75`) para que qualquer morador acompanhe, em linguagem simples e direto do celular, o que os vereadores de Pindamonhangaba apresentam na Câmara Municipal (legislatura 2025–2028). Todo número clicável abre exatamente a lista de documentos que o compõe, e cada item leva à ficha oficial na Câmara.
 
-**Endereço:** https://acompanhe-seu-vereador.vercel.app · **Contato:** pindamonhangaba@osbrasil.org.br · **Observatório:** https://pindamonhangaba.sistemaosb.com.br
+- **Portal no ar:** https://acompanhe-seu-vereador.vercel.app
+- **Manual humano completo (para Diretoria, voluntários, jornalistas e jurídico):** [`docs/GUIA-DO-OBSERVATORIO.md`](docs/GUIA-DO-OBSERVATORIO.md)
+- **Contato institucional e LGPD:** `pindamonhangaba@osbrasil.org.br` · **Site do OSB:** https://pindamonhangaba.sistemaosb.com.br
+- **Políticas:** [/como-funciona](https://acompanhe-seu-vereador.vercel.app/como-funciona) · [/metodologia](https://acompanhe-seu-vereador.vercel.app/metodologia) · [/privacidade](https://acompanhe-seu-vereador.vercel.app/privacidade) · [/termos](https://acompanhe-seu-vereador.vercel.app/termos)
 
-Não é o site oficial da Câmara e não republica seus documentos: mostra título, ementa, autoria e data, com link para o original. Identidade do projeto: [ADR 0001](docs/adr/0001-identidade-do-projeto.md). Termos de uso e política de privacidade (LGPD): [/termos](https://acompanhe-seu-vereador.vercel.app/termos) e [/privacidade](https://acompanhe-seu-vereador.vercel.app/privacidade).
+Este portal **não é o site oficial da Câmara Municipal** e não republica documentos integrais: exibe ementas (os resumos oficiais), datas, autoria e classificações abertas de apoio, sempre apontando para o documento original. Os retratos oficiais dos vereadores são exibidos em cores originais, com o mesmo enquadramento circular e em ordem estritamente alfabética. Identidade: [ADR 0001](docs/adr/0001-identidade-do-projeto.md).
 
-## Como funciona
+## Como o portal funciona (em linguagem direta)
 
-1. Antes do build, `scripts/collect.ts` (lógica em `src/lib/coleta/coletar.ts`) consulta a [API de Dados Abertos da Câmara](https://www.pindamonhangaba.sp.leg.br/dadosabertos): vereadores, proposições e normas desde 01/01/2025.
-2. O coletor se identifica, espera ≥ 1 s entre consultas, respeita `Retry-After`, trata resposta vazia como erro e para diante de desafio anti-robô, formato inesperado, paginação em loop ou queda de volume (comparando com a coleta anterior e com o manifesto publicado). **Se algo der errado, o build falha e a Vercel continua servindo a versão anterior.**
-3. Tudo é validado antes de escrever; os arquivos são gravados numa área temporária e só então substituem os anteriores.
-4. O resultado vira `data/generated/dataset.json` (lido pelo site) e `public/dados/*.csv|json` (dados abertos).
-5. Coletas seguintes são incrementais (páginas novas + 45 dias de margem), com coleta completa a cada 30 dias. O estado fica no cache de build da Vercel.
+1. **Fonte oficial (`API de Dados Abertos`):** antes de gerar o site, `scripts/collect.ts` (`src/lib/coleta/coletar.ts`) consulta a [API de Dados Abertos da Câmara](https://www.pindamonhangaba.sp.leg.br/dadosabertos) — o "balcão eletrônico" oficial que entrega os registros públicos em formato estruturado (`JSON`) mediante um token de cidadão guardado em segredo na Vercel.
+2. **Travas contra erro e respeito à Câmara:** o coletor se identifica honestamente, espera pelo menos 1 segundo entre pedidos, respeita limites (`Retry-After`), trata resposta vazia como falha e aborta diante de desafio anti-robô, mudança inesperada de formato ou queda brusca de volume. **Se algo falhar, o site novo não é publicado e a edição anterior continua funcionando normalmente.**
+3. **Publicação estática e dados abertos:** tudo é conferido, gravado de forma atômica em `data/generated/dataset.json` (que alimenta as páginas) e disponibilizado para download gratuito em planilhas `CSV` (para Excel) e `JSON` (para análise técnica) em `public/dados/`.
+4. **Atualização contínua:** coletas diárias buscam apenas páginas novas mais 45 dias de margem; a cada 30 dias, uma coleta completa do zero captura eventuais exclusões ou retificações feitas na Câmara.
 
-## Atualização dos dados (automática, 2x/dia)
+## Atualização automática (2x ao dia)
 
-O workflow `.github/workflows/atualizar-dados.yml` confere o manifesto de hora em hora e dispara um build de produção na Vercel quando a coleta publicada passa de 11 h (na prática, a cada ~12 h; um horário perdido pelo GitHub é recuperado na hora seguinte). O workflow `vigia-dados.yml` roda 3x/dia e abre uma issue `dados-desatualizados` se a coleta passar de 26 h, trouxer avisos ou se o portal (`/api/health` ou manifesto) responder com erro ou divergência (o GitHub avisa por e-mail). Detalhes, limites do plano gratuito e como atualizar à mão: [`docs/operacao/atualizar-dados.md`](docs/operacao/atualizar-dados.md). Hospedagem exclusivamente na Vercel ([ADR 0005](docs/adr/0005-hospedagem-unica-vercel.md)).
+- **Coletor agendado (`.github/workflows/atualizar-dados.yml`):** verifica o manifesto publicado de hora em hora e dispara nova publicação na Vercel quando a coleta passa de 11 h (na prática, a cada ~12 h).
+- **Vigia automático (`.github/workflows/vigia-dados.yml`):** confere 3x ao dia se `/dados/manifesto.json` e `/api/health` em produção estão íntegros e atualizados há menos de 26 h; se houver atraso ou divergência, abre uma issue `dados-desatualizados` e avisa por e-mail.
+- Passo a passo em linguagem simples e runbook técnico completo: [`docs/operacao/atualizar-dados.md`](docs/operacao/atualizar-dados.md) · Hospedagem única na Vercel: [ADR 0005](docs/adr/0005-hospedagem-unica-vercel.md).
 
-## Desenvolvimento
+## Desenvolvimento e testes locais
 
 ```bash
 npm ci
-npm run collect              # sem CAMARA_API_TOKEN usa a amostra real e rotulada de fixtures/
-npm run dev
-npm run lint                 # gate estático (proíbe any, catch vazio, drift de versão)
-npm run typecheck
-npm test                     # unitários, contratos e integração do coletor (número = lista)
-npm run build
-npm run test:e2e             # Playwright + axe contra o build (precisa de `npx playwright install`)
-npm run auditar:heuristicas  # revisão de bairros/assuntos e sentinela LGPD sobre dados abertos
-npm run auditar:cobertura    # confere 100% dos arquivos e rotas nos livros de auditoria
+npm run collect              # sem CAMARA_API_TOKEN usa a amostra real rotulada de fixtures/
+npm run dev                  # servidor de desenvolvimento local
+npm run lint                 # gate AST (proíbe any, catch vazio e divergência de versão)
+npm run typecheck            # checagem estrita de tipos TypeScript
+npm test                     # 17 arquivos / 144 testes unitários e de contrato (número = lista)
+npm run build                # gera o pacote final de produção
+npm run test:e2e             # Playwright + axe-core WCAG 2.2 AA (precisa de navegadores instalados)
+npm run auditar:heuristicas  # revisão de bairros/temas e sentinela preventiva de LGPD
+npm run auditar:cobertura    # confere 100% de arquivos, rotas, fluxos e achados nos livros-razão
 ```
 
-Em produção o token fica na variável `CAMARA_API_TOKEN` da Vercel (só produção). Sem ele, o build de produção falha de propósito.
+Em produção, o token oficial da Câmara fica apenas na variável `CAMARA_API_TOKEN` da Vercel. Sem ele em ambiente de produção, o build falha de propósito para nunca ir ao ar com dados de amostra.
 
-## Documentação
+## Documentação e auditoria
 
-- [`docs/GUIA-DO-OBSERVATORIO.md`](docs/GUIA-DO-OBSERVATORIO.md) — **guia humano completo** (como funciona em linguagem simples, metodologia em profundidade, operação, revisão jurídica, domínio e custos de hospedagem para ONG)
-- `HANDOFF.md` — documento único de estado, operação e rollback
-- `docs/auditoria/2026-11-18-profunda/` — auditoria profunda com livros de cobertura, achados, QA e lista jurídica
-- `docs/adr/` — decisões de arquitetura e produto
-- `docs/research/` — pesquisa da Fase 1 (fontes, API, Power BI, design, free tiers)
-- `CLAUDE.md` — princípios e convenções
+- [`docs/GUIA-DO-OBSERVATORIO.md`](docs/GUIA-DO-OBSERVATORIO.md) — **guia humano completo**: glossário sem complicação, passeio pelas telas, metodologia detalhada, passo a passo sem programação, checklist jurídico/DPO, domínio e custos de hospedagem para ONG
+- [`HANDOFF.md`](HANDOFF.md) — documento único de estado técnico, decisões vigentes, rollback e próximos passos para quem assumir o projeto
+- [`docs/auditoria/2026-11-18-profunda/`](docs/auditoria/2026-11-18-profunda/08-relatorio-final.md) — auditoria completa arquivo por arquivo e tela por tela (`158/158` arquivos, `25/25` rotas, QA, LGPD e achados)
+- [`docs/adr/`](docs/adr/) — decisões arquiteturais registradas (identidade, atualização, PWA/service worker, hospedagem única)
+- [`docs/research/`](docs/research/) — pesquisa original de fontes, API da Câmara, Power BI reverso, design cívico e limites gratuitos
+- [`CLAUDE.md`](CLAUDE.md) — regras técnicas, invariantes e convenções de desenvolvimento
 
-## Pedidos sobre dados pessoais e segurança
+## Privacidade (LGPD), correções e segurança
 
-- Pessoa citada numa ementa ou pedido de titular (LGPD): **não abra issue** (é público). Escreva para pindamonhangaba@osbrasil.org.br (prazo de resposta: até 15 dias); o procedimento está na [política de privacidade](https://acompanhe-seu-vereador.vercel.app/privacidade#direitos) e as omissões preventivas ou a pedido ficam em `src/lib/content/omissoes.ts` (sem nomes).
-- Falha de segurança: veja [`SECURITY.md`](.github/SECURITY.md).
+- **Correção de dados ou pedido de sigilo (LGPD):** se envolver dados pessoais de cidadão citado em ementa ou troca de retrato de gabinete, **não abra issue pública no GitHub** (tudo lá é indexável). Envie e-mail para **`pindamonhangaba@osbrasil.org.br`** (compromisso de resposta em até **15 dias**). O procedimento está em [/privacidade#direitos](https://acompanhe-seu-vereador.vercel.app/privacidade#direitos) e as omissões ficam registradas em `src/lib/content/omissoes.ts` (sem citar nomes pessoais).
+- **Falhas técnicas de segurança:** veja [`SECURITY.md`](.github/SECURITY.md).
 
 ## Licença
 
-Código: MIT, © Observatório Social do Brasil – Pindamonhangaba. A licença não se estende ao nome e ao logotipo do Observatório Social do Brasil. Dados: públicos, da Câmara Municipal de Pindamonhangaba; cite a fonte e a data da coleta ao reutilizar.
+Código-fonte aberto sob licença MIT, © Observatório Social do Brasil – Pindamonhangaba. A licença do código não se estende ao nome nem ao logotipo do Observatório Social do Brasil. Os dados brutos são públicos da Câmara Municipal de Pindamonhangaba; cite a fonte e a data da coleta ao reutilizar.

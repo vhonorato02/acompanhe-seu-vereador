@@ -56,6 +56,15 @@ test.describe("acessibilidade (axe, WCAG 2.2 A/AA)", () => {
       expect(sobra, rota).toBeLessThanOrEqual(1);
     }
   });
+
+  test("fotos oficiais dos vereadores são exibidas em cores originais (sem filtro cinza)", async ({ page }) => {
+    await page.goto("/");
+    const cardFilter = await page.locator(".rosto-foto img").first().evaluate((img) => getComputedStyle(img).filter);
+    expect(cardFilter).toBe("none");
+    await page.goto("/vereadores/marco-mayor");
+    const perfilFilter = await page.locator(".perfil-foto img").first().evaluate((img) => getComputedStyle(img).filter);
+    expect(perfilFilter).toBe("none");
+  });
 });
 
 test.describe("SEO, compartilhamento e cabeçalhos", () => {

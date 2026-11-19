@@ -22,8 +22,8 @@ export default function Vereadores() {
       <div className="prosa">
         <h1>Vereadores em exercício</h1>
         <p className="soft">
-          Legislatura 2025–2028, em ordem alfabética. A faixa mostra as proposições de cada pessoa mês a mês, na escala dela.{" "}
-          <Link href="/comparar">Comparar lado a lado</Link>
+          Legislatura 2025–2028, em ordem alfabética e sem ranking. O pequeno gráfico abaixo de cada nome mostra o ritmo mensal daquele
+          mandato na própria escala. <Link href="/comparar">Comparar lado a lado na mesma escala</Link>.
         </p>
       </div>
       <ul className="cartoes-vereador section">

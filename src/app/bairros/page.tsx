@@ -18,7 +18,8 @@ export default function Bairros() {
       <div className="prosa">
         <h1>O que pediram para o seu bairro</h1>
         <p className="soft">
-          Bairros citados no texto das proposições desde 2025. Toque num bairro para ver assuntos, vereadores e a lista completa.
+          Bairros identificados automaticamente no texto das proposições desde 2025. Toque em um bairro para ver os principais
+          assuntos, quais vereadores citaram o lugar e a lista completa de documentos oficiais.
         </p>
         <p>
           <span className="rotulo-derivado">

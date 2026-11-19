@@ -92,7 +92,7 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
             type="search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Bairro, assunto, número"
+            placeholder="Bairro, assunto, vereador ou número (ex.: 2398/2026)"
             autoComplete="off"
             enterKeyHint="search"
             maxLength={120}
@@ -106,7 +106,7 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
           {carregando && <p className="soft" role="status">Buscando…</p>}
           {erro && (
             <p className="soft" role="alert">
-              A busca não respondeu. Toque em Buscar para tentar de novo.
+              A busca não respondeu agora. Toque em Buscar para tentar de novo ou abra a página de proposições.
             </p>
           )}
           {res && res.q === termo && (
@@ -137,7 +137,8 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
                 <Feed itens={res.itens} vereadores={res.autores} />
               ) : (
                 <p className="soft">
-                  Nada com “{termo}”. Tente uma palavra da ementa, o nome de um bairro ou o número com ano, como 2398/2026.
+                  Nada encontrado para “{termo}”. Tente uma palavra simples da ementa (como “asfalto” ou “saúde”), o nome de um bairro ou
+                  o número com ano (ex.: 2398/2026).
                 </p>
               )}
             </>

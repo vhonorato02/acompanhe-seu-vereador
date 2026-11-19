@@ -40,8 +40,8 @@ export default function Inicio() {
       <section className="hero" aria-labelledby="titulo">
         <h1 id="titulo">O que os vereadores apresentam na Câmara.</h1>
         <p className="lede">
-          <Link href="/proposicoes">{n(total)} proposições</Link> na Câmara Municipal de {SITE.cidade} desde janeiro de 2025, cada uma
-          com o documento oficial. Dados de{" "}
+          <Link href="/proposicoes">{n(total)} proposições</Link> — requerimentos, indicações, moções e projetos de lei — apresentadas na
+          Câmara Municipal de {SITE.cidade} desde janeiro de 2025, sempre com o link para o documento oficial. Dados coletados em{" "}
           {dataColeta(d.execucao.coletadoEm)}.
         </p>
         <Busca />
@@ -71,7 +71,7 @@ export default function Inicio() {
           ))}
         </ul>
         <p className="small soft" style={{ marginTop: "1.25rem" }}>
-          Em ordem alfabética, legislatura 2025–2028. Fotos oficiais da Câmara Municipal.
+          Em ordem alfabética, legislatura 2025–2028. Retratos oficiais da Câmara Municipal em cores originais, sem destaque entre mandatos.
         </p>
       </section>
 
@@ -82,10 +82,10 @@ export default function Inicio() {
             <Link href="/bairros">Todos os {n(p.bairros.length)}</Link>
           </div>
           <p className="lede" style={{ marginTop: "-0.5rem", marginBottom: "1rem" }}>
-            Bairros citados no texto das proposições. Os que mais aparecem:
+            Lugares identificados no texto das proposições. Os que mais aparecem na legislatura:
           </p>
           <span className="rotulo-derivado">
-            <Icon nome="info" tamanho={14} /> Identificado no texto da ementa
+            <Icon nome="info" tamanho={14} /> Identificado automaticamente no texto da ementa
           </span>
           <Barras
             titulo="Bairros mais citados"
@@ -97,15 +97,15 @@ export default function Inicio() {
 
       <div className="section">
         <h2>A Câmara em números</h2>
-        <p className="lede">Cada número abre a lista de documentos que ele conta.</p>
+        <p className="lede">Todo número abaixo é um atalho: ao tocar, você abre exatamente os documentos oficiais que ele conta.</p>
       </div>
 
       <article className="historia" aria-labelledby="h-pedidos" style={{ marginTop: "1.5rem" }}>
         <h3 id="h-pedidos">{emDez} em cada 10 proposições são pedidos, não projetos de lei</h3>
         <p className="lede">
-          Indicações e requerimentos pedem providências à Prefeitura e a outros órgãos: tapar um buraco, trocar uma lâmpada, pedir
-          informações. Projetos de lei, que podem mudar regras da cidade, são {n(projetos)}.{" "}
-          <Link href="/como-funciona">O que é cada tipo</Link>
+          Indicações e requerimentos levam demandas do dia a dia à Prefeitura e a outros órgãos — tapar um buraco, trocar uma lâmpada,
+          cobrar informação oficial. Já projetos de lei, que podem criar ou alterar regras para a cidade, são {n(projetos)}.{" "}
+          <Link href="/como-funciona">Entenda cada tipo</Link>
         </p>
         <Proporcao
           partes={p.grupos.map((g) => ({ slug: g.slug as "pedidos", nome: g.nome, n: g.n }))}
@@ -116,8 +116,8 @@ export default function Inicio() {
       <article className="historia" aria-labelledby="h-ritmo">
         <h3 id="h-ritmo">Mês a mês</h3>
         <p className="lede">
-          O mês com mais proposições publicadas foi {nomeMes(Number(picoMes), true)} de {picoAno}, com {n(pico.total)}. Toque numa
-          coluna para ver o que foi apresentado naquele mês.
+          O mês com mais documentos publicados até agora foi {nomeMes(Number(picoMes), true)} de {picoAno}, com {n(pico.total)}. Toque em
+          uma coluna para ver tudo o que saiu naquele mês.
         </p>
         <Colunas
           dados={p.mensal}
@@ -135,8 +135,8 @@ export default function Inicio() {
           <h3 id="h-temas">Do que tratam os pedidos</h3>
           {tema1 && (
             <p className="lede">
-              {tema1.nome} aparece em {percent(tema1.n, p.pedidos.length)}% dos {n(p.pedidos.length)} pedidos. Um pedido pode tratar de
-              mais de um assunto. <Link href="/metodologia#temas">Como classificamos</Link>
+              {tema1.nome} aparece em {percent(tema1.n, p.pedidos.length)}% dos {n(p.pedidos.length)} pedidos. Como um mesmo pedido pode
+              falar de asfalto e iluminação juntos, ele conta nos dois assuntos. <Link href="/metodologia#temas">Como classificamos</Link>
             </p>
           )}
           <Barras
@@ -157,8 +157,8 @@ export default function Inicio() {
           </span>
           <h3 id="h-destinos">A quem se pede</h3>
           <p className="lede">
-            {percent(prefeitura, totalDestinos)}% dos pedidos vão para a Prefeitura. O resto se divide entre concessionárias como EDP e
-            Sabesp, o DER, a empresa de ônibus e a própria Mesa da Câmara. <Link href="/metodologia#destinos">Como identificamos</Link>
+            {percent(prefeitura, totalDestinos)}% dos pedidos são endereçados à Prefeitura. O restante vai para empresas e órgãos como EDP,
+            Sabesp, DER, transporte municipal e a própria Mesa da Câmara. <Link href="/metodologia#destinos">Como identificamos</Link>
           </p>
           <Barras
             titulo="Pedidos por destinatário"
@@ -174,8 +174,8 @@ export default function Inicio() {
           </span>
           <h3 id="h-leis">Do projeto à lei</h3>
           <p className="lede">
-            Quando a ementa de uma lei cita o número do projeto que a originou, o portal liga os dois e mostra a lei no perfil de quem
-            assinou o projeto. <Link href="/normas">Ver as leis</Link>
+            Quando o texto oficial de uma lei cita o número do projeto que lhe deu origem, o portal conecta os dois e exibe a lei aprovada
+            no perfil de quem assinou o projeto. <Link href="/normas">Ver as leis</Link>
           </p>
           {fVer && (
             <div className="funil">
@@ -195,27 +195,28 @@ export default function Inicio() {
             </div>
           )}
           <p className="small soft" style={{ marginTop: "1rem" }}>
-            A mesma conta não vale para os{" "}
+            A mesma comparação direta não vale para os{" "}
             {fExe ? <Link href={hrefLista("/proposicoes", fExe.filtroApresentados)}>{n(fExe.apresentados)} projetos do Poder Executivo</Link> : "projetos do Poder Executivo"}:
-            as leis que vêm deles em geral não citam o projeto de origem. Projetos ainda em tramitação entram no total, então a proporção
-            é um retrato parcial.
+            as leis vindas da Prefeitura raramente citam o número do projeto original, e projetos ainda em debate entram no total, tornando a
+            proporção sempre um piso mínimo observável.
           </p>
         </article>
 
         <article className="historia" aria-labelledby="h-rede">
           <h3 id="h-rede">Quem assina junto com quem</h3>
           <p className="lede">
-            {percent(unicoAutor, total)}% das proposições têm um único vereador como autor. Ainda assim,{" "}
-            {paresTodos === possiveis ? "todos os pares de vereadores" : `${paresTodos} dos ${possiveis} pares possíveis`} já assinaram
-            alguma juntos. Linha mais grossa, mais proposições em comum.
+            {percent(unicoAutor, total)}% das proposições têm um único vereador assinando. Ainda assim,{" "}
+            {paresTodos === possiveis ? "todos os pares possíveis entre vereadores" : `${paresTodos} dos ${possiveis} pares possíveis`} já
+            dividiram alguma proposta. Quanto mais espessa a linha, mais documentos em comum.
           </p>
           <Rede nos={d.vereadores.map((v) => ({ slug: v.slug, nome: v.nome, foto: v.foto }))} pares={p.pares} />
         </article>
       </div>
 
       <p className="nota section">
-        <strong>Quantidade não é qualidade.</strong> Um projeto de lei pode exigir meses de trabalho; um pedido pode ser repetido até ser
-        atendido. Por isso não há ranking: os números servem para encontrar os documentos, não para dar nota.
+        <strong>Quantidade não é qualidade.</strong> Um único projeto de lei pode exigir meses de estudo e debate; um pedido de rotina pode
+        ser repetido até ser resolvido. Por isso o portal não faz ranking: os números existem para ajudar você a encontrar os documentos
+        oficiais, nunca para dar nota.
       </p>
       <Fonte d={d} />
     </>

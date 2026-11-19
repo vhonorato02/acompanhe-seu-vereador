@@ -18,18 +18,18 @@ export function GET() {
 
 Última coleta: ${dataColeta(d.execucao.coletadoEm)} (horário de Brasília). Escopo: ${d.escopo.descricao}, desde ${dataLonga(d.escopo.inicio)}. Totais: ${n(d.proposicoes.length)} proposições, ${n(d.normas.length)} leis e normas, ${n(d.vereadores.length)} vereadores em exercício.
 
-Ao citar: os números são contagens de documentos publicados pela Câmara, não medem qualidade nem produtividade, e o portal não faz ranking. Cite o documento oficial (link em cada item) e a data da coleta. Classificações por bairro e assunto são automáticas e podem errar; a regra está na metodologia.
+Ao citar: os números são contagens de documentos publicados pela Câmara via API oficial de Dados Abertos (canal eletrônico oficial), não medem qualidade nem produtividade, e o portal não faz ranking. Todos os retratos oficiais são exibidos em suas cores originais e em ordem alfabética. Cite sempre o documento oficial (link em cada item) e a data da coleta. Classificações por bairro, assunto, destinatário e vínculo projeto-lei são automáticas e podem errar; todas as regras estão detalhadas na metodologia.
 
 ## Páginas principais
 - [Vereadores](${u}/vereadores): os vereadores em exercício, em ordem alfabética
 - [Comparar vereadores](${u}/comparar): comparação lado a lado de até três vereadores na mesma escala
-- [Proposições](${u}/proposicoes): requerimentos, indicações, moções e projetos, com filtros
+- [Proposições](${u}/proposicoes): requerimentos, indicações, moções e projetos, com filtros combináveis
 - [Leis e normas](${u}/normas): o que virou lei, decreto ou resolução
-- [Bairros](${u}/bairros): pedidos que citam bairros de Pindamonhangaba
-- [Como funciona](${u}/como-funciona): o que significa cada tipo de proposição e limites dos dados
-- [Metodologia](${u}/metodologia): fontes, regras de contagem e limitações
-- [Dados abertos](${u}/dados): CSV e JSON com dicionário de campos
-- [Correções](${u}/correcoes): como apontar erros nos dados ou na classificação
+- [Bairros](${u}/bairros): pedidos que citam bairros de Pindamonhangaba no texto da ementa
+- [Como funciona](${u}/como-funciona): papel dos vereadores × prefeito, glossário simples (incluindo API e ementa), tipos de proposição e limites
+- [Metodologia](${u}/metodologia): origem na API oficial, regras de contagem, falsos positivos bloqueados e limitações
+- [Dados abertos](${u}/dados): arquivos CSV (Excel) e JSON com dicionário completo e exemplos reais
+- [Correções](${u}/correcoes): como apontar erros nos dados ou pedir revisão com resposta em até 15 dias
 
 ## Vereadores
 ${vereadores}

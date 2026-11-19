@@ -3,7 +3,7 @@
 ## 1. Produto Real
 
 - **Nome e titularidade:** *Acompanhe seu Vereador — Pindamonhangaba*, atribuído ao **Observatório Social do Brasil – Pindamonhangaba** (CNPJ `30.197.903/0001-75`, `pindamonhangaba@osbrasil.org.br`). `[DECLARADO]` (autorização formal de marca/CNPJ aguarda confirmação do dono).
-- **Função real observada no código e no ar:** portal cívico apartidário estático/ISR-like por coleta de build, sem banco de dados, sem login/CMS e sem área administrativa. Exibe 11 vereadores em exercício (ordem alfabética, fotos em P&B), **17.545** proposições e **409** normas desde 01/01/2025 (coleta de `2026-11-18T04:17:33.473Z`), com busca instantânea (`/api/busca`), gráficos de proporção/evolução/rede de coautoria, comparação lado a lado (`/comparar`), índice de bairros citados, exportação em CSV/JSON (`/dados`) e guia de metodologia/LGPD/termos. `[OBSERVADO]`
+- **Função real observada no código e no ar:** portal cívico apartidário estático/ISR-like por coleta de build, sem banco de dados, sem login/CMS e sem área administrativa. Exibe 11 vereadores em exercício (ordem alfabética, retratos oficiais em cores originais com círculo uniforme desde `ACH-16`), **17.545+** proposições e **409+** normas desde 01/01/2025, com busca instantânea (`/api/busca`), gráficos de proporção/evolução/rede de coautoria, comparação lado a lado (`/comparar`), índice de bairros citados, exportação em CSV/JSON (`/dados`) e guias didáticos de funcionamento/metodologia/LGPD/termos. `[OBSERVADO]`
 - **Não implementa (decisão explícita de v1):** votações nominais, presença em plenário e histórico de tramitação ou legislaturas anteriores. `[OBSERVADO]`
 
 ## 2. Topologia Real Observada (de fora para dentro)

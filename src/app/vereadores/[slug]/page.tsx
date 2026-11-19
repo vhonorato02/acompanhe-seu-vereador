@@ -149,7 +149,8 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
         </ul>
         {papel === "Presidente" && (
           <p className="nota" style={{ marginTop: "1rem" }}>
-            Como presidente, conduz as sessões e representa a Câmara. Esse papel é contexto para ler os números.
+            Como presidente da Câmara, conduz as sessões plenárias, organiza a pauta e assina atos institucionais da Mesa Diretora — esse
+            papel regimental é contexto importante antes de comparar contagens individuais.
           </p>
         )}
       </section>
@@ -166,8 +167,8 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
           <h2 id="h-temas">Do que tratam os pedidos</h2>
           {tema1 ? (
             <p className="lede">
-              {tema1.nome} aparece em {percent(tema1.n, x.pedidos.length)}% dos pedidos. O traço cinza marca a proporção na Câmara inteira,
-              para comparar o perfil sem fazer ranking.
+              {tema1.nome} aparece em {percent(tema1.n, x.pedidos.length)}% dos pedidos analisados. O traço vertical marca a proporção
+              média da Câmara inteira para dar contexto ao perfil sem criar ranking.
             </p>
           ) : (
             <p className="lede">Nenhum pedido classificado no período.</p>
@@ -207,7 +208,10 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
       <div className="duas-colunas">
         <article className="historia" aria-labelledby="h-rede">
           <h2 id="h-rede">Com quem assina junto</h2>
-          <p className="lede">Os vereadores com quem {v.nome} mais divide a autoria. Cada número abre as proposições em comum.</p>
+          <p className="lede">
+            Os parlamentares que mais vezes dividiram autoria com {v.nome}. Toque em qualquer linha para abrir exatamente os documentos em
+            comum.
+          </p>
           {parceiros.length > 0 ? (
             <ul className="parceiros">
               {parceiros.slice(0, 5).map((q) => {
@@ -261,7 +265,7 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
         <Feed itens={ordenar(x.deles).slice(0, 5)} vereadores={d.vereadores} />
       </section>
       <p className="small soft" style={{ marginTop: "1rem" }}>
-        {v.foto ? "Foto: Câmara Municipal." : "Foto oficial indisponível nesta coleta."}
+        {v.foto ? "Retrato oficial: Câmara Municipal de Pindamonhangaba." : "Foto oficial indisponível nesta coleta."}
       </p>
       <Fonte d={d} />
     </>

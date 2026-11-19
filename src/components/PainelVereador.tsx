@@ -55,7 +55,7 @@ export function PainelVereador({
 
         {sel === null && (
           <p className="small soft" style={{ marginTop: "0.75rem" }}>
-            Escolha um ano para ver mês a mês.
+            Escolha um ano acima para enxergar a distribuição mês a mês.
           </p>
         )}
         {sel !== null && (

@@ -2,7 +2,7 @@
  * Visual system: white page, near-black text, system font, grey bands and hairlines.
  * Green is the Observatório's own (logo #90C040); a darker shade of the same hue is used where
  * text needs AA contrast on white. It is reserved for what you can tap and for the active state.
- * Portraits are shown in black and white everywhere: no councillor stands out by colour.
+ * Portraits use uniform circular framing without visual hierarchy so no councillor stands out.
  */
 :root {
   color-scheme: light dark;
@@ -601,7 +601,6 @@ main.page {
 .rosto-foto img {
   object-fit: cover;
   object-position: 50% 15%;
-  filter: grayscale(1);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .rosto:hover .rosto-foto img {
@@ -631,9 +630,8 @@ main.page {
   object-fit: cover;
   object-position: 50% 15%;
   background: var(--fill-2);
-  /* Initials of a councillor without a photo: inherited link green would be greyed by the filter. */
+  /* Initials of a councillor without a photo must stay neutral instead of inheriting link green. */
   color: var(--ink);
-  filter: grayscale(1);
   flex: none;
 }
 .avatares {
@@ -691,7 +689,6 @@ main.page {
   height: 100%;
   object-fit: cover;
   object-position: 50% 15%;
-  filter: grayscale(1);
 }
 .cartao-v .nome {
   display: block;
@@ -787,7 +784,6 @@ main.page {
   height: 100%;
   object-fit: cover;
   object-position: 50% 15%;
-  filter: grayscale(1);
 }
 .perfil-foto.sem-foto {
   display: grid;
@@ -1366,6 +1362,92 @@ select {
   font-weight: 500;
   font-size: var(--t-small);
 }
+.sumario {
+  background: var(--fill);
+  color: var(--ink);
+  border-radius: var(--r);
+  padding: 0.9rem 1.15rem;
+}
+.sumario-titulo {
+  font-size: var(--t-small);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 0.45rem;
+}
+.sumario ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.15rem;
+}
+.prosa .sumario li + li {
+  margin-top: 0;
+}
+.exemplo {
+  background: var(--fill);
+  color: var(--ink);
+  border-left: 3px solid var(--green);
+  border-radius: var(--r);
+  padding: 0.95rem 1.15rem;
+  font-size: 0.9375rem;
+}
+.exemplo p + p {
+  margin-top: 0.55rem;
+}
+.quadro-duplo {
+  display: grid;
+  gap: 0.85rem;
+}
+@media (min-width: 40rem) {
+  .quadro-duplo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.quadro-card {
+  background: var(--fill);
+  color: var(--ink);
+  border-radius: var(--r);
+  padding: 1rem 1.15rem;
+  font-size: 0.9375rem;
+}
+.quadro-card h3 {
+  margin: 0 0 0.55rem;
+  font-size: var(--t-body);
+}
+.quadro-card > * + * {
+  margin-top: 0.55rem;
+}
+.prosa ol.passos {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: passo;
+}
+.prosa ol.passos > li {
+  counter-increment: passo;
+  position: relative;
+  padding-left: 2.2rem;
+}
+.prosa ol.passos > li + li {
+  margin-top: 0.75rem;
+}
+.prosa ol.passos > li::before {
+  content: counter(passo);
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--on-green);
+  border: 1px solid transparent;
+  font-size: var(--t-small);
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
 
 /* ---------- charts ---------- */
 .grafico {
@@ -1636,9 +1718,6 @@ details.mais-barras summary {
   max-width: 26rem;
   display: block;
   margin: 0 auto;
-}
-.rede image {
-  filter: grayscale(1);
 }
 .rede-no {
   cursor: pointer;

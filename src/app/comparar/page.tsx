@@ -34,8 +34,8 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
       <div className="prosa">
         <h1>Comparar vereadores</h1>
         <p className="soft">
-          Escolha até {MAX} pessoas. Os gráficos usam a mesma escala para que a comparação seja justa. Lembre: volume não é qualidade,
-          e o presidente tem papel diferente dos demais.
+          Escolha até {MAX} vereadores para enxergar todos os gráficos na mesma escala — assim a comparação visual fica justa. Lembre:
+          volume de pedidos não mede qualidade, e quem preside a Câmara exerce atribuições regimentais próprias.
         </p>
       </div>
 
