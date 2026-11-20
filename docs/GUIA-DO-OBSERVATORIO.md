@@ -229,7 +229,7 @@ O coletor (`src/lib/coleta/coletar.ts` + `src/lib/camara/client.ts`) aplica regr
 |---|---|---|
 | `atualizar-dados.yml` | De hora em hora (minuto 17 UTC) | Confere a idade da última coleta. Só dispara novo build na Vercel após **11 h** (e nunca antes de **3 h** da tentativa anterior). Atualiza na prática a cada **~12 h**. |
 | `vigia-dados.yml` | 3x/dia (`06h43`, `14h43`, `22h43` BRT) | Lê `/dados/manifesto.json` e `/api/health` na Vercel. Abre issue `dados-desatualizados` se passar de **26 h**, houver avisos ou divergência de integridade; fecha quando volta ao normal. |
-| `quality-gates.yml` | Em cada alteração de código | Executa `npm audit --audit-level=moderate`, detecção de segredos, lint AST, TypeScript, 144 testes unitários, heurísticas LGPD, build completo e 192 testes Playwright/WCAG 2.2 AA. |
+| `quality-gates.yml` | Em cada alteração de código | Executa `npm audit --audit-level=moderate`, detecção de segredos, lint AST, TypeScript, 145 testes unitários, heurísticas LGPD, build completo e 195 testes Playwright/WCAG 2.2 AA. |
 
 ### 6.2 Operação sem saber programar (em cliques)
 

@@ -33,7 +33,7 @@
 
 ## Qualidade e operação local
 
-- **Suite unitária/contrato (`npm test`):** **17 arquivos, 144 testes** (Vitest) + `npm run lint` + `npm run typecheck` + `npm run auditar:cobertura` + `npm audit --audit-level=moderate`.
+- **Suite unitária/contrato (`npm test`):** **17 arquivos, 145 testes** (Vitest) + `npm run lint` + `npm run typecheck` + `npm run auditar:cobertura` + `npm audit --audit-level=moderate`.
 - **Playwright local (Windows):** validado com `--workers=2` (`desktop-chromium`, `android-412`, `samsung-360` — incluindo verificação de foto colorida `filter === "none"`). Se a porta `3100` estiver ocupada por outro processo, suba em porta dedicada (`npx next start -p 3197 -H 127.0.0.1`) e execute com `--workers=2`, `E2E_URL=http://127.0.0.1:3197` e `PLAYWRIGHT_BROWSERS_PATH="D:\Anglo AI - Local\Temp\ms-playwright"`. Encerre o servidor ao concluir.
 - **Limites da Câmara (nunca contornar):** HTML direto recebe LiteSpeed reCAPTCHA (`Bot Verification`); o coletor usa exclusivamente `/jsonweb/web-aplicativo.php` com token em produção e ≥ 1 s entre requisições.
 

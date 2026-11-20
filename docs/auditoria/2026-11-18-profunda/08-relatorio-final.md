@@ -4,7 +4,7 @@
 
 **Estado:** **`RELEASE v1.0.0`** (validado localmente nas Rodadas 1–3, com limpeza de domínios executada na Vercel e publicação na `main` + prova em produção). `[OBSERVADO]`
 
-O código auditado passou em todas as verificações automatizadas e independentes das Rodadas 1–4 (lint AST, typecheck, `npm audit = 0`, 144 testes unitários/contrato, 6/6 mutantes mortos na Rodada 1, build `Next.js 16.4.6`, testes E2E/axe com `--workers=2`, `158/158` arquivos cobertos e reconciliação de Missão A sobre os registros reais), e os endereços duplicados `camara-a-vista.vercel.app` e `osb-pinda-camara-1s2026.vercel.app` foram removidos e comprovados em `404`. Restam como ações exclusivas de governança humana e física:
+O código auditado passou em todas as verificações automatizadas e independentes das Rodadas 1–4 (lint AST, typecheck, `npm audit = 0`, 145 testes unitários/contrato, 6/6 mutantes mortos na Rodada 1, build `Next.js 16.4.6`, 195 testes E2E/axe com `--workers=2`, `158/158` arquivos cobertos e reconciliação de Missão A sobre os registros reais), e os endereços duplicados `camara-a-vista.vercel.app` e `osb-pinda-camara-1s2026.vercel.app` foram removidos e comprovados em `404`. Restam como ações exclusivas de governança humana e física:
 1. Revisão jurídica e deliberação da Diretoria do OSB sobre `/privacidade`, `/termos`, retratos oficiais em cores originais, autorização da marca/CNPJ e estratégia de longo prazo de hospedagem/domínio (`[DECLARADO]` — detalhado em [docs/GUIA-DO-OBSERVATORIO.md](../../GUIA-DO-OBSERVATORIO.md) §7 e [07-legal-para-revisao-humana.md](07-legal-para-revisao-humana.md)).
 2. Validar instalação PWA e leitura de tela em aparelhos físicos iOS/Android (`[BLOQUEADO]` nesta bancada).
 
@@ -56,25 +56,26 @@ Funciona sem banco de dados, sem CMS e sem login: coleta no build de produção 
 | Arquivos rastreados (`git ls-files`) | 158 | 158 (`100%`) | 158 | 0 | 0 | 0 |
 | Rotas/entradas Next.js (`src/app/`) | 25 entradas (`17` páginas + `3` APIs + `5` meta/404) | 25 (`100%`) | 25 | 0 | 0 | 0 |
 | Jornadas/fluxos (`livro-fluxos.csv`) | 14 | 12 | 12 (1 c/ ressalva) | 0 | 2 (`J13`, `J14`) | 0 |
-| Testes unitários/contrato (Vitest) | 144 (17 arquivos) | 144 | 144 | 0 | 0 | 0 |
+| Testes unitários/contrato (Vitest) | 145 (17 arquivos) | 145 | 145 | 0 | 0 | 0 |
 | Mutantes no núcleo de domínio (Rodada 1) | 6 | 6 | 6 mortos (`100%`) | 0 | 0 | 0 |
-| Testes E2E Chromium (3 viewports + axe) | 192 | 192 | 192 | 0 | 0 | 0 |
+| Testes E2E Chromium (3 viewports + axe) | 195 | 195 | 195 | 0 | 0 | 0 |
 | Missão A — recortes e amostra real | 30 recortes + 30 itens + 60 fixtures | 120 | 120 | 0 | 0 | 0 |
 
 ---
 
 ## 6. O que Mudou (Código, Infra, Git)
 
-- **Branch de preparação:** `release/v1.0.0-rc1` (a partir da `main` em `afddf61`), com publicação autorizada pelo dono para `main` + tag `v1.0.0`.
+- **Branch principal (`main`):** publicação inicial `v1.0.0` (`7e2bc8e`) seguida da Rodada 4 (`356d558` e fechamento de QA/dossiê).
 - **Rodada 1 (auditoria profunda e correções iniciais):** commits `1b1dace` (`ACH-01`), `d92f567` (`ACH-02`), `414d142` (`ACH-03`), `666cf7f` (`ACH-04`), `758b833` (`ACH-05`), `9b6502a` (`ACH-06`), `9fd1b57` (`ACH-07`), `89fd430` (`ACH-08`), `49b8d7b` (`ACH-09`), `0be0454` (Missão A) e `6976c91` (dossiê inicial).
 - **Rodada 2 (hospedagem única Vercel + UI/UX/A11y/SEO/Legal/Docs):** commits `c4ba308` ([ADR 0005](../../adr/0005-hospedagem-unica-vercel.md), remoção dos 6 arquivos exclusivos da VPS), `d0e3788` (`ACH-13`, `ACH-14`) e `ea1b8e5` (atualização do dossiê).
-- **Rodada 3 (limpeza Vercel, pt-BR, privacidade de busca, CI, Guia do Observatório):** limpeza via Vercel CLI (`camara-a-vista.vercel.app` removido e `osb-pinda-camara-1s2026` excluído — ambos retornando HTTP `404`), correções `ACH-15`, novo guia [`docs/GUIA-DO-OBSERVATORIO.md`](../../GUIA-DO-OBSERVATORIO.md) e atualização de `HANDOFF.md`, `CLAUDE.md`, `README.md` e dossiê.
+- **Rodada 3 (limpeza Vercel, pt-BR, privacidade de busca, CI, Guia do Observatório):** limpeza via Vercel CLI (`camara-a-vista.vercel.app` removido e `osb-pinda-camara-1s2026` excluído — ambos retornando HTTP `404`), correções `ACH-15` (`954037a`), novo guia [`docs/GUIA-DO-OBSERVATORIO.md`](../../GUIA-DO-OBSERVATORIO.md) (`47161fc`), dossiê (`b7a0fb1`), merge em `main` (`7e2bc8e`) e tag `v1.0.0`.
+- **Rodada 4 (fotos em cores originais + profundidade didática e clareza humana):** remoção dos 5 filtros `grayscale(1)` em `globals.css` (mantendo círculo uniforme sem ranking), reescrita didática integral das páginas institucionais/legais (`/como-funciona`, `/metodologia`, `/dados`, `/sobre`, `/correcoes`, `/privacidade`, `/termos`, `glossario.ts`), melhoria do texto da capa/perfis/listas, testes unitário e E2E de retrato colorido e aprofundamento dos documentos `.md` (`356d558`, `ACH-16`).
 
 ---
 
 ## 7. Versões Antes e Depois
 
-- **Aplicação:** `0.5.0` → **`1.0.0`** (consolidada em `release/v1.0.0-rc1` para publicação em `main` + tag `v1.0.0`).
+- **Aplicação:** `0.5.0` → **`1.0.0`** (publicada em `main` com tag `v1.0.0` e atualizada na Rodada 4).
 - **`next`:** `16.4.3` → **`16.4.6`** (`0` vulnerabilidades no `npm audit --audit-level=moderate`).
 - Demais dependências travadas em `package-lock.json`: `react` `19.3.1`, `zod` `4.6.7`, `typescript` `5.9.3`, `vitest` `5.0.5`, `@playwright/test` `1.64.1`.
 
@@ -82,9 +83,9 @@ Funciona sem banco de dados, sem CMS e sem login: coleta no build de produção 
 
 ## 8. Segurança e Legal: Corrigido × Pendente de Humano
 
-- **Corrigido tecnicamente (`[OBSERVADO]`):** 3 omissões LGPD de saúde em `omissoes.ts`, sentinela LGPD em `auditar-heuristicas.ts`, prazo de 15 dias em `/correcoes`, `/privacidade` atualizada (Vercel como operadora única + arts. 14, 20 e 33 da LGPD), `/termos` atualizado (fotos §5 e Lei nº 9.504/1997 §6), `/api/busca` com `Cache-Control: private, no-store` e `/api/*` com `X-Robots-Tag: noindex, nofollow`, atualização `next@16.4.6` + CI em `audit-level=moderate`, lint AST bloqueante e menor privilégio em `atualizar-dados.yml` e `.claude/settings.json`.
+- **Corrigido tecnicamente (`[OBSERVADO]`):** 3 omissões LGPD de saúde em `omissoes.ts`, sentinela LGPD em `auditar-heuristicas.ts`, prazo de 15 dias em `/correcoes`, `/privacidade` atualizada e didática (Vercel como operadora única + arts. 14, 20 e 33 da LGPD), `/termos` atualizado (fotos em cores originais §5 e Lei nº 9.504/1997 §6), `/api/busca` com `Cache-Control: private, no-store` e `/api/*` com `X-Robots-Tag: noindex, nofollow`, atualização `next@16.4.6` + CI em `audit-level=moderate`, lint AST bloqueante e menor privilégio em `atualizar-dados.yml` e `.claude/settings.json`.
 - **Pendente de humano (`[DECLARADO]` — ver `07-legal-para-revisao-humana.md` e `docs/GUIA-DO-OBSERVATORIO.md`):**
-  1. Revisão por advogado/DPO de `/termos`, `/privacidade` e cópia local em P&B das fotos dos vereadores.
+  1. Revisão por advogado/DPO de `/termos`, `/privacidade` e cópia local dos retratos oficiais em cores originais dos vereadores.
   2. Confirmação formal pelo OSB Pindamonhangaba do uso da marca, logotipo, CNPJ e leitura da caixa `pindamonhangaba@osbrasil.org.br`.
   3. Confirmação de elegibilidade do plano Hobby da Vercel junto ao suporte/termos para associação sem fins lucrativos ou migração futura para plano Pro / VPS econômica (~R$ 30/mês), detalhada em [`docs/GUIA-DO-OBSERVATORIO.md`](../../GUIA-DO-OBSERVATORIO.md) (`ACH-11`).
 
@@ -95,8 +96,7 @@ Funciona sem banco de dados, sem CMS e sem login: coleta no build de produção 
 1. Conferência visual direta das 30 proposições no HTML da Câmara (`pindamonhangaba.sp.leg.br` retorna LiteSpeed reCAPTCHA `Bot Verification`).
 2. Instalação real do PWA e navegação com TalkBack/VoiceOver em aparelhos físicos Android e iPhone.
 3. Suíte E2E local no Firefox/WebKit (binários não instalados para Playwright `1.64.1`).
-4. Build/deploy final da `v1.0.0` em `main` na Vercel (em execução na etapa final de entrega após o commit deste dossiê; `release/v1.0.0-rc1` já validada com `npm run build` e `192` testes E2E locais).
-5. Google Search Console (sem acesso nesta sessão).
+4. Google Search Console (sem acesso nesta sessão).
 
 ---
 
@@ -110,6 +110,6 @@ Funciona sem banco de dados, sem CMS e sem login: coleta no build de produção 
 
 ## 11. O que a Diretoria e o Dono Precisam Fazer (Pós-Publicação)
 
-1. **Limpeza na Vercel (`[OBSERVADO]` concluída nesta entrega em 18/11/2026):** `camara-a-vista.vercel.app` foi removido de `acompanhe-seu-vereador` e `osb-pinda-camara-1s2026` foi excluído via Vercel CLI (ambos em HTTP `404`; apenas `acompanhe-seu-vereador.vercel.app` permanece).
-2. **Revisão jurídica e institucional (OSB + advogado/DPO):** ler [`docs/GUIA-DO-OBSERVATORIO.md`](../../GUIA-DO-OBSERVATORIO.md) e [`07-legal-para-revisao-humana.md`](./07-legal-para-revisao-humana.md) para validar termos, privacidade, fotos P&B, canal `pindamonhangaba@osbrasil.org.br`, eventual domínio próprio (`.org.br`) e a escolha entre Vercel Hobby / Vercel Pro / VPS simples (~R$ 30/mês).
+1. **Limpeza na Vercel (`[OBSERVADO]` concluída em 18/11/2026):** `camara-a-vista.vercel.app` foi removido de `acompanhe-seu-vereador` e `osb-pinda-camara-1s2026` foi excluído via Vercel CLI (ambos em HTTP `404`; apenas `acompanhe-seu-vereador.vercel.app` permanece).
+2. **Revisão jurídica e institucional (OSB + advogado/DPO):** ler [`docs/GUIA-DO-OBSERVATORIO.md`](../../GUIA-DO-OBSERVATORIO.md) e [`07-legal-para-revisao-humana.md`](./07-legal-para-revisao-humana.md) para validar termos, privacidade, retratos oficiais em cores originais, canal `pindamonhangaba@osbrasil.org.br`, eventual domínio próprio (`.org.br`) e a escolha entre Vercel Hobby / Vercel Pro / VPS simples (~R$ 30/mês).
 3. **Opcional (higiene operacional e técnica):** configurar `VERCEL_DEPLOY_HOOK_URL` (Vercel → **Settings → Git → Deploy Hooks** → criar hook `atualizar-dados` na `main` → salvar como secret no GitHub) para parar de gerar 2 commits diários no histórico; desligar o contêiner antigo `vereador` na VPS fora deste repo; testar instalação PWA e leitor de tela em aparelho físico.

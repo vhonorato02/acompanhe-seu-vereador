@@ -30,7 +30,7 @@ npm run collect              # sem CAMARA_API_TOKEN usa a amostra real rotulada 
 npm run dev                  # servidor de desenvolvimento local
 npm run lint                 # gate AST (proíbe any, catch vazio e divergência de versão)
 npm run typecheck            # checagem estrita de tipos TypeScript
-npm test                     # 17 arquivos / 144 testes unitários e de contrato (número = lista)
+npm test                     # 17 arquivos / 145 testes unitários e de contrato (número = lista)
 npm run build                # gera o pacote final de produção
 npm run test:e2e             # Playwright + axe-core WCAG 2.2 AA (precisa de navegadores instalados)
 npm run auditar:heuristicas  # revisão de bairros/temas e sentinela preventiva de LGPD
