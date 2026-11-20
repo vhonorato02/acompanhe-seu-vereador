@@ -57,13 +57,25 @@ test.describe("acessibilidade (axe, WCAG 2.2 A/AA)", () => {
     }
   });
 
-  test("fotos oficiais dos vereadores são exibidas em cores originais (sem filtro cinza)", async ({ page }) => {
+  test("fotos oficiais dos vereadores são exibidas em cores originais (sem filtro cinza)", async ({ page, request }) => {
     await page.goto("/");
-    const cardFilter = await page.locator(".rosto-foto img").first().evaluate((img) => getComputedStyle(img).filter);
-    expect(cardFilter).toBe("none");
+    const folhas = await page.locator('link[rel="stylesheet"]').evaluateAll((els) =>
+      els.map((e) => e.getAttribute("href")).filter((h): h is string => Boolean(h)),
+    );
+    expect(folhas.length).toBeGreaterThan(0);
+    for (const href of folhas) {
+      const css = await (await request.get(href)).text();
+      expect(css).not.toMatch(/grayscale\s*\(/i);
+    }
+    const imgsHome = page.locator(".rosto-foto img");
+    if ((await imgsHome.count()) > 0) {
+      expect(await imgsHome.first().evaluate((img) => getComputedStyle(img).filter)).toBe("none");
+    }
     await page.goto("/vereadores/marco-mayor");
-    const perfilFilter = await page.locator(".perfil-foto img").first().evaluate((img) => getComputedStyle(img).filter);
-    expect(perfilFilter).toBe("none");
+    const imgsPerfil = page.locator(".perfil-foto img");
+    if ((await imgsPerfil.count()) > 0) {
+      expect(await imgsPerfil.first().evaluate((img) => getComputedStyle(img).filter)).toBe("none");
+    }
   });
 });
 

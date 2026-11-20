@@ -106,7 +106,7 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
           {carregando && <p className="soft" role="status">Buscando…</p>}
           {erro && (
             <p className="soft" role="alert">
-              A busca não respondeu agora. Toque em Buscar para tentar de novo ou abra a página de proposições.
+              A busca não respondeu. Toque em Buscar para tentar de novo ou abra a página de proposições.
             </p>
           )}
           {res && res.q === termo && (

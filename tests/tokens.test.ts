@@ -19,4 +19,9 @@ describe("tokens de design", () => {
     const usados = new Set(fontes.flatMap((s) => [...s.matchAll(/var\((--[a-z0-9-]+)/g)].map((m) => m[1] ?? "")));
     expect([...usados].filter((t) => !definidos.has(t)).sort()).toEqual([]);
   });
+
+  it("retratos dos vereadores não aplicam filtro grayscale em CSS", () => {
+    const css = readFileSync("src/app/globals.css", "utf8");
+    expect(css).not.toMatch(/grayscale\s*\(/i);
+  });
 });
