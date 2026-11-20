@@ -18,13 +18,13 @@ export default function Bairros() {
       <div className="prosa">
         <h1>O que pediram para o seu bairro</h1>
         <p className="soft">
-          Bairros identificados automaticamente no texto das proposições desde 2025. Toque em um bairro para ver os principais
-          assuntos, quais vereadores citaram o lugar e a lista completa de documentos oficiais.
+          Bairros identificados automaticamente no texto das proposições apresentadas desde 2025. Selecione um bairro para consultar
+          os assuntos frequentes, a autoria dos pedidos e os documentos oficiais relacionados.
         </p>
         <p>
           <span className="rotulo-derivado">
-            <Icon nome="info" tamanho={14} /> A Câmara não classifica por bairro: o portal procura “bairro …” no texto. Só aparecem bairros
-            citados pelo menos {MIN_BAIRRO} vezes.
+            <Icon nome="info" tamanho={14} /> A Câmara não classifica por bairro: o sistema identifica menções no texto. Listamos apenas
+            bairros com pelo menos {MIN_BAIRRO} ocorrências.
           </span>
         </p>
       </div>

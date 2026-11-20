@@ -1,16 +1,16 @@
-# Como os dados são atualizados no dia a dia
+# Rotina de atualização dos dados
 
-## Em resumo, sem termos técnicos
+## Visão geral para a equipe
 
-O portal se atualiza sozinho **duas vezes por dia** (cerca de 12 em 12 horas), sem ninguém precisar baixar planilhas ou apertar botões.
+O portal atualiza os dados automaticamente **duas vezes por dia** (cerca de 12 em 12 horas), sem intervenção manual.
 
-1. Um robô automático gratuito no GitHub (onde fica o código público) verifica de hora em hora se a última edição no ar já passou de 11 horas. Quando passa, ele pede à **Vercel** (o serviço onde o site fica hospedado) para buscar as novidades direto na **API de Dados Abertos da Câmara** — o balcão eletrônico oficial onde o sistema da Câmara entrega os dados organizados para programas de computador.
-2. Antes de colocar o site atualizado no ar, o sistema confere tudo automaticamente (formato, links, fotos, queda de volume). Se a Câmara estiver fora do ar ou responder algo estranho, **a atualização falha com segurança e os moradores continuam vendo a versão anterior funcionando normalmente**.
-3. Outro robô chamado **Vigia** confere o site três vezes por dia (`06h43`, `14h43` e `22h43` no horário de Brasília). Se passar de 26 horas sem atualizar ou algo falhar, ele abre um aviso automático no GitHub, que envia um e-mail aos responsáveis.
+1. Um agendamento no GitHub Actions verifica de hora em hora se a coleta publicada ultrapassou 11 horas. Quando ultrapassa, aciona a **Vercel** para consultar a **API de Dados Abertos da Câmara** e gerar uma nova versão do portal.
+2. Antes da publicação final, verificações automáticas validam formato, fotos, integridade das contagens e ausência de quedas bruscas de volume. Se a origem estiver fora do ar ou retornar bloqueio, a atualização é cancelada com segurança e a edição anterior continua no ar.
+3. A rotina de monitoramento (**Vigia**) confere o portal três vezes ao dia (`06h43`, `14h43` e `22h43` BRT). Se detectar atraso superior a 26 horas ou falha de saúde, abre um chamado automático no GitHub.
 
 ---
 
-## Como funciona por baixo dos panos (referência técnica)
+## Referência técnica da coleta e publicação
 
 Os dados vêm da API SoftCam da Câmara (`/jsonweb/web-aplicativo.php`) e são coletados **no build de produção da Vercel** (onde o segredo `CAMARA_API_TOKEN` fica armazenado). Atualizar significa disparar um novo build de produção aproveitando o cache de build: no dia a dia o coletor executa coleta incremental (≈ 60 consultas, ≈ 2 min) e, a cada 30 dias, refaz uma coleta completa do zero (≈ 384 consultas, ≈ 10 min) para capturar exclusões ou retificações na fonte.
 

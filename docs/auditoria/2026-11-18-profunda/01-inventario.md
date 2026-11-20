@@ -23,7 +23,7 @@
 | Módulo | Decisão | Justificativa baseada em evidência |
 |---|---|---|
 | **M1** Produto e negócio | **Aplica** | Portal cívico público com missão explícita de transparência sem ranking; comparar com referências reais (`Chicago Councilmatic`, `OpenParliament.ca`, `TheyWorkForYou`, `Câmara dos Deputados`) |
-| **M2** Design e redação | **Aplica** | Sistema visual próprio (tokens CSS em `globals.css`, modo claro/escuro, sem hex solto, gráficos acessíveis, pt-BR) |
+| **M2** Design e redação | **Aplica** | Sistema visual próprio da marca OSB (`#90C040`, papel claro/obsidian escuro configurável via menu **Aparência**, sem hex solto, gráficos acessíveis, pt-BR conciso) |
 | **M3** Acessibilidade | **Aplica** | Obrigatório pela LBI (Lei 13.146/2015, art. 63) e WCAG 2.2 AA |
 | **M4** Arquitetura e código | **Aplica** | Next.js 16.4 App Router, TypeScript strict, Zod, separação coleta/domínio/UI |
 | **M5** Dados e integridade | **Aplica (sem banco)** | Banco SQL é N/A (dataset estático em JSON gerado por coleta atômica); integridade `número = lista`, plausibilidade e proveniência aplicam integralmente |

@@ -80,33 +80,36 @@ src/app/como-funciona/page.tsx,Página App Router,184,integral,Rota pública Nex
 src/app/comparar/page.tsx,Página App Router,150,integral,Rota pública Next.js (/comparar),Next.js App Router / visitantes,corrigir,ACH-02; ACH-13; ACH-15; ACH-16,corrigido
 src/app/correcoes/page.tsx,Página App Router,121,integral,Rota pública Next.js (/correcoes),Next.js App Router / visitantes,corrigir,ACH-09; ACH-16,corrigido
 src/app/dados/page.tsx,Página App Router,254,integral,Rota pública Next.js (/dados),Next.js App Router / visitantes,corrigir,ACH-16,corrigido
-src/app/globals.css,Estilo CSS,1861,integral,"Tokens de design, temas claro/escuro, alto contraste, impressão e componentes visuais",src/app/layout.tsx,corrigir,ACH-14; ACH-16,corrigido
+src/app/globals.css,Estilo CSS,2650,integral,"Tokens de design #90C040, temas Claro/Escuro/Automático, modal dialog, acordeões, alto contraste e impressão",src/app/layout.tsx,corrigir,ACH-14; ACH-16; ACH-17,corrigido
 src/app/icon.png,Imagem PNG,0,binário,Ícone PWA/favicon validado por IHDR,manifest.ts / Next.js head,ok,-,auditado-ok
-src/app/layout.tsx,App Router,103,integral,"Layout raiz HTML, viewport colorScheme, fontes, SkipLink, Navegacao, Rodape e SW",Todas as rotas App Router,corrigir,ACH-14; ACH-15,corrigido
-src/app/llms.txt/route.ts,Rota Texto,54,integral,"Descrição estruturada do portal, datasets e rotas para indexadores/LLMs",Rota /llms.txt,corrigir,ACH-14; ACH-16,corrigido
-src/app/manifest.ts,Metadados PWA,35,integral,"Web App Manifest (nome, cores, ícones 192/512/maskable)",Rota /manifest.webmanifest,ok,-,auditado-ok
-src/app/metodologia/page.tsx,Página App Router,280,integral,Rota pública Next.js (/metodologia),Next.js App Router / visitantes,corrigir,ACH-16,corrigido
-src/app/normas/page.tsx,Página App Router,36,integral,Rota pública Next.js (/normas),Next.js App Router / visitantes,corrigir,ACH-16,corrigido
-src/app/not-found.tsx,Página,26,integral,"Página 404 com noindex, retorno à capa e atalhos principais",Fallback App Router / /404,corrigir,ACH-14; ACH-16,corrigido
-src/app/offline/page.tsx,Página App Router,27,integral,Rota pública Next.js (/offline),Next.js App Router / visitantes,corrigir,ACH-16,corrigido
-src/app/opengraph-image.tsx,Metadados OG,39,integral,Imagem Open Graph dinâmica do portal,Rota /opengraph-image,ok,-,auditado-ok
-src/app/page.tsx,Página,225,integral,"Capa com resumo de atividade, destaques da legislatura e atalhos principais",Rota /,corrigir,ACH-16,corrigido
-src/app/privacidade/page.tsx,Página App Router,181,integral,Rota pública Next.js (/privacidade),Next.js App Router / visitantes,corrigir,ACH-01; ACH-14; ACH-16,corrigido
-src/app/proposicoes/page.tsx,Página App Router,36,integral,Rota pública Next.js (/proposicoes),Next.js App Router / visitantes,corrigir,ACH-16,corrigido
+src/app/layout.tsx,App Router,106,integral,"Layout raiz HTML, viewport colorScheme, script anti-FOUC de tema, SkipLink, Navegacao, Rodape, MenuAppDialog e SW",Todas as rotas App Router,corrigir,ACH-14; ACH-15; ACH-17,corrigido
+src/app/llms.txt/route.ts,Rota Texto,54,integral,"Descrição estruturada do portal, datasets e rotas para indexadores/LLMs",Rota /llms.txt,corrigir,ACH-14; ACH-16; ACH-17,corrigido
+src/app/loading.tsx,App Router,14,integral,Estado de carregamento acessível (esqueleto) entre transições de rota,Next.js App Router,ok,ACH-17,adicionado-verificado
+src/app/manifest.ts,Metadados PWA,35,integral,"Web App Manifest (nome, cores #f6f7f3, ícones 192/512/maskable)",Rota /manifest.webmanifest,corrigir,ACH-17,corrigido
+src/app/metodologia/page.tsx,Página App Router,260,integral,Rota pública Next.js (/metodologia),Next.js App Router / visitantes,corrigir,ACH-16; ACH-17,corrigido
+src/app/normas/page.tsx,Página App Router,36,integral,Rota pública Next.js (/normas),Next.js App Router / visitantes,corrigir,ACH-16; ACH-17,corrigido
+src/app/not-found.tsx,Página,26,integral,"Página 404 com noindex, retorno à capa e atalhos principais",Fallback App Router / /404,corrigir,ACH-14; ACH-16; ACH-17,corrigido
+src/app/offline/page.tsx,Página App Router,25,integral,Rota pública Next.js (/offline),Next.js App Router / visitantes,corrigir,ACH-16; ACH-17,corrigido
+src/app/opengraph-image.tsx,Metadados OG,39,integral,Imagem Open Graph dinâmica do portal com faixa da marca OSB,Rota /opengraph-image,corrigir,ACH-17,corrigido
+src/app/page.tsx,Página,250,integral,"Capa com resumo de atividade, destaques da legislatura e atalhos principais",Rota /,corrigir,ACH-16; ACH-17,corrigido
+src/app/privacidade/page.tsx,Página App Router,170,integral,Rota pública Next.js (/privacidade),Next.js App Router / visitantes,corrigir,ACH-01; ACH-14; ACH-16; ACH-17,corrigido
+src/app/proposicoes/page.tsx,Página App Router,36,integral,Rota pública Next.js (/proposicoes),Next.js App Router / visitantes,corrigir,ACH-16; ACH-17,corrigido
 src/app/robots.ts,SEO,11,integral,Diretivas de rastreamento apontando para sitemap.xml canônico,Rota /robots.txt,corrigir,ACH-14,corrigido
 src/app/sitemap.ts,SEO,16,integral,Mapa de rotas públicas na Vercel,Rota /sitemap.xml,corrigir,ACH-09; ACH-14,corrigido
-src/app/sobre/page.tsx,Página App Router,153,integral,Rota pública Next.js (/sobre),Next.js App Router / visitantes,corrigir,ACH-16,corrigido
-src/app/termos/page.tsx,Página App Router,147,integral,Rota pública Next.js (/termos),Next.js App Router / visitantes,corrigir,ACH-14; ACH-16,corrigido
-src/app/vereadores/[slug]/page.tsx,Página App Router,274,integral,Rota pública Next.js (/vereadores/[slug]),Next.js App Router / visitantes,corrigir,ACH-14; ACH-15; ACH-16,corrigido
-src/app/vereadores/page.tsx,Página App Router,57,integral,Rota pública Next.js (/vereadores),Next.js App Router / visitantes,corrigir,ACH-15; ACH-16,corrigido
-src/components/Busca.tsx,Componente React,151,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-15; ACH-16,corrigido
+src/app/sobre/page.tsx,Página App Router,140,integral,Rota pública Next.js (/sobre),Next.js App Router / visitantes,corrigir,ACH-16; ACH-17,corrigido
+src/app/termos/page.tsx,Página App Router,140,integral,Rota pública Next.js (/termos),Next.js App Router / visitantes,corrigir,ACH-14; ACH-16; ACH-17,corrigido
+src/app/vereadores/[slug]/page.tsx,Página App Router,275,integral,Rota pública Next.js (/vereadores/[slug]),Next.js App Router / visitantes,corrigir,ACH-14; ACH-15; ACH-16; ACH-17,corrigido
+src/app/vereadores/page.tsx,Página App Router,57,integral,Rota pública Next.js (/vereadores),Next.js App Router / visitantes,corrigir,ACH-15; ACH-16; ACH-17,corrigido
+src/components/AcoesPagina.tsx,Componente React,42,integral,"Botão pílula Compartilhar (Web Share API + fallback clipboard)",Perfis e comparação,ok,ACH-17,adicionado-verificado
+src/components/Busca.tsx,Componente React,151,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-15; ACH-16; ACH-17,corrigido
 src/components/Contato.tsx,Componente React,7,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
-src/components/Fonte.tsx,Componente React,24,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-16,corrigido
-src/components/Icon.tsx,Componente React,98,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-14,corrigido
-src/components/Item.tsx,Componente React,64,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
+src/components/Fonte.tsx,Componente React,24,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-16; ACH-17,corrigido
+src/components/Icon.tsx,Componente React,140,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-14; ACH-17,corrigido
+src/components/Item.tsx,Componente React,65,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-17,corrigido
 src/components/JsonLd.tsx,Componente React,6,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
 src/components/ListaBairros.tsx,Componente React,66,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-15,corrigido
-src/components/Navegacao.tsx,Componente React,52,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
+src/components/MenuApp.tsx,Componente React,295,integral,"Menu nativo <dialog> desktop/celular com tema Claro/Escuro/Automático, atalhos, PWA e compartilhar",Navegacao.tsx e layout.tsx,ok,ACH-17,adicionado-verificado
+src/components/Navegacao.tsx,Componente React,125,integral,"Barra superior app c/ voltar contextual, navegação desktop e barra inferior móvel com 5 abas",src/app/layout.tsx,corrigir,ACH-17,corrigido
 src/components/PaginaLista.tsx,Componente React,258,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-14,corrigido
 src/components/PainelVereador.tsx,Componente React,115,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,corrigir,ACH-14; ACH-16,corrigido
 src/components/RegistrarSW.tsx,Componente React,16,integral,"Componente reutilizável de interface, gráfico ou navegação",Páginas App Router,ok,-,auditado-ok
@@ -138,6 +141,7 @@ src/lib/data/types.ts,Núcleo Dados,68,integral,"Leitura, derivação, análise,
 src/lib/format.ts,Utilitário,56,integral,Constantes de configuração do portal e formatação pt-BR,Aplicação e scripts,ok,-,auditado-ok
 src/lib/seo/jsonld.ts,SEO/JSON-LD,132,integral,"Gerador de dados estruturados Schema.org (NGO, WebSite, Dataset, Person, BreadcrumbList)",layout.tsx / páginas públicas,corrigir,ACH-14,corrigido
 src/lib/site.ts,Utilitário,49,integral,Constantes de configuração do portal e formatação pt-BR,Aplicação e scripts,corrigir,ACH-01; ACH-03,corrigido
+src/lib/tema.ts,Utilitário,57,integral,"Leitura e persistência local da preferência visual (Claro, Escuro ou Automático) via <meta name=color-scheme>",MenuApp.tsx e layout.tsx,ok,ACH-17,adicionado-verificado
 tests/analise.test.ts,Teste Unitário,92,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
 tests/bairros.test.ts,Teste Unitário,98,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,ok,-,auditado-ok
 tests/busca.test.ts,Teste Unitário,66,integral,"Testes Vitest de domínio, coleta, privacidade, SEO e saúde",npm test / CI,corrigir,ACH-15,corrigido

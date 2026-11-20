@@ -13,12 +13,12 @@ export default function NaoEncontrado() {
       <p className="lede">
         Este endereço não existe, mudou ou deixou de estar no ar. <Link href="/">Voltar ao início</Link>.
       </p>
-      <h2>Para onde você pode ir</h2>
+      <h2>Principais seções</h2>
       <ul>
-        <li><Link href="/vereadores">Vereadores em exercício</Link> — perfis individuais em ordem alfabética</li>
-        <li><Link href="/proposicoes">Buscar proposições</Link> — requerimentos, indicações, moções e projetos</li>
-        <li><Link href="/bairros">O que pediram para o seu bairro</Link> — pedidos agrupados por região</li>
-        <li><Link href="/como-funciona">Como funciona</Link> — guia simples sobre a Câmara e os termos usados</li>
+        <li><Link href="/vereadores">Vereadores em exercício</Link>: perfis individuais em ordem alfabética</li>
+        <li><Link href="/proposicoes">Buscar proposições</Link>: requerimentos, indicações, moções e projetos</li>
+        <li><Link href="/bairros">Pedidos por bairro</Link>: ocorrências agrupadas por localidade citada</li>
+        <li><Link href="/como-funciona">Como funciona</Link>: competências do Legislativo e glossário técnico</li>
       </ul>
     </div>
   );

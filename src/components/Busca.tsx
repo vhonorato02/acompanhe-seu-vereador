@@ -92,7 +92,7 @@ export function Busca({ inicial = "", vivo = true, rotulo = "Buscar proposiçõe
             type="search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Bairro, assunto, vereador ou número (ex.: 2398/2026)"
+            placeholder="Buscar bairro, tema ou número"
             autoComplete="off"
             enterKeyHint="search"
             maxLength={120}

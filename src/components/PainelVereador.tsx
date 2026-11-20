@@ -55,7 +55,7 @@ export function PainelVereador({
 
         {sel === null && (
           <p className="small soft" style={{ marginTop: "0.75rem" }}>
-            Escolha um ano acima para enxergar a distribuição mês a mês.
+            Selecione um ano acima para acompanhar a frequência mês a mês.
           </p>
         )}
         {sel !== null && (
@@ -82,7 +82,7 @@ export function PainelVereador({
               ))}
             </div>
             <p className="small soft" style={{ marginTop: "0.5rem" }}>
-              Por mês de publicação. Toque numa barra para ver as daquele mês.
+              Por mês de publicação na Câmara. Selecione uma coluna para abrir os registros.
             </p>
           </>
         )}

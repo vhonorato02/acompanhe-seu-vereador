@@ -9,12 +9,12 @@ Portal cívico aberto e apartidário do **Observatório Social do Brasil – Pin
 
 Este portal **não é o site oficial da Câmara Municipal** e não republica documentos integrais: exibe ementas (os resumos oficiais), datas, autoria e classificações abertas de apoio, sempre apontando para o documento original. Os retratos oficiais dos vereadores são exibidos em cores originais, com o mesmo enquadramento circular e em ordem estritamente alfabética. Identidade: [ADR 0001](docs/adr/0001-identidade-do-projeto.md).
 
-## Como o portal funciona (em linguagem direta)
+## Como o portal funciona
 
-1. **Fonte oficial (`API de Dados Abertos`):** antes de gerar o site, `scripts/collect.ts` (`src/lib/coleta/coletar.ts`) consulta a [API de Dados Abertos da Câmara](https://www.pindamonhangaba.sp.leg.br/dadosabertos) — o "balcão eletrônico" oficial que entrega os registros públicos em formato estruturado (`JSON`) mediante um token de cidadão guardado em segredo na Vercel.
-2. **Travas contra erro e respeito à Câmara:** o coletor se identifica honestamente, espera pelo menos 1 segundo entre pedidos, respeita limites (`Retry-After`), trata resposta vazia como falha e aborta diante de desafio anti-robô, mudança inesperada de formato ou queda brusca de volume. **Se algo falhar, o site novo não é publicado e a edição anterior continua funcionando normalmente.**
-3. **Publicação estática e dados abertos:** tudo é conferido, gravado de forma atômica em `data/generated/dataset.json` (que alimenta as páginas) e disponibilizado para download gratuito em planilhas `CSV` (para Excel) e `JSON` (para análise técnica) em `public/dados/`.
-4. **Atualização contínua:** coletas diárias buscam apenas páginas novas mais 45 dias de margem; a cada 30 dias, uma coleta completa do zero captura eventuais exclusões ou retificações feitas na Câmara.
+1. **Fonte oficial (`API de Dados Abertos`):** antes de gerar o site, `scripts/collect.ts` (`src/lib/coleta/coletar.ts`) consulta a [API de Dados Abertos da Câmara](https://www.pindamonhangaba.sp.leg.br/dadosabertos) com um token de acesso guardado exclusivamente nas variáveis de ambiente da Vercel.
+2. **Travas de integridade:** o coletor aguarda intervalo mínimo de 1 segundo entre requisições, respeita cabeçalhos `Retry-After`, trata respostas vazias como falha e interrompe diante de verificação anti-robô, alteração de schema ou queda abrupta de volume. Se qualquer verificação falhar, a edição anterior permanece publicada.
+3. **Publicação estática e dados abertos:** os registros validados são gravados em `data/generated/dataset.json` e exportados em planilhas `CSV` (`UTF-8 com BOM`) e arquivos `JSON` em `public/dados/`.
+4. **Atualização contínua e tema configurável:** coletas diárias buscam novidades mais uma janela de 45 dias; a cada 30 dias ocorre uma re-coleta integral. Na interface, o usuário alterna entre os temas **Automático**, **Claro** e **Escuro** pelo menu do aplicativo (**Menu** no desktop / **Mais** no celular), usando a paleta verde oficial do Observatório (`#90C040`).
 
 ## Atualização automática (2x ao dia)
 
@@ -41,9 +41,9 @@ Em produção, o token oficial da Câmara fica apenas na variável `CAMARA_API_T
 
 ## Documentação e auditoria
 
-- [`docs/GUIA-DO-OBSERVATORIO.md`](docs/GUIA-DO-OBSERVATORIO.md) — **guia humano completo**: glossário sem complicação, passeio pelas telas, metodologia detalhada, passo a passo sem programação, checklist jurídico/DPO, domínio e custos de hospedagem para ONG
-- [`HANDOFF.md`](HANDOFF.md) — documento único de estado técnico, decisões vigentes, rollback e próximos passos para quem assumir o projeto
-- [`docs/auditoria/2026-11-18-profunda/`](docs/auditoria/2026-11-18-profunda/08-relatorio-final.md) — auditoria completa arquivo por arquivo e tela por tela (`158/158` arquivos, `25/25` rotas, QA, LGPD e achados)
+- [`docs/GUIA-DO-OBSERVATORIO.md`](docs/GUIA-DO-OBSERVATORIO.md) — manual completo do projeto: glossário, arquitetura, metodologia detalhada, operação diária, checklist jurídico/DPO e opções de hospedagem para ONG
+- [`HANDOFF.md`](HANDOFF.md) — estado técnico consolidado, decisões vigentes, rollback e próximos passos
+- [`docs/auditoria/2026-11-18-profunda/`](docs/auditoria/2026-11-18-profunda/08-relatorio-final.md) — dossiê completo de auditoria (cobertura 100% de arquivos e rotas, QA, LGPD e achados)
 - [`docs/adr/`](docs/adr/) — decisões arquiteturais registradas (identidade, atualização, PWA/service worker, hospedagem única)
 - [`docs/research/`](docs/research/) — pesquisa original de fontes, API da Câmara, Power BI reverso, design cívico e limites gratuitos
 - [`CLAUDE.md`](CLAUDE.md) — regras técnicas, invariantes e convenções de desenvolvimento

@@ -13,7 +13,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Metodologia",
   description:
-    "De onde vêm os dados do portal, o que é a API da Câmara, como cada contagem é feita e quais são os limites das classificações automáticas.",
+    "Origem dos dados na API da Câmara de Pindamonhangaba, regras de contagem, separação de leitura automática e limitações conhecidas.",
   alternates: { canonical: "/metodologia" },
 };
 
@@ -26,236 +26,194 @@ export default function Metodologia() {
   const citacoes = pa.bairros.reduce((a, b) => a + b.n, 0);
   const modo =
     d.execucao.modo === "completo"
-      ? "coleta completa do zero"
+      ? "coleta completa a partir do início"
       : d.execucao.modo === "incremental"
-        ? "coleta incremental (busca páginas novas mais uma margem de segurança de 45 dias para trás)"
-        : "amostra de desenvolvimento, usada apenas em testes locais";
+        ? "coleta incremental (registros novos e revisão de 45 dias anteriores)"
+        : "amostra reduzida de desenvolvimento";
 
   return (
     <div className="prosa">
-      <h1>Metodologia: como cada número nasce</h1>
+      <h1>Metodologia</h1>
       <p className="lede">
-        Transparência também significa mostrar a cozinha do sistema. Aqui está, sem economês de TI, de onde o {SITE.nome} busca os
-        documentos, como cada conta é conferida e onde existem limites que um computador ainda não resolve sozinho.
+        Origem dos dados na Câmara Municipal de {SITE.cidade}, regras de contagem e funcionamento da classificação automática, para que cada
+        número exibido no {SITE.nome} possa ser auditado de ponta a ponta.
       </p>
 
       <nav className="sumario" aria-label="Nesta página">
         <p className="sumario-titulo">Nesta página</p>
         <ul>
-          <li><a href="#fonte">De onde vêm (API)</a></li>
-          <li><a href="#periodo">Período e datas</a></li>
-          <li><a href="#camadas">Três camadas da informação</a></li>
-          <li><a href="#contagem">Regras de contagem</a></li>
-          <li><a href="#derivados">Leitura automática do texto</a></li>
-          <li><a href="#privacidade">Privacidade (LGPD)</a></li>
-          <li><a href="#limites">Limites conhecidos</a></li>
+          <li><a href="#fonte">1. Origem dos dados e API</a></li>
+          <li><a href="#periodo">2. Período e datas</a></li>
+          <li><a href="#camadas">3. Três camadas de informação</a></li>
+          <li><a href="#contagem">4. Regras de contagem</a></li>
+          <li><a href="#derivados">5. Classificação automática</a></li>
+          <li><a href="#privacidade">6. Proteção de dados (LGPD)</a></li>
+          <li><a href="#limites">7. Limites conhecidos</a></li>
         </ul>
       </nav>
 
-      <h2 id="fonte">1. De onde vêm os dados (e o que é API)</h2>
+      <h2 id="fonte">1. Origem dos dados e API oficial</h2>
       <p>
-        Todos os registros vêm diretamente da <a href={d.fonte.url}>{d.fonte.nome}</a>. Termos declarados pela fonte: {d.fonte.termos}
+        Todos os documentos provêm da <a href={d.fonte.url}>{d.fonte.nome}</a>. Termos declarados pela fonte: {d.fonte.termos}
       </p>
-      <div className="exemplo">
-        <p>
-          <strong>O que é uma API, em português direto?</strong> <em>API</em> (Interface de Programação de Aplicações) é um canal
-          eletrônico oficial mantido pela própria Câmara para que programas de computador leiam os dados públicos em formato
-          organizado, sem depender de ninguém abrir página por página e copiar tabelas na mão. Para usar esse canal com
-          responsabilidade, a Câmara fornece uma chave de identificação chamada <strong>token de cidadão</strong>, guardada em
-          segredo no servidor de publicação.
-        </p>
-      </div>
       <p>
         <strong>Última coleta publicada:</strong> {dataColeta(d.execucao.coletadoEm)} ({modo}
-        {d.execucao.requisicoes > 0 ? `, ${n(d.execucao.requisicoes)} consultas feitas à API` : ""}).
+        {d.execucao.requisicoes > 0 ? `, ${n(d.execucao.requisicoes)} requisições à API` : ""}).
       </p>
-      <ul>
-        <li>
-          <strong>Frequência de atualização:</strong> o sistema verifica a fonte automaticamente e atualiza o portal cerca de duas
-          vezes por dia (a cada ~12 horas). Entre uma coleta e outra, o site exibe a fotografia exata da última coleta, com a data
-          sempre visível no rodapé.
-        </li>
-        <li>
-          <strong>Coleta diária × coleta mensal:</strong> no dia a dia usamos <em>coleta incremental</em> (busca o que entrou de novo e
-          reconfere os últimos 45 dias caso alguma ementa tenha sido editada). A cada 30 dias fazemos uma{" "}
-          <em>coleta completa do zero</em>, que permite perceber quando a própria Câmara corrigiu ou retirou um documento antigo.
-        </li>
-        <li>
-          <strong>Respeito à Câmara e proteção contra erros:</strong> o coletor se identifica com nome do projeto e e-mail do
-          Observatório, espera pelo menos 1 segundo entre cada consulta e trava imediatamente se a Câmara responder vazio, mudar o
-          formato dos campos, exibir verificação anti-robô ou devolver um corte brusco superior a 10% no volume de registros.{" "}
-          <strong>Se qualquer trava disparar, a publicação nova é cancelada:</strong> você continua vendo a última edição íntegra no ar
-          e um alerta automático avisa os responsáveis.
-        </li>
-      </ul>
-
-      <h2 id="periodo">2. Período e diferença entre “ano do número” e “mês de publicação”</h2>
-      <p>
-        <strong>Recorte atual:</strong> {d.escopo.descricao}, reunindo proposições e normas publicadas a partir de{" "}
-        {d.escopo.inicio.split("-").reverse().join("/")} ou cujo número oficial já comece em 2025.
-      </p>
-      <div className="exemplo">
-        <p>
-          <strong>Por que o filtro por ano pode diferir do gráfico mês a mês?</strong> Quando você filtra pelo campo{" "}
-          <strong>Ano</strong> (por exemplo, <code>2026</code>), o portal olha o ano escrito no número oficial do documento
-          (<em>Requerimento nº 2398/<strong>2026</strong></em>). Já os gráficos <strong>Mês a mês</strong> usam a data exata em que a
-          Câmara publicou o registro no sistema. Em viradas de ano, um pedido numerado nos últimos dias de dezembro pode aparecer no
-          sistema no início de janeiro — ambas as referências estão corretas para a sua pergunta.
-        </p>
+      <div className="acordeoes">
+        <details className="acordeao" open>
+          <summary>Como funciona a coleta na API e a validação antes da publicação</summary>
+          <div className="acordeao-corpo">
+            <p>
+              <strong>O que é a API e o token de acesso:</strong> a Câmara mantém uma API (Interface de Programação de Aplicações) que entrega
+              registros públicos em formato estruturado para leitura automatizada. Para autenticação nesse serviço oficial, o coletor usa uma
+              chave institucional chamada <em>token de cidadão</em>, mantida apenas em variável secreta no ambiente de publicação.
+            </p>
+            <p>
+              <strong>Frequência incremental e rechecagem mensal:</strong> uma rotina automatizada verifica novidades a cada ~12 horas,
+              revisitando os últimos 45 dias para captar edições de ementa. A cada 30 dias ocorre uma coleta integral para refletir eventuais
+              exclusões ou retificações antigas na fonte.
+            </p>
+            <p>
+              <strong>Travas de integridade:</strong> o coletor aguarda intervalo mínimo de 1 segundo entre requisições e aborta imediatamente
+              caso a API altere sua estrutura, exiba bloqueio automatizado ou apresente redução abrupta superior a 10% nos registros. Quando
+              qualquer trava é acionada, a publicação anterior íntegra permanece no ar.
+            </p>
+          </div>
+        </details>
       </div>
 
-      <h2 id="camadas">3. As três camadas da informação (nunca misturadas)</h2>
+      <h2 id="periodo">2. Período coberto e critérios de data</h2>
       <p>
-        Para que ninguém confunda dado oficial com leitura automática do computador, todo conteúdo do portal pertence a uma destas três
-        camadas:
+        <strong>Recorte atual:</strong> {d.escopo.descricao}, reunindo proposições e normas publicadas desde{" "}
+        {d.escopo.inicio.split("-").reverse().join("/")} ou numeradas a partir de 2025.
       </p>
+      <p>
+        Ao filtrar pelo campo <strong>Ano</strong> (por exemplo, <code>2026</code>), considera-se o ano presente no número oficial do documento
+        (como <em>Requerimento 2398/2026</em>). Os gráficos <strong>Por mês</strong>, por sua vez, agrupam pela data de publicação registrada no
+        sistema da Câmara, o que explica eventuais variações em viradas de ano.
+      </p>
+
+      <h2 id="camadas">3. Três camadas de informação</h2>
       <ol className="passos">
         <li>
-          <strong>Fato oficial da fonte:</strong> título, número, data, nome dos autores, ementa (resumo) e link oficial chegam
-          exatamente como a Câmara publicou. Fazemos apenas duas limpezas visuais de leitura, sem trocar uma única palavra:
-          convertemos códigos HTML residuais como <code>&amp;quot;</code> em aspas normais e transformamos textos inteiros em CAIXA
-          ALTA em frases normais (mantendo a versão original a um clique no site da Câmara).
+          <strong>Fato oficial da fonte:</strong> tipo, número, título, data, autoria, ementa e endereço oficial mantêm o conteúdo publicado
+          pela Câmara, com conversão apenas de entidades HTML residuais (como <code>&amp;quot;</code>) e ajuste de caixa alta para leitura.
         </li>
         <li>
-          <strong>Contagem exata (“número = lista”):</strong> todo número clicável do site — num cartão de vereador, numa barra de
-          assunto ou numa coluna mensal — é calculado exatamente pela mesma função de busca da página para onde ele aponta. Antes de
-          cada publicação, testes automáticos conferem se o número escrito na tela bate um a um com a lista que se abre ao clicar.
+          <strong>Contagem verificável:</strong> cada total exibido em painéis, cartões ou barras usa a mesma função de filtro da lista de
+          destino, garantindo correspondência exata entre o número e os itens abertos ao clicar.
         </li>
         <li>
-          <strong>Classificação automática (derivada):</strong> assunto do pedido, bairro citado, destinatário e vínculo entre projeto
-          e lei não vêm prontos na API da Câmara. São deduzidos pelo código a partir do texto oficial da ementa, usando regras
-          públicas e abertas à crítica. Como qualquer leitura automática de texto pode errar, ela aparece sempre acompanhada do aviso{" "}
-          <em>Classificação automática</em> ou equivalente.
+          <strong>Classificação derivada do texto:</strong> assunto, bairro citado, destinatário e vínculo projeto-lei são inferidos a partir da
+          ementa por regras públicas abertas e vêm sempre identificados como leitura automática.
         </li>
       </ol>
 
-      <h2 id="contagem">4. Como contamos (e por que NÃO fazemos ranking)</h2>
+      <h2 id="contagem">4. Regras de contagem e ausência de ranking</h2>
       <ul>
         <li>
-          <strong>Coautoria conta para cada autor em exercício:</strong> a Câmara registra múltiplos autores separados por ponto e
-          vírgula (“;”). Se um projeto tem a assinatura de três vereadores, ele entra no perfil de cada um dos três. Por isso, somar os
-          totais individuais dos perfis sempre dá um número maior que o total único de documentos da Câmara — isso é matemático e
-          esperado.
+          <strong>Coautoria contada para cada signatário ativo:</strong> quando dois ou mais vereadores assinam o mesmo documento, ele integra a
+          lista de cada autor em exercício. A soma dos totais individuais supera o total de documentos únicos do Legislativo.
         </li>
         <li>
-          <strong>Mudança de nome parlamentar:</strong> um dicionário aberto no código reconcilia apelidos e nomes anteriores já usados
-          na legislatura (por exemplo, <em>Norbertinho</em> com <em>Norberto Moraes</em>, ou variações antigas de <em>Felipinho César</em>),
-          para que ninguém “perca” documentos antigos por ter atualizado a grafia oficial.
+          <strong>Apelidos parlamentares reconciliados:</strong> nomes anteriores ou variações oficiais (como <em>Norbertinho</em> /{" "}
+          <em>Norberto Moraes</em>) apontam para o mesmo perfil para preservar o histórico completo do mandato.
         </li>
         <li>
-          <strong>Autores que não são vereadores em exercício:</strong> proposições apresentadas pelo Poder Executivo (prefeito), por
-          Comissões, pela Mesa Diretora ou por suplentes que já deixaram o mandato continuam pesquisáveis nas listas gerais, mas não
-          ganham perfil individual aqui. Nesta coleta, {n(semVereador)} proposições não têm nenhum dos {d.vereadores.length}{" "}
-          vereadores em exercício como autor.
+          <strong>Iniciativas fora dos perfis individuais:</strong> nesta coleta, {n(semVereador)} proposições têm autoria do Poder Executivo,
+          de comissões, da Mesa Diretora ou de suplentes fora de exercício, permanecendo visíveis nas listas gerais.
         </li>
         <li>
-          <strong>Quantidade não é qualidade:</strong> não publicamos ranking, nota, selo ou rótulo de “mais produtivo”. Indicações de
-          manutenção são rápidas e numerosas; projetos de lei exigem estudo e tramitação longa. Além disso, quem preside a Câmara conduz
-          as sessões e cumpre papel regimental distinto dos demais parlamentares.
+          <strong>Sem ranking nem nota:</strong> volume documental não mede qualidade legislativa. Indicações rotineiras e projetos de lei têm
+          naturezas distintas, e quem ocupa a presidência da Casa exerce atribuições regimentais próprias.
         </li>
       </ul>
 
-      <h2 id="derivados">5. Regras públicas da leitura automática do texto</h2>
+      <h2 id="derivados">5. Regras da classificação automática</h2>
 
       <h3 id="temas">Assuntos dos pedidos</h3>
       <p>
-        Aplicamos listas públicas de palavras-chave sobre os <strong>Pedidos</strong> (indicações, requerimentos e indicações de
-        projeto de lei). Antes de comparar, o sistema remove acentos e padroniza maiúsculas. Um mesmo pedido pode entrar em mais de um
-        assunto (ex.: lâmpada de LED na rua entra em <em>Iluminação</em> e <em>Ruas e asfalto</em>) ou ficar sem assunto quando trata de
-        tema muito específico. Nesta coleta, <strong>{percent(classificados, pa.pedidos.length)}%</strong> dos {n(pa.pedidos.length)}{" "}
-        pedidos receberam ao menos um assunto.
+        Listas públicas de expressões regulares são aplicadas às ementas dos <strong>Pedidos</strong> após normalização de acentos e maiúsculas.
+        Um pedido pode corresponder a mais de um assunto (ex.: luminária de LED em via pública entra em <em>Iluminação</em> e{" "}
+        <em>Ruas e asfalto</em>) ou permanecer sem categoria. Nesta coleta, <strong>{percent(classificados, pa.pedidos.length)}%</strong> dos{" "}
+        {n(pa.pedidos.length)} pedidos foram classificados em ao menos um assunto.
       </p>
-      <p>
-        As regras passam por revisão contínua contra falsos positivos encontrados nos dados reais: por exemplo, a palavra{" "}
-        <em>“posteriormente”</em> não conta como <em>poste</em>, <em>“aguardar”</em> não conta como <em>água</em>, o sobrenome{" "}
-        <em>“Matos”</em> não vira <em>mato</em>, <em>“garrafa PET”</em> não entra em <em>Animais</em>, <em>“medição”</em> não entra em{" "}
-        <em>Saúde</em> e referências nominais ao vereador <em>“Professor Everton”</em> não inflam o tema <em>Educação</em>.
-      </p>
-      <ul>
-        {TEMAS.map((t) => (
-          <li key={t.slug}>
-            <strong>{t.nome}:</strong> {t.descricao}
-          </li>
-        ))}
-      </ul>
+      <div className="acordeoes">
+        <details className="acordeao">
+          <summary>Ver as 12 categorias de assunto e falsos positivos bloqueados</summary>
+          <div className="acordeao-corpo">
+            <p>
+              As expressões evitam coincidências falsas observadas na base real: <em>“posteriormente”</em> não aciona <em>poste</em>,{" "}
+              <em>“aguardar”</em> não entra em <em>água</em>, o sobrenome <em>“Matos”</em> não vira <em>mato</em>, <em>“garrafa PET”</em> é
+              isolada de <em>Animais</em>, <em>“medição”</em> não entra em <em>Saúde</em> e menções nominais ao vereador{" "}
+              <em>“Professor Everton”</em> não inflam <em>Educação</em>.
+            </p>
+            <ul>
+              {TEMAS.map((t) => (
+                <li key={t.slug}>
+                  <strong>{t.nome}:</strong> {t.descricao}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </details>
+      </div>
 
       <h3 id="bairros">Bairros citados no texto</h3>
       <p>
-        A Câmara possui um campo técnico de bairros na API, mas ele vem vazio nos registros públicos. Para responder à pergunta{" "}
-        <em>“o que pediram para o meu bairro?”</em>, o portal lê o texto da ementa procurando expressões como{" "}
-        <em>“no bairro Araretama”</em>, <em>“Bairro do São Benedito”</em>, <em>“nos bairros Pasin e Mantiqueira”</em> ou{" "}
-        <em>“distrito de Moreira César”</em>, encerrando a leitura ao encontrar vírgula, ponto, nome de rua ou conectivos como{" "}
-        <em>“localizado”</em> e <em>“próximo”</em>.
+        Como o campo técnico de bairro vem vazio na API, o portal identifica menções explícitas na ementa (como <em>“no bairro Araretama”</em>{" "}
+        ou <em>“distrito de Moreira César”</em>), totalizando {n(comBairro)} proposições identificadas nesta coleta. O catálogo exibe localidades
+        com ao menos <strong>{MIN_BAIRRO} ocorrências</strong> ({n(pa.bairros.length)} bairros e {n(citacoes)} citações); nos perfis individuais,
+        o limite mínimo é de 2 citações. Citar um bairro indica menção no texto do pedido, não execução de obra.
       </p>
+      <div className="acordeoes">
+        <details className="acordeao">
+          <summary>Ver variantes de grafia agrupadas e termos descartados</summary>
+          <div className="acordeao-corpo">
+            <ul className="small">
+              {VARIANTES_BAIRRO.map((g) => (
+                <li key={g.nome}>
+                  <strong>{g.nome}:</strong> {g.variantes.join(", ")}
+                </li>
+              ))}
+            </ul>
+            <p className="small soft">
+              Expressões genéricas após “bairro” ({NAO_E_BAIRRO.join(", ")}) são descartadas automaticamente. Loteamentos distintos com nomes
+              próximos permanecem separados salvo confirmação local. Para sugerir ajuste, acesse <Link href="/correcoes">Correções</Link>.
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <h3 id="destinos">Destinatários dos pedidos</h3>
       <p>
-        Nesta coleta, {n(comBairro)} proposições citam ao menos um bairro identificado pelo texto. Para evitar que erros isolados de
-        digitação poluam o índice geral, o catálogo público lista apenas bairros com pelo menos <strong>{MIN_BAIRRO} citações</strong>{" "}
-        ({n(pa.bairros.length)} bairros e {n(citacoes)} citações somadas). Nos perfis individuais, o mínimo cai para 2 citações.
-        Pedidos que trazem apenas o nome da rua sem citar o bairro não entram nessa conta — e citar um bairro significa apenas que o
-        lugar foi mencionado no pedido, não que a obra foi executada.
-      </p>
-      <p>Grafias comprovadamente equivalentes do mesmo bairro são somadas (acentos e maiúsculas já são ignorados):</p>
-      <ul className="small">
-        {VARIANTES_BAIRRO.map((g) => (
-          <li key={g.nome}>
-            <strong>{g.nome}:</strong> {g.variantes.join(", ")}
-          </li>
-        ))}
-      </ul>
-      <p className="small soft">
-        Termos genéricos que às vezes aparecem logo após a palavra “bairro” sem dar um nome real ({NAO_E_BAIRRO.join(", ")}, “zona
-        leste”) são descartados automaticamente. Já lugares com nomes próximos que podem ser regiões diferentes (como “Andrade” e
-        “Residencial Andrade”, ou “Ipê” e “Ipê I”) permanecem separados até confirmação da comunidade local. Viu uma grafia que deveria
-        ser unida ou separada? <Link href="/correcoes">Avise o Observatório</Link>.
+        O vocativo inicial dos primeiros 160 caracteres da ementa identifica o órgão acionado (como <em>“Ao Executivo Municipal”</em> ou{" "}
+        <em>“À Sabesp”</em>), com todas as <strong>Indicações</strong> atribuídas por definição à Prefeitura. Categorias ativas:{" "}
+        {DESTINOS.map((x) => x.nome).join(", ")}, além de “Outros”.
       </p>
 
-      <h3 id="destinos">A quem se pede</h3>
+      <h3 id="leis">Vínculo entre projeto de lei e norma publicada</h3>
       <p>
-        Para descobrir quem foi acionado pelo vereador, o código lê os primeiros 160 caracteres da ementa — onde costuma estar o
-        vocativo inicial (<em>“Ao Executivo Municipal…”</em>, <em>“À Sabesp…”</em>). Toda <strong>Indicação</strong> é contada como
-        endereçada à <strong>Prefeitura</strong> por regra regimental. Órgãos e concessionárias reconhecidos hoje:{" "}
-        {DESTINOS.map((x) => x.nome).join(", ")}; os demais ficam agrupados em “Outros”.
+        Sempre que a ementa de uma norma publicada menciona o projeto original (ex.: <em>“Projeto de Lei nº 148/2026”</em>), os dois registros
+        são associados e a norma passa a constar no perfil dos signatários do projeto ({n(pa.viraram.length)} normas vinculadas nesta coleta).
+        Por ausência de menção frequente em leis do Executivo e pela presença de projetos em tramitação no total apresentado, esse número
+        representa apenas um mínimo observável.
       </p>
 
-      <h3 id="leis">Do projeto à lei (e por que a taxa é sempre um mínimo)</h3>
+      <h2 id="privacidade">6. Proteção de dados pessoais (LGPD)</h2>
       <p>
-        A API da Câmara não traz um código ligando automaticamente cada lei publicada ao projeto de lei que lhe deu origem. Quando a
-        ementa da lei traz essa referência no texto — por exemplo, <em>“(Projeto de Lei nº 148/2026, de autoria do Vereador…)”</em> —,
-        o portal conecta os dois registros e exibe a lei no perfil de quem assinou aquele projeto.
-      </p>
-      <p>
-        Nesta coleta, <strong>{n(pa.viraram.length)} normas</strong> foram vinculadas a um projeto desta legislatura. Leis de
-        iniciativa do Poder Executivo raramente citam o número do projeto em sua ementa oficial, e projetos ainda em discussão somam no
-        total apresentado — portanto, esse número mostra um <strong>piso mínimo observável</strong>, nunca um “aproveitamento total”.
+        Quando uma ementa de requerimento expõe nome civil ligado a saúde, vulnerabilidade ou menoridade, o registro oficial (número, data,
+        autoria e link da Câmara) é mantido intacto, mas o texto exibido no site e nos arquivos abertos é substituído por nota neutra de
+        privacidade. Consulte o procedimento completo em <Link href="/privacidade">Política de privacidade</Link>.
       </p>
 
-      <h2 id="privacidade">6. Cuidados com dados pessoais (LGPD) na coleta</h2>
-      <p>
-        Embora as ementas venham de uma fonte oficial pública, requerimentos individuais por vezes mencionam nomes completos de
-        cidadãos em situações delicadas de saúde, vulnerabilidade ou menoridade. Nessas situações identificadas preventivamente (ou por
-        solicitação do titular), o Observatório mantém o número, a data, a autoria parlamentar e o link oficial da Câmara, mas
-        substitui a ementa exibida no site e nos arquivos abertos por uma nota neutra de proteção à privacidade. Entenda todos os
-        direitos em <Link href="/privacidade">Política de privacidade</Link>.
-      </p>
-
-      <h2 id="limites">7. Limites conhecidos do conjunto de dados</h2>
+      <h2 id="limites">7. Limites conhecidos</h2>
       <ul>
-        <li>
-          <strong>Sem votações nominais, presença ou andamento:</strong> essas informações ainda não são publicadas na API de Dados
-          Abertos da Câmara; só um pedido futuro de abertura de dados poderá trazê-las sem trabalho manual.
-        </li>
-        <li>
-          <strong>Apenas vereadores em exercício hoje:</strong> a lista oficial fornecida pela API não inclui histórico de suplentes que
-          assumiram temporariamente no início do mandato.
-        </li>
-        <li>
-          <strong>Atraso de até 1 mês para exclusões raras na fonte:</strong> registros muito antigos apagados ou corrigidos pela Câmara
-          aparecem na próxima coleta completa mensal (a cada 30 dias).
-        </li>
-        <li>
-          <strong>Sem texto integral copiado:</strong> este portal mostra resumo e metadados; a íntegra de cada documento permanece no
-          site oficial da Câmara, acessível pelo link de cada item.
-        </li>
+        <li><strong>Votações nominais, presença e tramitação:</strong> não constam na API de Dados Abertos da Câmara.</li>
+        <li><strong>Vereadores fora de exercício:</strong> o cadastro da API lista apenas parlamentares ativos na data da coleta.</li>
+        <li><strong>Exclusões raras na origem:</strong> atualizam na coleta completa executada mensalmente.</li>
+        <li><strong>Íntegra dos documentos:</strong> mantida exclusivamente no site oficial da Câmara, acessível via link externo em cada item.</li>
       </ul>
 
       {d.execucao.avisos.length > 0 && (
@@ -270,9 +228,8 @@ export default function Metodologia() {
       )}
 
       <p>
-        Encontrou qualquer divergência ou falso positivo? Veja <Link href="/correcoes">como avisar em poucos cliques</Link>. Se quiser
-        conferir os números no seu próprio computador, <Link href="/dados">baixe os arquivos em Dados abertos</Link> ou leia{" "}
-        <Link href="/como-funciona">Como funciona a Câmara</Link>.
+        Para conferir os arquivos brutos, acesse <Link href="/dados">Dados abertos</Link>; para apontar falhas na leitura automática, consulte{" "}
+        <Link href="/correcoes">Correções</Link>.
       </p>
     </div>
   );

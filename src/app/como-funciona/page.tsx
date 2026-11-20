@@ -7,7 +7,7 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Como funciona",
-  description: "Guia simples sobre o papel dos vereadores de Pindamonhangaba, os tipos de documento e termos como ementa e API de Dados Abertos.",
+  description: "Competências dos vereadores e da Prefeitura em Pindamonhangaba, glossário de termos legislativos e técnicos e tipos de proposição.",
   alternates: { canonical: "/como-funciona" },
 };
 
@@ -18,165 +18,147 @@ export default function ComoFunciona() {
     <div className="prosa">
       <h1>Como funciona a Câmara e este portal</h1>
       <p className="lede">
-        Quem mora em {SITE.cidade} nem sempre precisa conhecer o vocabulário jurídico para saber o que acontece no plenário.
-        Aqui explicamos o que fazem os {d.vereadores.length} vereadores, o que significa cada pedido e como os registros oficiais
-        chegam até você.
+        Este guia explica o que compete aos {d.vereadores.length} vereadores e à Prefeitura em {SITE.cidade}, traduz termos legislativos e
+        técnicos (como ementa e API) e mostra o que ainda não consta nos dados públicos da Câmara.
       </p>
 
       <nav className="sumario" aria-label="Nesta página">
         <p className="sumario-titulo">Nesta página</p>
         <ul>
-          <li><a href="#papel">Vereador x Prefeito</a></li>
-          <li><a href="#dicionario">Palavras traduzidas (inclui API)</a></li>
+          <li><a href="#papel">Câmara e Prefeitura</a></li>
+          <li><a href="#dicionario">Glossário (inclui API e ementa)</a></li>
           <li><a href="#tipos">Tipos de proposição</a></li>
-          <li><a href="#caminho">Por que há tantos pedidos</a></li>
-          <li><a href="#limites">O que não aparece (ainda)</a></li>
+          <li><a href="#caminho">Por que predominam os pedidos</a></li>
+          <li><a href="#limites">Dados ainda ausentes na fonte</a></li>
         </ul>
       </nav>
 
-      <h2 id="papel">O que faz um vereador (e o que cabe à Prefeitura)</h2>
+      <h2 id="papel">O que faz um vereador e o que cabe à Prefeitura</h2>
       <p>
-        A Câmara Municipal de {SITE.cidade} tem {d.vereadores.length} vereadores eleitos para a legislatura 2025–2028. As sessões
-        ordinárias acontecem às terças-feiras, a partir das 17h, segundo a própria Câmara, e são abertas para quem quiser
-        acompanhar no plenário ou pelas transmissões oficiais. A <strong>Mesa Diretora</strong> (presidente, vice-presidentes e
-        secretários) organiza a pauta, conduz as reuniões e responde pela administração interna da Casa.
-      </p>
-      <p>
-        Uma confusão muito comum é cobrar do vereador uma obra na rua como se ele mandasse na equipe de asfalto. Na cidade, as
-        responsabilidades são divididas entre dois Poderes:
+        A Câmara Municipal de {SITE.cidade} conta com {d.vereadores.length} vereadores na legislatura 2025–2028. As sessões ordinárias
+        ocorrem às terças-feiras, a partir das 17h, com acesso aberto ao público no plenário e transmissão pelos canais oficiais. A{" "}
+        <strong>Mesa Diretora</strong> (presidência, vice-presidências e secretarias) define a pauta das votações e responde pela gestão
+        interna da Casa.
       </p>
       <div className="quadro-duplo">
         <section className="quadro-card" aria-labelledby="q-camara">
           <h3 id="q-camara">Câmara Municipal (Vereadores)</h3>
           <ul>
-            <li><strong>Cria e vota leis municipais:</strong> regras da cidade, aprovação do orçamento anual e mudanças em tributos locais.</li>
-            <li><strong>Fiscaliza a Prefeitura:</strong> pede documentos, questiona atrasos de obras, analisa contratos e julga as contas anuais do Executivo.</li>
-            <li><strong>Encaminha demandas dos bairros:</strong> leva pedidos de limpeza, iluminação, saúde e trânsito até o prefeito e concessionárias.</li>
+            <li><strong>Legisla sobre o município:</strong> debate e vota leis locais, o orçamento anual e regras tributárias da cidade.</li>
+            <li><strong>Fiscaliza o Executivo:</strong> requer informações oficiais, analisa contratos públicos e julga as contas do prefeito.</li>
+            <li><strong>Encaminha demandas locais:</strong> formaliza pedidos de manutenção, saúde, mobilidade e iluminação aos órgãos competentes.</li>
           </ul>
         </section>
         <section className="quadro-card" aria-labelledby="q-prefeitura">
           <h3 id="q-prefeitura">Prefeitura (Prefeito e Secretarias)</h3>
           <ul>
-            <li><strong>Executa o trabalho diário:</strong> tapa buracos, troca lâmpadas, faz capina, mantém postos de saúde, creches, escolas e frota municipal.</li>
-            <li><strong>Administra o dinheiro público:</strong> contrata serviços, paga fornecedores e decide prioridades dentro do orçamento aprovado.</li>
-            <li><strong>Propõe projetos exclusivos:</strong> só o prefeito pode iniciar leis sobre salários, cargos e estrutura interna da Prefeitura.</li>
+            <li><strong>Executa obras e serviços:</strong> gerencia as equipes de pavimentação, iluminação, limpeza, postos de saúde e escolas municipais.</li>
+            <li><strong>Administra o orçamento:</strong> arrecada tributos, contrata fornecedores e define a ordem de execução das despesas aprovadas.</li>
+            <li><strong>Tem iniciativa exclusiva em cargos e despesas:</strong> somente o prefeito propõe leis sobre remuneração de servidores e estrutura administrativa.</li>
           </ul>
         </section>
       </div>
 
-      <h2 id="dicionario">Palavras da Câmara e da internet traduzidas sem complicação</h2>
-      <p>
-        Os sistemas públicos usam nomes técnicos no dia a dia. Abaixo está o significado direto de cada termo que você encontra
-        neste portal:
-      </p>
-      <ul className="verbetes">
-        <li>
-          <h3>Proposição</h3>
-          <p>
-            É o nome geral de qualquer documento formal apresentado na Câmara para pedir uma ação, cobrar informação, prestar uma
-            homenagem ou propor uma lei. Um requerimento, uma indicação, uma moção e um projeto de lei são todos tipos de proposição.
-          </p>
-        </li>
-        <li>
-          <h3>Ementa</h3>
-          <p>
-            É o resumo curto que aparece logo no começo do documento oficial explicando do que ele trata — por exemplo,{" "}
-            <em>“Solicita operação tapa-buraco no bairro Araretama”</em>. É essa ementa que você lê nas listas deste portal antes de
-            clicar para abrir a íntegra no site da Câmara.
-          </p>
-        </li>
-        <li>
-          <h3>Coautoria</h3>
-          <p>
-            Acontece quando mais de um vereador assina junto a mesma proposição. Neste portal, se três parlamentares assinam o mesmo
-            documento, ele aparece no perfil de cada um dos três — sempre avisando quando houve assinatura conjunta.
-          </p>
-        </li>
-        <li>
-          <h3>Tramitação, sanção e veto</h3>
-          <p>
-            <strong>Tramitação</strong> é o caminho que um projeto percorre entre comissões e debates antes da votação no plenário. Se
-            aprovado pela Câmara, vai ao prefeito, que pode dar a <strong>sanção</strong> (concordar e assinar para virar lei) ou
-            aplicar o <strong>veto</strong> (recusar parte ou todo o texto, devolvendo-o aos vereadores para decisão final).
-          </p>
-        </li>
-        <li>
-          <h3>Norma (lei, decreto legislativo ou resolução)</h3>
-          <p>
-            É a regra que já foi aprovada, publicada oficialmente e passou a valer — seja para toda a população (como uma lei
-            ordinária ou complementar), seja para a organização interna da própria Câmara (resolução).
-          </p>
-        </li>
-        <li>
-          <h3>API de Dados Abertos (o “balcão eletrônico” oficial)</h3>
-          <p>
-            <strong>API</strong> é a sigla para <em>Interface de Programação de Aplicações</em>. Na prática, funciona como um{" "}
-            <strong>balcão eletrônico automático</strong> oferecido pela própria Câmara Municipal para que programas de computador
-            consultem os registros públicos diretamente, de forma padronizada e sem ninguém precisar copiar planilhas à mão. É dessa
-            API oficial que este portal recolhe os dados todos os dias. Saiba todos os detalhes em{" "}
-            <Link href="/metodologia">Metodologia</Link> ou baixe os arquivos em <Link href="/dados">Dados abertos</Link>.
-          </p>
-        </li>
-      </ul>
+      <h2 id="dicionario">Glossário de termos legislativos e técnicos</h2>
+      <p>Definições objetivas para termos jurídicos e de tecnologia exibidos nas listas e fichas do portal:</p>
+      <div className="acordeoes">
+        <details className="acordeao" open>
+          <summary>Proposição e ementa</summary>
+          <div className="acordeao-corpo">
+            <p>
+              <strong>Proposição</strong> é todo documento formal protocolado na Câmara (requerimento, indicação, moção, emenda ou projeto de
+              lei).
+            </p>
+            <p>
+              <strong>Ementa</strong> é o resumo oficial que abre o documento e antecipa seu conteúdo, como{" "}
+              <em>“Solicita operação tapa-buraco no bairro Araretama”</em>.
+            </p>
+          </div>
+        </details>
+        <details className="acordeao">
+          <summary>Coautoria, tramitação, sanção, veto e norma</summary>
+          <div className="acordeao-corpo">
+            <p>
+              <strong>Coautoria:</strong> assinatura conjunta de mais de um vereador na mesma proposição. O registro entra na contagem de cada
+              signatário, sempre sinalizado no item.
+            </p>
+            <p>
+              <strong>Tramitação:</strong> percurso do projeto pelas comissões técnicas até a votação em plenário.
+            </p>
+            <p>
+              <strong>Sanção e veto:</strong> ao aprovar um projeto de lei, a Câmara o envia ao prefeito, que pode sancioná-lo (promulgando a lei)
+              ou vetá-lo no todo ou em parte, devolvendo a matéria para nova decisão do plenário.
+            </p>
+            <p>
+              <strong>Norma:</strong> texto legal já publicado e em vigor (lei ordinária, lei complementar, decreto legislativo ou resolução).
+            </p>
+          </div>
+        </details>
+        <details className="acordeao">
+          <summary>API de Dados Abertos</summary>
+          <div className="acordeao-corpo">
+            <p>
+              <strong>API</strong> (Interface de Programação de Aplicações) é o canal eletrônico mantido pela própria Câmara Municipal para
+              entregar os registros públicos em formato estruturado diretamente a programas de computador, sem transcrição manual de páginas. É
+              a partir dessa API oficial que o portal atualiza sua base de dados. Saiba mais em <Link href="/metodologia">Metodologia</Link> ou
+              acesse os arquivos em <Link href="/dados">Dados abertos</Link>.
+            </p>
+          </div>
+        </details>
+      </div>
 
-      <h2 id="tipos">Cada tipo de proposição, explicado com exemplo</h2>
+      <h2 id="tipos">Tipos de proposição desta legislatura</h2>
       <div className="nota">
         <p>
-          <strong>Nota importante:</strong> estas explicações foram escritas em linguagem cotidiana pelo Observatório para ajudar na
-          leitura. As definições jurídicas oficiais valem conforme o Regimento Interno da Câmara e a Lei Orgânica do Município de{" "}
-          {SITE.cidade}.
+          As sínteses abaixo facilitam a leitura cidadã. As atribuições formais seguem o Regimento Interno da Câmara Municipal e a Lei Orgânica
+          de {SITE.cidade}.
         </p>
       </div>
-      <ul className="verbetes">
-        {GLOSSARIO.filter((g) => existe.has(g.contract)).map((g) => (
-          <li key={g.contract} id={g.contract}>
-            <h3>{d.tipos.find((t) => t.contract === g.contract)?.titulo}</h3>
-            <p>{g.explicacao}</p>
-            <p>
-              <Link href={hrefLista("/proposicoes", { tipo: g.contract })}>Ver todas desta legislatura</Link>
-            </p>
-          </li>
+      <div className="acordeoes">
+        {GLOSSARIO.filter((g) => existe.has(g.contract)).map((g, idx) => (
+          <details key={g.contract} id={g.contract} className="acordeao" open={idx < 2}>
+            <summary>{`${d.tipos.find((t) => t.contract === g.contract)?.titulo ?? g.contract}: ${g.curto}`}</summary>
+            <div className="acordeao-corpo">
+              <p>{g.explicacao}</p>
+              <p>
+                <Link href={hrefLista("/proposicoes", { tipo: g.contract })}>Abrir proposições deste tipo</Link>
+              </p>
+            </div>
+          </details>
         ))}
-      </ul>
+      </div>
 
-      <h2 id="caminho">Por que cerca de 9 em cada 10 documentos são pedidos, não projetos de lei</h2>
+      <h2 id="caminho">Por que predominam requerimentos e indicações</h2>
       <div className="exemplo">
         <p>
-          <strong>Entenda sem prejuízo ao contexto:</strong> é natural que Indicações e Requerimentos apareçam em volume muito maior
-          que Projetos de Lei. Tapar buracos, pedir informações de trânsito ou encaminhar reclamações de moradores acontece toda
-          semana; já escrever uma lei nova exige estudo jurídico, análise de orçamento e várias votações.
-        </p>
-        <p>
-          Por isso o Observatório repete em todo o site: <strong>quantidade não mede qualidade</strong>. Um único projeto de lei bem
-          feito pode impactar a cidade por décadas, enquanto centenas de indicações podem refletir apenas pedidos operacionais
-          repetidos.
+          Pedidos rotineiros de manutenção urbana e solicitações de informação ocorrem diariamente e acumulam grande volume estatístico. Já
+          projetos de lei demandam estudo técnico, análise orçamentária e deliberação em plenário. Por essa razão, quantidade absoluta de
+          proposições não mede relevância nem qualidade parlamentar.
         </p>
       </div>
 
-      <h2 id="limites">O que este portal NÃO mostra (ainda) — e por quê</h2>
+      <h2 id="limites">Dados ainda ausentes na fonte oficial</h2>
       <p>
-        Por respeito à transparência, tudo o que a Câmara ainda não entrega de forma estruturada na API de Dados Abertos fica
-        explicitamente marcado como limite do sistema — nunca preenchido com estimativas:
+        Quando uma informação não é fornecida pela API de Dados Abertos da Câmara, o portal aponta a lacuna em vez de substituí-la por
+        estimativas:
       </p>
       <ul>
         <li>
-          <strong>Como cada vereador votou:</strong> os registros individuais de voto em plenário não são publicados pela API de
-          dados abertos da Câmara nesta legislatura.
+          <strong>Votos nominais individuais:</strong> a API legislativa não publica como cada vereador votou em cada sessão.
         </li>
         <li>
-          <strong>Presença nas sessões:</strong> a lista de comparecimento também não entra na API; hoje ela aparece apenas nas atas
-          das sessões publicadas em arquivos PDF no site oficial da Câmara.
+          <strong>Frequência em plenário:</strong> listas de presença aparecem apenas nas atas em PDF do site oficial da Câmara, fora dos
+          dados estruturados.
         </li>
         <li>
-          <strong>Andamento atual (tramitação):</strong> saber se um projeto está em comissão, parado ou pronto para votação depende
-          da consulta direta ao documento no site oficial — por isso todo item listado aqui traz o link direto para a ficha da Câmara.
+          <strong>Situação atual da tramitação:</strong> pareceres recentes e despacho em comissões devem ser conferidos diretamente no link
+          oficial que acompanha cada registro.
         </li>
       </ul>
 
       <p>
-        Quer entender como o sistema conta cada item, identifica bairros e evita falsos positivos? Leia a{" "}
-        <Link href="/metodologia">Metodologia completa</Link> ou comece a explorar as{" "}
-        <Link href="/proposicoes">proposições desta legislatura</Link>.
+        Veja as regras detalhadas de contagem em <Link href="/metodologia">Metodologia</Link> ou explore a{" "}
+        <Link href="/proposicoes">lista completa de proposições</Link>.
       </p>
     </div>
   );

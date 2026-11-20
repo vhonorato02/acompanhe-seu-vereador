@@ -27,6 +27,7 @@ Varredura executada sobre `proposicoes.json` (`17.545`) e `normas.json` (`409`) 
 ### 1.3 Cookies, armazenamento local e rastreadores (`[OBSERVADO]`)
 
 - **Cookies HTTP / JavaScript:** **zero**. Nenhum `Set-Cookie`, nenhum pixel, nenhum Google Analytics, nenhuma fonte externa (`--font` usa fontes locais do sistema). `[OBSERVADO]`
+- **Preferência visual local (`localStorage`):** por padrão acompanha o tema do dispositivo sem gravar nada. Somente quando o visitante fixa manualmente *Claro* ou *Escuro* no menu **Aparência**, grava `light` ou `dark` na chave local `asv-tema` (removida ao voltar para *Automático*), sem tráfego ao servidor nem identificação pessoal. `[OBSERVADO]`
 - **Service Worker (`public/sw.js`):** armazena apenas arquivos estáticos com hash (`/_next/static/`), ícones, marca e `/offline`. Nenhum dado pessoal ou busca é persistido no navegador. `[OBSERVADO]`
 - **Conclusão técnica:** não cabe banner de consentimento de cookies (evita poluição e "dark pattern" onde não há rastreamento). `[OBSERVADO]`
 

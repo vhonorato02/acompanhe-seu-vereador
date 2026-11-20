@@ -77,6 +77,55 @@ test.describe("acessibilidade (axe, WCAG 2.2 A/AA)", () => {
       expect(await imgsPerfil.first().evaluate((img) => getComputedStyle(img).filter)).toBe("none");
     }
   });
+
+  test("menu do aplicativo configura tema (Claro, Escuro, Automático) com contraste AA e fecha com Esc @cross", async ({ page }, info) => {
+    await page.goto("/");
+    const abrirMenu = async () => {
+      const mobileBtn = page.getByRole("button", { name: "Mais" });
+      if (await mobileBtn.isVisible()) {
+        await mobileBtn.click();
+      } else {
+        await page.getByRole("button", { name: "Menu" }).click();
+      }
+      await expect(page.locator("dialog.sheet[open]")).toBeVisible();
+    };
+
+    await abrirMenu();
+    const dlg = page.locator("dialog.sheet");
+    await expect(dlg.getByRole("link", { name: "Comparar vereadores" })).toHaveAttribute("href", "/comparar");
+    await expect(dlg.getByRole("link", { name: "Leis e normas" })).toHaveAttribute("href", "/normas");
+    await expect(dlg.getByRole("link", { name: "Metodologia e limites" })).toHaveAttribute("href", "/metodologia");
+
+    await dlg.getByRole("button", { name: "Escuro" }).click();
+    await expect(page.locator('meta[name="color-scheme"]')).toHaveAttribute("content", "dark");
+    expect(await page.evaluate(() => localStorage.getItem("asv-tema"))).toBe("dark");
+    expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe("rgb(11, 14, 10)");
+    await page.waitForTimeout(280);
+    await page.screenshot({ path: `e2e-artifacts/capturas/${info.project.name}-menu-dark.png` });
+    const axeDark = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
+    expect(axeDark.violations, axeDark.violations.map((v) => v.id).join(", ")).toEqual([]);
+
+    await page.reload();
+    await expect(page.locator('meta[name="color-scheme"]')).toHaveAttribute("content", "dark");
+    expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe("rgb(11, 14, 10)");
+
+    await abrirMenu();
+    await dlg.getByRole("button", { name: "Claro" }).click();
+    await expect(page.locator('meta[name="color-scheme"]')).toHaveAttribute("content", "light");
+    expect(await page.evaluate(() => localStorage.getItem("asv-tema"))).toBe("light");
+    expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe("rgb(246, 247, 243)");
+    await page.waitForTimeout(280);
+    await page.screenshot({ path: `e2e-artifacts/capturas/${info.project.name}-menu-light.png` });
+    const axeLight = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
+    expect(axeLight.violations, axeLight.violations.map((v) => v.id).join(", ")).toEqual([]);
+
+    await dlg.getByRole("button", { name: "Automático" }).click();
+    await expect(page.locator('meta[name="color-scheme"]')).toHaveAttribute("content", "light dark");
+    expect(await page.evaluate(() => localStorage.getItem("asv-tema"))).toBeNull();
+
+    await page.keyboard.press("Escape");
+    await expect(page.locator("dialog.sheet[open]")).toHaveCount(0);
+  });
 });
 
 test.describe("SEO, compartilhamento e cabeçalhos", () => {

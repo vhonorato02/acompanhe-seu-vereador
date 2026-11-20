@@ -7,10 +7,10 @@
 
 ## Sumário
 
-1. [Glossário sem complicação (para ler sem medo de siglas)](#1-glossário-sem-complicação-para-ler-sem-medo-de-siglas)
-2. [O que é o portal — e o que ele faz questão de NÃO ser](#2-o-que-é-o-portal--e-o-que-ele-faz-questão-de-não-ser)
-3. [Passeio pelas telas: o que existe para o cidadão](#3-passeio-pelas-telas-o-que-existe-para-o-cidadão)
-4. [Como o portal foi feito (sem economês de TI)](#4-como-o-portal-foi-feito-sem-economês-de-ti)
+1. [Glossário de termos técnicos e legislativos](#1-glossário-de-termos-técnicos-e-legislativos)
+2. [Finalidade e limites do portal](#2-o-que-é-o-portal--e-o-que-ele-faz-questão-de-não-ser)
+3. [Telas e recursos disponíveis](#3-passeio-pelas-telas-o-que-existe-para-o-cidadão)
+4. [Arquitetura e funcionamento](#4-arquitetura-e-funcionamento)
 5. [Metodologia em profundidade: como cada número nasce](#5-metodologia-em-profundidade-como-cada-número-nasce)
 6. [Como o portal se atualiza e como operar no dia a dia](#6-como-o-portal-se-atualiza-e-como-operar-no-dia-a-dia)
 7. [O que o Observatório TEM que fazer e o que PODE fazer (Jurídico, Domínio, Custos e Hospedagem para ONG)](#7-o-que-o-observatório-tem-que-fazer-e-o-que-pode-fazer)
@@ -18,26 +18,26 @@
 
 ---
 
-## 1. Glossário sem complicação (para ler sem medo de siglas)
+## 1. Glossário de termos técnicos e legislativos
 
-Ao longo do portal e dos documentos do projeto aparecem termos técnicos da Câmara Municipal e da internet. Eles precisam continuar existindo porque dão precisão a jornalistas, advogados e auditores — mas ninguém precisa saber o significado de antemão. Aqui está a tradução direta de cada um:
+Ao longo do portal e dos documentos aparecem termos próprios do processo legislativo e da infraestrutura web. Eles preservam precisão jurídica e técnica para jornalistas, advogados e auditores, definidos objetivamente abaixo:
 
-| Termo ou sigla | Tradução em português direto |
+| Termo ou sigla | Significado objetivo |
 |---|---|
-| **API (e API de Dados Abertos)** | Vem do inglês *Application Programming Interface*. Pense nela como um **“balcão eletrônico oficial”** mantido pelo sistema da Câmara Municipal. Em vez de um voluntário entrar página por página e copiar planilhas no mouse, nosso programa bate nesse balcão eletrônico e recebe os registros públicos já estruturados e prontos para conferência automática. |
-| **Token (ou `CAMARA_API_TOKEN`)** | É uma **chave numérica de identificação** gratuita que a Câmara fornece a cidadãos e entidades para consultar a API com responsabilidade. No portal, esse token fica guardado em segredo nos bastidores da hospedagem (Vercel), nunca exposto na tela do visitante. |
-| **Proposição** | É qualquer texto oficial protocolado na Câmara para debate, cobrança ou criação de regra: requerimento, indicação, moção, emenda, veto ou projeto de lei. |
-| **Ementa** | É o **resumo curto** que aparece logo no topo de um documento legislativo explicando do que ele trata (ex.: *“Solicita instalação de iluminação de LED no bairro Araretama”*). É o texto que o portal exibe para leitura rápida antes de você abrir o documento completo na Câmara. |
-| **Norma (Lei / Resolução / Decreto)** | É o texto que **já foi aprovado e publicado** oficialmente, passando a valer como regra na cidade ou na própria Câmara. |
-| **CSV e `UTF-8 com BOM`** | **CSV** é um arquivo de tabela simples feito para abrir no **Microsoft Excel**, LibreOffice ou Google Planilhas. Usamos ponto e vírgula (`;`) e o marcador **`UTF-8 com BOM`** para que acentos do português (`ç`, `ã`, `é`) apareçam perfeitos no Excel configurado em português, sem letras quebradas. |
-| **JSON e Manifesto** | **JSON** é um formato de arquivo organizado para programas de computador lerem listas e campos sem ambiguidade. O **`manifesto.json`** funciona como a “ficha técnica do lote”: diz exatamente a data, a hora, a origem e quantos documentos existiam naquela coleta. |
-| **`Slug`** | É o apelido padronizado usado nos endereços da internet, sem acentos nem espaços — por exemplo, o perfil de Marco Mayor vira `/vereadores/marco-mayor` e o bairro Distrito de Moreira César vira `/bairros/distrito-de-moreira-cesar`. |
-| **PWA (Aplicativo Web Progressivo)** | Tecnologia do próprio navegador (Chrome, Edge, Safari) que deixa instalar o site na tela inicial do celular com ícone próprio, como um aplicativo, sem passar pela Play Store nem pela App Store. |
-| **GitHub e Issue** | **GitHub** é o cofre público na internet onde o código-fonte do projeto fica guardado, transparente e auditável linha por linha. Uma **Issue** é uma ficha aberta de aviso, bug ou sugestão de melhoria vinculada ao projeto. |
-| **Vercel** | Empresa onde o site mora hoje na internet (o “terreno e prédio” que montam e entregam as páginas rapidamente para qualquer navegador com cadeado HTTPS). |
-| **Domínio e DNS** | **Domínio** é o endereço digitado no navegador (ex.: `acompanhe-seu-vereador.vercel.app` ou um futuro `vereadorespinda.org.br`). **DNS** é a “lista telefônica da internet” que traduz esse endereço legível para o servidor correto. |
-| **VPS** | *Virtual Private Server* — na prática, alugar um pequeno computador ligado 24 horas por dia na nuvem apenas para a ONG, sem depender de limites do plano gratuito da Vercel. |
-| **LGPD e LAI** | **LAI** (Lei nº 12.527/2011) é a Lei de Acesso à Informação, que garante a publicidade de dados públicos. **LGPD** (Lei nº 13.709/2018) é a Lei Geral de Proteção de Dados Pessoais, que protege dados sensíveis e a privacidade dos cidadãos mesmo quando mencionados em documentos públicos. |
+| **API (e API de Dados Abertos)** | Sigla para *Application Programming Interface*. Canal eletrônico estruturado mantido pela própria Câmara Municipal para entregar registros públicos diretamente a programas de computador, dispensando captura manual de páginas. |
+| **Token (ou `CAMARA_API_TOKEN`)** | Chave institucional fornecida pela Câmara para consulta autenticada à API. Permanece armazenada exclusivamente em variável secreta na plataforma de publicação (Vercel), nunca exposta no navegador. |
+| **Proposição** | Todo documento formal protocolado na Câmara para cobrança, esclarecimento, homenagem ou criação de norma: requerimento, indicação, moção, emenda, veto ou projeto de lei. |
+| **Ementa** | Resumo inicial oficial de um ato legislativo que antecipa seu conteúdo (ex.: *“Solicita instalação de iluminação de LED no bairro Araretama”*). É exibida nas listagens com ligação direta ao arquivo integral na Câmara. |
+| **Norma (Lei / Resolução / Decreto)** | Ato já aprovado e publicado oficialmente com eficácia normativa no município ou na própria Câmara. |
+| **CSV e `UTF-8 com BOM`** | **CSV** é um formato tabular separado por ponto e vírgula (`;`) para abertura em Excel, LibreOffice e Google Planilhas. O marcador **`UTF-8 com BOM`** assegura exibição correta de acentos em português no Microsoft Excel. |
+| **JSON e Manifesto** | **JSON** é um formato estruturado para análise automatizada e scripts, preservando listas sem perda de campos. O arquivo **`manifesto.json`** registra data, hora, origem e totais oficiais de cada lote publicado. |
+| **`Slug`** | Identificador textual padronizado usado em URLs, sem acentos ou espaços (ex.: `/vereadores/marco-mayor` e `/bairros/distrito-de-moreira-cesar`). |
+| **PWA (Aplicativo Web Progressivo)** | Conjunto de padrões abertos que permite instalar o site na tela inicial de celulares Android e iOS diretamente pelo navegador, sem intermediários de lojas de aplicativos. |
+| **GitHub e Issue** | **GitHub** é o repositório público que versiona o código-fonte do portal de forma auditável. Uma **Issue** registra relatos de erro, correções e sugestões. |
+| **Vercel** | Plataforma de hospedagem em nuvem que compila as páginas estáticas e atende às requisições do portal sob HTTPS. |
+| **Domínio e DNS** | **Domínio** é o endereço web digitado pelo usuário (como `acompanhe-seu-vereador.vercel.app`). **DNS** é o sistema de resolução que aponta esse nome ao servidor de destino. |
+| **VPS** | *Virtual Private Server*: servidor virtual dedicado operado em nuvem pela própria organização, independente do plano gratuito de plataformas PaaS. |
+| **LGPD e LAI** | **LAI** (Lei nº 12.527/2011) assegura o acesso público a atos governamentais; **LGPD** (Lei nº 13.709/2018) disciplina o tratamento e a proteção de dados pessoais, inclusive sensíveis. |
 
 ---
 
@@ -78,26 +78,26 @@ O portal foi desenhado para celular e computador sem excesso de menus. São **17
 | `/bairros` e `/bairros/[bairro]` | Índice pesquisável de bairros identificados nas proposições (ex.: Distrito de Moreira César, Araretama, Cidade Nova), ordenável alfabeticamente ou por volume, com página própria para cada bairro. |
 | `/proposicoes` | Busca completa paginada com filtros combináveis por tipo, ano do número oficial, vereador, assunto, bairro, destinatário, coautoria, mês de publicação e vínculo com lei. |
 | `/normas` | Leis ordinárias, leis complementares, resoluções e decretos legislativos publicados na legislatura, ligados aos projetos originais quando citados na ementa. |
-| `/como-funciona` | Explica sem complicação a diferença entre **Vereador × Prefeito**, traduz termos como *API*, *ementa*, *proposição*, *sanção* e *veto*, detalha os 11 tipos legislativos com exemplos reais e mostra os limites do portal. |
-| `/metodologia` | Abre toda a “cozinha” do cálculo: como a API funciona, as 3 camadas da informação, regras de contagem, listas de temas, falsos positivos bloqueados, variantes de bairros e proteção LGPD. |
-| `/dados` | Permite baixar todo o acervo em **CSV** (pronto para Excel em português) e **JSON** (com ficha técnica de `manifesto.json`), dicionário com exemplos reais e sugestão de crédito. |
-| `/correcoes` | Explica em passos simples e com exemplo de texto pronto como avisar erros de dados, classificação, bairro, retrato de gabinete ou pedidos de privacidade (LGPD), com compromisso de resposta em até **15 dias**. |
-| `/sobre`, `/privacidade`, `/termos` | Identidade institucional do Observatório, guia em português direto sobre privacidade/LGPD (sem cookies e sem perfilamento) e condições de uso e neutralidade eleitoral. |
-| `/offline` e `/404` | Tela honesta de *“Sem conexão”* (nunca finge que dado velho está atualizado) e página de erro amigável com atalhos úteis. |
+| `/como-funciona` | Diferencia competências entre Câmara Municipal e Prefeitura, define API, ementa, proposição, sanção e veto, apresenta os 11 tipos em painéis expansíveis e aponta limites conhecidos. |
+| `/metodologia` | Detalha a coleta na API, as três camadas de informação, regras de contagem, categorias de assunto, falsos positivos bloqueados, variantes de bairros e proteção LGPD. |
+| `/dados` | Permite baixar o acervo completo em **CSV** (Excel) e **JSON** (com `manifesto.json`), dicionário de colunas e modelo de citação. |
+| `/correcoes` | Orienta em passos diretos como reportar divergências nos dados, ajustes em classificações automáticas, troca de retrato oficial ou pedidos LGPD, com resposta em até **15 dias**. |
+| `/sobre`, `/privacidade`, `/termos` | Apresenta o mantenedor institucional, política de privacidade conforme a LGPD (sem cookies nem rastreadores, com preferência local apenas caso o visitante fixe tema claro ou escuro) e termos de neutralidade eleitoral. |
+| `/offline` e `/404` | Tela de *“Sem conexão”* (sem exibição de cache defasado) e página 404 com atalhos principais. |
 
-### Como instalar como aplicativo no celular (PWA)
+### Como configurar aparência (Claro/Escuro) e instalar como aplicativo (PWA)
 
-O portal pode ficar na tela inicial do celular com ícone próprio, **sem precisar baixar nada em loja de aplicativos**:
+O menu do aplicativo — acessível pelo botão **Menu** no topo (desktop) ou na aba **Mais** da barra inferior (celular) — concentra o seletor de **Aparência** (**Automático**, **Claro** e **Escuro** com a identidade verde `#90C040` do OSB), a lista completa de páginas, botão **Compartilhar** e a opção **Instalar aplicativo**:
 
-- **No Android (Chrome / Edge):** abra `https://acompanhe-seu-vereador.vercel.app`, toque nos **três pontinhos (⋮)** no canto superior direito e escolha **“Instalar aplicativo”** ou **“Adicionar à tela inicial”**.
-- **No iPhone (Safari):** abra o endereço no Safari, toque em **Compartilhar** (o quadrado com seta para cima) e toque em **“Adicionar à Tela de Início”**.
-- **Por que ele pede internet ao abrir:** diferente de redes sociais ou apps de notícia, o service worker (`public/sw.js`) guarda no celular apenas o visual (ícones, estilos e a página de aviso), **nunca cópias antigas das proposições**. Sem sinal, o usuário vê apenas um aviso claro de falta de conexão para que ninguém tome um número antigo como atual.
+- **No Android (Chrome / Edge):** abra `https://acompanhe-seu-vereador.vercel.app`, use **Instalar aplicativo** no menu **Mais** ou no menu do navegador para fixar na tela inicial.
+- **No iPhone (Safari):** abra em Safari, toque em **Compartilhar** e selecione **“Adicionar à Tela de Início”**.
+- **Por que solicita internet ao abrir:** o service worker (`public/sw.js`) armazena em cache apenas os ativos estáticos de interface e a tela `/offline`, nunca cópias desatualizadas das proposições.
 
 ---
 
-## 4. Como o portal foi feito (sem economês de TI)
+## 4. Arquitetura e funcionamento
 
-O sistema foi desenhado sob medida para uma associação voluntária: **sem banco de dados para pagar e administrar**, **sem tela de login para sofrer invasão por senha vazada** e **com publicação segura em camadas**:
+O projeto opera sem banco de dados nem painel administrativo vulnerável a credenciais vazadas, compilando as páginas públicas em etapas automáticas de validação:
 
 ```mermaid
 flowchart LR
@@ -258,7 +258,7 @@ O coletor (`src/lib/coleta/coletar.ts` + `src/lib/camara/client.ts`) aplica regr
 | **LGPD — Controlador e Encarregado (arts. 5º VI, 18 e 41)** | `/privacidade` identifica o **Observatório Social do Brasil – Pindamonhangaba/SP** (`30.197.903/0001-75`), sede, canal `pindamonhangaba@osbrasil.org.br` e prazo de **15 dias** alinhado com `/correcoes`. | Formalizar internamente quem responde como Encarregado (art. 41) pela caixa de e-mail, garantindo leitura semanal para cumprir sempre o prazo máximo de 15 dias (art. 19 § 2º). |
 | **LGPD — Saúde e menores (arts. 5º II, 11 e 14)** | 3 requerimentos detectados (`130774`, `132682`, `134695`) omitidos em `omissoes.ts`; `/privacidade` explicita omissão preventiva inclusive para menores (art. 14). | Aprovar juridicamente a redação padrão (`TEXTO_OMITIDO`) e definir periodicidade humana para rodar `npm run auditar:heuristicas` sobre novas coletas. |
 | **LGPD — Decisões automatizadas e bases legais (arts. 7º e 20)** | `/privacidade` declara expressamente que classificações automáticas leem apenas textos legislativos públicos e não realizam perfilamento de pessoas naturais (art. 20), amparadas na LAI (12.527/2011) e art. 7º §§ 3º, 4º, 7º e IX. | Revisar o texto integral de `/privacidade` e conferir coerência com a política institucional nacional do OSB linkada no portal. |
-| **LGPD — Operador e transferência internacional (art. 33)** | Zero cookies, zero analytics, zero banco de usuários; `/privacidade` informa logs técnicos padrão na Vercel Inc. e possível processamento internacional (art. 33). | Validar com especialista LGPD a cláusula referente à Vercel Inc. (ou considerar hospedagem em servidor localizado no Brasil caso o OSB prefira no futuro). |
+| **LGPD — Operador, transferência internacional (art. 33) e preferência local** | Zero cookies, zero analytics e zero banco de usuários; `/privacidade` informa logs técnicos padrão na Vercel Inc. (art. 33) e esclarece que a opção manual de tema (`Claro`/`Escuro`) salva apenas a preferência visual em `localStorage` local do navegador. | Validar com especialista LGPD a cláusula referente à Vercel Inc. (ou considerar hospedagem em servidor localizado no Brasil caso o OSB prefira no futuro). |
 | **Direito Eleitoral (Lei nº 9.504/1997)** | Ordem alfabética, zero ranking/nota/cor partidária, retratos uniformes sem privilégio visual; `/termos` §6 veda publicidade, patrocínio, impulsionamento e uso eleitoral da marca. | Orientar voluntários e comunicação para **jamais impulsionar postagens pagas** ligando para recortes individuais de parlamentares em período eleitoral. |
 | **Direito de Imagem — Retratos Oficiais (`/termos` §5)** | Retratos públicos oficiais da API da Câmara, exibidos em cores originais e círculo idêntico para todos, com canal explícito para atualização ou troca por iniciais mediante pedido de gabinete. | Confirmar com o jurídico se convém enviar ofício cortês à Câmara Municipal comunicando o projeto e o canal oficial para atualização de fotos dos gabinetes. |
 | **Autorização Formal de Marca e CNPJ** | Código MIT com ressalva clara de que a licença livre não abrange o nome nem o logotipo do OSB. | Registrar em ata da Diretoria do OSB Pindamonhangaba autorização formal de uso da marca, logotipo, CNPJ e endereço no portal. |
@@ -279,7 +279,7 @@ Há **um ponto contratual relevante** na hospedagem gratuita atual:
 
 - A **Vercel** oferece o plano gratuito *Hobby*, cujos termos oficiais limitam o uso a projetos **pessoais e não comerciais**, vetando uso institucional/empresarial fora desse enquadramento e proibindo pagamento a desenvolvedores (já o plano *Pro* custa cerca de **US$ 20/mês**, mais de **R$ 1.400/ano** — caro para uma ONG local sem receita).
 
-Compare as três alternativas reais em português direto:
+Compare as três alternativas reais de hospedagem:
 
 | Opção de hospedagem | Custo estimado | Quando faz sentido |
 |---|---|---|

@@ -10,7 +10,7 @@ import { n } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Vereadores",
-  description: "Os vereadores em exercício na Câmara Municipal de Pindamonhangaba, legislatura 2025–2028, com o que cada um apresentou.",
+  description: "Os vereadores em exercício na Câmara Municipal de Pindamonhangaba na legislatura 2025–2028 e suas proposições apresentadas.",
   alternates: { canonical: "/vereadores" },
 };
 
@@ -22,8 +22,8 @@ export default function Vereadores() {
       <div className="prosa">
         <h1>Vereadores em exercício</h1>
         <p className="soft">
-          Legislatura 2025–2028, em ordem alfabética e sem ranking. O pequeno gráfico abaixo de cada nome mostra o ritmo mensal daquele
-          mandato na própria escala. <Link href="/comparar">Comparar lado a lado na mesma escala</Link>.
+          Legislatura 2025–2028, listagem alfabética e sem ranking. As colunas ao lado de cada nome mostram a frequência mensal de
+          publicações do mandato na própria escala. <Link href="/comparar">Comparar vereadores</Link>.
         </p>
       </div>
       <ul className="cartoes-vereador section">
@@ -41,7 +41,7 @@ export default function Vereadores() {
                     {v.partido}
                     {v.funcao && v.funcao !== "Vereador" ? `, ${v.funcao.toLowerCase()}` : ""}. {n(deles.length)}{" "}
                     {deles.length === 1 ? "proposição" : "proposições"}
-                    {tema ? `, mais sobre ${tema.nome.toLowerCase()}` : ""}
+                    {tema ? `, com foco em ${tema.nome.toLowerCase()}` : ""}
                   </span>
                   <Faisca valores={porMes(deles, p.listaMeses).map((m) => m.total)} />
                 </span>

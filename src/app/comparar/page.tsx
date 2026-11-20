@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { AcoesPagina } from "@/components/AcoesPagina";
 import { Fonte } from "@/components/Fonte";
 import { Icon } from "@/components/Icon";
 import { Barras, Colunas, Proporcao } from "@/components/graficos/Graficos";
@@ -34,9 +35,15 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
       <div className="prosa">
         <h1>Comparar vereadores</h1>
         <p className="soft">
-          Escolha até {MAX} vereadores para enxergar todos os gráficos na mesma escala — assim a comparação visual fica justa. Lembre:
-          volume de pedidos não mede qualidade, e quem preside a Câmara exerce atribuições regimentais próprias.
+          Selecione até {MAX} parlamentares para visualizar os gráficos na mesma escala. O volume de proposições não mede qualidade
+          legislativa, e quem preside a Câmara exerce atribuições regimentais próprias.
         </p>
+        {sel.length >= 2 && (
+          <AcoesPagina
+            titulo={`Comparação: ${dados.map((item) => item.v.nome).join(" x ")}`}
+            texto="Comparação na mesma escala de proposições apresentadas na Câmara Municipal de Pindamonhangaba."
+          />
+        )}
       </div>
 
       <nav className="seletor section" aria-label="Escolher vereadores" style={{ marginTop: "1.25rem" }}>
@@ -58,11 +65,11 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
       </nav>
 
       {dados.length === 0 && (
-        <p className="nota section">Toque em dois ou três nomes acima para começar.</p>
+        <p className="nota section">Toque em dois ou três nomes acima para iniciar a comparação.</p>
       )}
       {dados.length === 1 && (
         <p className="small soft" style={{ marginTop: "0.75rem" }}>
-          Toque em mais um ou dois nomes acima para comparar lado a lado.
+          Selecione mais um ou dois parlamentares acima para visualizar lado a lado.
         </p>
       )}
 
@@ -73,11 +80,15 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
               <h2 className="sr-only" id={`c-${v.slug}`}>
                 {v.nome}
               </h2>
-              <Link href={`/vereadores/${v.slug}`} className="cartao-v" style={{ border: 0, padding: 0 }}>
+              <Link href={`/vereadores/${v.slug}`} className="cartao-v">
                 <span className="foto">{v.foto && <Image src={v.foto} alt="" width={136} height={136} />}</span>
                 <span>
                   <span className="nome">{v.nome}</span>
-                  <span className="meta"> {v.partido}{v.funcao && v.funcao !== "Vereador" ? `, ${v.funcao.toLowerCase()}` : ""}</span>
+                  <span className="meta">
+                    {" "}
+                    {v.partido}
+                    {v.funcao && v.funcao !== "Vereador" ? `, ${v.funcao.toLowerCase()}` : ""}
+                  </span>
                 </span>
               </Link>
               <ul className="fatos">
@@ -108,7 +119,7 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
               />
               <h3>Tipos</h3>
               <Proporcao partes={x.grupos.map((g) => ({ slug: g.slug as "pedidos", nome: g.nome, n: g.n }))} />
-              <span className="rotulo-derivado" style={{ marginTop: "1.75rem", marginBottom: 0 }}>
+              <span className="rotulo-derivado" style={{ marginTop: "1.5rem", marginBottom: 0 }}>
                 <Icon nome="info" tamanho={14} /> Classificação automática pelo texto
               </span>
               <h3 style={{ marginTop: "0.35rem" }}>Assuntos dos pedidos (%)</h3>
@@ -127,7 +138,7 @@ export default async function Comparar({ searchParams }: { searchParams: Promise
               ) : (
                 <p className="small soft">Nenhum pedido classificado neste período.</p>
               )}
-              <span className="rotulo-derivado" style={{ marginTop: "1.75rem", marginBottom: 0 }}>
+              <span className="rotulo-derivado" style={{ marginTop: "1.5rem", marginBottom: 0 }}>
                 <Icon nome="info" tamanho={14} /> Classificação automática pelo texto
               </span>
               <h3 style={{ marginTop: "0.35rem" }}>Bairros mais citados</h3>

@@ -15,6 +15,36 @@ const PATHS: Record<string, React.ReactNode> = {
       <path d="m20 20-4.8-4.8" />
     </>
   ),
+  menu: (
+    <>
+      <circle cx="5.5" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="18.5" cy="12" r="1.5" fill="currentColor" stroke="none" />
+    </>
+  ),
+  voltar: <path d="M15 5 8 12l7 7" />,
+  fechar: <path d="M6 6l12 12M18 6 6 18" />,
+  seta: <path d="m9 6 6 6-6 6" />,
+  compartilhar: (
+    <>
+      <circle cx="18" cy="5.5" r="2.2" />
+      <circle cx="6" cy="12" r="2.2" />
+      <circle cx="18" cy="18.5" r="2.2" />
+      <path d="m8 11 8-4.4M8 13l8 4.4" />
+    </>
+  ),
+  instalar: (
+    <>
+      <rect x="6" y="3" width="12" height="18" rx="2" />
+      <path d="M12 8v6m0 0-2.5-2.5M12 14l2.5-2.5" />
+    </>
+  ),
+  comparar: (
+    <>
+      <rect x="3.5" y="4.5" width="7" height="15" rx="1.5" />
+      <rect x="13.5" y="4.5" width="7" height="15" rx="1.5" />
+    </>
+  ),
   lei: (
     <>
       <path d="M12 3v18M7 21h10M5 7h14" />
@@ -73,6 +103,19 @@ const PATHS: Record<string, React.ReactNode> = {
     <>
       <circle cx="12" cy="12" r="8.5" />
       <path d="M12 11v5.5M12 7.6v.4" />
+    </>
+  ),
+  sol: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2.5v2M12 19.5v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2.5 12h2M19.5 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+    </>
+  ),
+  lua: <path d="M20 14.5A8 8 0 0 1 9.5 4a8.2 8.2 0 1 0 10.5 10.5z" />,
+  sistema: (
+    <>
+      <rect x="3" y="4.5" width="18" height="12" rx="2" />
+      <path d="M8.5 20h7M12 16.5V20" />
     </>
   ),
 };

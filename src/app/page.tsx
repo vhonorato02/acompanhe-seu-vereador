@@ -23,7 +23,10 @@ export default function Inicio() {
   const pedidos = p.grupos.find((g) => g.slug === "pedidos")?.n ?? 0;
   const projetos = p.grupos.find((g) => g.slug === "projetos")?.n ?? 0;
   const emDez = Math.round((pedidos / total) * 10);
-  const pico = p.mensal.reduce((a, b) => (b.total > a.total ? b : a), p.mensal[0] ?? { mes: "", total: 0, porGrupo: { pedidos: 0, projetos: 0, homenagens: 0, camara: 0 } });
+  const pico = p.mensal.reduce(
+    (a, b) => (b.total > a.total ? b : a),
+    p.mensal[0] ?? { mes: "", total: 0, porGrupo: { pedidos: 0, projetos: 0, homenagens: 0, camara: 0 } },
+  );
   const [picoAno, picoMes] = pico.mes.split("-");
   const tema1 = p.temasPedidos[0];
   const fVer = p.funil.find((f) => f.autor === "vereadores");
@@ -38,13 +41,14 @@ export default function Inicio() {
   return (
     <>
       <section className="hero" aria-labelledby="titulo">
-        <h1 id="titulo">O que os vereadores apresentam na Câmara.</h1>
+        <h1 id="titulo">Acompanhe o que os vereadores apresentam na Câmara</h1>
         <p className="lede">
-          <Link href="/proposicoes">{n(total)} proposições</Link> — requerimentos, indicações, moções e projetos de lei — apresentadas na
-          Câmara Municipal de {SITE.cidade} desde janeiro de 2025, sempre com o link para o documento oficial. Dados coletados em{" "}
-          {dataColeta(d.execucao.coletadoEm)}.
+          Consulte projetos de lei, requerimentos, indicações e moções publicados desde janeiro de 2025, com ligação direta para o
+          documento oficial. Dados atualizados em {dataColeta(d.execucao.coletadoEm)}.
         </p>
+
         <Busca />
+
         <nav aria-label="Assuntos mais pedidos">
           <ul className="atalhos">
             {p.temasPedidos.slice(0, 6).map((t) => (
@@ -56,11 +60,26 @@ export default function Inicio() {
             ))}
           </ul>
         </nav>
+
+        <div className="kpi-grade">
+          <Link href="/proposicoes" className="kpi-card">
+            <span className="kpi-num">{n(total)}</span>
+            <span className="kpi-rotulo">Proposições registradas</span>
+          </Link>
+          <Link href={hrefLista("/proposicoes", { grupo: "projetos" })} className="kpi-card">
+            <span className="kpi-num">{n(projetos)}</span>
+            <span className="kpi-rotulo">Projetos e propostas normativas</span>
+          </Link>
+          <Link href="/normas" className="kpi-card">
+            <span className="kpi-num">{n(d.normas.length)}</span>
+            <span className="kpi-rotulo">Leis e normas publicadas</span>
+          </Link>
+        </div>
       </section>
 
       <section className="section" aria-labelledby="t-vereadores">
         <div className="section-head">
-          <h2 id="t-vereadores">Os {nVereadores} vereadores</h2>
+          <h2 id="t-vereadores">Os {nVereadores} vereadores em exercício</h2>
           <Link href="/comparar">Comparar</Link>
         </div>
         <ul className="galeria">
@@ -70,22 +89,22 @@ export default function Inicio() {
             </li>
           ))}
         </ul>
-        <p className="small soft" style={{ marginTop: "1.25rem" }}>
-          Em ordem alfabética, legislatura 2025–2028. Retratos oficiais da Câmara Municipal em cores originais, sem destaque entre mandatos.
+        <p className="small soft" style={{ marginTop: "1rem" }}>
+          Ordem alfabética, sem classificação por desempenho. Retratos oficiais da Câmara Municipal.
         </p>
       </section>
 
       <section className="banda section" aria-labelledby="t-bairros">
         <div>
           <div className="section-head">
-            <h2 id="t-bairros">O seu bairro</h2>
+            <h2 id="t-bairros">Pedidos por bairro</h2>
             <Link href="/bairros">Todos os {n(p.bairros.length)}</Link>
           </div>
-          <p className="lede" style={{ marginTop: "-0.5rem", marginBottom: "1rem" }}>
-            Lugares identificados no texto das proposições. Os que mais aparecem na legislatura:
+          <p className="lede" style={{ marginTop: "-0.35rem", marginBottom: "0.85rem" }}>
+            Localidades identificadas automaticamente nas ementas (os resumos oficiais) das proposições desta legislatura.
           </p>
           <span className="rotulo-derivado">
-            <Icon nome="info" tamanho={14} /> Identificado automaticamente no texto da ementa
+            <Icon nome="info" tamanho={14} /> Classificação automática pelo texto da ementa
           </span>
           <Barras
             titulo="Bairros mais citados"
@@ -95,129 +114,137 @@ export default function Inicio() {
         </div>
       </section>
 
-      <div className="section">
-        <h2>A Câmara em números</h2>
-        <p className="lede">Todo número abaixo é um atalho: ao tocar, você abre exatamente os documentos oficiais que ele conta.</p>
-      </div>
-
-      <article className="historia" aria-labelledby="h-pedidos" style={{ marginTop: "1.5rem" }}>
-        <h3 id="h-pedidos">{emDez} em cada 10 proposições são pedidos, não projetos de lei</h3>
-        <p className="lede">
-          Indicações e requerimentos levam demandas do dia a dia à Prefeitura e a outros órgãos — tapar um buraco, trocar uma lâmpada,
-          cobrar informação oficial. Já projetos de lei, que podem criar ou alterar regras para a cidade, são {n(projetos)}.{" "}
-          <Link href="/como-funciona">Entenda cada tipo</Link>
+      <section className="section" aria-labelledby="t-numeros">
+        <div className="section-head">
+          <h2 id="t-numeros">Visão geral da Câmara</h2>
+          <Link href="/como-funciona">Como funciona</Link>
+        </div>
+        <p className="lede" style={{ marginTop: "-0.35rem", marginBottom: "1.25rem" }}>
+          Cada número abaixo abre exatamente a lista dos documentos oficiais contabilizados.
         </p>
-        <Proporcao
-          partes={p.grupos.map((g) => ({ slug: g.slug as "pedidos", nome: g.nome, n: g.n }))}
-          href={(slug) => hrefLista("/proposicoes", { grupo: slug })}
-        />
-      </article>
 
-      <article className="historia" aria-labelledby="h-ritmo">
-        <h3 id="h-ritmo">Mês a mês</h3>
-        <p className="lede">
-          O mês com mais documentos publicados até agora foi {nomeMes(Number(picoMes), true)} de {picoAno}, com {n(pico.total)}. Toque em
-          uma coluna para ver tudo o que saiu naquele mês.
-        </p>
-        <Colunas
-          dados={p.mensal}
-          empilhado
-          titulo="Proposições publicadas por mês"
-          href={(mes) => hrefLista("/proposicoes", { pub: mes })}
-        />
-      </article>
+        <article className="historia" aria-labelledby="h-pedidos">
+          <h3 id="h-pedidos">{emDez} em cada 10 proposições são pedidos ao Executivo ou a concessionárias</h3>
+          <p className="lede">
+            Indicações e requerimentos tratam de solicitações operacionais e pedidos de informação; projetos de lei propõem regras para o
+            município e somam {n(projetos)} registros. <Link href="/como-funciona#tipos">Entenda cada tipo</Link>.
+          </p>
+          <Proporcao
+            partes={p.grupos.map((g) => ({ slug: g.slug as "pedidos", nome: g.nome, n: g.n }))}
+            href={(slug) => hrefLista("/proposicoes", { grupo: slug })}
+          />
+        </article>
 
-      <div className="duas-colunas">
-        <article className="historia" aria-labelledby="h-temas">
-          <span className="rotulo-derivado">
-            <Icon nome="info" tamanho={14} /> Classificação automática pelo texto
-          </span>
-          <h3 id="h-temas">Do que tratam os pedidos</h3>
-          {tema1 && (
+        <article className="historia" aria-labelledby="h-ritmo">
+          <h3 id="h-ritmo">Produção mês a mês</h3>
+          <p className="lede">
+            O mês com maior volume publicado foi {nomeMes(Number(picoMes), true)} de {picoAno}, com {n(pico.total)} documentos. Selecione uma
+            coluna para consultar os itens do período.
+          </p>
+          <Colunas
+            dados={p.mensal}
+            empilhado
+            titulo="Proposições publicadas por mês"
+            href={(mes) => hrefLista("/proposicoes", { pub: mes })}
+          />
+        </article>
+
+        <div className="duas-colunas">
+          <article className="historia" aria-labelledby="h-temas">
+            <span className="rotulo-derivado">
+              <Icon nome="info" tamanho={14} /> Classificação automática pelo texto
+            </span>
+            <h3 id="h-temas">Assuntos mais frequentes nos pedidos</h3>
+            {tema1 && (
+              <p className="lede">
+                {tema1.nome} aparece em {percent(tema1.n, p.pedidos.length)}% dos {n(p.pedidos.length)} pedidos. Um mesmo documento pode
+                tratar de mais de um assunto. <Link href="/metodologia#temas">Critérios de classificação</Link>.
+              </p>
+            )}
+            <Barras
+              titulo="Pedidos por assunto"
+              visiveis={6}
+              itens={p.temasPedidos.map((t) => ({
+                chave: t.slug,
+                nome: t.nome,
+                n: t.n,
+                href: hrefLista("/proposicoes", t.filtro),
+              }))}
+            />
+          </article>
+
+          <article className="historia" aria-labelledby="h-destinos">
+            <span className="rotulo-derivado">
+              <Icon nome="info" tamanho={14} /> Classificação automática pelo vocativo
+            </span>
+            <h3 id="h-destinos">Destinatários dos pedidos</h3>
             <p className="lede">
-              {tema1.nome} aparece em {percent(tema1.n, p.pedidos.length)}% dos {n(p.pedidos.length)} pedidos. Como um mesmo pedido pode
-              falar de asfalto e iluminação juntos, ele conta nos dois assuntos. <Link href="/metodologia#temas">Como classificamos</Link>
+              {percent(prefeitura, totalDestinos)}% dos pedidos são endereçados à Prefeitura; os demais seguem para concessionárias,
+              autarquias estaduais e Mesa Diretora. <Link href="/metodologia#destinos">Ver regra aplicada</Link>.
             </p>
-          )}
-          <Barras
-            titulo="Pedidos por assunto"
-            visiveis={6}
-            itens={p.temasPedidos.map((t) => ({
-              chave: t.slug,
-              nome: t.nome,
-              n: t.n,
-              href: hrefLista("/proposicoes", t.filtro),
-            }))}
-          />
-        </article>
+            <Barras
+              titulo="Pedidos por destinatário"
+              itens={p.destinos.map((x) => ({ chave: x.slug, nome: x.nome, n: x.n, href: hrefLista("/proposicoes", x.filtro) }))}
+            />
+          </article>
+        </div>
 
-        <article className="historia" aria-labelledby="h-destinos">
-          <span className="rotulo-derivado">
-            <Icon nome="info" tamanho={14} /> Identificado pelo início do texto
-          </span>
-          <h3 id="h-destinos">A quem se pede</h3>
-          <p className="lede">
-            {percent(prefeitura, totalDestinos)}% dos pedidos são endereçados à Prefeitura. O restante vai para empresas e órgãos como EDP,
-            Sabesp, DER, transporte municipal e a própria Mesa da Câmara. <Link href="/metodologia#destinos">Como identificamos</Link>
-          </p>
-          <Barras
-            titulo="Pedidos por destinatário"
-            itens={p.destinos.map((x) => ({ chave: x.slug, nome: x.nome, n: x.n, href: hrefLista("/proposicoes", x.filtro) }))}
-          />
-        </article>
-      </div>
-
-      <div className="duas-colunas">
-        <article className="historia" aria-labelledby="h-leis">
-          <span className="rotulo-derivado">
-            <Icon nome="info" tamanho={14} /> Ligação feita pelo número do projeto citado na lei
-          </span>
-          <h3 id="h-leis">Do projeto à lei</h3>
-          <p className="lede">
-            Quando o texto oficial de uma lei cita o número do projeto que lhe deu origem, o portal conecta os dois e exibe a lei aprovada
-            no perfil de quem assinou o projeto. <Link href="/normas">Ver as leis</Link>
-          </p>
-          {fVer && (
-            <div className="funil">
-              <div className="funil-linha">
-                <div className="rotulos">
-                  <span>Projetos de lei de vereadores</span>
-                  <span>
-                    <Link href={hrefLista("/proposicoes", fVer.filtroViraramLei)}>{n(fVer.viraramLei)}</Link> de{" "}
-                    <Link href={hrefLista("/proposicoes", fVer.filtroApresentados)}>{n(fVer.apresentados)}</Link>
-                  </span>
+        <div className="duas-colunas">
+          <article className="historia" aria-labelledby="h-leis">
+            <span className="rotulo-derivado">
+              <Icon nome="info" tamanho={14} /> Vínculo pelo número do projeto citado na norma
+            </span>
+            <h3 id="h-leis">Projetos vinculados a leis publicadas</h3>
+            <p className="lede">
+              Quando a ementa de uma norma informa o número do projeto de origem, o portal associa os dois registros.{" "}
+              <Link href="/normas">Consultar leis e normas</Link>.
+            </p>
+            {fVer && (
+              <div className="funil">
+                <div className="funil-linha">
+                  <div className="rotulos">
+                    <span>Projetos de lei de vereadores</span>
+                    <span>
+                      <Link href={hrefLista("/proposicoes", fVer.filtroViraramLei)}>{n(fVer.viraramLei)}</Link> de{" "}
+                      <Link href={hrefLista("/proposicoes", fVer.filtroApresentados)}>{n(fVer.apresentados)}</Link>
+                    </span>
+                  </div>
+                  <div className="funil-barra" aria-hidden="true">
+                    <span style={{ width: `${Math.max(1, percent(fVer.viraramLei, fVer.apresentados))}%` }} />
+                  </div>
+                  <p className="small soft">citados expressamente como origem de norma publicada ({percent(fVer.viraramLei, fVer.apresentados)}%)</p>
                 </div>
-                <div className="funil-barra" aria-hidden="true">
-                  <span style={{ width: `${Math.max(1, percent(fVer.viraramLei, fVer.apresentados))}%` }} />
-                </div>
-                <p className="small soft">já citados como origem de uma lei publicada ({percent(fVer.viraramLei, fVer.apresentados)}%)</p>
               </div>
-            </div>
-          )}
-          <p className="small soft" style={{ marginTop: "1rem" }}>
-            A mesma comparação direta não vale para os{" "}
-            {fExe ? <Link href={hrefLista("/proposicoes", fExe.filtroApresentados)}>{n(fExe.apresentados)} projetos do Poder Executivo</Link> : "projetos do Poder Executivo"}:
-            as leis vindas da Prefeitura raramente citam o número do projeto original, e projetos ainda em debate entram no total, tornando a
-            proporção sempre um piso mínimo observável.
-          </p>
-        </article>
+            )}
+            <p className="small soft" style={{ marginTop: "1rem" }}>
+              O cálculo não se aplica diretamente aos{" "}
+              {fExe ? (
+                <Link href={hrefLista("/proposicoes", fExe.filtroApresentados)}>{n(fExe.apresentados)} projetos do Poder Executivo</Link>
+              ) : (
+                "projetos do Poder Executivo"
+              )}
+              , pois leis municipais de autoria da Prefeitura em regra não citam o projeto original, e propostas em tramitação permanecem no
+              denominador.
+            </p>
+          </article>
 
-        <article className="historia" aria-labelledby="h-rede">
-          <h3 id="h-rede">Quem assina junto com quem</h3>
-          <p className="lede">
-            {percent(unicoAutor, total)}% das proposições têm um único vereador assinando. Ainda assim,{" "}
-            {paresTodos === possiveis ? "todos os pares possíveis entre vereadores" : `${paresTodos} dos ${possiveis} pares possíveis`} já
-            dividiram alguma proposta. Quanto mais espessa a linha, mais documentos em comum.
-          </p>
-          <Rede nos={d.vereadores.map((v) => ({ slug: v.slug, nome: v.nome, foto: v.foto }))} pares={p.pares} />
-        </article>
-      </div>
+          <article className="historia" aria-labelledby="h-rede">
+            <h3 id="h-rede">Coautoria entre vereadores</h3>
+            <p className="lede">
+              {percent(unicoAutor, total)}% das proposições têm autoria individual. Nos demais casos,{" "}
+              {paresTodos === possiveis ? "todos os pares possíveis" : `${paresTodos} dos ${possiveis} pares possíveis`} já assinaram ao menos
+              um documento em conjunto.
+            </p>
+            <Rede nos={d.vereadores.map((v) => ({ slug: v.slug, nome: v.nome, foto: v.foto }))} pares={p.pares} />
+          </article>
+        </div>
 
-      <p className="nota section">
-        <strong>Quantidade não é qualidade.</strong> Um único projeto de lei pode exigir meses de estudo e debate; um pedido de rotina pode
-        ser repetido até ser resolvido. Por isso o portal não faz ranking: os números existem para ajudar você a encontrar os documentos
-        oficiais, nunca para dar nota.
-      </p>
+        <p className="nota" style={{ marginTop: "1.25rem" }}>
+          <strong>Contexto metodológico:</strong> volume de registros não mede qualidade legislativa. Projetos de lei demandam pareceres e
+          votação em plenário, enquanto pedidos operacionais podem ser reiterados diversas vezes. Não elaboramos rankings ou notas
+          individuais.
+        </p>
+      </section>
       <Fonte d={d} />
     </>
   );

@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
-import { NavTopo, TabBar } from "@/components/Navegacao";
+import { MenuAppDialog } from "@/components/MenuApp";
+import { BarraTopo, TabBar } from "@/components/Navegacao";
 import { RegistrarSW } from "@/components/RegistrarSW";
 import { organizacaoLd, websiteLd } from "@/lib/seo/jsonld";
 import { SITE } from "@/lib/site";
@@ -31,29 +32,23 @@ export const viewport: Viewport = {
   viewportFit: "cover",
   colorScheme: "light dark",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f7f3" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0e0a" },
   ],
 };
+
+const FOUC_TEMA_SCRIPT = `try{var t=localStorage.getItem("asv-tema");if(t==="light"||t==="dark"){var m=document.querySelector('meta[name="color-scheme"]');if(m)m.setAttribute("content",t);var c=document.createElement("meta");c.name="theme-color";c.dataset.temaManual="1";c.content=t==="dark"?"#0b0e0a":"#f6f7f3";document.head.appendChild(c);}}catch(e){void e;}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
       <body>
+        <script dangerouslySetInnerHTML={{ __html: FOUC_TEMA_SCRIPT }} />
         <a className="skip" href="#conteudo">
           Pular para o conteúdo
         </a>
         <header className="topbar">
-          <div className="page">
-            <Link href="/" className="marca">
-              <img src="/marca/emblema.png" alt="" width={33} height={32} />
-              <span>
-                {SITE.nome}
-                <small>{SITE.organizacaoCurta}</small>
-              </span>
-            </Link>
-            <NavTopo />
-          </div>
+          <BarraTopo />
         </header>
         <main id="conteudo" className="page" tabIndex={-1}>
           {children}
@@ -64,12 +59,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="page">
             <div className="instituicao">
               <a className="logo-osb" href={SITE.osb.site} aria-label={`${SITE.organizacao} (site do Observatório)`}>
-                <img src="/marca/logo-osb.png" alt="" width={672} height={246} loading="lazy" />
+                <img src="/marca/logo-osb.png" alt="" width={672} height={246} />
               </a>
               <div>
                 <p>
-                  <strong>{SITE.nome}</strong> é um projeto do {SITE.organizacao}, associação civil apartidária que busca {SITE.missao}.
-                  Não é o site oficial da Câmara Municipal; os documentos oficiais estão em{" "}
+                  <strong>{SITE.nome}</strong> é uma iniciativa do {SITE.organizacao}, associação civil apartidária dedicada a {SITE.missao}.
+                  Não substitui o site oficial da Câmara Municipal; os registros originais ficam em{" "}
                   <a href="https://www.pindamonhangaba.sp.leg.br">pindamonhangaba.sp.leg.br</a>.
                 </p>
                 <address>
@@ -96,6 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
         <TabBar />
+        <MenuAppDialog />
       </body>
     </html>
   );

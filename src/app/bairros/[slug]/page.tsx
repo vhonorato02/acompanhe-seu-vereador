@@ -77,7 +77,7 @@ export default async function PaginaBairro({ params }: { params: Promise<{ slug:
         <div className="duas-colunas">
           <article className="historia" aria-labelledby="h-temas">
             <h2 id="h-temas">Assuntos</h2>
-            <p className="lede">Um mesmo pedido pode tratar de mais de um assunto ao mesmo tempo (por exemplo, asfalto e iluminação).</p>
+            <p className="lede">Um pedido pode receber mais de um assunto quando trata de frentes distintas, como pavimentação e iluminação.</p>
             <Barras
               titulo={`Assuntos em ${b.nome}`}
               itens={temas.map((t) => ({ chave: t.slug, nome: t.nome, n: t.n, href: hrefLista("/proposicoes", t.filtro) }))}

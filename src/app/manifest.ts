@@ -18,8 +18,8 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     orientation: "portrait",
     categories: ["government", "news"],
-    background_color: "#ffffff",
-    theme_color: "#ffffff",
+    background_color: "#f6f7f3",
+    theme_color: "#f6f7f3",
     shortcuts: [
       { name: "Vereadores", url: "/vereadores", icons: [{ src: "/icones/icone-192.png", sizes: "192x192" }] },
       { name: "O seu bairro", url: "/bairros", icons: [{ src: "/icones/icone-192.png", sizes: "192x192" }] },

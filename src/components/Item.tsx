@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Icon } from "./Icon";
 import { Avatar } from "./Rosto";
 import { APELIDOS } from "@/lib/content/apelidos";
 import { legivel, nomeItem } from "@/lib/content/tipos";
@@ -16,6 +17,7 @@ export function Item({ r, porSlug }: { r: Registro; porSlug: ReadonlyMap<string,
       <div className="item-topo">
         <a className="item-nome" href={r.link}>
           {nomeItem(r.tipo, r.numero, r.ano, r.titulo)}
+          <Icon nome="externo" tamanho={14} />
         </a>
         <time className="item-data" dateTime={r.data.replace(" ", "T")}>
           {dataCurta(r.data)}

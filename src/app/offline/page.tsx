@@ -14,12 +14,11 @@ export default function Offline() {
     <div className="prosa">
       <h1>Sem conexão</h1>
       <p className="lede">
-        Não foi possível carregar esta página porque o seu aparelho parece estar sem internet no momento.
+        Não foi possível carregar esta página porque o dispositivo está sem acesso à internet.
       </p>
       <p>
-        De propósito, o portal nunca guarda números antigos no celular para fingir que estão atualizados — em acompanhamento público,
-        informação desatualizada induz a erro. Assim que a conexão voltar,{" "}
-        <a href="">tente recarregar a página</a>.
+        Por decisão editorial, o portal não exibe cópias antigas em cache como se fossem a coleta atual. Assim que a conexão for
+        restabelecida, <a href="">recarregue a página</a>.
       </p>
     </div>
   );

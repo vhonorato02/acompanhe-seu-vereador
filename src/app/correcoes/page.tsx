@@ -5,7 +5,7 @@ import { SITE, URL_REPORTAR_ERRO } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Correções",
-  description: `Como avisar sobre um erro de dado, classificação, bairro, foto ou pedido de privacidade no ${SITE.nome}.`,
+  description: `Canal para apontar divergências nos dados, ajustes em classificações automáticas, troca de retrato oficial ou pedidos de LGPD no ${SITE.nome}.`,
   alternates: { canonical: "/correcoes" },
 };
 
@@ -14,105 +14,92 @@ const CORRECOES = `${SITE.repositorio}/issues?q=label%3Acorre%C3%A7%C3%A3o`;
 export default function Correcoes() {
   return (
     <div className="prosa">
-      <h1>Viu um erro ou quer pedir revisão? Avise.</h1>
+      <h1>Comunicar erro ou pedir revisão</h1>
       <p className="lede">
-        Quem trabalha com mais de dezessete mil documentos públicos sabe que falhas acontecem: uma palavra pode enganar a leitura
-        automática, um nome de bairro pode aparecer duplicado, um gabinete pode atualizar a foto oficial ou a própria Câmara pode
-        retificar um texto. Cada aviso ajuda a deixar o portal mais preciso para toda a cidade.
+        Em bases com dezenas de milhares de atos públicos, classificações automáticas de texto, grafias de bairros ou registros da origem
+        podem exigir ajuste. O Observatório analisa pedidos de revisão e solicitações de privacidade com resposta em até 15 dias corridos.
       </p>
 
       <nav className="sumario" aria-label="Nesta página">
         <p className="sumario-titulo">Nesta página</p>
         <ul>
-          <li><a href="#tipos">O que você pode avisar</a></li>
-          <li><a href="#como-avisar">Dois caminhos simples</a></li>
-          <li><a href="#modelo">O que escrever (com exemplo)</a></li>
-          <li><a href="#depois">O que acontece depois (15 dias)</a></li>
+          <li><a href="#tipos">Situações atendidas</a></li>
+          <li><a href="#como-avisar">Canais de atendimento</a></li>
+          <li><a href="#modelo">Informações recomendadas</a></li>
+          <li><a href="#depois">Fluxo e prazo de resposta</a></li>
         </ul>
       </nav>
 
-      <h2 id="tipos">1. Que tipo de situação você encontrou?</h2>
+      <h2 id="tipos">1. Situações que podem ser reportadas</h2>
       <ul>
         <li>
-          <strong>Erro de leitura automática (portal):</strong> por exemplo, um pedido que entrou no assunto errado, um bairro escrito de
-          duas formas separadas (<em>“Jardim Resende”</em> e <em>“Jardim Rezende”</em>), um projeto já sancionado que não apareceu ligado
-          à lei ou uma foto oficial desatualizada de gabinete.
+          <strong>Classificação automática do portal:</strong> pedido enquadrado em assunto inadequado, bairro listado com grafias duplicadas,
+          projeto sancionado ainda sem vínculo com a lei correspondente ou retrato oficial desatualizado de gabinete.
         </li>
         <li>
-          <strong>Erro no texto original (Câmara):</strong> quando a data, a autoria ou o título publicado pela própria Câmara Municipal
-          trouxer algum equívoco na fonte oficial.
+          <strong>Divergência no registro original da Câmara:</strong> data, autoria ou ementa publicada com erro na fonte legislativa.
         </li>
         <li>
-          <strong>Pedido envolvendo dados pessoais ou privacidade (LGPD):</strong> caso você ou um familiar tenha o nome citado numa
-          ementa delicada e queira solicitar omissão conforme a <Link href="/privacidade#direitos">Política de privacidade</Link>.{" "}
-          <strong>Neste caso, use apenas o e-mail abaixo</strong> — nunca envie dados pessoais em avisos públicos.
+          <strong>Solicitações de privacidade (LGPD):</strong> omissão de ementas que exponham cidadãos comuns em situações sensíveis de saúde
+          ou vulnerabilidade (<Link href="/privacidade#direitos">Política de privacidade</Link>). Nesses casos, utilize exclusivamente o canal de
+          e-mail institucional para evitar exposição pública dos dados.
         </li>
       </ul>
 
-      <h2 id="como-avisar">2. Dois caminhos simples (sem precisar entender de tecnologia)</h2>
+      <h2 id="como-avisar">2. Canais disponíveis</h2>
       <div className="quadro-duplo">
         <section className="quadro-card" aria-labelledby="c-email">
-          <h3 id="c-email">Por e-mail (para qualquer pessoa)</h3>
+          <h3 id="c-email">E-mail institucional (qualquer assunto)</h3>
           <p>
-            É o caminho mais rápido e não exige cadastro nenhum. Escreva diretamente para o Observatório Social de {SITE.cidade} em{" "}
+            Caminho indicado para moradores, gabinetes e requerimentos formais de privacidade:{" "}
             <Contato assunto="Erro ou revisão no portal" />.
           </p>
-          <p className="small soft">
-            Obrigatório para pedidos de privacidade (LGPD), remoção de dados sensíveis de terceiros ou solicitação de troca de retrato de
-            gabinete.
-          </p>
+          <p className="small soft">Não exige conta em plataformas externas e garante atendimento reservado para dados pessoais.</p>
         </section>
         <section className="quadro-card" aria-labelledby="c-github">
-          <h3 id="c-github">Pelo formulário público do GitHub</h3>
+          <h3 id="c-github">Registro público no GitHub (questões técnicas)</h3>
           <p>
-            <a href={URL_REPORTAR_ERRO}>Abrir um aviso estruturado no GitHub</a>. <em>GitHub</em> é o site público onde o código-fonte
-            e o registro técnico de melhorias do projeto ficam abertos para qualquer auditor conferir.
+            <a href={URL_REPORTAR_ERRO}>Abrir chamado no repositório público</a> para relatar falhas de código, layout ou regras automáticas de
+            leitura.
           </p>
-          <p className="small soft">
-            Requer conta gratuita no GitHub e torna sua mensagem visível publicamente na internet — use só para erros técnicos ou de dados
-            sem informações pessoais.
-          </p>
+          <p className="small soft">Exige conta gratuita no GitHub e publica a mensagem abertamente para auditoria comunitária.</p>
         </section>
       </div>
 
-      <h2 id="modelo">3. O que ajuda a conferir rápido (com exemplo pronto)</h2>
-      <p>Você não precisa usar linguagem técnica. Se conseguir incluir estes três itens, resolvemos muito mais depressa:</p>
+      <h2 id="modelo">3. O que enviar para acelerar a conferência</h2>
       <ul>
-        <li>O endereço (link) da página do portal onde você viu o problema;</li>
-        <li>O que está aparecendo agora e o que deveria aparecer;</li>
-        <li>Se tiver, o link do documento oficial no site da Câmara Municipal mostrando o dado correto.</li>
+        <li>Endereço (URL) da página onde a informação aparece;</li>
+        <li>Descrição objetiva da divergência observada;</li>
+        <li>Link do documento oficial no site da Câmara Municipal, sempre que disponível.</li>
       </ul>
       <div className="exemplo">
         <p>
-          <strong>Exemplo de mensagem pronta para copiar:</strong>
-        </p>
-        <p>
+          <strong>Modelo de mensagem:</strong>{" "}
           <em>
-            “Olá, equipe do Observatório. Na página /bairros/andrade aparecem pedidos do Residencial Andrade misturados com outro
-            loteamento (ou separados por engano). Segue o link da proposição na Câmara: https://pindamonhangaba.sp.leg.br/…”
+            “Na página /bairros/andrade, proposições do Residencial Andrade aparecem separadas por grafia diferente. Link do documento na
+            Câmara: https://pindamonhangaba.sp.leg.br/…”
           </em>
         </p>
       </div>
 
-      <h2 id="depois">4. O que acontece depois do envio (prazo de até 15 dias)</h2>
+      <h2 id="depois">4. Como o pedido é tratado (até 15 dias)</h2>
       <ol className="passos">
         <li>
-          <strong>Conferência e resposta em até 15 dias:</strong> o Observatório confere a mensagem diretamente no documento oficial da
-          Câmara e responde pelo mesmo canal em até 15 dias corridos.
+          <strong>Análise e retorno em até 15 dias corridos:</strong> a equipe confronta a solicitação diretamente com a fonte oficial da Câmara e
+          responde pelo mesmo canal de envio.
         </li>
         <li>
-          <strong>Quando o erro é do portal:</strong> corrigimos a regra no código-fonte e escrevemos um teste automático para garantir que
-          o mesmo erro nunca mais volte. A melhoria entra no ar já na atualização seguinte (duas vezes ao dia).
+          <strong>Erro atribuído ao código do portal:</strong> a regra é corrigida, coberta por teste automatizado contra reincidência e publicada
+          na atualização seguinte.
         </li>
         <li>
-          <strong>Quando o erro está na Câmara:</strong> como o portal não inventa nem adultera documentos oficiais, encaminhamos o aviso à
-          Câmara Municipal e deixamos o registro anotado. Se for questão de privacidade (LGPD), explicamos também como protocolar na
-          própria Câmara, pois aqui ocultamos apenas a cópia deste portal.
+          <strong>Erro na base da Câmara Municipal:</strong> por fidelidade à fonte, não alteramos documentos oficiais unilateralmente.
+          Encaminhamos o apontamento à Câmara e registramos a ocorrência; em pedidos de LGPD, informamos também como solicitar ajuste na origem.
         </li>
         <li>
-          <strong>Nada é varrido para baixo do tapete:</strong> correções técnicas e de metodologia ficam registradas na{" "}
-          <a href={CORRECOES}>lista pública de correções</a> e na página de <Link href="/metodologia">Metodologia</Link>, sempre sem
-          expor dados pessoais de quem pediu sigilo.
+          <strong>Transparência de correções:</strong> ajustes técnicos e metodológicos são documentados em{" "}
+          <a href={CORRECOES}>chamados de correção no GitHub</a> e na página de <Link href="/metodologia">Metodologia</Link>, preservando o
+          sigilo de titulares que solicitaram omissão.
         </li>
       </ol>
     </div>

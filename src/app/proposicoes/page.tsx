@@ -25,9 +25,9 @@ export default async function Proposicoes({
       searchParams={await searchParams}
       intro={
         <p className="soft">
-          Busque por palavra, nome de bairro, número com ano (ex.: 2398/2026) ou abreviação do tipo (<code>req</code> para requerimento,{" "}
-          <code>pl</code> para projeto de lei, <code>moção</code>). Inclui também propostas da Prefeitura e de comissões.{" "}
-          <Link href="/como-funciona">Entenda cada tipo</Link>
+          Pesquise por palavra-chave, bairro, número com ano (ex.: 2398/2026) ou sigla do tipo (<code>req</code> para requerimento,{" "}
+          <code>pl</code> para projeto de lei, <code>moção</code>). Inclui iniciativas do Executivo e de comissões.{" "}
+          <Link href="/como-funciona#tipos">Tipos de proposição</Link>.
         </p>
       }
     />

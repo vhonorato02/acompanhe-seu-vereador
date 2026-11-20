@@ -69,7 +69,7 @@ export function PaginaLista({
         </label>
         <div className="busca-campo">
           <Icon nome="buscar" />
-          <input id="q" name="q" type="search" defaultValue={filtro.q ?? ""} placeholder="Bairro, assunto, número" autoComplete="off" enterKeyHint="search" maxLength={120} />
+          <input id="q" name="q" type="search" defaultValue={filtro.q ?? ""} placeholder="Buscar bairro, tema ou número" autoComplete="off" enterKeyHint="search" maxLength={120} />
           <CamposOcultos filtro={filtro} exceto={["q"]} />
           <button type="submit">Buscar</button>
         </div>

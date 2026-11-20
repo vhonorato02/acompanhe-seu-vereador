@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ViewTransition } from "react";
+import { AcoesPagina } from "@/components/AcoesPagina";
 import { Fonte } from "@/components/Fonte";
 import { Barras } from "@/components/graficos/Graficos";
 import { Icon } from "@/components/Icon";
@@ -109,6 +110,7 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
           <p className="perfil-links">
             <a href={v.link.replace(/#.*$/, "")}>Perfil no site oficial</a>
             <Link href={`/comparar?v=${v.slug}`}>Comparar</Link>
+            <AcoesPagina titulo={`${v.nome} · ${SITE.nome}`} texto={`Atuação parlamentar de ${v.nome} (${v.partido}) em Pindamonhangaba.`} />
           </p>
         </div>
       </header>
@@ -149,8 +151,8 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
         </ul>
         {papel === "Presidente" && (
           <p className="nota" style={{ marginTop: "1rem" }}>
-            Como presidente da Câmara, conduz as sessões plenárias, organiza a pauta e assina atos institucionais da Mesa Diretora — esse
-            papel regimental é contexto importante antes de comparar contagens individuais.
+            Na presidência da Câmara, conduz as sessões plenárias, organiza a pauta e assina atos institucionais da Mesa Diretora. Considere
+            essas funções regimentais ao comparar contagens individuais.
           </p>
         )}
       </section>
@@ -167,8 +169,8 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
           <h2 id="h-temas">Do que tratam os pedidos</h2>
           {tema1 ? (
             <p className="lede">
-              {tema1.nome} aparece em {percent(tema1.n, x.pedidos.length)}% dos pedidos analisados. O traço vertical marca a proporção
-              média da Câmara inteira para dar contexto ao perfil sem criar ranking.
+              {tema1.nome} aparece em {percent(tema1.n, x.pedidos.length)}% dos pedidos analisados. A linha vertical marca a proporção média
+              da Câmara para contextualizar o perfil sem criar ranking.
             </p>
           ) : (
             <p className="lede">Nenhum pedido classificado no período.</p>
@@ -209,8 +211,7 @@ export default async function PaginaVereador({ params }: { params: Promise<{ slu
         <article className="historia" aria-labelledby="h-rede">
           <h2 id="h-rede">Com quem assina junto</h2>
           <p className="lede">
-            Os parlamentares que mais vezes dividiram autoria com {v.nome}. Toque em qualquer linha para abrir exatamente os documentos em
-            comum.
+            Parlamentares que dividiram autoria com {v.nome}. Selecione qualquer linha para abrir os documentos em comum.
           </p>
           {parceiros.length > 0 ? (
             <ul className="parceiros">

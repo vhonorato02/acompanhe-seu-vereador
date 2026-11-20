@@ -10,8 +10,8 @@ export function Fonte({ d }: { d: Dataset }) {
         Dados públicos obtidos da <a href={d.fonte.url}>{d.fonte.nome}</a>, coletados em {dataColeta(d.execucao.coletadoEm)} ({d.escopo.descricao}).
       </p>
       <p>
-        <Link href="/como-funciona">O que significa cada tipo</Link>, <Link href="/metodologia">como contamos</Link>,{" "}
-        <Link href="/dados">baixar tabelas abertas</Link> ou <Link href="/correcoes">avisar de um erro</Link>.
+        <Link href="/como-funciona">Glossário e tipos de documento</Link>, <Link href="/metodologia">metodologia</Link>,{" "}
+        <Link href="/dados">dados abertos</Link> ou <Link href="/correcoes">comunicar erro</Link>.
       </p>
       {d.execucao.modo === "amostra" && (
         <p className="nota aviso" style={{ marginTop: "0.75rem" }}>

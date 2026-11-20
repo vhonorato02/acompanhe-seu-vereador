@@ -1,79 +1,263 @@
 /*
- * Visual system: white page, near-black text, system font, grey bands and hairlines.
- * Green is the Observatório's own (logo #90C040); a darker shade of the same hue is used where
- * text needs AA contrast on white. It is reserved for what you can tap and for the active state.
- * Portraits use uniform circular framing without visual hierarchy so no councillor stands out.
+ * Visual system: Observatório Social do Brasil (brand green #90C040) on warm architectural paper (#f6f7f3)
+ * and botanical obsidian (#0b0e0a) in dark mode, with user-configurable Light / Dark / System override.
+ * System font stack (zero external font fetches). Portraits render in original colors in uniform circles.
  */
 :root {
   color-scheme: light dark;
-  --bg: #ffffff;
-  --fill: #f5f5f7;
-  --fill-2: #e8e8ed;
-  --ink: #1d1d1f;
-  --ink-2: #6e6e73;
-  --line: #d2d2d7;
-  --brand: #90c040;
-  /* The official logo has black lettering: it always sits on white, in both themes. */
-  --logo-plate: #ffffff;
-  --green: #4a7a1a;
-  --green-hover: #3f6b12;
-  --on-green: #ffffff;
-  --green-tint: #eef5e3;
-  --bar: #48484a;
-  --bar-2: #86868b;
-  --track: #e8e8ed;
-  --thumb: #ffffff;
-  --glass: rgba(255, 255, 255, 0.82);
 
-  /* Chart slots: one dark grey for the bulk, green for bills, light greys for the rest. */
-  --g1: #48484a; /* pedidos */
-  --g2: #4a7a1a; /* projetos de lei */
-  --g3: #aeaeb2; /* homenagens */
-  --g4: #d1d1d6; /* funcionamento da Câmara */
-  --grid: #e8e8ed;
-  --rede-linha: #8e8e93;
-  --ref: #1d1d1f;
+  --brand: #90c040;
+  --brand-bright: #a8d452;
+  --on-brand: #132104;
+  /* The official logo has black lettering: it always sits on a crisp white plate. */
+  --logo-plate: #ffffff;
+
+  /* Raw light & dark palettes so color-scheme overrides work with or without light-dark(). */
+  --bg-l: #f6f7f3;
+  --bg-d: #0b0e0a;
+  --surface-l: #ffffff;
+  --surface-d: #141913;
+  --fill-l: #ecefe6;
+  --fill-d: #1d241b;
+  --fill-2-l: #e1e6d8;
+  --fill-2-d: #273024;
+  --ink-l: #161914;
+  --ink-d: #f3f5f0;
+  --ink-2-l: #50574c;
+  --ink-2-d: #a1ab9b;
+  --line-l: #dce1d4;
+  --line-d: #2a3327;
+  --green-l: #3d6b10;
+  --green-d: #98c945;
+  --green-hover-l: #31570c;
+  --green-hover-d: #b0dc64;
+  --on-green-l: #ffffff;
+  --on-green-d: #0d1704;
+  --green-tint-l: #ecf5db;
+  --green-tint-d: #1d2b11;
+  --bar-l: #2c3329;
+  --bar-d: #c4cebe;
+  --bar-2-l: #677061;
+  --bar-2-d: #8a9584;
+  --track-l: #e3e7dc;
+  --track-d: #262f23;
+  --thumb-l: #ffffff;
+  --thumb-d: #445040;
+  --glass-l: rgba(246, 247, 243, 0.85);
+  --glass-d: rgba(14, 18, 13, 0.85);
+  --scrim-l: rgba(18, 24, 14, 0.5);
+  --scrim-d: rgba(4, 7, 3, 0.72);
+  --shadow-sm-l: 0 1px 2px rgba(22, 25, 20, 0.05), 0 6px 20px rgba(22, 25, 20, 0.04);
+  --shadow-sm-d: 0 1px 2px rgba(0, 0, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.28);
+  --shadow-md-l: 0 16px 40px rgba(22, 25, 20, 0.14), 0 2px 8px rgba(22, 25, 20, 0.06);
+  --shadow-md-d: 0 20px 48px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(144, 192, 64, 0.14);
+  --g1-l: #3b4237;
+  --g1-d: #b8c2b2;
+  --g2-l: #4a7a1a;
+  --g2-d: #90c040;
+  --g3-l: #99a392;
+  --g3-d: #6c7766;
+  --g4-l: #cfd6c6;
+  --g4-d: #364032;
+  --grid-l: #e3e7dc;
+  --grid-d: #252e22;
+  --rede-linha-l: #9aa393;
+  --rede-linha-d: #707b6a;
+  --ref-l: #161914;
+  --ref-d: #f3f5f0;
+  --scrollbar-track-l: #ecefe6;
+  --scrollbar-track-d: #141913;
+  --scrollbar-thumb-l: #7b8473;
+  --scrollbar-thumb-d: #687461;
+
+  --bg: var(--bg-l);
+  --surface: var(--surface-l);
+  --fill: var(--fill-l);
+  --fill-2: var(--fill-2-l);
+  --ink: var(--ink-l);
+  --ink-2: var(--ink-2-l);
+  --line: var(--line-l);
+  --green: var(--green-l);
+  --green-hover: var(--green-hover-l);
+  --on-green: var(--on-green-l);
+  --green-tint: var(--green-tint-l);
+  --bar: var(--bar-l);
+  --bar-2: var(--bar-2-l);
+  --track: var(--track-l);
+  --thumb: var(--thumb-l);
+  --glass: var(--glass-l);
+  --scrim: var(--scrim-l);
+  --shadow-sm: var(--shadow-sm-l);
+  --shadow-md: var(--shadow-md-l);
+
+  /* Chart slots: deep neutral for requests, OSB green for bills, muted neutral greys for the rest. */
+  --g1: var(--g1-l); /* pedidos */
+  --g2: var(--g2-l); /* projetos de lei */
+  --g3: var(--g3-l); /* homenagens */
+  --g4: var(--g4-l); /* funcionamento da Câmara */
+  --grid: var(--grid-l);
+  --rede-linha: var(--rede-linha-l);
+  --ref: var(--ref-l);
+  --scrollbar-track: var(--scrollbar-track-l);
+  --scrollbar-thumb: var(--scrollbar-thumb-l);
 
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI Variable Text", "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
 
   --t-small: 0.8125rem;
-  --t-body: 1.0625rem;
-  --t-lead: clamp(1.1875rem, 1.05rem + 0.6vw, 1.4375rem);
-  --t-h3: 1.1875rem;
-  --t-h2: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
-  --t-h1: clamp(2.125rem, 1.4rem + 3.4vw, 4rem);
+  --t-body: 1rem;
+  --t-lead: clamp(1.0625rem, 0.98rem + 0.45vw, 1.25rem);
+  --t-h3: 1.125rem;
+  --t-h2: clamp(1.375rem, 1.15rem + 1.1vw, 1.875rem);
+  --t-h1: clamp(1.875rem, 1.35rem + 2.4vw, 3rem);
 
   --gutter: 1rem;
-  --page: 64rem;
-  --tabbar-h: 3.5rem;
-  --r: 12px;
+  --page: 66rem;
+  --tabbar-h: 3.75rem;
+  --r: 14px;
+  --r-lg: 20px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #000000;
-    --fill: #1c1c1e;
-    --fill-2: #2c2c2e;
-    --ink: #f5f5f7;
-    --ink-2: #98989d;
-    --line: #38383a;
-    --green: #90c040;
-    --green-hover: #a8d45e;
-    --on-green: #000000;
-    --green-tint: #1e2a10;
-    --bar: #c7c7cc;
-    --bar-2: #8e8e93;
-    --track: #2c2c2e;
-    --thumb: #636366;
-    --glass: rgba(22, 22, 23, 0.82);
-    --g1: #c7c7cc;
-    --g2: #90c040;
-    --g3: #636366;
-    --g4: #3a3a3c;
-    --grid: #2c2c2e;
-    --rede-linha: #8e8e93;
-    --ref: #f5f5f7;
+    --bg: var(--bg-d);
+    --surface: var(--surface-d);
+    --fill: var(--fill-d);
+    --fill-2: var(--fill-2-d);
+    --ink: var(--ink-d);
+    --ink-2: var(--ink-2-d);
+    --line: var(--line-d);
+    --green: var(--green-d);
+    --green-hover: var(--green-hover-d);
+    --on-green: var(--on-green-d);
+    --green-tint: var(--green-tint-d);
+    --bar: var(--bar-d);
+    --bar-2: var(--bar-2-d);
+    --track: var(--track-d);
+    --thumb: var(--thumb-d);
+    --glass: var(--glass-d);
+    --scrim: var(--scrim-d);
+    --shadow-sm: var(--shadow-sm-d);
+    --shadow-md: var(--shadow-md-d);
+    --g1: var(--g1-d);
+    --g2: var(--g2-d);
+    --g3: var(--g3-d);
+    --g4: var(--g4-d);
+    --grid: var(--grid-d);
+    --rede-linha: var(--rede-linha-d);
+    --ref: var(--ref-d);
+    --scrollbar-track: var(--scrollbar-track-d);
+    --scrollbar-thumb: var(--scrollbar-thumb-d);
+  }
+}
+
+/* Explicit user theme override reflected from <meta name="color-scheme"> inside <head>. */
+:root:has(> head > meta[name="color-scheme"][content="dark"]) {
+  color-scheme: dark;
+  --bg: var(--bg-d);
+  --surface: var(--surface-d);
+  --fill: var(--fill-d);
+  --fill-2: var(--fill-2-d);
+  --ink: var(--ink-d);
+  --ink-2: var(--ink-2-d);
+  --line: var(--line-d);
+  --green: var(--green-d);
+  --green-hover: var(--green-hover-d);
+  --on-green: var(--on-green-d);
+  --green-tint: var(--green-tint-d);
+  --bar: var(--bar-d);
+  --bar-2: var(--bar-2-d);
+  --track: var(--track-d);
+  --thumb: var(--thumb-d);
+  --glass: var(--glass-d);
+  --scrim: var(--scrim-d);
+  --shadow-sm: var(--shadow-sm-d);
+  --shadow-md: var(--shadow-md-d);
+  --g1: var(--g1-d);
+  --g2: var(--g2-d);
+  --g3: var(--g3-d);
+  --g4: var(--g4-d);
+  --grid: var(--grid-d);
+  --rede-linha: var(--rede-linha-d);
+  --ref: var(--ref-d);
+  --scrollbar-track: var(--scrollbar-track-d);
+  --scrollbar-thumb: var(--scrollbar-thumb-d);
+}
+
+:root:has(> head > meta[name="color-scheme"][content="light"]) {
+  color-scheme: light;
+  --bg: var(--bg-l);
+  --surface: var(--surface-l);
+  --fill: var(--fill-l);
+  --fill-2: var(--fill-2-l);
+  --ink: var(--ink-l);
+  --ink-2: var(--ink-2-l);
+  --line: var(--line-l);
+  --green: var(--green-l);
+  --green-hover: var(--green-hover-l);
+  --on-green: var(--on-green-l);
+  --green-tint: var(--green-tint-l);
+  --bar: var(--bar-l);
+  --bar-2: var(--bar-2-l);
+  --track: var(--track-l);
+  --thumb: var(--thumb-l);
+  --glass: var(--glass-l);
+  --scrim: var(--scrim-l);
+  --shadow-sm: var(--shadow-sm-l);
+  --shadow-md: var(--shadow-md-l);
+  --g1: var(--g1-l);
+  --g2: var(--g2-l);
+  --g3: var(--g3-l);
+  --g4: var(--g4-l);
+  --grid: var(--grid-l);
+  --rede-linha: var(--rede-linha-l);
+  --ref: var(--ref-l);
+  --scrollbar-track: var(--scrollbar-track-l);
+  --scrollbar-thumb: var(--scrollbar-thumb-l);
+}
+
+@supports (color: light-dark(white, black)) {
+  :root {
+    --bg: light-dark(var(--bg-l), var(--bg-d));
+    --surface: light-dark(var(--surface-l), var(--surface-d));
+    --fill: light-dark(var(--fill-l), var(--fill-d));
+    --fill-2: light-dark(var(--fill-2-l), var(--fill-2-d));
+    --ink: light-dark(var(--ink-l), var(--ink-d));
+    --ink-2: light-dark(var(--ink-2-l), var(--ink-2-d));
+    --line: light-dark(var(--line-l), var(--line-d));
+    --green: light-dark(var(--green-l), var(--green-d));
+    --green-hover: light-dark(var(--green-hover-l), var(--green-hover-d));
+    --on-green: light-dark(var(--on-green-l), var(--on-green-d));
+    --green-tint: light-dark(var(--green-tint-l), var(--green-tint-d));
+    --bar: light-dark(var(--bar-l), var(--bar-d));
+    --bar-2: light-dark(var(--bar-2-l), var(--bar-2-d));
+    --track: light-dark(var(--track-l), var(--track-d));
+    --thumb: light-dark(var(--thumb-l), var(--thumb-d));
+    --glass: light-dark(var(--glass-l), var(--glass-d));
+    --scrim: light-dark(var(--scrim-l), var(--scrim-d));
+    --g1: light-dark(var(--g1-l), var(--g1-d));
+    --g2: light-dark(var(--g2-l), var(--g2-d));
+    --g3: light-dark(var(--g3-l), var(--g3-d));
+    --g4: light-dark(var(--g4-l), var(--g4-d));
+    --grid: light-dark(var(--grid-l), var(--grid-d));
+    --rede-linha: light-dark(var(--rede-linha-l), var(--rede-linha-d));
+    --ref: light-dark(var(--ref-l), var(--ref-d));
+    --scrollbar-track: light-dark(var(--scrollbar-track-l), var(--scrollbar-track-d));
+    --scrollbar-thumb: light-dark(var(--scrollbar-thumb-l), var(--scrollbar-thumb-d));
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+}
+
+@supports not (scrollbar-color: auto) {
+  :root::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  :root::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+  }
+  :root::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
   }
 }
 
@@ -89,7 +273,6 @@
   box-sizing: border-box;
 }
 html {
-  /* Explicit on the root too: without it WebKit reports a white canvas under the dark theme. */
   background: var(--bg);
   accent-color: var(--green);
   -webkit-text-size-adjust: 100%;
@@ -103,11 +286,12 @@ body {
   color: var(--ink);
   font-family: var(--font);
   font-size: var(--t-body);
-  line-height: 1.47;
+  line-height: 1.5;
   letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+  overscroll-behavior-y: contain;
   padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
 }
 @media (min-width: 52rem) {
@@ -122,14 +306,14 @@ h1,
 h2,
 h3 {
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.12;
   letter-spacing: -0.025em;
   margin: 0;
   text-wrap: balance;
 }
 h1 {
   font-size: var(--t-h1);
-  letter-spacing: -0.035em;
+  letter-spacing: -0.03em;
 }
 h2 {
   font-size: var(--t-h2);
@@ -147,6 +331,17 @@ p {
 a {
   color: var(--green);
   text-decoration: none;
+  touch-action: manipulation;
+}
+button,
+input,
+select,
+summary {
+  touch-action: manipulation;
+}
+::selection {
+  background: color-mix(in oklab, var(--brand) 34%, transparent);
+  color: var(--ink);
 }
 a:hover {
   text-decoration: underline;
@@ -175,6 +370,17 @@ select {
   letter-spacing: inherit;
   color: inherit;
 }
+nav,
+button,
+.chip,
+.tabbar,
+.rosto,
+.cartao-v,
+.kpi-card {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
 .sr-only {
   position: absolute;
   width: 1px;
@@ -192,12 +398,12 @@ select {
 .skip:focus-visible {
   left: var(--gutter);
   top: 0.5rem;
-  background: var(--bg);
+  background: var(--surface);
   color: var(--ink);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   border: 1px solid var(--line);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--shadow-md);
   font-weight: 600;
   text-decoration: none;
 }
@@ -208,22 +414,23 @@ select {
   padding: 0 var(--gutter);
 }
 main.page {
-  padding-top: 1.5rem;
+  padding-top: 1.25rem;
   padding-bottom: 3rem;
 }
 .section {
-  margin-top: 3.5rem;
+  margin-top: 2.5rem;
 }
 .section-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 .section-head a {
   white-space: nowrap;
-  font-size: var(--t-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
 .soft {
   color: var(--ink-2);
@@ -236,12 +443,26 @@ main.page {
   font-size: var(--t-body);
   margin-top: 0.5rem;
 }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: var(--green-tint);
+  color: var(--green);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.85rem;
+}
 
-/* Full-bleed grey band inside the centred page. */
+/* Full-bleed recessed section band. */
 .banda {
   background: var(--fill);
+  border-block: 1px solid var(--line);
   margin-inline: calc(50% - 50vw);
-  padding-block: 2.75rem;
+  padding-block: 2.25rem;
 }
 .banda > * {
   max-width: var(--page);
@@ -249,7 +470,7 @@ main.page {
   padding-inline: var(--gutter);
 }
 
-/* ---------- top bar ---------- */
+/* ---------- top bar (mobile app header + desktop nav + menu trigger) ---------- */
 .topbar {
   position: sticky;
   top: 0;
@@ -257,22 +478,24 @@ main.page {
   background: var(--glass);
   backdrop-filter: saturate(1.8) blur(20px);
   -webkit-backdrop-filter: saturate(1.8) blur(20px);
+  border-top: 3px solid var(--brand);
   border-bottom: 1px solid var(--line);
+  padding-top: env(safe-area-inset-top);
 }
 .topbar .page {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  min-height: 3.25rem;
+  gap: 0.75rem;
+  min-height: 3.5rem;
 }
 .marca {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   color: var(--ink);
-  font-weight: 600;
-  font-size: 1.0625rem;
+  font-weight: 650;
+  font-size: 1rem;
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
@@ -294,39 +517,120 @@ main.page {
   letter-spacing: 0;
   color: var(--ink-2);
 }
+.topbar-app {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex: 1;
+}
+.topbar-voltar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: -0.45rem;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  flex: none;
+}
+.topbar-voltar:hover {
+  background: var(--fill);
+  text-decoration: none;
+}
+.topbar-titulo {
+  font-weight: 650;
+  font-size: 1.0625rem;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topbar-app.is-subpage .marca {
+  display: none;
+}
+@media (min-width: 52rem) {
+  .topbar-voltar,
+  .topbar-titulo {
+    display: none;
+  }
+  .topbar-app.is-subpage .marca {
+    display: flex;
+  }
+}
+.topbar-dir {
+  display: none;
+}
 .topnav {
   display: none;
 }
 @media (min-width: 52rem) {
+  .topbar-dir {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
   .topnav {
     display: flex;
-    gap: 1.75rem;
+    gap: 1.2rem;
   }
 }
 .topnav a {
-  /* WCAG 2.5.8: a full-height target, not just the text line. */
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  color: var(--ink);
+  color: var(--ink-2);
   font-size: 0.875rem;
-  opacity: 0.8;
+  font-weight: 500;
 }
 .topnav a:hover {
-  opacity: 1;
+  color: var(--ink);
   text-decoration: none;
 }
 .topnav a[aria-current="page"],
 .topnav a[aria-current="page"]:hover {
-  color: var(--green);
-  opacity: 1;
-  font-weight: 600;
+  color: var(--ink);
+  font-weight: 650;
   text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.45rem;
+  text-decoration-color: var(--brand);
+  text-decoration-thickness: 2.5px;
+  text-underline-offset: 0.5rem;
+}
+.topbar-menu {
+  display: none;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.35rem;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex: none;
+  box-shadow: var(--shadow-sm);
+}
+.topbar-menu svg {
+  color: var(--green);
+}
+.topbar-menu:hover,
+.topbar-menu[aria-expanded="true"] {
+  border-color: var(--brand);
+  background: var(--green-tint);
+}
+@media (min-width: 52rem) {
+  .topbar-menu {
+    display: inline-flex;
+  }
 }
 
-/* ---------- tab bar (phones) ---------- */
+/* ---------- bottom tab bar (5 tabs, native mobile pattern) ---------- */
 .tabbar {
   position: fixed;
   inset: auto 0 0 0;
@@ -347,65 +651,388 @@ main.page {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 }
-.tabbar a {
+.tabbar a,
+.tabbar-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.15rem;
+  width: 100%;
   min-height: var(--tabbar-h);
+  padding: 0.25rem 0.1rem;
+  border: 0;
+  background: transparent;
   color: var(--ink-2);
   font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0;
+  cursor: pointer;
 }
-.tabbar a:hover {
+.tabbar a:hover,
+.tabbar-btn:hover {
   text-decoration: none;
-}
-.tabbar a[aria-current="page"],
-.tabbar a[aria-current="page"]:hover {
-  color: var(--green);
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.2rem;
+  color: var(--ink);
 }
 .tab-ico {
   display: grid;
   place-items: center;
+  padding: 0.18rem 0.78rem;
+  border-radius: 999px;
+}
+.tabbar a[aria-current="page"],
+.tabbar a[aria-current="page"]:hover,
+.tabbar-btn[aria-expanded="true"] {
+  color: var(--green);
+  font-weight: 700;
+}
+.tabbar a[aria-current="page"] .tab-ico,
+.tabbar-btn[aria-expanded="true"] .tab-ico {
+  background: var(--green-tint);
+  border: 1px solid color-mix(in oklab, var(--brand) 42%, transparent);
+  color: var(--green);
 }
 
-/* ---------- hero (home) ---------- */
+/* ---------- bottom sheet modal (<dialog>) ---------- */
+dialog.sheet {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-md);
+  margin: 0;
+  padding: 0.65rem var(--gutter) calc(1.25rem + env(safe-area-inset-bottom));
+  inset: auto 0 0 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 85dvh;
+  overflow-y: auto;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  opacity: 0;
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: 0.24s;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+@media (min-width: 44rem) {
+  dialog.sheet {
+    margin: auto;
+    inset: 0;
+    max-width: 28rem;
+    border-radius: var(--r-lg);
+    padding: 1.25rem 1.4rem;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.sheet {
+    transform: translateY(1.25rem);
+  }
+  @media (min-width: 44rem) {
+    dialog.sheet {
+      transform: scale(0.96);
+    }
+  }
+}
+dialog.sheet[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  opacity: 1;
+  @starting-style {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    transform: none;
+    @starting-style {
+      transform: translateY(1.5rem);
+    }
+    @media (min-width: 44rem) {
+      @starting-style {
+        transform: scale(0.96);
+      }
+    }
+  }
+}
+dialog.sheet:modal {
+  overscroll-behavior: contain;
+}
+dialog.sheet::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition-property: background-color, backdrop-filter, display, overlay;
+  transition-duration: 0.24s;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+dialog.sheet[open]::backdrop {
+  background-color: var(--scrim);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  @starting-style {
+    background-color: transparent;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  dialog.sheet,
+  dialog.sheet::backdrop {
+    transition-duration: 0.1s;
+  }
+}
+.sheet-alca {
+  width: 2.25rem;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--line);
+  margin: 0 auto 0.2rem;
+}
+@media (min-width: 44rem) {
+  .sheet-alca {
+    display: none;
+  }
+}
+.sheet-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.sheet-marca {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+.sheet-marca img {
+  flex: none;
+}
+.sheet-topo h2 {
+  font-size: 1.0625rem;
+  line-height: 1.15;
+}
+.sheet-subtitulo {
+  font-size: 0.75rem;
+  color: var(--ink-2);
+  margin-top: 0.1rem;
+}
+.sheet-fechar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 0;
+  background: var(--fill);
+  color: var(--ink);
+  cursor: pointer;
+}
+.sheet-fechar:hover {
+  background: var(--fill-2);
+}
+.sheet-grupo h3 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  margin-bottom: 0.45rem;
+}
+.sheet-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--fill);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.sheet-lista li + li {
+  border-top: 1px solid var(--line);
+}
+.sheet-lista a,
+.sheet-lista button.sheet-acao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 2.85rem;
+  padding: 0.65rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+.sheet-lista a:hover,
+.sheet-lista button.sheet-acao:hover {
+  background: var(--fill-2);
+  text-decoration: none;
+}
+.sheet-item-esq {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--green);
+}
+.sheet-item-esq span {
+  color: var(--ink);
+}
+.sheet-nota {
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--r);
+  background: var(--green-tint);
+  border: 1px solid color-mix(in oklab, var(--brand) 38%, transparent);
+  color: var(--ink);
+  font-size: var(--t-small);
+}
+.tema-grade {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+  padding: 0.3rem;
+  border-radius: var(--r);
+  background: var(--fill);
+  border: 1px solid var(--line);
+}
+.tema-opcao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: 3.75rem;
+  padding: 0.55rem 0.35rem;
+  border-radius: calc(var(--r) - 4px);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 0.8125rem;
+  font-weight: 550;
+  cursor: pointer;
+}
+.tema-opcao:hover {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--surface) 55%, transparent);
+}
+.tema-opcao[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 650;
+  border-color: color-mix(in oklab, var(--brand) 65%, var(--line));
+  box-shadow: var(--shadow-sm);
+}
+.tema-opcao[aria-pressed="true"] svg {
+  color: var(--green);
+}
+.tema-legenda {
+  margin-top: 0.45rem;
+  font-size: var(--t-small);
+  color: var(--ink-2);
+}
+
+/* ---------- page actions (Share pill) ---------- */
+.acoes-pagina {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.botao-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+.botao-pill:hover {
+  background: var(--fill);
+  color: var(--green);
+}
+
+/* ---------- hero & KPI strip (home) ---------- */
 .hero {
-  padding-top: 1.5rem;
+  background: var(--surface);
+  background-image: radial-gradient(68% 92% at 100% 0%, color-mix(in oklab, var(--brand) 14%, transparent), transparent 72%);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 1.5rem 1.25rem;
+  box-shadow: var(--shadow-sm);
 }
 @media (min-width: 52rem) {
   .hero {
-    padding-top: 3.5rem;
+    padding: 2.25rem 2rem;
   }
 }
 .hero h1 {
-  max-width: 19ch;
+  max-width: 20ch;
 }
 .hero .lede {
   font-size: var(--t-lead);
-  margin-top: 1rem;
-  max-width: 40ch;
-  line-height: 1.35;
+  margin-top: 0.75rem;
+  max-width: 48ch;
+  line-height: 1.4;
 }
 .hero .busca {
-  margin-top: 1.75rem;
-  max-width: 40rem;
+  margin-top: 1.25rem;
+  max-width: 42rem;
+}
+.kpi-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+.kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  text-decoration: none;
+}
+.kpi-card:hover {
+  background: var(--green-tint);
+  border-color: var(--brand);
+  text-decoration: none;
+}
+.kpi-num {
+  font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--green);
+}
+.kpi-rotulo {
+  font-size: var(--t-small);
+  color: var(--ink-2);
+  font-weight: 500;
 }
 .atalhos {
   display: flex;
   gap: 0.5rem;
   overflow-x: auto;
   scrollbar-width: none;
-  margin: 1rem calc(var(--gutter) * -1) 0;
-  padding: 0.25rem var(--gutter);
+  margin: 1rem -1.25rem 0;
+  padding: 0.25rem 1.25rem;
   list-style: none;
 }
 .atalhos::-webkit-scrollbar {
@@ -427,17 +1054,19 @@ main.page {
 .busca-campo {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  background: var(--fill);
+  gap: 0.55rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: var(--r);
-  padding: 0 0.4rem 0 0.9rem;
+  padding: 0 0.4rem 0 0.85rem;
   min-height: 3.125rem;
   color: var(--ink-2);
-  border: 1px solid transparent;
+  box-shadow: var(--shadow-sm);
 }
-.busca-campo:focus-within {
+.busca-campo:focus-within,
+.busca-campo:has(:focus-visible) {
   border-color: var(--green);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 25%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 22%, transparent);
 }
 .busca-campo input {
   flex: 1;
@@ -445,7 +1074,7 @@ main.page {
   border: 0;
   background: transparent;
   font-size: var(--t-body);
-  padding: 0.7rem 0;
+  padding: 0.65rem 0;
   color: var(--ink);
 }
 .busca-campo input::placeholder {
@@ -460,18 +1089,25 @@ main.page {
 }
 .busca-campo button {
   border: 0;
-  background: transparent;
-  color: var(--green);
-  font-weight: 600;
-  padding: 0.55rem 0.7rem;
-  border-radius: 8px;
+  background: var(--brand);
+  color: var(--on-brand);
+  font-weight: 650;
+  padding: 0.5rem 0.95rem;
+  border-radius: 10px;
   cursor: pointer;
+  flex: none;
 }
 .busca-campo button:hover {
-  background: var(--fill-2);
+  background: var(--green);
+  color: var(--on-green);
 }
 .resultados-vivos {
-  margin-top: 1.25rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
 }
 .resultados-vivos .resumo {
   display: flex;
@@ -490,18 +1126,19 @@ main.page {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  min-height: 2.25rem;
+  min-height: 2.35rem;
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
-  border: 0;
-  background: var(--fill);
+  border: 1px solid var(--line);
+  background: var(--surface);
   color: var(--ink);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   white-space: nowrap;
   cursor: pointer;
 }
 .chip:hover {
-  background: var(--fill-2);
+  background: var(--fill);
   text-decoration: none;
 }
 .chip .conta {
@@ -512,6 +1149,7 @@ main.page {
 .chip[aria-current],
 .chip.ativo {
   background: var(--green);
+  border-color: var(--green);
   color: var(--on-green);
 }
 .chip[aria-pressed="true"] .conta,
@@ -520,7 +1158,7 @@ main.page {
   color: var(--on-green);
 }
 .chip .avatar {
-  margin-left: -0.5rem;
+  margin-left: -0.45rem;
 }
 .filtros-barra,
 .trilho,
@@ -566,7 +1204,7 @@ main.page {
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem 0.75rem;
+  gap: 0.75rem;
 }
 @media (min-width: 34rem) {
   .galeria {
@@ -576,7 +1214,7 @@ main.page {
 @media (min-width: 52rem) {
   .galeria {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 2rem 1.25rem;
+    gap: 1rem;
   }
 }
 .rosto {
@@ -584,45 +1222,49 @@ main.page {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  height: 100%;
+  padding: 0.9rem 0.6rem;
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+  background: var(--surface);
   color: var(--ink);
+  box-shadow: var(--shadow-sm);
 }
 .rosto:hover {
+  border-color: var(--brand);
   text-decoration: none;
 }
 .rosto-foto {
   position: relative;
   width: 100%;
-  max-width: 7.5rem;
+  max-width: 6.25rem;
   aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
   background: var(--fill-2);
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--line);
 }
 .rosto-foto img {
   object-fit: cover;
   object-position: 50% 15%;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.rosto:hover .rosto-foto img {
-  transform: scale(1.04);
 }
 .rosto-nome {
-  margin-top: 0.6rem;
+  margin-top: 0.65rem;
   font-weight: 600;
-  font-size: 0.9375rem;
-  line-height: 1.2;
+  font-size: 0.875rem;
+  line-height: 1.25;
   letter-spacing: -0.015em;
 }
 .rosto:hover .rosto-nome {
   color: var(--green);
 }
 .rosto-partido {
-  font-size: var(--t-small);
+  font-size: 0.75rem;
   color: var(--ink-2);
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
 }
 .trilho .rosto {
-  width: 5.5rem;
+  width: 6.25rem;
   flex: none;
 }
 .avatar {
@@ -630,7 +1272,6 @@ main.page {
   object-fit: cover;
   object-position: 50% 15%;
   background: var(--fill-2);
-  /* Initials of a councillor without a photo must stay neutral instead of inheriting link green. */
   color: var(--ink);
   flex: none;
 }
@@ -642,47 +1283,46 @@ main.page {
   margin-left: -0.45rem;
 }
 .avatares .avatar {
-  box-shadow: 0 0 0 2px var(--bg);
+  box-shadow: 0 0 0 2px var(--surface);
 }
 
 /* ---------- councillor list rows (/vereadores, compare) ---------- */
 .cartoes-vereador {
   list-style: none;
-  margin: 0;
+  margin: 1.5rem 0 0;
   padding: 0;
-  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 0.75rem;
 }
 @media (min-width: 52rem) {
   .cartoes-vereador {
-    display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 2.5rem;
-    border-top: 0;
+    gap: 1rem;
   }
-  .cartoes-vereador > li {
-    border-top: 1px solid var(--line);
-  }
-}
-.cartoes-vereador > li {
-  border-bottom: 1px solid var(--line);
 }
 .cartao-v {
   display: grid;
-  grid-template-columns: 3.5rem 1fr;
-  gap: 0.9rem;
+  grid-template-columns: 3.75rem 1fr;
+  gap: 0.95rem;
   align-items: center;
-  padding: 0.85rem 0;
+  padding: 1rem 1.05rem;
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+  background: var(--surface);
   color: var(--ink);
+  box-shadow: var(--shadow-sm);
 }
 .cartao-v:hover {
+  border-color: var(--brand);
   text-decoration: none;
 }
 .cartao-v .foto {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3.75rem;
+  height: 3.75rem;
   border-radius: 50%;
   overflow: hidden;
   background: var(--fill-2);
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--line);
 }
 .cartao-v .foto img {
   width: 100%;
@@ -692,7 +1332,7 @@ main.page {
 }
 .cartao-v .nome {
   display: block;
-  font-weight: 600;
+  font-weight: 650;
   letter-spacing: -0.015em;
 }
 .cartao-v:hover .nome {
@@ -700,12 +1340,13 @@ main.page {
 }
 .cartao-v .meta {
   display: block;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: var(--ink-2);
-  line-height: 1.35;
+  line-height: 1.38;
+  margin-top: 0.1rem;
 }
 .cartao-v .faisca {
-  margin-top: 0.4rem;
+  margin-top: 0.45rem;
 }
 
 /* ---------- feed of documents ---------- */
@@ -713,21 +1354,28 @@ main.page {
   list-style: none;
   margin: 0;
   padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.feed > li + li {
   border-top: 1px solid var(--line);
 }
-.feed > li {
-  border-bottom: 1px solid var(--line);
-}
 .item {
-  padding: 1rem 0;
+  padding: 1rem 1.15rem;
 }
 .item-topo {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 .item-nome {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-weight: 600;
   letter-spacing: -0.015em;
 }
@@ -737,16 +1385,16 @@ main.page {
   color: var(--ink-2);
 }
 .item-ementa {
-  margin-top: 0.3rem;
+  margin-top: 0.35rem;
   font-size: 0.9375rem;
-  line-height: 1.45;
+  line-height: 1.48;
   overflow-wrap: anywhere;
 }
 .item-pe {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.6rem;
+  margin-top: 0.65rem;
   font-size: var(--t-small);
   color: var(--ink-2);
 }
@@ -757,19 +1405,25 @@ main.page {
 /* ---------- profile ---------- */
 .voltar {
   font-size: 0.9375rem;
+  font-weight: 500;
 }
 .perfil-hero {
   display: grid;
-  grid-template-columns: 5.5rem 1fr;
+  grid-template-columns: 5.25rem 1fr;
   gap: 1rem;
   align-items: center;
   margin-top: 0.75rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
 }
 @media (min-width: 46rem) {
   .perfil-hero {
-    grid-template-columns: 9rem 1fr;
-    gap: 2rem;
-    margin-top: 1.5rem;
+    grid-template-columns: 8rem 1fr;
+    gap: 1.75rem;
+    padding: 1.5rem 1.75rem;
   }
 }
 .perfil-foto {
@@ -778,6 +1432,7 @@ main.page {
   border-radius: 50%;
   overflow: hidden;
   background: var(--fill-2);
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--line);
 }
 .perfil-foto img {
   width: 100%;
@@ -788,86 +1443,81 @@ main.page {
 .perfil-foto.sem-foto {
   display: grid;
   place-items: center;
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: var(--ink-2);
 }
 .perfil-nome {
-  font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3rem);
+  font-size: clamp(1.5rem, 1.15rem + 2vw, 2.5rem);
   letter-spacing: -0.03em;
 }
 .perfil-meta {
-  margin-top: 0.35rem;
+  margin-top: 0.3rem;
   color: var(--ink-2);
-  font-size: 0.9375rem;
 }
 .perfil-links {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
-  margin-top: 0.5rem;
+  gap: 0.5rem 1rem;
+  margin-top: 0.75rem;
   font-size: 0.9375rem;
 }
 .perfil-links a {
   text-decoration: none;
-}
-.perfil-foto-credito {
-  margin-top: 0.75rem;
-  font-size: 0.75rem;
-  color: var(--ink-2);
-}
-.etiqueta {
-  font-size: 0.9375rem;
-  color: var(--ink-2);
+  font-weight: 500;
 }
 
-/* Key numbers: a row of facts, each number leads to its list. */
+/* Key numbers: KPI cards on profile and compare views. */
 .fatos {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  border-top: 1px solid var(--line);
+  gap: 0.75rem;
 }
 @media (min-width: 46rem) {
   .fatos {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 2rem;
+    gap: 1rem;
   }
 }
 .fato {
   display: grid;
-  grid-template-columns: 5.5rem 1fr;
+  grid-template-columns: 4.5rem 1fr;
   gap: 0.75rem;
-  align-items: baseline;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--line);
+  align-items: center;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
   color: var(--ink-2);
   font-size: 0.9375rem;
-  line-height: 1.35;
+  line-height: 1.38;
 }
 @media (min-width: 46rem) {
   .fato {
     grid-template-columns: 1fr;
-    gap: 0.25rem;
-    padding: 1.25rem 0;
+    gap: 0.3rem;
+    padding: 1.15rem 1.2rem;
+    align-content: start;
   }
 }
 .fato strong {
   font-size: 1.75rem;
-  font-weight: 700;
+  font-weight: 750;
   letter-spacing: -0.03em;
   line-height: 1;
 }
 @media (min-width: 46rem) {
   .fato strong {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
 }
 .fato strong a {
   text-decoration: none;
 }
-/* A link inside running text must not rely on colour alone (WCAG 1.4.1). */
 .fato span a {
   text-decoration: underline;
   text-underline-offset: 0.15em;
@@ -876,14 +1526,15 @@ main.page {
 /* Segmented control (period). */
 .segmentos {
   display: inline-flex;
-  padding: 2px;
-  border-radius: 9px;
+  padding: 3px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
   background: var(--track);
 }
 .segmentos button {
   border: 0;
   background: transparent;
-  min-height: 2rem;
+  min-height: 2.1rem;
   padding: 0.3rem 1.1rem;
   border-radius: 7px;
   font-size: 0.875rem;
@@ -891,29 +1542,34 @@ main.page {
   cursor: pointer;
 }
 .segmentos button[aria-pressed="true"] {
-  background: var(--thumb);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
-  font-weight: 600;
+  background: var(--surface);
+  color: var(--green);
+  box-shadow: var(--shadow-sm);
+  font-weight: 650;
 }
 .painel-grade {
   display: grid;
-  gap: 2.5rem;
-  margin-top: 1.5rem;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
 }
 @media (min-width: 60rem) {
   .painel-grade {
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 1.5rem;
     align-items: start;
   }
-  /* The total and its chart stay in view while the longer type list scrolls beside them. */
   .painel-grade > .painel:first-child {
     position: sticky;
-    top: 5rem;
+    top: 4.5rem;
   }
 }
 .painel {
   min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
 }
 .painel h3 {
   margin-bottom: 0.5rem;
@@ -924,8 +1580,8 @@ main.page {
   gap: 0.25rem;
 }
 .total-grande a {
-  font-size: clamp(2.75rem, 2rem + 3vw, 4rem);
-  font-weight: 700;
+  font-size: clamp(2.5rem, 2rem + 2.5vw, 3.5rem);
+  font-weight: 750;
   letter-spacing: -0.04em;
   line-height: 1;
   text-decoration: none;
@@ -937,7 +1593,7 @@ main.page {
   gap: 4px;
   align-items: end;
   height: 6.5rem;
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
 }
 .mes {
   height: 100%;
@@ -947,7 +1603,7 @@ main.page {
 .mes .barra {
   width: 100%;
   background: var(--bar);
-  border-radius: 3px 3px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 a.mes:hover .barra,
 .mes:focus-visible .barra {
@@ -976,7 +1632,7 @@ a.mes:hover .barra,
 .composicao a {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 0.15rem 1rem;
+  gap: 0.2rem 1rem;
   padding: 0.75rem 0;
   color: var(--ink);
 }
@@ -999,14 +1655,14 @@ a.mes:hover .barra,
 }
 .composicao .trilha {
   grid-column: 1 / -1;
-  height: 4px;
-  border-radius: 2px;
+  height: 6px;
+  border-radius: 999px;
   background: var(--track);
 }
 .composicao .trilha span {
   display: block;
   height: 100%;
-  border-radius: 2px;
+  border-radius: 999px;
   background: var(--bar);
 }
 .composicao a:hover .rotulo {
@@ -1015,31 +1671,35 @@ a.mes:hover .barra,
 
 /* ---------- stories (home, profile, neighbourhood) ---------- */
 .historia {
-  padding: 2.5rem 0;
-  border-top: 1px solid var(--line);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 1.35rem 1.25rem;
+  box-shadow: var(--shadow-sm);
   min-width: 0;
 }
-.historia > .grafico {
-  margin-top: 1.5rem;
-}
-.historia .rodape-historia {
+.historia + .historia {
   margin-top: 1.25rem;
-  font-size: 0.9375rem;
+}
+.historia > .grafico {
+  margin-top: 1.25rem;
 }
 .duas-colunas {
   display: grid;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
 }
 @media (min-width: 60rem) {
   .duas-colunas {
     grid-template-columns: 1fr 1fr;
-    column-gap: 4rem;
+    gap: 1.25rem;
   }
 }
 .rotulo-derivado {
   display: inline-flex;
   align-items: flex-start;
   gap: 0.35rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.55rem;
   font-size: var(--t-small);
   line-height: 1.45;
   color: var(--ink-2);
@@ -1049,10 +1709,10 @@ a.mes:hover .barra,
   margin-top: 0.2em;
 }
 .prosa .rotulo-derivado {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
 }
 .funil {
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
 }
 .funil-linha .rotulos {
   display: flex;
@@ -1064,17 +1724,17 @@ a.mes:hover .barra,
   font-weight: 600;
 }
 .funil-barra {
-  height: 6px;
-  border-radius: 3px;
+  height: 8px;
+  border-radius: 999px;
   background: var(--track);
-  margin: 0.6rem 0 0.4rem;
+  margin: 0.6rem 0 0.45rem;
   overflow: hidden;
 }
 .funil-barra span {
   display: block;
   height: 100%;
-  background: var(--bar);
-  border-radius: 3px;
+  background: var(--green);
+  border-radius: 999px;
 }
 .parceiros {
   list-style: none;
@@ -1110,12 +1770,15 @@ details summary {
   cursor: pointer;
   color: var(--green);
   font-size: 0.9375rem;
+  font-weight: 500;
   list-style: none;
 }
 details summary::-webkit-details-marker {
   display: none;
 }
-details summary::after {
+details.mais-filtros summary::after,
+details.mais-barras summary::after,
+details.como-tabela summary::after {
   content: "";
   display: inline-block;
   width: 0.45em;
@@ -1126,7 +1789,9 @@ details summary::after {
   transform: translateY(-0.2em) rotate(45deg);
   transition: transform 0.2s;
 }
-details[open] > summary::after {
+details.mais-filtros[open] > summary::after,
+details.mais-barras[open] > summary::after,
+details.como-tabela[open] > summary::after {
   transform: translateY(0.05em) rotate(-135deg);
 }
 details.mais-filtros summary {
@@ -1140,8 +1805,10 @@ details.mais-filtros summary {
   gap: 1rem;
   margin-top: 0.75rem;
   padding: 1rem;
-  background: var(--fill);
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
 }
 @media (min-width: 46rem) {
   .form-filtros {
@@ -1174,7 +1841,7 @@ select {
   border-radius: 999px;
   background: var(--green);
   color: var(--on-green);
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   text-decoration: none;
 }
@@ -1184,14 +1851,15 @@ select {
   text-decoration: none;
 }
 .botao.secundario {
-  background: var(--fill);
+  background: var(--surface);
+  border: 1px solid var(--line);
   color: var(--green);
 }
 .botao.secundario:hover {
-  background: var(--fill-2);
+  background: var(--fill);
 }
 .contagem {
-  margin: 1.5rem 0 0.5rem;
+  margin: 1.25rem 0 0.65rem;
   color: var(--ink-2);
 }
 .contagem strong {
@@ -1209,8 +1877,8 @@ select {
 
 /* ---------- notes, provenance, footer ---------- */
 .nota {
-  background: var(--fill);
-  /* Explicit: inside .fonte the inherited grey falls under 4.5:1 on the grey band. */
+  background: var(--surface);
+  border: 1px solid var(--line);
   color: var(--ink);
   border-radius: var(--r);
   padding: 1rem 1.15rem;
@@ -1222,9 +1890,10 @@ select {
 }
 .aviso {
   background: var(--green-tint);
+  border-color: color-mix(in oklab, var(--brand) 40%, var(--line));
 }
 .fonte {
-  margin-top: 3rem;
+  margin-top: 2.5rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--line);
   font-size: var(--t-small);
@@ -1234,10 +1903,11 @@ select {
   margin-top: 0.35rem;
 }
 .rodape {
-  background: var(--fill);
+  background: var(--surface);
+  border-top: 1px solid var(--line);
   color: var(--ink-2);
-  font-size: 0.75rem;
-  padding: 1.5rem 0 2rem;
+  font-size: 0.8125rem;
+  padding: 2rem 0 2.25rem;
 }
 .rodape strong {
   color: var(--ink);
@@ -1260,17 +1930,18 @@ select {
     gap: 1.5rem;
   }
 }
-/* The official logo has black lettering: it sits on its own white plate in both themes. */
+/* The official logo has black lettering: it sits on white in both themes. */
 .rodape .logo-osb {
   display: inline-block;
   justify-self: start;
   background: var(--logo-plate);
+  border: 1px solid var(--line);
   border-radius: var(--r);
   padding: 0.6rem 0.8rem;
   line-height: 0;
 }
 .rodape .logo-osb img {
-  width: 11rem;
+  width: 10.5rem;
   height: auto;
 }
 .rodape address {
@@ -1280,56 +1951,60 @@ select {
 }
 .rodape ul {
   list-style: none;
-  padding: 0.85rem 0 0;
-  margin: 0.85rem 0 0;
+  padding: 1rem 0 0;
+  margin: 1rem 0 0;
   border-top: 1px solid var(--line);
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
+  gap: 0.35rem 1.25rem;
 }
 .rodape ul a {
   text-decoration: none;
-  /* WCAG 2.5.8: at least 24px tall targets, even with the small footer type. */
   display: inline-flex;
   align-items: center;
   min-height: 1.5rem;
 }
 
-/* ---------- prose pages ---------- */
+/* ---------- prose pages & native accordions ---------- */
 .prosa {
-  max-width: 44rem;
+  max-width: 46rem;
 }
 .prosa > * + * {
   margin-top: 1rem;
 }
 .prosa h1 + p {
-  margin-top: 0.85rem;
+  margin-top: 0.75rem;
   font-size: var(--t-lead);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 .prosa h2 {
-  margin-top: 2.75rem;
-  font-size: 1.625rem;
+  margin-top: 2.25rem;
+  font-size: 1.45rem;
 }
 .prosa h3 {
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
 }
 .prosa ul,
 .prosa ol {
   padding-left: 1.25rem;
 }
 .prosa li + li {
-  margin-top: 0.4rem;
+  margin-top: 0.45rem;
 }
 .verbetes {
   list-style: none;
   padding: 0;
-  margin: 1.25rem 0 0;
-  border-top: 1px solid var(--line);
+  margin: 1rem 0 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
 }
 .verbetes li {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--line);
+  padding: 1rem 1.15rem;
+}
+.verbetes li + li {
+  border-top: 1px solid var(--line);
 }
 .prosa .verbetes li + li {
   margin-top: 0;
@@ -1339,7 +2014,7 @@ select {
   margin: 0;
 }
 .verbetes p {
-  margin-top: 0.3rem;
+  margin-top: 0.35rem;
   color: var(--ink-2);
 }
 .tabela {
@@ -1350,7 +2025,7 @@ select {
 .tabela th,
 .tabela td {
   text-align: left;
-  padding: 0.55rem 0.75rem 0.55rem 0;
+  padding: 0.6rem 0.75rem 0.6rem 0;
   border-bottom: 1px solid var(--line);
   vertical-align: top;
 }
@@ -1359,18 +2034,20 @@ select {
 }
 .tabela thead th {
   color: var(--ink-2);
-  font-weight: 500;
+  font-weight: 600;
   font-size: var(--t-small);
 }
 .sumario {
-  background: var(--fill);
+  background: var(--surface);
+  border: 1px solid var(--line);
   color: var(--ink);
   border-radius: var(--r);
-  padding: 0.9rem 1.15rem;
+  padding: 0.95rem 1.15rem;
+  box-shadow: var(--shadow-sm);
 }
 .sumario-titulo {
   font-size: var(--t-small);
-  font-weight: 600;
+  font-weight: 650;
   color: var(--ink);
   margin: 0 0 0.45rem;
 }
@@ -1386,12 +2063,14 @@ select {
   margin-top: 0;
 }
 .exemplo {
-  background: var(--fill);
-  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-left: 3px solid var(--green);
+  color: var(--ink);
   border-radius: var(--r);
-  padding: 0.95rem 1.15rem;
+  padding: 1rem 1.15rem;
   font-size: 0.9375rem;
+  box-shadow: var(--shadow-sm);
 }
 .exemplo p + p {
   margin-top: 0.55rem;
@@ -1406,11 +2085,13 @@ select {
   }
 }
 .quadro-card {
-  background: var(--fill);
+  background: var(--surface);
+  border: 1px solid var(--line);
   color: var(--ink);
   border-radius: var(--r);
-  padding: 1rem 1.15rem;
+  padding: 1.05rem 1.15rem;
   font-size: 0.9375rem;
+  box-shadow: var(--shadow-sm);
 }
 .quadro-card h3 {
   margin: 0 0 0.55rem;
@@ -1427,16 +2108,20 @@ select {
 .prosa ol.passos > li {
   counter-increment: passo;
   position: relative;
-  padding-left: 2.2rem;
+  padding: 0.85rem 1rem 0.85rem 3rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
 }
 .prosa ol.passos > li + li {
-  margin-top: 0.75rem;
+  margin-top: 0.65rem;
 }
 .prosa ol.passos > li::before {
   content: counter(passo);
   position: absolute;
-  left: 0;
-  top: 0.1rem;
+  left: 0.9rem;
+  top: 0.85rem;
   width: 1.55rem;
   height: 1.55rem;
   border-radius: 50%;
@@ -1447,6 +2132,74 @@ select {
   font-weight: 700;
   display: grid;
   place-items: center;
+}
+
+/* Native animated accordions (disclosure cards). */
+.acordeoes {
+  display: grid;
+  gap: 0.65rem;
+}
+details.acordeao {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+details.acordeao > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.85rem 1.1rem;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+details.acordeao > summary:hover {
+  background: var(--fill);
+}
+details.acordeao > summary::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: none;
+  border-right: 2px solid var(--green);
+  border-bottom: 2px solid var(--green);
+  transform: rotate(-45deg);
+}
+details.acordeao[open] > summary::before {
+  transform: rotate(45deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  details.acordeao > summary::before {
+    transition: transform 0.2s ease-out;
+  }
+  details.acordeao::details-content {
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    contain: layout;
+    transition: block-size, content-visibility, display;
+    transition-duration: 0.26s;
+    transition-timing-function: ease-in-out;
+    transition-behavior: allow-discrete;
+  }
+  details.acordeao:not([open])::details-content {
+    block-size: 0;
+  }
+}
+.acordeao-corpo {
+  padding: 0 1.1rem 1rem 2.2rem;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.acordeao-corpo p + p,
+.acordeao-corpo ul + p,
+.acordeao-corpo p + ul {
+  margin-top: 0.55rem;
 }
 
 /* ---------- charts ---------- */
@@ -1475,7 +2228,7 @@ select {
 .col-pilha {
   display: flex;
   flex-direction: column-reverse;
-  border-radius: 3px 3px 0 0;
+  border-radius: 4px 4px 0 0;
   overflow: hidden;
   min-height: 2px;
   gap: 1px;
@@ -1563,8 +2316,8 @@ a.col:hover .col-pilha,
 .proporcao {
   display: flex;
   gap: 2px;
-  height: 0.75rem;
-  border-radius: 6px;
+  height: 0.9rem;
+  border-radius: 999px;
   overflow: hidden;
 }
 .proporcao span {
@@ -1621,7 +2374,7 @@ a.col:hover .col-pilha,
 @media (min-width: 52rem) {
   .barras.duas {
     columns: 2;
-    column-gap: 4rem;
+    column-gap: 3rem;
   }
   .barras.duas li {
     break-inside: avoid;
@@ -1632,7 +2385,7 @@ a.col:hover .col-pilha,
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0.35rem 1rem;
-  padding: 0.55rem 0;
+  padding: 0.6rem 0;
   color: var(--ink);
   text-decoration: none;
 }
@@ -1657,30 +2410,30 @@ a .b-num {
 .b-trilha {
   grid-column: 1 / -1;
   position: relative;
-  height: 4px;
-  border-radius: 2px;
+  height: 7px;
+  border-radius: 999px;
   background: var(--track);
 }
 .b-valor {
   display: block;
   height: 100%;
-  border-radius: 2px;
+  border-radius: 999px;
   background: var(--bar);
 }
 .b-ref {
   position: absolute;
-  top: -4px;
+  top: -3px;
   width: 2px;
-  height: 12px;
+  height: 13px;
   margin-left: -1px;
-  border-radius: 1px;
+  border-radius: 2px;
   background: var(--bar-2);
 }
 .b-ref-amostra {
   display: inline-block;
   width: 2px;
   height: 12px;
-  border-radius: 1px;
+  border-radius: 2px;
   background: var(--bar-2);
   vertical-align: middle;
   margin-right: 0.35rem;
@@ -1698,8 +2451,8 @@ a .b-num {
 .faisca span {
   flex: 1;
   background: var(--bar-2);
-  border-radius: 1px;
-  min-height: 1px;
+  border-radius: 2px 2px 0 0;
+  min-height: 2px;
 }
 details.como-tabela {
   margin-top: 0.85rem;
@@ -1715,7 +2468,7 @@ details.mais-barras summary {
 }
 .rede svg {
   width: 100%;
-  max-width: 26rem;
+  max-width: 24rem;
   display: block;
   margin: 0 auto;
 }
@@ -1749,7 +2502,7 @@ details.mais-barras summary {
 }
 .comparacao {
   display: grid;
-  gap: 0 2.5rem;
+  gap: 1.25rem;
 }
 @media (min-width: 60rem) {
   .comparacao {
@@ -1760,10 +2513,13 @@ details.mais-barras summary {
   min-width: 0;
 }
 .comparacao .cartao-v {
-  padding-top: 0;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  background: transparent;
 }
 .comparacao h3 {
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   font-size: var(--t-body);
 }
@@ -1772,17 +2528,61 @@ details.mais-barras summary {
   margin-top: 1rem;
 }
 .comparacao .fato {
-  grid-template-columns: 5.5rem 1fr;
+  grid-template-columns: 4.5rem 1fr;
   gap: 0.75rem;
-  padding: 0.85rem 0;
+  padding: 0.85rem 1rem;
 }
 .comparacao .fato strong {
   font-size: 1.75rem;
 }
 
+/* ---------- loading skeleton ---------- */
+.esqueleto-grade {
+  display: grid;
+  gap: 1rem;
+}
+.esqueleto-bloco {
+  height: 7.5rem;
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.esqueleto-bloco.alto {
+  height: 12rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rosto,
+  .cartao-v,
+  .kpi-card,
+  .botao,
+  .botao-pill,
+  .chip,
+  .tabbar a,
+  .tabbar-btn {
+    transition: transform 0.14s ease, background-color 0.15s ease, border-color 0.15s ease;
+  }
+  .rosto:active,
+  .cartao-v:active,
+  .kpi-card:active,
+  .botao:active,
+  .botao-pill:active,
+  .chip:active,
+  .tabbar a:active,
+  .tabbar-btn:active {
+    transform: scale(0.98);
+  }
+  .esqueleto-bloco {
+    animation: pulso-suave 1.3s ease-in-out infinite alternate;
+  }
+  @keyframes pulso-suave {
+    from { opacity: 0.55; }
+    to { opacity: 0.95; }
+  }
+}
+
 /* ---------- motion ---------- */
 ::view-transition-group(*) {
-  animation-duration: 0.35s;
+  animation-duration: 0.32s;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1791,6 +2591,13 @@ details.mais-barras summary {
   *::after {
     transition: none !important;
     animation: none !important;
+  }
+  dialog.sheet,
+  dialog.sheet::backdrop {
+    transition-property: opacity, background-color, display, overlay !important;
+    transition-duration: 0.1s !important;
+    transition-timing-function: ease-out !important;
+    transition-behavior: allow-discrete !important;
   }
   ::view-transition-group(*),
   ::view-transition-old(*),
@@ -1821,7 +2628,8 @@ details.mais-barras summary {
   .chip[aria-pressed="true"],
   .chip[aria-current],
   .chip.ativo,
-  .segmentos button[aria-pressed="true"] {
+  .segmentos button[aria-pressed="true"],
+  .tema-opcao[aria-pressed="true"] {
     outline: 2px solid Highlight;
     outline-offset: -2px;
   }
@@ -1830,14 +2638,28 @@ details.mais-barras summary {
     outline: 1px solid Highlight;
     outline-offset: 2px;
   }
+  dialog.sheet {
+    border: 2px solid CanvasText;
+  }
 }
 
 @media print {
-  :root {
+  :root,
+  :root:has(> head > meta[name="color-scheme"]) {
     color-scheme: light;
+    --bg: var(--bg-l);
+    --surface: var(--surface-l);
+    --fill: var(--fill-l);
+    --fill-2: var(--fill-2-l);
+    --ink: var(--ink-l);
+    --ink-2: var(--ink-2-l);
+    --line: var(--line-l);
+    --green: var(--green-l);
   }
   .topbar,
   .tabbar,
+  dialog.sheet,
+  .acoes-pagina,
   .skip,
   .busca,
   details.mais-filtros,
